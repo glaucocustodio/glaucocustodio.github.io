@@ -1,0 +1,160 @@
+---
+layout: post
+status: publish
+published: true
+title: Configurando Ambiente de Produ&ccedil;&atilde;o Django com Virtualenvwrapper,
+  Gunicorn e Nginx
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, hoje estou aqui para apresentar uma solu&ccedil;&atilde;o
+  que utilizei esses dias para rodar uma aplica&ccedil;&atilde;o Django em produ&ccedil;&atilde;o.\r\n\r\nN&atilde;o
+  sou muito experiente no mundo Python, mas sei que o pessoal costuma a usar bastante
+  servidores wsgi para rodar aplica&ccedil;&otilde;es da linguagem.\r\n\r\nEstava
+  acostumado a subir aplica&ccedil;&otilde;es Django usando FastCGI em servidores
+  compartilhados (por falta de outra op&ccedil;&atilde;o), mas em meu &uacute;ltimo
+  servi&ccedil;o pude subir o projeto em meu vps, ent&atilde;o optei por algo mais
+  simples que funcionasse bem.\r\n\r\n"
+wordpress_id: 2130
+wordpress_url: http://blog.glaucocustodio.com/?p=2130
+date: '2013-11-23 16:56:45 -0200'
+date_gmt: '2013-11-23 16:56:45 -0200'
+categories:
+- Python
+- Servidor
+tags:
+- django
+- nginx
+- gunicorn
+- virtualenv
+- virtualenvwrapper
+- upstart
+comments:
+- id: 19736
+  author: Nosbielcs
+  author_email: contato#clei@co.com
+  author_url: ''
+  date: '2015-01-13 04:32:12 -0200'
+  date_gmt: '2015-01-13 04:32:12 -0200'
+  content: Muito boa a dica. Parab&eacute;ns
+- id: 24991
+  author: Andreas
+  author_email: andreasaw8@gmail.com
+  author_url: ''
+  date: '2015-03-18 20:33:14 -0300'
+  date_gmt: '2015-03-18 20:33:14 -0300'
+  content: Muito obrigado por este tutorial. Abra&ccedil;o.
+- id: 33089
+  author: Gilson
+  author_email: gilsonrauschkolb17@yahoo.com.br
+  author_url: ''
+  date: '2015-06-10 00:19:26 -0300'
+  date_gmt: '2015-06-10 00:19:26 -0300'
+  content: "Opa,\r\n\r\nGla&uacute;cio, estou tentando seguir o seu tutorial, mas
+    n&atilde;o consigo fazer o comando source &#47;usr&#47;local&#47;bin&#47;virtualenvwrapper.sh,
+    diz que n&atilde;o existe o arquivo, e tamb&eacute;m n&atilde;o consigo o mkvirtualenv
+    diz que n&atilde;o &eacute; um comando v&aacute;lido, o que posso fazer?\r\n\r\nObrigado"
+---
+<p>Fala pessoal, hoje estou aqui para apresentar uma solu&ccedil;&atilde;o que utilizei esses dias para rodar uma aplica&ccedil;&atilde;o Django em produ&ccedil;&atilde;o.</p>
+<p>N&atilde;o sou muito experiente no mundo Python, mas sei que o pessoal costuma a usar bastante servidores wsgi para rodar aplica&ccedil;&otilde;es da linguagem.</p>
+<p>Estava acostumado a subir aplica&ccedil;&otilde;es Django usando FastCGI em servidores compartilhados (por falta de outra op&ccedil;&atilde;o), mas em meu &uacute;ltimo servi&ccedil;o pude subir o projeto em meu vps, ent&atilde;o optei por algo mais simples que funcionasse bem.</p>
+<p><a id="more"></a><a id="more-2130"></a>A op&ccedil;&atilde;o de usar o Nginx com o Gunicorn me pareceu a melhor, dado o fato que j&aacute; tinha o servidor web instalado e a integra&ccedil;&atilde;o seria bem f&aacute;cil.</p>
+<h2>Preparando Ambiente<&#47;h2><br />
+Assim como a documenta&ccedil;&atilde;o do Gunicorn recomenda, vamos criar um ambiente isolado com <a href="https:&#47;&#47;pypi.python.org&#47;pypi&#47;virtualenv" rel="external nofollow" target="_blank">virtualenv<&#47;a> para que possamos trabalhar com m&uacute;ltiplas vers&otilde;es do Django.</p>
+<p>Instale o virtualenv via pip:<br />
+[code language="bash"]$ sudo pip install virtualenv[&#47;code]<br />
+Eu particularmente gosto de usar o virtualenvwrapper tamb&eacute;m, pois facilita um pouco mais, instale ele via pip:<br />
+[code language="bash"]$ sudo pip install virtualenvwrapper[&#47;code]<br />
+Agora carregue o arquivo do virtualenvwrapper com fun&ccedil;&otilde;es para administrar os ambientes:<br />
+[code language="bash"]$ source &#47;usr&#47;local&#47;bin&#47;virtualenvwrapper.sh[&#47;code]<br />
+Adicione essa mesma linha acima no final do arquivo <code>~&#47;.bashrc<&#47;code> ou <code>~&#47;.bash_profile<&#47;code> para que os comandos sejam carregados junto com o shell.</p>
+<p>Vamos criar um ambiente agora:<br />
+[code language="bash"]$ mkvirtualenv django-1.5[&#47;code]<br />
+Aqui estou criando um ambiente chamado "django-1.5", usaremos ele para trabalhar com projetos dessa vers&atilde;o do Django.</p>
+<p>Se voc&ecirc; rodar <code>$ ls ~&#47;.virtualenvs<&#47;code> ver&aacute; que um diret&oacute;rio "django-1.5" foi criado, nessa pasta ser&atilde;o armazenadas as bibliotecas do nosso ambiente.</p>
+<p>Observe tamb&eacute;m que no shell teremos o nome do ambiente entre par&ecirc;nteses antes do nome do usu&aacute;rio, desse jeito: <code>(django-1.5)glauco@glauco-note ~$<&#47;code>. Isso significa que esse ambiente est&aacute; ativo, para desativ&aacute;-lo rode <code>$ deactivate django-1.5<&#47;code> e para ativar, basta rodar <code>$ workon django-1.5<&#47;code>.</p>
+<p>Nosso ambiente isolado est&aacute; criado no servidor, agora precisamos fazer deploy do projeto e instalar as depend&ecirc;ncias (como o Django, South etc..).</p>
+<p>Saindo do servidor e indo para nosso ambiente local de desenvolvimento, vamos congelar as depend&ecirc;ncias do projeto em um arquivo txt:<br />
+[code language="bash"]$ pip freeze > requirements.txt[&#47;code]<br />
+Fa&ccedil;a deploy no servidor de produ&ccedil;&atilde;o usando git ou ferramentas como <a href="http:&#47;&#47;fabfile.org" rel="external no-follow" target="_blank">Fabric<&#47;a>, acesse a pasta do arquivo com as depend&ecirc;ncias do projeto e instale-as via <code>$ pip install -r requirements.txt<&#47;code>.</p>
+<h2>Instalando e Configurando Gunicorn<&#47;h2><br />
+Instalar o Gunicorn &eacute; f&aacute;cil, basta rodar <code>pip install gunicorn<&#47;code> e pronto.</p>
+<p>A partir da vers&atilde;o 1.4 do Django, quando criamos um projeto, ele vem com um arquivo chamado <code>wsgi.py<&#47;code> que serve para fazer a liga&ccedil;&atilde;o entre o servidor web (nesse exemplo Nginx) e o servidor de aplica&ccedil;&atilde;o (nesse exemplo Gunicorn).</p>
+<p>Precisamos alterar o arquivo para adicionar o caminho de nossa aplica&ccedil;&atilde;o ao python path:<br />
+[code language="python"]# wsgi.py<br />
+import os, sys</p>
+<p>PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))<br />
+settings_module = "%s.settings" % PROJECT_ROOT.split(os.sep)[-1]<br />
+if PROJECT_ROOT not in sys.path:<br />
+    sys.path.append(PROJECT_ROOT)<br />
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)</p>
+<p>from django.core.wsgi import get_wsgi_application<br />
+application = get_wsgi_application()[&#47;code]<br />
+Aqui pegamos o caminho absoluto do projeto e verificamos se ele est&aacute; no python path, sen&atilde;o estiver, adicionamos, depois dizemos ao Django qual a localiza&ccedil;&atilde;o do arquivo settings.py.</p>
+<p>Vamos rodar nossa aplica&ccedil;&atilde;o para testar:<br />
+[code language="bash"]$ gunicorn -b "127.0.0.1:8007" meu_projeto.wsgi:application[&#47;code]<br />
+O c&oacute;digo acima deve ser executado no diret&oacute;rio acima do projeto, nesse caso <code>~&#47;<&#47;code>, pois o projeto est&aacute; em <code>~&#47;meu_projeto<&#47;code>. Troque "meu_projeto" pelo nome do diret&oacute;rio que cont&eacute;m seu projeto.</p>
+<p>Se tudo deu certo, voc&ecirc; j&aacute; tem o Gunicorn rodando.</p>
+<h2>Servindo Arquivos Est&aacute;ticos com Nginx<&#47;h2><br />
+N&atilde;o &eacute; recomendado servir arquivos est&aacute;ticos com o Django, por isso precisamos de um servidor web para fazer o servi&ccedil;o, nesse tutorial iremos usar o Nginx.</p>
+<p>Considerando que voc&ecirc; j&aacute; tenha ele instalado, vamos configurar um servidor como abaixo:<br />
+[code language="nginx" linenos="table"] server {<br />
+  listen   8006;<br />
+  passenger_enabled off;<br />
+  server_name localhost;<br />
+  root &#47;home&#47;superuser&#47;meu_projeto;<br />
+  location &#47;static&#47; {<br />
+    alias &#47;home&#47;superuser&#47;meu_projeto&#47;my_template&#47;static&#47;;<br />
+    if ($query_string) {<br />
+      expires max;<br />
+    }<br />
+  }<br />
+  location &#47; {<br />
+    proxy_pass_header Server;<br />
+    proxy_set_header Host $http_host;<br />
+    proxy_redirect off;<br />
+    proxy_set_header X-Real-IP $remote_addr;<br />
+    proxy_set_header X-Scheme $scheme;<br />
+    proxy_connect_timeout 30;<br />
+    proxy_read_timeout 20;<br />
+    proxy_pass http:&#47;&#47;127.0.0.1:8007;<br />
+  }<br />
+}[&#47;code]</p>
+<div class="note">A linha 3 serve para dizer ao Nginx que o Passenger deve estar desabilitado nesse servidor, voc&ecirc; s&oacute; ir&aacute; precisar dela caso tenha o Passenger instalado, se voc&ecirc; n&atilde;o tem pode tir&aacute;-la.<&#47;div><br />
+Aqui definimos um servidor ouvindo na porta 8006, mapeando as urls que come&ccedil;am com <code>&#47;static&#47;<&#47;code> para o caminho de arquivos est&aacute;ticos de nossa aplica&ccedil;&atilde;o e que define um proxy reverso que serve para jogar as requisi&ccedil;&otilde;es ao Gunicorn que est&aacute; escutando na porta 8007 (como foi definido no teste anteriormente).</p>
+<p>Ao terminar de configurar o Nginx, reinicie-o e acesse o servidor via ip mesmo (por ex: <code>http:&#47;&#47;111.222.33.444:8006<&#47;code>) e j&aacute; devemos ter nossa aplica&ccedil;&atilde;o rodando.</p>
+<h2>Automatizando Startup do Gunicorn com Upstart<&#47;h2><br />
+Poderiamos parar por aqui pois j&aacute; temos o que precisamos, mas imagine s&oacute; que voc&ecirc; precise reinicar o processo do Gunicorn ao fazer um deploy, da forma que est&aacute;, voc&ecirc; precisaria dar um <code>ps aux<&#47;code> para localizar o processo e depois mat&aacute;-lo, isso n&atilde;o &eacute; muito legal.</p>
+<p>Servidores Ubuntu possuem o <a href="http:&#47;&#47;upstart.ubuntu.com&#47;" rel="external nofollow" target="_blank">Upstart<&#47;a>, com ele conseguimos controlar servi&ccedil;os apenas rodando um <code>sudo stop nome_servico<&#47;code> e <code>sudo start nome_servico<&#47;code>, al&eacute;m da garantia que ele nos d&aacute; que o processo sempre estar&aacute; rodando, &eacute; disso que precisamos.</p>
+<p>Vamos criar um arquivo chamado <code>start.sh<&#47;code> na pasta do projeto que seja respons&aacute;vel por subir nossa aplica&ccedil;&atilde;o:<br />
+[code linenos="table" language="bash"]<br />
+#!&#47;bin&#47;bash<br />
+set -e<br />
+APP_NAME='meu_projeto'<br />
+APP_PATH=&#47;home&#47;superuser<br />
+ENV_PATH=$APP_PATH&#47;.virtualenvs&#47;django-1.5<br />
+LOGFILE="$APP_PATH&#47;$APP_NAME&#47;log"<br />
+NUM_WORKERS=3<br />
+# user&#47;group to run as<br />
+USER=superuser<br />
+#GROUP=your_unix_group<br />
+PORT=8007<br />
+source $ENV_PATH&#47;bin&#47;activate<br />
+cd "$APP_PATH&#47;"<br />
+exec gunicorn -w $NUM_WORKERS -b "127.0.0.1:$PORT" --user=$USER --log-level=debug --log-file=$LOGFILE 2>>$LOGFILE "$APP_NAME.wsgi:application"[&#47;code]<br />
+D&ecirc; permiss&atilde;o de execu&ccedil;&atilde;o a ele via <code>$ chmod +x start.sh<&#47;code>.</p>
+<p>Nesse arquivo defino algumas vari&aacute;veis para que possamos usar na inicializa&ccedil;ao do servidor. Atente para a linha 12, nela eu ativo o ambiente a ser utilizado, isso &eacute; muito importante.</p>
+<p>Na linha 7 definimos quantos workers o Gunicorn usar&aacute;, recomenda-se utilizar a seguinte f&oacute;rmula para calcular: 1 + 2 * NUMERO DE CORES DO PROCESSADOR.</p>
+<p>Com nosso script de inicializa&ccedil;&atilde;o pronto, vamos criar um novo servi&ccedil;o no Upstart para cuidar dele. Acesse a pasta <code>&#47;etc&#47;init<&#47;code> e crie um arquivo chamado <code>meu_projeto.conf<&#47;code> com o seguinte conte&uacute;do:<br />
+[code language="bash"]description "Meu Projeto Gunicorn"<br />
+start on runlevel [2345]<br />
+stop on runlevel [016]<br />
+respawn</p>
+<p>exec su - superuser -c '&#47;home&#47;superuser&#47;meu_projeto&#47;start.sh'[&#47;code]<br />
+Salve e pronto, agora voc&ecirc; pode controlar o Gunicorn via <code>sudo start meu_projeto<&#47;code> e <code>sudo stop meu_projeto<&#47;code>.</p>
+<p>Abra&ccedil;os.</p>

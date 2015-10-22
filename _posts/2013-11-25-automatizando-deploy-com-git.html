@@ -1,0 +1,125 @@
+---
+layout: post
+status: publish
+published: true
+title: Automatizando Deploy com Git
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Em meus &uacute;ltimos projetos pessoais tenho usado o git para fazer deploy,
+  acabei fazendo (ou n&atilde;o rs) essa escolha pois estava focado na entrega e n&atilde;o
+  tinha muito tempo pra configurar um <a href=\"http:&#47;&#47;www.capistranorb.com&#47;\"
+  rel=\"external nofollow\" target=\"_blank\">Capistrano<&#47;a> da vida. Esse &uacute;tlimo
+  ali&aacute;s &eacute; muito bom, mas acho que talvez seja um overkill para pequenos
+  projetos onde um <code>git push<&#47;code> e <code>git pull<&#47;code> resolveria.\r\n\r\nMinha
+  rotina mais comum para projetos em casa vinha sendo: fazer altera&ccedil;&atilde;o,
+  comitar, dar <code>git push<&#47;code>, acessar o servidor, dar <code>git pull<&#47;code>
+  e resetar o servidor da aplica&ccedil;&atilde;o.\r\n\r\n"
+wordpress_id: 2218
+wordpress_url: http://blog.glaucocustodio.com/?p=2218
+date: '2013-11-25 21:33:45 -0200'
+date_gmt: '2013-11-25 21:33:45 -0200'
+categories:
+- Git
+tags:
+- deploy
+- hooks
+comments:
+- id: 2809
+  author: Ismael
+  author_email: ismavolk@gmail.com
+  author_url: ''
+  date: '2014-07-28 19:54:45 -0300'
+  date_gmt: '2014-07-28 19:54:45 -0300'
+  content: Muito bom! obrigado por compartilhar :)
+- id: 2849
+  author: Fabio L. Janiszevski
+  author_email: contato@fabiosammy.com
+  author_url: ''
+  date: '2014-08-02 12:47:30 -0300'
+  date_gmt: '2014-08-02 12:47:30 -0300'
+  content: N&atilde;o &eacute; mais f&aacute;cil utilizar um webhook no pr&oacute;prio
+    bitbucket?
+- id: 4507
+  author: Ricardo Farias
+  author_email: rycardofaryas@gmail.com
+  author_url: ''
+  date: '2014-08-25 08:17:53 -0300'
+  date_gmt: '2014-08-25 08:17:53 -0300'
+  content: "Muito bom o seu post. Me ajudou bastante.\r\n\r\nJ&aacute; que voc&ecirc;
+    usa Git, talvez possa me ajudar no seguinte problema:\r\nAntes eu usava as linhas
+    abaixo no meu arquivo .bash_profile e elas funcionavam, mas agora n&atilde;o funcionam
+    mais. Fazia um bom tempo que n&atilde;o desenvolvia projetos e agora estou retomando
+    essa atividade e tive que atualizar todo o meu ambiente de programa&ccedil;&atilde;o.
+    Talvez tenha a ver com a vers&atilde;o do Git que estou usando (1.8.4.2).\r\n\r\n#
+    Ativa o autocomplete do git, usado com um duplo TAB ap&oacute;s a digita&ccedil;&atilde;o
+    de uma parte de um comando\r\nsource ~&#47;git-completion.bash\r\n\r\n# Exibe
+    s&iacute;mbolos no prompt (* +) quando h&aacute; altera&ccedil;&otilde;es no reposit&oacute;rio
+    git\r\nexport GIT_PS1_SHOWDIRTYSTATE=true\r\nexport GIT_PS1_SHOWUNTRACKEDFILES=true"
+- id: 22502
+  author: Artur
+  author_email: artur.corvino1@gmail.com
+  author_url: ''
+  date: '2015-02-19 18:35:47 -0200'
+  date_gmt: '2015-02-19 18:35:47 -0200'
+  content: "Ol&aacute;! Primeiramente, parab&eacute;ns pelo tuto, &eacute; de grande
+    ajuda a comunidade. Tenho algumas duvidas:\r\n\r\n1 - Eu preciso ter a minha chave
+    SSH do meu servidor remoto no meu reposit&oacute;rio privado?\r\n2 - &Eacute;
+    feito o clone do meu projeto quando eu envio? Ou preciso j&aacute; ter o projeto
+    clonado no meu servidor remoto, e esse comando ir&aacute; apenas fazer o pull
+    do meu reposit&oacute;rio?\r\n\r\nObrigado!"
+---
+<p>Em meus &uacute;ltimos projetos pessoais tenho usado o git para fazer deploy, acabei fazendo (ou n&atilde;o rs) essa escolha pois estava focado na entrega e n&atilde;o tinha muito tempo pra configurar um <a href="http:&#47;&#47;www.capistranorb.com&#47;" rel="external nofollow" target="_blank">Capistrano<&#47;a> da vida. Esse &uacute;tlimo ali&aacute;s &eacute; muito bom, mas acho que talvez seja um overkill para pequenos projetos onde um <code>git push<&#47;code> e <code>git pull<&#47;code> resolveria.</p>
+<p>Minha rotina mais comum para projetos em casa vinha sendo: fazer altera&ccedil;&atilde;o, comitar, dar <code>git push<&#47;code>, acessar o servidor, dar <code>git pull<&#47;code> e resetar o servidor da aplica&ccedil;&atilde;o.</p>
+<p><a id="more"></a><a id="more-2218"></a>Lembrando da facilidade que servi&ccedil;os como Heroku e OpenShift oferecem ao fazer deploy com <code>git push<&#47;code>, resolvi automatizar meu processo tamb&eacute;m.</p>
+<p>Vi um <a href="http:&#47;&#47;eltonminetto.net&#47;blog&#47;2013&#47;11&#47;11&#47;deploy-estilo-heroku-usando-git&#47;" rel="external nofollow" target="_blank">post do Elton Minetto<&#47;a> sobre o assunto, mas particularmente n&atilde;o gostei do <code>git checkout -f<&#47;code>, procurei mais um pouco e achei <a href="http:&#47;&#47;www.akitaonrails.com&#47;2010&#47;02&#47;13&#47;deploy-com-git-push#.UpOh4arniNM">esse do Akita<&#47;a>, por fim, montei a solu&ccedil;&atilde;o que atendia bem minhas necessidades, e irei apresent&aacute;-la.</p>
+<h2>Criando um Servidor Git<&#47;h2></p>
+<p>No servidor que deseja fazer deploy, crie a estrutura:<br />
+[code language="bash"]$ cd ~&#47;<br />
+$ mkdir -p git_servers&#47;meu_projeto.git[&#47;code]<br />
+E ent&atilde;o crie um reposit&oacute;rio git vazio (que ser&aacute; o servidor):<br />
+[code language="bash"]$ cd ~&#47;git_servers&#47;meu_projeto.git<br />
+$ git init --bare[&#47;code]</p>
+<h2>Criando Git Hook<&#47;h2><br />
+Crie um arquivo post-receive dentro da pasta hooks que servir&aacute; para executar comandos ap&oacute;s receber um git push, n&atilde;o esque&ccedil;a de dar permiss&atilde;o de execu&ccedil;&atilde;o:<br />
+[code language="bash"]$ touch hooks&#47;post-receive<br />
+$ chmod +x hooks&#47;post-receive[&#47;code]<br />
+Ent&atilde;o vem a m&aacute;gica:<br />
+[code language="bash"]#!&#47;bin&#47;sh<br />
+# &#47;home&#47;user&#47;git_servers&#47;meu_projeto.git&#47;hooks&#47;post-receive<br />
+echo "-- hooks --"<br />
+cd &#47;home&#47;user&#47;meu_projeto<br />
+unset GIT_DIR<br />
+git pull origin master<br />
+sudo stop meu_projeto<br />
+sudo start meu_projeto[&#47;code]<br />
+Aqui acesso a pasta do projeto no servidor (aquela que est&aacute; a aplica&ccedil;&atilde;o rodando), definimos esse <code>unset GIT_DIR<&#47;code> para poder executar comandos git sem precisar utilizar o prefixo <code>env -i<&#47;code> que o Akita usou e ent&atilde;o damos o tradicional <code>git pull origin master<&#47;code> para baixar as altera&ccedil;&otilde;es. </p>
+<p>Os dois &uacute;ltimos comandos servem para reiniciar um processo via Upstart (que utilizo pra rodar o Gunicorn), s&oacute; atente para o detalhe que voc&ecirc; precisar&aacute; <a href="http:&#47;&#47;askubuntu.com&#47;questions&#47;147241&#47;execute-sudo-without-password" rel="external nofollow" target="_blank">configurar o visudo para aceitar comandos sem pedir senha<&#47;a>.<br />
+O script acima utilizo para projetos Django, para aplica&ccedil;&otilde;es Rails &eacute; um pouco diferente, veja:<br />
+[code language="bash"]<br />
+#!&#47;bin&#47;bash -l<br />
+echo "-- hooks --"<br />
+cd &#47;home&#47;user&#47;meu_projeto<br />
+unset GIT_DIR<br />
+git pull origin master<br />
+echo "-- installing gems --"<br />
+bundle install<br />
+echo "-- migrating database --"<br />
+rake db:migrate RAILS_ENV=production<br />
+echo "-- cleaning assets --"<br />
+rake assets:clean RAILS_ENV=production<br />
+echo "-- compiling assets --"<br />
+rake assets:precompile RAILS_ENV=production<br />
+echo "-- restarting server --"<br />
+touch tmp&#47;restart.txt<br />
+[&#47;code]<br />
+A &uacute;nica diferen&ccedil;a &eacute; que nesse script utilizamos <code>#!&#47;bin&#47;bash -l<&#47;code> para agir como um login shell e termos acesso as fun&ccedil;&otilde;es do RVM.</p>
+<h2>Fazendo Deploy<&#47;h2></p>
+<p>Como uso o Bitbucket para armazenar meus projetos e nem sempre ap&oacute;s um <code>git push<&#47;code> local irei querer fazer deploy em produ&ccedil;&atilde;o, ent&atilde;o adicionei uma fonte remota com <code>git remote add deploy user@meu_dominio.com:~&#47;git_servers&#47;meu_projeto.git<&#47;code> (portanto fiquei com duas: origin do Bitbucket e deploy do servidor de produ&ccedil;&atilde;o), agora toda vez que precisar fazer deploy, basta dar um <code>git push origin master<&#47;code> pra jogar pro Bitbucket e depois um <code>git push deploy master<&#47;code>. Se eu n&atilde;o quiser fazer deploy, rodo apenas o primeiro.</p>
+<p>Com isso n&atilde;o preciso mais acessar meu servidor manualmente pra baixar as altera&ccedil;&otilde;es e resetar o servidor de aplica&ccedil;&atilde;o.</p>
+<p>Abra&ccedil;os.</p>

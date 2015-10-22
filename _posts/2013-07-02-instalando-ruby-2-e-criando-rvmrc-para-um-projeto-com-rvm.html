@@ -1,0 +1,82 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Instalando Ruby 2 e Criando .rvmrc para um Projeto com RVM '
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Todos sabem que o Ruby 2.0 est&aacute;vel j&aacute; foi lan&ccedil;ado h&aacute;
+  algum tempo.\r\n\r\nAgora com o lan&ccedil;amento do Ruby on Rails 4 fica ainda
+  melhor migrar para a &uacute;ltima vers&atilde;o da linguagem.\r\n\r\nNo post de
+  hoje irei mostrar como <strong>instalar a &uacute;ltima vers&atilde;o do Ruby e
+  criar um arquivo .rvmrc para um projeto espec&iacute;fico<&#47;strong>, usando <strong>RVM<&#47;strong>
+  &eacute; claro.\r\n"
+wordpress_id: 1824
+wordpress_url: http://blog.glaucocustodio.com/?p=1824
+date: '2013-07-02 12:26:34 -0300'
+date_gmt: '2013-07-02 12:26:34 -0300'
+categories:
+- Ruby
+tags:
+- rvm
+comments:
+- id: 849
+  author: Marcelo G. Silva
+  author_email: mgswolf@gmail.com
+  author_url: http://defindex.com.br
+  date: '2013-07-02 13:02:46 -0300'
+  date_gmt: '2013-07-02 13:02:46 -0300'
+  content: "Legal! ainda n&atilde;o tive problemas com incompatibilidade de gems no
+    Ruby 2, mas caso apare&ccedil;a essa &eacute; uma boa solu&ccedil;&atilde;o. \r\n&Oacute;timo
+    post, parab&eacute;ns."
+- id: 906
+  author: Instalando e Configurando Ambiente Ruby on Rails no Linux (Ubuntu) | JustCode
+  author_email: ''
+  author_url: http://blog.glaucocustodio.com/2012/08/23/instalando-e-configurando-ambiente-ruby-on-rails-no-linux/
+  date: '2013-07-13 13:58:42 -0300'
+  date_gmt: '2013-07-13 13:58:42 -0300'
+  content: "[...] Importante (atualizado 13&#47;07&#47;2013): esse tutorial demonstra
+    a instala&ccedil;&atilde;o do Ruby 1.9.3, recentemente saiu a vers&atilde;o 2.0.0
+    da linguagem. &Eacute; recomend&aacute;vel o uso dessa nova vers&atilde;o com
+    o Rails 4 (&uacute;ltima vers&atilde;o). Ap&oacute;s seguir os passos abaixo,
+    leia esse post onde explico como atualizar. [...]"
+---
+<p>Todos sabem que o Ruby 2.0 est&aacute;vel j&aacute; foi lan&ccedil;ado h&aacute; algum tempo.</p>
+<p>Agora com o lan&ccedil;amento do Ruby on Rails 4 fica ainda melhor migrar para a &uacute;ltima vers&atilde;o da linguagem.</p>
+<p>No post de hoje irei mostrar como <strong>instalar a &uacute;ltima vers&atilde;o do Ruby e criar um arquivo .rvmrc para um projeto espec&iacute;fico<&#47;strong>, usando <strong>RVM<&#47;strong> &eacute; claro.<br />
+<a id="more"></a><a id="more-1824"></a><br />
+<h2>Instalando Ruby 2<&#47;h2></p>
+<p>Primeiro vamos ver quais vers&otilde;es do Ruby temos instalados em nossa m&aacute;quina, basta executar o comando <code>rvm list<&#47;code> pra isso.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-instalados-com-rvm.png"><img class="alignnone size-full wp-image-1830" title="listando-versoes-do-ruby-instalados-com-rvm" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-instalados-com-rvm.png" alt="" width="388" height="200" &#47;><&#47;a></p>
+<p>Aqui em meu caso, tenho apenas a vers&atilde;o 1.9.3-p194..</p>
+<p>Para conseguirmos a &uacute;ltima vers&atilde;o dispon&iacute;vel da linguagem, &eacute; recomend&aacute;vel atualizarmos o RVM primeiro, rode <code>rvm get head<&#47;code>.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;atualizando-versao-do-rvm.png"><img class="alignnone size-full wp-image-1833" title="atualizando-versao-do-rvm" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;atualizando-versao-do-rvm.png" alt="" width="731" height="218" &#47;><&#47;a></p>
+<p>Aguarde um pouco e j&aacute; teremos o RVM atualizado, ao t&eacute;rmino, rode <code>rvm list known<&#47;code> para ver as vers&otilde;es do Ruby dispon&iacute;veis para download.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-disponiveis-para-download.png"><img class="alignnone size-full wp-image-1834" title="listando-versoes-do-ruby-disponiveis-para-download" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-disponiveis-para-download.png" alt="" width="442" height="314" &#47;><&#47;a></p>
+<p>Irei instalar a &uacute;ltima vers&atilde;o (2.0.0-head), ent&atilde;o digito <code>rvm install ruby-2.0.0-head<&#47;code>. O processo pode levar um tempo pois o Ruby ser&aacute; baixado e compilado.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;instalando-ruby-2.0.png"><img class="alignnone size-full wp-image-1836" title="instalando-ruby-2.0" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;instalando-ruby-2.0.png" alt="" width="734" height="328" &#47;><&#47;a></p>
+<p>Ao t&eacute;rmino, se digitarmos <code>rvm list<&#47;code> agora teremos a vers&atilde;o que acabamos de instalar.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-instalados.png"><img class="alignnone size-full wp-image-1837" title="listando-versoes-do-ruby-instalados" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;listando-versoes-do-ruby-instalados.png" alt="" width="362" height="221" &#47;><&#47;a></p>
+<p>O Ruby 2 j&aacute; est&aacute; instalado mas ainda estamos usando a vers&atilde;o 1.9.3-p194, podemos usar <code>rvm use ruby-2.0.0-head --default<&#47;code> para trocarmos para a 2.0 (deixando ela como pad&atilde;o).</p>
+<h2>Criando .rvmrc para um Projeto<&#47;h2></p>
+<div class="note">Os passos abaixo s&atilde;o indicados para pessoas que possuem projetos em vers&otilde;es anteriores ao Ruby 2.0 e est&atilde;o tendo&#47;querem evitar conflito de gems.<&#47;div></p>
+<p>Imagine que possivelmente precisaremos rodar alguns projetos na vers&atilde;o 1.9.3 do Ruby e outros na vers&atilde;o 2.0.</p>
+<p>Algumas gemas dos projetos em Ruby 1.9.3 podem ser incompat&iacute;ves com gemas dos projetos com a vers&atilde;o 2.0 da linguagem, para resolver isso, eu crio um arquivo .rvmrc dentro dos projetos com vers&otilde;es diferentes.</p>
+<p>Imagina que temos uma aplica&ccedil;&atilde;o Rails rodando com Ruby 1.9.3 no diret&oacute;rio "x" e outra aplica&ccedil;&atilde;o do framework rodando com Ruby 2 no diret&oacute;rio "y".</p>
+<p>Para evitar conflito de gemas e n&atilde;o ter que ficar mudando a vers&atilde;o do Ruby toda hora, eu crio um arquivo de configura&ccedil;&atilde;o do RVM (.rvmrc) dentro do projeto "y" especificando a vers&atilde;o 2.0 da linguagem, assim toda vez que acessarmos ele, estaremos automaticamente com a vers&atilde;o definida.<br />
+[code language="ruby"]cd ~&#47;Projects&#47;y&#47;<br />
+rvm --rvmrc --create ruby-2.0.0-head@y[&#47;code]<br />
+Agora quando eu acessar o diret&oacute;rio "y" pela primeira vez, o RVM identificar&aacute; que existe um arquivo de configura&ccedil;&atilde;o e ir&aacute; perguntar se desejo permitir que ele seja executado, digo que sim, e ao ver a vers&atilde;o do Ruby, terei o que desejo, Ruby 2.0.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;mensagem-do-rvm.png"><img class="alignnone size-full wp-image-1842" title="mensagem-do-rvm" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;mensagem-do-rvm.png" alt="" width="1058" height="385" &#47;><&#47;a></p>
+<p>Como no diret&oacute;rio anterior n&atilde;o tenho nenhum arquivo .rvmrc, se voltar nele e checar pela vers&atilde;o do Ruby, estarei usando o 1.9.3 (que na minha m&aacute;quina ainda &eacute; o padr&atilde;o).</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;versao-padrao-do-ruby.png"><img class="alignnone size-full wp-image-1844" title="versao-padrao-do-ruby" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;versao-padrao-do-ruby.png" alt="" width="498" height="75" &#47;><&#47;a></p>
+<div class="note">Quando n&atilde;o h&aacute; nenhum arquivo de configura&ccedil;&atilde;o no diret&oacute;rio atual, o RVM usa o definido na home do usu&aacute;rio corrente.<&#47;div><br />
+Essa foi a dica de hoje pessoal, espero que tenham gostado.</p>
+<p>O que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais.</p>

@@ -1,0 +1,372 @@
+---
+layout: post
+status: publish
+published: true
+title: Instalando e Configurando Servidor FTP com vsftpd no Linux
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, hoje venho ensinar como <strong>instalar e configurar um servidor
+  FTP no Linux<&#47;strong>, mais precisamente no Ubuntu 12.04.\r\n\r\nDentre as muitas
+  op&ccedil;&otilde;es de programas que temos por ai, irei instalar o <a href=\"https:&#47;&#47;security.appspot.com&#47;vsftpd.html\"
+  rel=\"external nofollow\" target=\"_blank\"><strong>vsftpd<&#47;strong><&#47;a>,
+  que parece ser muito seguro e &eacute; utilizado pela RedHat e OpenSuse al&eacute;m
+  de outras empresas..\r\n\r\n"
+wordpress_id: 1746
+wordpress_url: http://blog.glaucocustodio.com/?p=1746
+date: '2013-06-22 16:51:31 -0300'
+date_gmt: '2013-06-22 16:51:31 -0300'
+categories:
+- Linux
+- Servidor
+tags:
+- vsftpd
+- ftp
+comments:
+- id: 755
+  author: Evandro Ribeiro
+  author_email: ribeiroevandro@live.com
+  author_url: http://www.fb.me/ribeiroevandro
+  date: '2013-06-22 22:03:10 -0300'
+  date_gmt: '2013-06-22 22:03:10 -0300'
+  content: excelente post, j&aacute; bati muito a cabe&ccedil;a tentando fazer esse
+    tipo de configura&ccedil;&atilde;o e nunca conseguia ter um sucesso, acho que
+    agora, ficar&aacute; mais f&aacute;cil...
+- id: 1026
+  author: S&oacute;crates
+  author_email: socratesaugusto@hotmail.com
+  author_url: ''
+  date: '2013-07-30 14:01:18 -0300'
+  date_gmt: '2013-07-30 14:01:18 -0300'
+  content: "Amigo preciso de uma ajuda urgente.\r\nTenho um segundo hd na minha maquina,
+    uso ubuntu server.\r\nComo fa&ccedil;o para que a raiz do meu ftp seja este segundo
+    hd???\r\nEsse hd &eacute; de 1TB e quero usa-lo so para arquivos ftp.\r\nPor favor
+    me ajude"
+- id: 1366
+  author: Devair
+  author_email: devair.souza@floresteca.com
+  author_url: ''
+  date: '2013-10-14 14:57:06 -0300'
+  date_gmt: '2013-10-14 14:57:06 -0300'
+  content: "Amigo, onde seto as configura&ccedil;&otilde;es de &ldquo;pasv_enable=YES&rdquo;
+    e pasv_min_port=9040 e pasv_max_port=9050 ? \r\n&Egrave; no proprio arquivo &ldquo;&#47;etc&#47;vsftpd.conf&rdquo;
+    ?"
+- id: 1373
+  author: Luiz Gustavo Villa Nova
+  author_email: gustavo.villanova@live.com
+  author_url: ''
+  date: '2013-10-15 18:55:07 -0300'
+  date_gmt: '2013-10-15 18:55:07 -0300'
+  content: "&Oacute;timo post, parab&eacute;ns! Existe muito conte&uacute;do na internet
+    sobre configura&ccedil;&atilde;o do VSFTPD mas &eacute; muito confuso, o seu post
+    &eacute; descomplicado e objetivo e espero que ajude muitas pessoas."
+- id: 1466
+  author: Andr&eacute;
+  author_email: andremmmm@gmail.com
+  author_url: ''
+  date: '2013-11-13 06:06:44 -0200'
+  date_gmt: '2013-11-13 06:06:44 -0200'
+  content: "Muito bom seu artigo!!!\r\nNo meu arquivo de configura&ccedil;&atilde;o
+    vsftpd n&atilde;o tem a op&ccedil;&atilde;o para deixar em modo passivo.\r\nComo
+    posso fazer?"
+- id: 1498
+  author: Paulo Celso
+  author_email: paulocelso68@gmail.com
+  author_url: ''
+  date: '2013-11-26 21:09:55 -0200'
+  date_gmt: '2013-11-26 21:09:55 -0200'
+  content: "Glauco,\r\nParab&eacute;ns pelo artigo. Estou querendo montar um servidor
+    ftp dom&eacute;stico para compartilhamento de m&uacute;sicas, filmes e afins e
+    penso que servidor FTP seria melhor do que compartilhamento via samba. Tenho os
+    HDs extras s&oacute; com esse material multimidia e em formato NTFS. Como poderia
+    apontar o diret&oacute;rio padr&atilde;o para um HD contendo a pasta filmes nele?
+    Usaria links? Se voc&ecirc; puder me dar uma dica, agrade&ccedil;o!"
+- id: 1510
+  author: Servidor FTPES (FTP over TLS&#47;SSL) | Lauro de Paula
+  author_email: ''
+  author_url: http://laurobmb.wordpress.com/2013/11/28/servidor-ftpes-ftp-over-tlsssl/
+  date: '2013-11-29 00:04:56 -0200'
+  date_gmt: '2013-11-29 00:04:56 -0200'
+  content: "[...] * http:&#47;&#47;crunchtools.com&#47;vsftpd-ssl&#47; * http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;06&#47;22&#47;instalando-e-configurando-servidor-ftp-com-vsftpd-no-linux...
+    <a href=&#8221;http:&#47;&#47;br.linkedin.com&#47;pub&#47;lauro-de-paula-gomes&#47;2b&#47;9bb&#47;6a3&#8243;>
+    [...]"
+- id: 1539
+  author: Domingos
+  author_email: ubissedomingosgil@hotmail.com
+  author_url: ''
+  date: '2013-12-17 12:36:55 -0200'
+  date_gmt: '2013-12-17 12:36:55 -0200'
+  content: gostei
+- id: 1543
+  author: Di&oacute;genes Torres
+  author_email: diogenestorres@gmail.com
+  author_url: ''
+  date: '2013-12-19 13:18:58 -0200'
+  date_gmt: '2013-12-19 13:18:58 -0200'
+  content: Excelente conte&uacute;do! Muito claro e esclarecedor. Parab&eacute;ns.
+- id: 1602
+  author: Rodrigo Prates
+  author_email: rodrigo@prates.net
+  author_url: ''
+  date: '2014-01-23 00:25:19 -0200'
+  date_gmt: '2014-01-23 00:25:19 -0200'
+  content: "Tenho um servidor FTP com o vsftpd rodando, n&atilde;o permite usu&aacute;rios
+    an&ocirc;nimos, somente registrados, tenho uma pergunta, teria alguma op&ccedil;&atilde;o,
+    para quando o usu&aacute;rio criasse uma pasta, ela ser sempre criado com um grupo
+    padr&atilde;o, sem ser o grupo dele, por exemplo\r\n\r\nusu&aacute;rio = usu&aacute;rio1\r\ngrupo
+    de usu&aacute;rio = usuario1\r\ngrupo de ftp = ftp\r\n\r\nquando usu&aacute;rio1
+    criasse uma pasta ou arquivo, ficar com a permiss&atilde;o do dono usu&aacute;rio1
+    e do grupo ftp?"
+- id: 1736
+  author: Eduardo Viana Pessoa
+  author_email: eduardo.vianap@gmail.com
+  author_url: http://fb.com/eduardo.v.pessoa
+  date: '2014-03-10 20:25:37 -0300'
+  date_gmt: '2014-03-10 20:25:37 -0300'
+  content: Meus parab&eacute;ns!! Excelente tutorial, me ajudou muito! Obrigado
+- id: 1890
+  author: Ronald Lopes
+  author_email: ronald.lopes@rl.eti.br
+  author_url: http://magazineacalentar.com
+  date: '2014-04-08 22:04:08 -0300'
+  date_gmt: '2014-04-08 22:04:08 -0300'
+  content: "Boa noite,\r\n\r\nMano vi v&aacute;rios tutoriais e nenhum deu certo,
+    mas vi que em seu tutorial tem a op&ccedil;&atilde;o de modo passivo, isso deve
+    ter sido a diferen&ccedil;a que fez meu vsftp funcionar.\r\n\r\nVlw"
+- id: 2575
+  author: Lucas Peregrino
+  author_email: lucasperegrino@gmail.com
+  author_url: ''
+  date: '2014-06-27 11:56:55 -0300'
+  date_gmt: '2014-06-27 11:56:55 -0300'
+  content: Bom dia parab&eacute;ns pelo dica contudo em modo passivo voc&ecirc; j&aacute;
+    conseguiu fazer acesso via internet em minha regi&atilde;o os provedores n&atilde;o
+    liberam a porta 20 e 21 tenho que esta alterando elas s&oacute; que estou tendo
+    problemas quanto a isso.
+- id: 4037
+  author: Israel
+  author_email: folgazoes@gmail.com
+  author_url: http://israelaraujo.org
+  date: '2014-08-22 21:10:06 -0300'
+  date_gmt: '2014-08-22 21:10:06 -0300'
+  content: "Ol&aacute;, boa noite!\r\n\r\nJ&aacute; fiz e refiz v&aacute;rias vezes
+    esse tutorial, porem quando vou acessar sempre d&aacute; o seguinte erro:\r\n530
+    Login incorrect\r\n\r\nO que poderia est&aacute; errado?\r\n\r\nAtenciosamente!"
+- id: 11857
+  author: Rafael Leitte
+  author_email: rafaew.98@hotmail.com
+  author_url: ''
+  date: '2014-10-05 03:28:18 -0300'
+  date_gmt: '2014-10-05 03:28:18 -0300'
+  content: Realmente muito bom mesmo. Me ajudou bastante em um trabalho escolar!
+- id: 14912
+  author: Notria
+  author_email: notria@gmail.com.br
+  author_url: ''
+  date: '2014-10-20 23:23:47 -0200'
+  date_gmt: '2014-10-20 23:23:47 -0200'
+  content: Excelente tutorial. Simples e descomplicado. Sem complexidade e enrola&ccedil;&otilde;es.
+- id: 16517
+  author: Alan
+  author_email: alanevangelista@gmail.com
+  author_url: ''
+  date: '2014-11-18 02:39:32 -0200'
+  date_gmt: '2014-11-18 02:39:32 -0200'
+  content: Parab&eacute;ns pelo post.
+- id: 17223
+  author: Jo&atilde;o Ivson
+  author_email: joaoivson@entel.eng.br
+  author_url: http://entel.eng.br
+  date: '2014-12-01 13:33:58 -0200'
+  date_gmt: '2014-12-01 13:33:58 -0200'
+  content: "Cara, o seu post foi maravilhoso, s&oacute; que ainda estou com umas pequna
+    duvida. Ao entrar pela Filezilla, n&atilde;o consigo acessar, me envia um erro
+    530, segue abaixo:\r\n\r\n10:32:25\tEstado:\tA resolver o endere&ccedil;o de entelengenharia.no-ip.org\r\n10:32:25\tEstado:\tConectando
+    177.158.153.55:2100...\r\n10:32:25\tEstado:\tConex&atilde;o estabelecida, esperando
+    mensagem de boas-vindas...\r\n10:32:25\tResposta:\t220 FTP server (177.158.153.55)
+    ready.\r\n10:32:25\tComando:\tUSER ftpuser\r\n10:32:25\tResposta:\t331 Password
+    for (ftpuser) please.\r\n10:32:25\tComando:\tPASS *******\r\n10:32:25\tResposta:\t530
+    Error password, username or beyond max login number.\r\n10:32:25\tErro:\tCritical
+    error: N&atilde;o foi poss&iacute;vel conectar ao servidor\r\n\r\nMais o Nome
+    e Usu&aacute;rio esta correto e n&atilde;o tem ningu&eacute;m logado.\r\n\r\nTens
+    uma sa&iacute;da para isto?"
+- id: 22273
+  author: Murilo Camatari
+  author_email: murilo_testa@hotmail.com
+  author_url: ''
+  date: '2015-02-14 02:07:28 -0200'
+  date_gmt: '2015-02-14 02:07:28 -0200'
+  content: "Muito Obrigado! \r\nEsse post me ajudou bastante.\r\nBem explicado o passo
+    a passo, sem erro, SIMPLES!!!\r\n\r\nAbra&ccedil;os!"
+- id: 26399
+  author: Marcelo Lima
+  author_email: marcelolima@netbeluc.com.br
+  author_url: http://www.netbeluc.com.br
+  date: '2015-03-28 18:27:16 -0300'
+  date_gmt: '2015-03-28 18:27:16 -0300'
+  content: "Ol&aacute;, excelente tutorial, tive s&oacute; um problema estou com a
+    mensagem:\r\n500 OOPS: cannot change directory:&#47;var&#47;drogarialivieroftp\r\n\r\nSabe
+    o que pode ser?\r\n\r\nPortas liberadas estou na Amazon e preciso do ftp nesse
+    site mas n&atilde;o consigo configurar\r\no usu&aacute;rio n&atilde;o esta em
+    uma pasta no diretorio var e sim em outro por isso criei um link mas n&atilde;o
+    esta funcionando, pode me ajudar?"
+- id: 27412
+  author: Andr&eacute; Push
+  author_email: andrethyagopr@gmail.com
+  author_url: ''
+  date: '2015-04-07 14:44:08 -0300'
+  date_gmt: '2015-04-07 14:44:08 -0300'
+  content: "Mto bom, cara. Bem did&aacute;tico e objetivo.\r\nCongratulations"
+- id: 28495
+  author: Unknown User
+  author_email: unknownuser@user.com
+  author_url: ''
+  date: '2015-04-21 17:30:13 -0300'
+  date_gmt: '2015-04-21 17:30:13 -0300'
+  content: Estou tentando criar um servidor ftp numa m&aacute;quina rodando fedora
+    21, j&aacute; fiz o download do vsftpd e filezilla, executei os passos acima explicados,
+    mas ainda n&atilde;o entendi como vou acessar esse servidor ftp de fora, pois
+    n&atilde;o utilizo ip fixo, tenho ip din&acirc;mico, por&eacute;m no meu router,
+    est&aacute; habilitado dns din&acirc;mico com NO-IP, no caso eu teria de colocar
+    o nome do host no lugar do ip?
+- id: 30108
+  author: Andr&eacute; Guilherme
+  author_email: m.andreguilherme@gmail.com
+  author_url: http://www.prideti.com
+  date: '2015-05-08 19:34:28 -0300'
+  date_gmt: '2015-05-08 19:34:28 -0300'
+  content: "Excelente!!! Tava apanhando aqui... Parei pra prestar aten&ccedil;&atilde;o
+    no que voc&ecirc; escreveu.\r\n\r\nTudo certo!"
+- id: 32509
+  author: Alexandre Kimura
+  author_email: alexandrekimura@gmail.com
+  author_url: ''
+  date: '2015-06-04 23:17:39 -0300'
+  date_gmt: '2015-06-04 23:17:39 -0300'
+  content: Eu criei o usu&aacute;rio mas ele tem acesso a todos os diret&oacute;rios,
+    como isolar este usu&aacute;rio em um &uacute;nico diret&oacute;rio?
+- id: 32737
+  author: Adriano Tambellini
+  author_email: ajtsc_32@hotmail.com
+  author_url: ''
+  date: '2015-06-06 16:10:34 -0300'
+  date_gmt: '2015-06-06 16:10:34 -0300'
+  content: "&Oacute;timo.... Funcionou parab&eacute;ns pelo post"
+- id: 33145
+  author: MIlena
+  author_email: milena.mendes@hotmail.com.br
+  author_url: ''
+  date: '2015-06-10 14:43:05 -0300'
+  date_gmt: '2015-06-10 14:43:05 -0300'
+  content: fiquei confusa, porq n colocou nome de usuario diferente de diret&oacute;rio
+    e grupo :(
+- id: 33327
+  author: Itanay
+  author_email: itanays@hotmail.com
+  author_url: ''
+  date: '2015-06-12 14:15:56 -0300'
+  date_gmt: '2015-06-12 14:15:56 -0300'
+  content: Parab&eacute;ns! Brother. Pela ajuda.
+- id: 34512
+  author: octavio narvaz
+  author_email: octavio.narvaz@gmail.com
+  author_url: ''
+  date: '2015-06-25 22:11:30 -0300'
+  date_gmt: '2015-06-25 22:11:30 -0300'
+  content: "Muito bom, seu artigo.\r\nObrigado por compartilhar essas informa&ccedil;&otilde;es."
+- id: 38207
+  author: Renato Diniz Marigo
+  author_email: renizgo@yahoo.com.br
+  author_url: http://www.renatomarigo.com.br
+  date: '2015-08-10 12:47:02 -0300'
+  date_gmt: '2015-08-10 12:47:02 -0300'
+  content: "Parab&eacute;ns,\r\n\r\nUm excelente artigo muito bem escrito e explicado."
+- id: 38252
+  author: Maicon Vogt
+  author_email: maiconvogt@outlook.com
+  author_url: ''
+  date: '2015-08-11 12:40:48 -0300'
+  date_gmt: '2015-08-11 12:40:48 -0300'
+  content: "Fala amigo..\r\nTo com o seguinte problema na configura&ccedil;&atilde;o
+    os usu&aacute;rio conseguem ver o diret&oacute;rios acima do deles como resolver
+    isso ???"
+- id: 42154
+  author: Jose Benicio
+  author_email: benicio_70@hotmail.com
+  author_url: ''
+  date: '2015-09-28 23:58:21 -0300'
+  date_gmt: '2015-09-28 23:58:21 -0300'
+  content: Parab&eacute;ns pelo post, excelente!
+- id: 42643
+  author: Elder
+  author_email: elderlucas@ysh.com.br
+  author_url: http://www.ysh.com.br
+  date: '2015-10-05 20:22:07 -0300'
+  date_gmt: '2015-10-05 20:22:07 -0300'
+  content: Excelente, funcionou perfeitamente!
+---
+<p>Fala pessoal, hoje venho ensinar como <strong>instalar e configurar um servidor FTP no Linux<&#47;strong>, mais precisamente no Ubuntu 12.04.</p>
+<p>Dentre as muitas op&ccedil;&otilde;es de programas que temos por ai, irei instalar o <a href="https:&#47;&#47;security.appspot.com&#47;vsftpd.html" rel="external nofollow" target="_blank"><strong>vsftpd<&#47;strong><&#47;a>, que parece ser muito seguro e &eacute; utilizado pela RedHat e OpenSuse al&eacute;m de outras empresas..</p>
+<p><a id="more"></a><a id="more-1746"></a></p>
+<h2>Entendendo o FTP<&#47;h2><br />
+Por padr&atilde;o o protocolo de transfer&ecirc;ncia de arquivos utiliza duas portas para comunica&ccedil;&atilde;o, a 21 para comandos e 20 para transfer&ecirc;ncia dos dados.</p>
+<p>Por&eacute;m nem sempre a porta 20 &eacute; utilizada para transfer&ecirc;ncia de dados, isso depende do modo que ele est&aacute; configurado: ativou ou passivo.</p>
+<h3>Modo Ativo<&#47;h3><br />
+No modo ativo, o cliente conecta-se atrav&eacute;s de uma porta rand&ocirc;mica maior que 1023 (N > 1023) na porta 21 do servidor. Ent&atilde;o o cliente come&ccedil;a ouvir na porta N + 1 e envia para o servidor essa porta, o servidor conecta-se de volta na porta especificada pelo cliente (N + 1) atrav&eacute;s da porta local 20.</p>
+<p>Representa&ccedil;&atilde;o:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_ativo.gif"><img class="alignnone size-full wp-image-1752" title="ftp_ativo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_ativo.gif" alt="" width="318" height="294" &#47;><&#47;a></p>
+<p>O problema com esse modo do FTP &eacute; que o servidor que come&ccedil;a uma conex&atilde;o para transfer&ecirc;ncia de dados, isso pode gerar problemas com o firewall do cliente pois est&aacute; recebendo uma solicita&ccedil;&atilde;o de fora e que geralmente &eacute; bloqueada.</p>
+<h3>Modo Passivo<&#47;h3><br />
+Para resolver essa quest&atilde;o, foi desenvolvido o modo passivo (PASV). Nesse modo, o cliente abre duas portas rand&ocirc;micas maiores do que 1023 (N > 1023 e N+1). A primeira porta conecta-se com a porta 21 do servidor, mas inv&eacute;s de informar o servidor a porta para comunica&ccedil;&atilde;o de dados, o cliente usar&aacute; o comando PASV. Como resultado, o servidor vai abrir uma porta rand&ocirc;mica (ou n&atilde;o, se configurarmos) P e ent&atilde;o enviar&aacute; essa porta P como resposta ao PASV para o cliente. Por fim, o cliente inicia o conex&atilde;o atrav&eacute;s da porta N+1 na porta P do servidor para transfer&ecirc;ncia de dados.</p>
+<p>Representa&ccedil;&atilde;o:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_passivo.gif"><img class="alignnone size-full wp-image-1756" title="ftp_passivo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_passivo.gif" alt="" width="358" height="286" &#47;><&#47;a></p>
+<div class="note">Observe que no modo passivo n&atilde;o utilizamos a porta 20.<&#47;div><br />
+Essa foi uma breve abordagem sobre o funcionamento do FTP e dos modos ativo e passivo, recomendo esse <a href="http:&#47;&#47;slacksite.com&#47;other&#47;ftp.html" rel="external nofollow" target="_blank">excelente link<&#47;a> caso voc&ecirc; queira saber mais.</p>
+<h2>Instala&ccedil;&atilde;o e Configura&ccedil;&atilde;o<&#47;h2><br />
+Agora que j&aacute; temos uma base, vamos &agrave; instala&ccedil;&atilde;o.</p>
+<p>Primeiro, atualize a lista de pacotes e depois instale o vsftpd:<br />
+[code language="bash"]sudo apt-get update[&#47;code]<br />
+[code language="bash"]sudo apt-get install vsftpd[&#47;code]<br />
+Ap&oacute;s a instala&ccedil;&atilde;o, podemos testar acessando o servidor FTP localmente como an&ocirc;nimo (usu&aacute;rio sem senha), basta rodarmos o comando <code>ftp localhost<&#47;code> e digitarmos "anonymous" no usu&aacute;rio e deixar a senha vazia.<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp-anonimo.png"><img class="alignnone size-full wp-image-1768" title="ftp-anonimo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp-anonimo.png" alt="" width="461" height="254" &#47;><&#47;a></p>
+<div class="note">Veja que estamos recebendo a mensagem "Consider usign PASV" porque estamos no modo ativo.<&#47;div><br />
+Com nosso servidor instalado e funcionando, vamos alterar algumas configura&ccedil;&otilde;es no arquivo que se encontra geralmente em <code>&#47;etc&#47;vsftpd.conf<&#47;code>.</p>
+<p>Vamos come&ccedil;ar desabilitando acesso an&ocirc;nimo de nosso servidor. Abra o arquivo de configura&ccedil;&atilde;o para editar e defina <code>anonymous_enable=NO<&#47;code>.<br />
+[code language="bash"]sudo vim &#47;etc&#47;vsftpd.conf[&#47;code]<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;removendo-acesso-anonimo.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;removendo-acesso-anonimo.png" alt="" title="removendo-acesso-anonimo" width="695" class="alignnone size-full wp-image-1772" &#47;><&#47;a><br />
+Se tentarmos acessar o servidor agora n&atilde;o conseguiremos pois estamos sem nenhuma forma de autentica&ccedil;&atilde;o.</p>
+<div class="alert">Toda vez que alterarmos o arquivo de configura&ccedil;&atilde;o precisamos reiniciar o servidor FTP, use o comando <code> sudo service vsftpd restart<&#47;code> para isso.<&#47;div><br />
+Precisamos de usu&aacute;rio para acessar nosso servidor, vamos dizer ao vsftpd para permitir login com usu&aacute;rios locais (do sistema operacional). Abra o arquivo de configura&ccedil;&atilde;o e descomente a linha <code>local_enable=YES<&#47;code>.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permitir-usuarios-locais-no-ftp.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permitir-usuarios-locais-no-ftp.png" alt="" title="permitir-usuarios-locais-no-ftp" width="434" class="alignnone size-full wp-image-1780" &#47;><&#47;a></p>
+<p>Uma boa pr&aacute;tica &eacute; criar um grupo para usu&aacute;rios de FTP no Linux, assim facilita a administra&ccedil;&atilde;o de permiss&otilde;es para esses indiv&iacute;duos. Execute o comando abaixo para criar um grupo chamado "ftpusers".<br />
+[code language="bash"]sudo groupadd ftpusers[&#47;code]<br />
+J&aacute; temos o grupo, vamos criar um usu&aacute;rio chamado "ftpuser", adicionar ele no grupo "ftpusers" e definir uma senha:<br />
+[code language="bash"]useradd -g ftpusers ftpuser[&#47;code]<br />
+[code language="bash"]passwd ftpuser[&#47;code]<br />
+Se tentarmos acessar nosso servidor FTP agora, veremos que precisamos criar uma pasta com o mesmo nome do usu&aacute;rio dentro de <code>&#47;home<&#47;code>. Vamos criar esse diret&oacute;rio do usu&aacute;rio, mudar o owner para "ftpuser" e o grupo para "ftpusers". Tamb&eacute;m precisamos remover o acesso de escrita desse diret&oacute;rio, pois o vsftpd n&atilde;o permite que a pasta do usu&aacute;rio (somente ela, os subdiret&oacute;rios podem ter) tenha acesso de escrita:<br />
+[code language="bash"]cd &#47;home[&#47;code]<br />
+[code language="bash"]sudo mkdir ftpuser[&#47;code]<br />
+[code language="bash"]sudo chown ftpuser:ftpusers ftpuser[&#47;code]<br />
+[code language="bash"]sudo chmod a-w ftpuser[&#47;code]<br />
+Ap&oacute;s as opera&ccedil;&otilde;es acimas, devemos ter isso:<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permissoes-do-diretorio-do-usuario-ftp.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permissoes-do-diretorio-do-usuario-ftp.png" alt="" title="permissoes-do-diretorio-do-usuario-ftp" width="547" class="alignnone size-full wp-image-1789" &#47;><&#47;a></p>
+<p>Como o diret&oacute;rio do usu&aacute;rio n&atilde;o tem acesso de escrita, iremos criar um diret&oacute;rio chamado <code>public<&#47;code> dentro de <code>&#47;home&#47;ftpuser<&#47;code> onde o usu&aacute;rio poder&aacute; armazenar seus arquivos e depois mudaremos o owner para o usu&aacute;rio e seu grupo (para que ele consiga ter acesso total)<br />
+[code language="bash"]sudo mkdir &#47;home&#47;ftpuser&#47;public[&#47;code]<br />
+[code language="bash"]sudo chown ftpuser:ftpusers &#47;home&#47;ftpuser&#47;public[&#47;code]<br />
+A partir de agora j&aacute; conseguimos acessar o servidor FTP com o usu&aacute;rio criado, s&oacute; que tem algo de errado ai, o usu&aacute;rio consegue acessar qualquer diret&oacute;rio do sistema a partir do diret&oacute;rio dele, basta executar <code>cd &#47;<&#47;code> para acessar a raiz do Linux por exemplo.. </p>
+<p>Descomente a linha <code>chroot_local_user=YES<&#47;code> para enjaular o usu&aacute;rio apenas no diret&oacute;rio dele, assim ele s&oacute; poder&aacute; acessar subdiret&oacute;rios de sua pasta.<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;enjaular-usuario-no-seu-diretorio.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;enjaular-usuario-no-seu-diretorio.png" alt="" title="enjaular-usuario-no-seu-diretorio" width="673" class="alignnone size-full wp-image-1791" &#47;><&#47;a></p>
+<p>At&eacute; agora est&aacute; tudo certo, por&eacute;m ainda estamos utilizando o modo ativo, isso pode nos gerar problemas.. Vamos ativar o modo passivo, para isso precisamos definir <code>pasv_enable=YES<&#47;code> no arquivo de configura&ccedil;&atilde;o.<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;habilitando-ftp-passivo.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;habilitando-ftp-passivo.png" alt="" title="habilitando-ftp-passivo" width="449" class="alignnone size-full wp-image-1801" &#47;><&#47;a></p>
+<p>Nesse servidor n&atilde;o foi necess&aacute;rio, mas em alguns pode ser necess&aacute;rio definir o ip do servidor FTP no qual o cliente deve fazer a solicita&ccedil;&atilde;o, se for seu caso, basta definir <code>pasv_address=XXX.XXX.XXX.XXX<&#47;code> (troque XXX.XXX.XXX.XXX pelo ip do seu servidor FTP) no arquivo de configura&ccedil;&atilde;o.</p>
+<p>Pode-se tamb&eacute;m definir uma faixa de portas na qual o servidor FTP ir&aacute; usar para transferir arquivos, basta definir <code>pasv_min_port=9040<&#47;code> e <code>pasv_max_port=9050<&#47;code> no arquivo de configura&ccedil;&atilde;o, nesse caso estariamos liberando as portas 9040 at&eacute; 9050 para transfer&ecirc;ncia no modo passivo.</p>
+<p>Se voc&ecirc; desejar pode mudar onde ser&aacute; o diret&oacute;rio inicial do usu&aacute;rio FTP (o padr&atilde;o &eacute; <code>&#47;home&#47;nome_usuario<&#47;code>), basta definir <code>local_root=&#47;var&#47;$USER<&#47;code> no arquivo de configura&ccedil;&atilde;o, caso voc&ecirc; utilize a vari&aacute;vel <code>$USER<&#47;code> do sistema no caminho (como nesse exemplo), defina tamb&eacute;m a linha <code>user_sub_token=$USER<&#47;code> para o vsftpd entender como uma vari&aacute;vel. No exemplo dado, ao acessarmos o servidor FTP com o usu&aacute;rio "ftpuser" o vsftpd estaria procurando o diret&oacute;rio <code>&#47;var&#47;ftpuser<&#47;code>. </p>
+<div class="alert">N&atilde;o esque&ccedil;a que o diret&oacute;rio inicial deve ser do usu&aacute;rio e grupo desejados e a raiz n&atilde;o pode ter permiss&atilde;o de escrita.<&#47;div></p>
+<p>Para finalizar, muitas vezes podemos precisar que o diret&oacute;rio inicial do servidor FTP aponte para um outro diret&oacute;rio que n&atilde;o seja um subdiret&oacute;rio (que esteja fora da home), a melhor forma para fazer isso seria montar o diret&oacute;rio desejado dentro da pasta inicial do usu&aacute;rio. Temos aqui um exemplo: <code>sudo mount --bind &#47;var&#47;webapps&#47;meu-blog &#47;home&#47;usuario_ftp&#47;blog<&#47;code>, assim cada vez que acessarmos o diret&oacute;rio "blog" do usu&aacute;rio estaremos na verdade acessando o "meu-blog" dentro de "var".</p>
+<p>Por hoje &eacute; s&oacute;, n&atilde;o esque&ccedil;a de deixar sua opini&atilde;o nos coment&aacute;rios.</p>
+<p>At&eacute; mais.</p>

@@ -1,0 +1,335 @@
+---
+layout: post
+status: publish
+published: true
+title: Otimizando Performance com Compacta&ccedil;&atilde;o Gzip&#47;Deflate
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, beleza?\r\n\r\nHoje estou aqui para falar de um assunto que
+  pode n&atilde;o ser muito conhecido por alguns, que &eacute; a <strong>compacta&ccedil;&atilde;o
+  gzip&#47;deflate<&#47;strong>.\r\n\r\nEssa t&eacute;cnica, nada mais &eacute; do
+  que a compacta&ccedil;&atilde;o dos arquivos solicitados pelo navegador (browser)
+  antes deles serem enviados pelo servidor.\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;22&#47;otimizando-performance-com-compactacao-gzip-deflate&#47;\"><img
+  class=\"alignnone  wp-image-490\" title=\"gzip-deflate-compression\" src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;gzip-deflate-compression.jpg\"
+  alt=\"gzip-deflate-compression\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n<h2>"
+wordpress_id: 479
+wordpress_url: http://blog.glaucocustodio.com/?p=479
+date: '2012-09-22 15:54:49 -0300'
+date_gmt: '2012-09-22 15:54:49 -0300'
+categories:
+- Servidor
+tags:
+- apache
+- servidor
+- gzip
+comments:
+- id: 37
+  author: BrunoArruda
+  author_email: contato@brunoarruda.com.br
+  author_url: http://www.brunoarruda.com.br/
+  date: '2012-09-25 16:33:30 -0300'
+  date_gmt: '2012-09-25 16:33:30 -0300'
+  content: "Parab&eacute;ns Glauco, me auxiliou bastante na otimiza&ccedil;&atilde;o
+    do meu site, excelente artigo, muito bem explicado continue com essa did&aacute;tica
+    que esta muito boa.\r\nParab&eacute;ns novamente e sucesso!"
+- id: 43
+  author: yan
+  author_email: yanklovinsk@gmail.com
+  author_url: http://www.yanklovinsk.com.br
+  date: '2012-10-03 17:56:40 -0300'
+  date_gmt: '2012-10-03 17:56:40 -0300'
+  content: "Tudo legal quando pensamos em wordpress. Entretanto tenho um blog no blogger,
+    ent&atilde;o como utilizar o gzip nele, al&eacute;m disso tenho dois arquivos
+    externos .js e .css onde est&atilde;o todos os scripts s&oacute; que o pagespeed
+    pede para usar o gzip e n&atilde;o sei como fazer. Glauco pode me ajudar. Agrade&ccedil;o
+    antecipadamente.\r\n\r\nYan"
+- id: 129
+  author: Flowck II
+  author_email: flowck96@hotmail.com
+  author_url: http://webvisao.wordpress.com
+  date: '2012-12-01 21:45:07 -0200'
+  date_gmt: '2012-12-01 21:45:07 -0200'
+  content: Gostei muito do post, muito claro e pratico mas voc&ecirc; apenas mostrou
+    como ativar o modulo deflate no servidor local, e caso este modulo ou o gzip n&atilde;o
+    estiver ativado no host em que eu hospedei o meu site?
+- id: 251
+  author: Paulo Benitez
+  author_email: paulo.bntz@gmail.com
+  author_url: ''
+  date: '2012-12-13 14:19:22 -0200'
+  date_gmt: '2012-12-13 14:19:22 -0200'
+  content: Muito bem explicado. &Oacute;timo artigo.
+- id: 322
+  author: Alexandre
+  author_email: editor@androidcabecao.com.br
+  author_url: http://androidcabecao.com.br/
+  date: '2013-01-23 00:27:01 -0200'
+  date_gmt: '2013-01-23 00:27:01 -0200'
+  content: "Opa amigo! Eu tenho um problema no wp. &Eacute; o seguinte, quando eu
+    fa&ccedil;o upload de imagens para inserir em artigos, o wp cria uma p&aacute;gina
+    para essa imagem, como se fosse uma postagem. Se algu&eacute;m clica na imagem
+    dentro do artigo original para o qual a imagem foi uploadada, ser&aacute; direcionado
+    para uma postagem com a imagem e informa&ccedil;&otilde;es, como descri&ccedil;&atilde;o,
+    etc, ect.\r\n\r\nUm exemplo &eacute; o artigo http:&#47;&#47;androidcabecao.com.br&#47;ubuntu-phone-os-sera-que-encaixa&#47;\r\n\r\nSe
+    algu&eacute;m clicar na imagem com a foto do artigo, uma nova p&aacute;gina &eacute;
+    aberta com a imagem e a descri&ccedil;&atilde;o.\r\n\r\nEu gostaria de saber como
+    removo isso. Porque logo quando eu comecei com o WP, se eu clicasse na imagem,
+    abria apenas a imagem. E queria q isso voltasse. Obrigado"
+- id: 676
+  author: Willian Abreu
+  author_email: willian.abreu2726@gmail.com
+  author_url: ''
+  date: '2013-06-04 14:10:05 -0300'
+  date_gmt: '2013-06-04 14:10:05 -0300'
+  content: Parab&eacute;ns pela explica&ccedil;&atilde;o!
+- id: 735
+  author: Thiago Nunes
+  author_email: thiagonunes30@gmail.com
+  author_url: ''
+  date: '2013-06-20 16:04:31 -0300'
+  date_gmt: '2013-06-20 16:04:31 -0300'
+  content: "&Oacute;tima explica&ccedil;&atilde;o, vai me ajudar em um trabalho de
+    otimiza&ccedil;&atilde;o que estou fazendo para um portal.\r\n\r\nObrigado!"
+- id: 1118
+  author: gadarf
+  author_email: gadarf@mmosgame.com
+  author_url: http://mmosgame.com/
+  date: '2013-08-13 12:05:08 -0300'
+  date_gmt: '2013-08-13 12:05:08 -0300'
+  content: Vou testar, espero que minha hospedagem tenha isso ativado.
+- id: 1170
+  author: Rodrigo
+  author_email: rodrigo@immitec.com
+  author_url: http://www.ImmiFlex.com
+  date: '2013-08-27 19:24:35 -0300'
+  date_gmt: '2013-08-27 19:24:35 -0300'
+  content: "Eu preciso usar compress&atilde;o em minhas p&aacute;ginas&#47;imagens&#47;scripts,
+    mas meu hosting me informou que o gzip e deflate n&atilde;o est&atilde;o dispon&iacute;veis
+    para mim porque uso servidor compartilhado e me recomendou usar ZLib. ZLib est&aacute;
+    Ativado e On no meu servidor. E a documenta&ccedil;&atilde;o php est&aacute; dizendo
+    que eu preciso adicionar \"Accept-Encoding: gzip\" no cabe&ccedil;alho do HTTP,
+    mas n&atilde;o tenho ideia de como fazer isso e n&atilde;o estou encontrando na
+    internet.\r\n\r\nPoderiam me ajudar?"
+- id: 1335
+  author: Gabriel Martins
+  author_email: gabrirock1@hotmail.com
+  author_url: http://www.criarsitewix.com/
+  date: '2013-10-06 22:39:31 -0300'
+  date_gmt: '2013-10-06 22:39:31 -0300'
+  content: "Aqui ficou dando erro 500 internal servir error...n&atilde;o funcoinaou.\r\n\r\nAbra&ccedil;o!"
+- id: 1610
+  author: romulo paulo
+  author_email: rmulopaulo@hotmail.com
+  author_url: http://www.rclique.com.br
+  date: '2014-01-30 03:17:59 -0200'
+  date_gmt: '2014-01-30 03:17:59 -0200'
+  content: muito bom vou fazer no meu site, gostei
+- id: 1951
+  author: Dinilson Mar&ccedil;al
+  author_email: dinilsonmarcal@hotmail.com
+  author_url: http://mapadecursosonline.com/
+  date: '2014-04-14 21:49:58 -0300'
+  date_gmt: '2014-04-14 21:49:58 -0300'
+  content: "Ol&aacute; Glauco Cust&oacute;dio!\r\n\r\nO seu artigo foi muito &uacute;til.
+    Obrigado pela dica!\r\n\r\nPaz e ben&ccedil;&atilde;os,\r\n\r\n\r\nDinilson Mar&ccedil;al"
+- id: 1952
+  author: Dinilson Mar&ccedil;al
+  author_email: dinilsonmarcal@hotmail.com
+  author_url: http://mapadecursosonline.com/
+  date: '2014-04-14 22:18:24 -0300'
+  date_gmt: '2014-04-14 22:18:24 -0300'
+  content: "Ol&aacute; Glauco Cust&oacute;dio!\r\n\r\nN&atilde;o consegui realizar
+    esta etapa \"vamos colocar em pr&aacute;tica ativando ela no servidor web Apache.\".
+    Caso possa fornecer mais detalhes sobre isso eu agrade&ccedil;o. \r\n\r\nQue as
+    melhores coisas aconte&ccedil;am na sua vida!\r\n\r\nDinilson Mar&ccedil;al"
+- id: 2287
+  author: Assistencia Importados
+  author_email: assistenciaimportados@gmail.com
+  author_url: http://www.assistenciaimportados.com.br/
+  date: '2014-05-14 20:06:45 -0300'
+  date_gmt: '2014-05-14 20:06:45 -0300'
+  content: Muito bem explicado, &oacute;timo artigo.
+- id: 2311
+  author: Assistencia Tecnica Bosch
+  author_email: boschassistenciatecnica@gmail.com
+  author_url: http://www.boschassistenciatecnica.com/
+  date: '2014-05-20 19:40:59 -0300'
+  date_gmt: '2014-05-20 19:40:59 -0300'
+  content: Muito bem explicado
+- id: 8194
+  author: Deuzebra na Web &raquo; Otimizando Performance com Compacta&ccedil;&atilde;o
+    Gzip&#47;Deflate
+  author_email: ''
+  author_url: http://www.deuzebranaweb.com.br/otimizando-performance-com-compactacao-gzipdeflate/
+  date: '2014-09-09 21:21:28 -0300'
+  date_gmt: '2014-09-09 21:21:28 -0300'
+  content: "[...] Otimizando Performance com Compacta&ccedil;&atilde;o Gzip&#47;Deflate
+    \   Fala pessoal, beleza? [...]"
+- id: 11732
+  author: Eloah Cristina
+  author_email: contato@marolacomcarambola.com.br
+  author_url: http://www.conexaofotografica.com.br
+  date: '2014-10-03 03:57:36 -0300'
+  date_gmt: '2014-10-03 03:57:36 -0300'
+  content: "Eu coloquei esse trecho no meu arquivo httacess.. por&eacute;m ele deixa
+    o site com o recado \"Erro interno do Servidor!\"\r\nSabe me auxiliar o que pode
+    estar errado?\r\nAbra&ccedil;os,"
+- id: 11733
+  author: Eloah Cristina
+  author_email: contato@marolacomcarambola.com.br
+  author_url: http://www.conexaofotografica.com.br
+  date: '2014-10-03 04:01:53 -0300'
+  date_gmt: '2014-10-03 04:01:53 -0300'
+  content: "Ah, na verdade o que d&aacute; erro &eacute; o seguinte trecho\r\n\r\n\"#
+    Netscape 4.x has some problems...\r\nBrowserMatch ^Mozilla&#47;4 gzip-only-text&#47;html\r\n\r\n#
+    Netscape 4.06-4.08 have some more problems\r\nBrowserMatch ^Mozilla&#47;4.0[678]
+    no-gzip\r\n\r\n# MSIE masquerades as Netscape, but it is fine\r\n# BrowserMatch
+    \bMSIE !no-gzip !gzip-only-text&#47;html\r\n\r\n# NOTE: Due to a bug in mod_setenvif
+    up to Apache 2.0.48\r\n# the above regex won't work. You can use the following\r\n#
+    workaround to get the desired effect:\r\nBrowserMatch \bMSI[E] !no-gzip !gzip-only-text&#47;html\r\n\r\n#
+    Don't compress images\r\nSetEnvIfNoCase Request_URI \r\n.(?:gif|jpe?g|png)$ no-gzip
+    dont-vary\"\r\n\r\nSe eu n&atilde;o usar, tudo bem?"
+- id: 20092
+  author: Gustavo Matias
+  author_email: ghmmatias@gmail.com
+  author_url: http://www.ghmm.com.br
+  date: '2015-01-16 17:48:55 -0200'
+  date_gmt: '2015-01-16 17:48:55 -0200'
+  content: Excelente! Parab&eacute;ns e obrigado pela explica&ccedil;&atilde;o clara.
+- id: 21041
+  author: Victor Hugo Santana
+  author_email: arquiteto.victorhugo@gmail.com
+  author_url: http://rendaconstante.com
+  date: '2015-01-27 00:35:50 -0200'
+  date_gmt: '2015-01-27 00:35:50 -0200'
+  content: "&Oacute;tima explica&ccedil;&atilde;o!"
+- id: 31554
+  author: Jonny Ken
+  author_email: web@jonnyken.com
+  author_url: http://migre.me
+  date: '2015-05-26 23:41:49 -0300'
+  date_gmt: '2015-05-26 23:41:49 -0300'
+  content: "&Oacute;timo artigo. Mas importante lembrar que a maioria de arquivos
+    de imagem j&aacute; s&atilde;o compactados. Ent&atilde;o se o pesado do servidor
+    &eacute; a transmiss&atilde;o desses dados, habilitar a compacta&ccedil;&atilde;o
+    no Apache pode onerar o processamento do servidor e o ganho em banda ser&aacute;
+    muito baixo. Ai cabe pesquisar se vale a pena :)"
+- id: 31555
+  author: Jonny Ken
+  author_email: web@jonnyken.com
+  author_url: http://migre.me
+  date: '2015-05-26 23:47:10 -0300'
+  date_gmt: '2015-05-26 23:47:10 -0300'
+  content: Acabei de ver que no arquivo est&aacute; mostrando isso, mas mesmo assim
+    fica aqui o refor&ccedil;o :p
+- id: 36202
+  author: Cleiton
+  author_email: cleitonzahn.info@gmail.com
+  author_url: http://hospedebem.info/
+  date: '2015-07-16 01:36:10 -0300'
+  date_gmt: '2015-07-16 01:36:10 -0300'
+  content: "Muito bom! Me ajudou muito, valeu!!\r\nS&oacute; tive que descartar a
+    parte SetEnvIfNoCase Request_URI \r\n.(?:gif|jpe?g|png)$ no-gzip dont-vary, porque
+    n&atilde;o funcionou no servidor onde hospedo. Mas o resto, funcionou bem."
+- id: 40072
+  author: Lucas
+  author_email: capanga157@gmail.com
+  author_url: ''
+  date: '2015-09-04 13:14:10 -0300'
+  date_gmt: '2015-09-04 13:14:10 -0300'
+  content: "&Oacute;timo, vai me ajudar e muito na otimiza&ccedil;&atilde;o do meu
+    site.\r\nObrigado."
+- id: 42251
+  author: leandro
+  author_email: filmesclassicosraros@gmail.com
+  author_url: http://filmesclassicosraros.com.br/
+  date: '2015-09-30 19:34:47 -0300'
+  date_gmt: '2015-09-30 19:34:47 -0300'
+  content: otimas explica&ccedil;ao, ajudou muito...
+- id: 43502
+  author: Fabio
+  author_email: fabiomaster0@gmail.com
+  author_url: http://planetalar.com.br
+  date: '2015-10-15 21:43:58 -0300'
+  date_gmt: '2015-10-15 21:43:58 -0300'
+  content: "Oi Glauco,\r\nMuito bom seu artigo.\r\nNo caso da hospedagem ser em um
+    servidor contratado como Locaweb ou KingHost temos que solicitar ao suporte t&eacute;cnico
+    a libera&ccedil;&atilde;o dos m&oacute;dulos mod_deflate e mod_gzip. &Eacute;
+    isso?\r\nGrande abra&ccedil;o."
+---
+<p>Fala pessoal, beleza?</p>
+<p>Hoje estou aqui para falar de um assunto que pode n&atilde;o ser muito conhecido por alguns, que &eacute; a <strong>compacta&ccedil;&atilde;o gzip&#47;deflate<&#47;strong>.</p>
+<p>Essa t&eacute;cnica, nada mais &eacute; do que a compacta&ccedil;&atilde;o dos arquivos solicitados pelo navegador (browser) antes deles serem enviados pelo servidor.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;22&#47;otimizando-performance-com-compactacao-gzip-deflate&#47;"><img class="alignnone  wp-image-490" title="gzip-deflate-compression" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;gzip-deflate-compression.jpg" alt="gzip-deflate-compression" width="580" height="240" &#47;><&#47;a></p>
+<h2><a id="more"></a><a id="more-479"></a>Fluxo de Requisi&ccedil;&atilde;o e Resposta HTTP<&#47;h2><br />
+Primeiro vou come&ccedil;ar explicando como funciona quando fazemos uma requisi&ccedil;&atilde;o sem utilizar essa compacta&ccedil;&atilde;o, veja a imagem abaixo.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP.gif"><img class="alignnone size-full wp-image-482" title="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP.gif" alt="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP" width="550" height="250" &#47;><&#47;a></p>
+<p>Vamos supor que temos um arquivo CSS em nosso site (http:&#47;&#47;site.com.br), atrav&eacute;s do HTML abaixo:</p>
+<p>[code language="html"]
+<link rel="stylesheet" href="estilo.css" type="text&#47;css"&#47;>[&#47;code]</p>
+<ol>
+<li>navegador solicita o arquivo <code>estilo.css<&#47;code> ao servidor<&#47;li>
+<li>servidor encontra o arquivo e l&ecirc;<&#47;li>
+<li>servidor retorna o arquivo com c&oacute;digo 200 (OK)<&#47;li>
+<li>navegador exibe o resultado da p&aacute;gina aplicada com o estilo CSS<&#47;li><br />
+<&#47;ol></p>
+<h2>Otimizando<&#47;h2><br />
+Acima temos o fluxo de uma requisi&ccedil;&atilde;o HTTP, funciona muito bem, mas podemos otimizar usando compacta&ccedil;&atilde;o, veja.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao.gif"><img class="alignnone size-full wp-image-484" title="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao.gif" alt="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao" width="560" height="250" &#47;><&#47;a></p>
+<ol>
+<li>navegador solicita o arquivo <code>estilo.css<&#47;code> dizendo que aceita compacta&ccedil;&atilde;o gzip<&#47;li>
+<li>servidor encontra o arquivo e <span style="text-decoration: underline;">compacta<&#47;span> (aqui est&aacute; a "m&aacute;gica")<&#47;li>
+<li>servidor responde com o arquivo compactado<&#47;li>
+<li>navegador descompacta, e exibe a p&aacute;gina com estilo aplicado<&#47;li><br />
+<&#47;ol><br />
+Bem simples n&eacute;? Agora inv&eacute;s de fazermos download de um arquivo de 70KB, baixamos apenas 5KB pois usamos a compress&atilde;o. &Eacute; uma economia incr&iacute;vel..</p>
+<h2>Ativando compress&atilde;o no Apache<&#47;h2><br />
+Como j&aacute; sabemos o que &eacute; a compacta&ccedil;&atilde;o e seu benef&iacute;cio, vamos colocar em pr&aacute;tica ativando ela no servidor web Apache.</p>
+<p>O Apache tem duas formas de compress&atilde;o, <code>mod_deflate<&#47;code> e <code>mod_gzip<&#47;code> (ambos s&atilde;o m&oacute;dulos), irei usar <code>mod_deflate<&#47;code> por ser mais simples e mais utilizado, mas fica a seu crit&eacute;rio. Para isso precisamos ativar o m&oacute;dulo, caso voc&ecirc; esteja no Ubuntu, execute o comando <code>sudo a2enmod deflate<&#47;code> e pronto, se voc&ecirc; usa Windows com WAMP, basta iniciar o gerenciador do <code>WAMP -> Apache -> M&oacute;dulos -> mod_deflate<&#47;code>, pronto! N&atilde;o esque&ccedil;a de reiniciar o Apache ap&oacute;s a ativa&ccedil;&atilde;o..</p>
+<p>Vou usar meu site (<a title="http:&#47;&#47;glaucocustodio.com" href="http:&#47;&#47;glaucocustodio.com" target="_blank">http:&#47;&#47;glaucocustodio.com<&#47;a>) como exemplo pr&aacute;tico para ativar a compacta&ccedil;&atilde;o. Abaixo temos uma imagem que mostra uma requisi&ccedil;&atilde;o ao arquivo <code>jquery.js<&#47;code> sendo feita sem compacta&ccedil;&atilde;o gzip&#47;deflate, temos que fazer download de 91.7KB.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o.gif"><img class="alignnone size-full wp-image-488" title="analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o.gif" alt="analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o" width="862" height="411" &#47;><&#47;a></p>
+<p>Como j&aacute; sei que no servidor de meu site o <code>mod_deflate<&#47;code> j&aacute; est&aacute; ativo, adiciono o c&oacute;digo abaixo no arquivo <code>.htaccess<&#47;code> na raiz do meu site para ativar a compacta&ccedil;&atilde;o.</p>
+<p>[code language="apache"]<br />
+<IfModule mod_deflate.c><br />
+# Insert filter<br />
+AddOutputFilterByType DEFLATE text&#47;plain<br />
+AddOutputFilterByType DEFLATE text&#47;xml<br />
+AddOutputFilterByType DEFLATE application&#47;xhtml+xml<br />
+AddOutputFilterByType DEFLATE text&#47;css<br />
+AddOutputFilterByType DEFLATE application&#47;xml<br />
+AddOutputFilterByType DEFLATE image&#47;svg+xml<br />
+AddOutputFilterByType DEFLATE application&#47;rss+xml<br />
+AddOutputFilterByType DEFLATE application&#47;atom_xml<br />
+AddOutputFilterByType DEFLATE application&#47;x-javascript<br />
+AddOutputFilterByType DEFLATE application&#47;javascript<br />
+AddOutputFilterByType DEFLATE application&#47;x-httpd-php<br />
+AddOutputFilterByType DEFLATE application&#47;x-httpd-fastphp<br />
+AddOutputFilterByType DEFLATE application&#47;x-httpd-eruby<br />
+AddOutputFilterByType DEFLATE text&#47;html</p>
+<p>SetOutputFilter DEFLATE</p>
+<p># Netscape 4.x has some problems...<br />
+BrowserMatch ^Mozilla&#47;4 gzip-only-text&#47;html</p>
+<p># Netscape 4.06-4.08 have some more problems<br />
+BrowserMatch ^Mozilla&#47;4\.0[678] no-gzip</p>
+<p># MSIE masquerades as Netscape, but it is fine<br />
+# BrowserMatch \bMSIE !no-gzip !gzip-only-text&#47;html</p>
+<p># NOTE: Due to a bug in mod_setenvif up to Apache 2.0.48<br />
+# the above regex won't work. You can use the following<br />
+# workaround to get the desired effect:<br />
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text&#47;html</p>
+<p># Don't compress images<br />
+SetEnvIfNoCase Request_URI \<br />
+\.(?:gif|jpe?g|png)$ no-gzip dont-vary<br />
+<&#47;IfModule><br />
+[&#47;code]</p>
+<p>Esse c&oacute;digo verifica se o m&oacute;dulo deflate est&aacute; ativo (<code>IfModule<&#47;code>), define compacta&ccedil;&atilde;o deflate por tipos atrav&eacute;s das linhas <code>AddOutputFilterByType..<&#47;code>, garante que navegadores antigos (como Netscape 1.0) n&atilde;o ter&atilde;o compacta&ccedil;&atilde;o (pois n&atilde;o suportam a descompress&atilde;o) e evita que imagens sejam comprimidas pois a maioria delas j&aacute; s&atilde;o e n&atilde;o tem necessidade (assim como v&iacute;deos e arquivos de &aacute;udios).</p>
+<p>Ap&oacute;s subir o arquivo no servidor e analisar as requisi&ccedil;&otilde;es, veja o que temos.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o.gif"><img class="alignnone size-full wp-image-487" title="analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o.gif" alt="analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o" width="873" height="415" &#47;><&#47;a></p>
+<div class="note">N&atilde;o esque&ccedil;a de limpar o cache do navegador para ver o resultado.<&#47;div></p>
+<p>Observe a linha <code>Content-Encoding<&#47;code> e veja que a compacta&ccedil;&atilde;o <code>deflate&#47;gzip<&#47;code> est&aacute; ativa agora e o mais impressionante &eacute; o tamanho do arquivo baixado, apenas 32.4KB, ou seja, reduzimos 2&#47;3 do peso do arquivo apenas com essa t&eacute;cnica..</p>
+<p>Espero que tenha ajudado e sido claro nesse tutorial.. O que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais!</p>

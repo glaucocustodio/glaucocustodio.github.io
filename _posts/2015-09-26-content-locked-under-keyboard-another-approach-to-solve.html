@@ -1,0 +1,103 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Content Locked Under Keyboard: Another Approach To Solve'
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3468
+wordpress_url: http://blog.glaucocustodio.com/?p=3468
+date: '2015-09-26 13:10:16 -0300'
+date_gmt: '2015-09-26 13:10:16 -0300'
+categories:
+- Swift
+tags:
+- ios
+comments: []
+---
+If you are an iOS developer very likely you faced this problem: when user clicks on some field to type, the keyboard pops up and covers the text field.
+
+Recently I had this problem as well, looking for solution I found <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html#//apple_ref/doc/uid/TP40009542-CH5-SW7" rel="external nofollow" target="_blank">this link from Apple's iOS Developer Library</a>.
+
+Despite the good source, I didn't like having to place my views (like <code>UITextField</code>) inside a <code>UIScrollView</code> to solve this matter.
+<h2>Another Approach To Solve</h2>
+I found a simpler way, did some changes and then wrapped it in a <code>UIViewController</code>:
+
+{% highlight swift %}
+import UIKit
+
+class UncoveredContentViewController: UIViewController {
+  var activeField: UIView?
+  var changedY = false
+  var keyboardHeight: CGFloat = 300
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+  }
+  
+  func keyboardWillShow(sender: NSNotification) {
+    let kbSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+    
+    keyboardHeight = kbSize!.height
+    var aRect = self.view.frame;
+    aRect.size.height = aRect.size.height - kbSize!.height - CGFloat(20);
+
+    if activeField != nil {
+      if (!CGRectContainsPoint(aRect, activeField!.frame.origin)) {
+        changedY = true
+        self.view.frame.origin.y -= keyboardHeight
+      }
+    }
+  }
+  
+  func keyboardWillHide(sender: NSNotification) {
+    if changedY {
+      self.view.frame.origin.y += keyboardHeight
+    }
+    changedY = false
+  }
+  
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self);
+  }
+  
+  @IBAction func textFieldEditingDidBegin(sender: UITextField){
+    //println("did begin")
+    activeField = sender
+  }
+  
+  @IBAction func textFieldEditingDidEnd(sender: UITextField) {
+    //println("did end")
+    activeField = nil
+  }
+}
+{% endhighlight %}
+
+There is no secret here. We observe <code>UIKeyboardWillShowNotification</code> and <code>UIKeyboardWillHideNotification</code> calling its respectives bound methods when the events are fired.
+
+The handler methods then scrolls up the parent view according with keyboard's height.
+
+In the controllers you need this solution, just subclass <code>UncoveredContentViewController</code>:
+
+{% highlight swift %}
+import UIKit
+
+class ViewController: UncoveredContentViewController {
+}
+{% endhighlight %}
+
+At last, don't forget to bind <code>Editing Did Begin</code> and <code>Editing Did End</code> to <code>textFieldEditingDidBegin</code> and <code>textFieldEditingDidEnd</code> respectively for each <code>UITextField</code> you need to fix.
+<p>
+  <a href="{{ site.baseurl }}/assets/uitextfield-sent-events.png"><img class="alignnone size-full wp-image-3482" title="uitextfield-sent-events" src="{{ site.baseurl }}/assets/uitextfield-sent-events.png" alt="" /></a>
+</p>
+
+That's all. See you.

@@ -1,0 +1,78 @@
+---
+layout: post
+status: publish
+published: true
+title: Montar Parti&ccedil;&atilde;o NTFS ao Iniciar Ubuntu
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, beleza?\r\n\r\nEstou aqui para falar de Linux hoje. Em meu
+  computador tenho uma <strong>parti&ccedil;&atilde;o NTFS<&#47;strong> e sempre quando
+  vou acessar algum arquivo pelo <strong>Ubuntu<&#47;strong> 12.04 preciso esperar
+  o sistema montar ela. A pesquisa do dash tamb&eacute;m n&atilde;o funciona pois
+  o sistema n&atilde;o reconhece as parti&ccedil;&otilde;es ainda n&atilde;o montadas.\r\n\r\n"
+wordpress_id: 905
+wordpress_url: http://blog.glaucocustodio.com/?p=905
+date: '2012-12-21 19:34:12 -0200'
+date_gmt: '2012-12-21 19:34:12 -0200'
+categories:
+- Linux
+tags:
+- ntfs
+comments:
+- id: 1046
+  author: Paulo
+  author_email: pasegros@r7.com
+  author_url: ''
+  date: '2013-08-02 20:16:42 -0300'
+  date_gmt: '2013-08-02 20:16:42 -0300'
+  content: "Muito boa dica, estava procurando como resolver esse problema tamb&eacute;m.\r\nObrigado!!!"
+- id: 1124
+  author: Trikoloko
+  author_email: p.trikoloko@yahoo.com
+  author_url: http://bjshare
+  date: '2013-08-15 15:10:51 -0300'
+  date_gmt: '2013-08-15 15:10:51 -0300'
+  content: Otima dica, jah usei em varias formata&ccedil;oes de linux, funciona tmbm
+    no Mate e Cinnamon 13 e 14, brigadaum colega
+- id: 1611
+  author: Philipe
+  author_email: philiperibeiro@outlook.com
+  author_url: ''
+  date: '2014-01-31 10:23:56 -0200'
+  date_gmt: '2014-01-31 10:23:56 -0200'
+  content: "Muito booa!\r\nJ&aacute; tinha um tempo que procurava por essa dica. Muito
+    obrigado!"
+- id: 2028
+  author: Rogerio
+  author_email: rogerioribeirodejti@yahoo.com.br
+  author_url: ''
+  date: '2014-04-21 13:29:47 -0300'
+  date_gmt: '2014-04-21 13:29:47 -0300'
+  content: Cara muito obrigado!
+- id: 41774
+  author: Uchiha Sasuke
+  author_email: naruto@uzumaki.com
+  author_url: ''
+  date: '2015-09-22 13:48:35 -0300'
+  date_gmt: '2015-09-22 13:48:35 -0300'
+  content: "Muito bom :)\r\nBem mais simples que muitos tutoriais longos que por muitas
+    vezes n&atilde;o ajudam em nada."
+---
+<p>Fala pessoal, beleza?</p>
+<p>Estou aqui para falar de Linux hoje. Em meu computador tenho uma <strong>parti&ccedil;&atilde;o NTFS<&#47;strong> e sempre quando vou acessar algum arquivo pelo <strong>Ubuntu<&#47;strong> 12.04 preciso esperar o sistema montar ela. A pesquisa do dash tamb&eacute;m n&atilde;o funciona pois o sistema n&atilde;o reconhece as parti&ccedil;&otilde;es ainda n&atilde;o montadas.</p>
+<p><a id="more"></a><a id="more-905"></a>Para resolver isso, tudo que precisamos fazer &eacute; executar um comando ao iniciar do Ubuntu que fa&ccedil;a a montagem automaticamente para n&oacute;s.</p>
+<p>Adicione o comando abaixo na inicializa&ccedil;&atilde;o (<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;19&#47;definir-brilho-automaticamente-ao-iniciar-ubuntu-12-04-lts#run-command-when-system-starts" target="_blank">clique aqui<&#47;a> caso n&atilde;o saiba) trocando o <code>sda2<&#47;code> pela parti&ccedil;&atilde;o a ser montada:<br />
+[code language="bash"]udisks --mount &#47;dev&#47;sda2[&#47;code]<br />
+Lembrando que o c&oacute;digo acima deve ser colocado no campo <code>Command<&#47;code>, feito isso salve e pronto!</p>
+<p>Se voc&ecirc; conhece apenas o r&oacute;tulo da parti&ccedil;&atilde;o, como <code>ARQUIVOS<&#47;code> ou <code>Disco C<&#47;code> por exemplo, rode o comando abaixo no terminal:<br />
+[code language="bash"]sudo blkid[&#47;code]<br />
+Ele ir&aacute; exibir uma sa&iacute;da como essa onde facilmente podemos ver no canto esquerdo a parti&ccedil;&atilde;o que desejamos.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;ver-unidades-de-disco-no-ubuntu.jpg"><img class="alignnone  wp-image-908" title="ver-unidades-de-disco-no-ubuntu" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;ver-unidades-de-disco-no-ubuntu.jpg" alt="ver-unidades-de-disco-no-ubuntu" width="736"&#47;><&#47;a></p>
+<p>O que acharam da dica?</p>
+<p>At&eacute; mais!</p>

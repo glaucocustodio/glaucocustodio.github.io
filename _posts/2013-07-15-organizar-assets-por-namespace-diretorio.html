@@ -1,0 +1,81 @@
+---
+layout: post
+status: publish
+published: true
+title: Organizar Assets por Namespace&#47;Diret&oacute;rio
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Estou aqui para falar sobre Rails e <strong>asset<&#47;strong> pipeline
+  novamente.\r\n\r\nH&aacute; um tempo atr&aacute;s escrevi <a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;18&#47;adicionar-arquivos-a-serem-compilados-no-asset-pipeline&#47;\"
+  target=\"_blank\">esse artigo<&#47;a> mostrando como podemos adicionar arquivos
+  a serem compilados no asset do Rails.\r\n\r\nTrabalhando em outro projeto recentemente,
+  surgiu a necessidade de poder compilar v&aacute;rios assets gerando um arquivo s&oacute;
+  para cada <strong>namespace<&#47;strong>.\r\n"
+wordpress_id: 1872
+wordpress_url: http://blog.glaucocustodio.com/?p=1872
+date: '2013-07-15 23:58:52 -0300'
+date_gmt: '2013-07-15 23:58:52 -0300'
+categories:
+- Ruby
+tags:
+- asset pipeline
+comments:
+- id: 1173
+  author: Thiago Leite Luiz
+  author_email: tlluiz@tlluiz.com
+  author_url: ''
+  date: '2013-08-30 13:19:15 -0300'
+  date_gmt: '2013-08-30 13:19:15 -0300'
+  content: "Parab&eacute;ns Glauco! Sabe quando a tempos lembro que preciso me preocupar
+    com a organiza&ccedil;&atilde;o dos CSS de um projeto quando ele tem v&aacute;rios
+    namespaces ou mesmo v&aacute;rios layouts diferentes, mas nunca sobrou tempo para
+    faz&ecirc;-lo? Pois &eacute;. Foi assim que, sem muita inten&ccedil;&atilde;o,
+    me esbarrei com seu post.\r\n\r\nMais uma vez parab&eacute;ns!"
+- id: 1201
+  author: Jhonathas
+  author_email: jhonathas@gmail.com
+  author_url: http://www.ligadastorcidas.com.br
+  date: '2013-09-03 12:58:15 -0300'
+  date_gmt: '2013-09-03 12:58:15 -0300'
+  content: Parab&eacute;ns cara, &oacute;tima dica
+---
+<p>Estou aqui para falar sobre Rails e <strong>asset<&#47;strong> pipeline novamente.</p>
+<p>H&aacute; um tempo atr&aacute;s escrevi <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;18&#47;adicionar-arquivos-a-serem-compilados-no-asset-pipeline&#47;" target="_blank">esse artigo<&#47;a> mostrando como podemos adicionar arquivos a serem compilados no asset do Rails.</p>
+<p>Trabalhando em outro projeto recentemente, surgiu a necessidade de poder compilar v&aacute;rios assets gerando um arquivo s&oacute; para cada <strong>namespace<&#47;strong>.<br />
+<a id="more"></a><a id="more-1872"></a><br />
+<h2>Exemplificando<&#47;h2></p>
+<p>Imagina que temos o namespace <code>admin<&#47;code> em nossa aplica&ccedil;&atilde;o como abaixo:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;aplicacao-rails-com-namespace.png"><img class="alignnone size-full wp-image-1875" title="aplicacao-rails-com-namespace" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;aplicacao-rails-com-namespace.png" alt="" width="763" height="207" &#47;><&#47;a></p>
+<p>E na pasta <code>stylesheets<&#47;code> dos assets temos os seguintes arquivos:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;stylesheets-assets.png"><img class="alignnone size-full wp-image-1882" title="stylesheets-assets" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;stylesheets-assets.png" alt="" width="209" height="224" &#47;><&#47;a></p>
+<p>Por padr&atilde;o, o Rails ir&aacute; incluir todos assets no layout de nossa aplica&ccedil;&atilde;o (por causa do <code>require_tree .<&#47;code>)</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-inclusos.png"><img class="alignnone size-full wp-image-1883" title="assets-inclusos" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-inclusos.png" alt="" width="861" height="109" &#47;><&#47;a></p>
+<p>Mas espera ai, queremos incluir no site apenas o <code>default.css<&#47;code> e o <code>style.css<&#47;code>, o <code>admin_default.css<&#47;code> e <code>admin_style.css<&#47;code> devem ser inclusos apenas quando estivermos no layout do namespace <code>admin<&#47;code>.</p>
+<h2>Solu&ccedil;&atilde;o<&#47;h2><br />
+Como solu&ccedil;&atilde;o, podemos criar pastas com nomes que facilitam identifica&ccedil;&atilde;o e incluir dentro de cada uma os assets respectivos de seus layouts. De quebra ainda pode-se criar um diret&oacute;rio que armazenar&aacute; os assets comuns entre os layouts. Veja:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-organizados-por-namespace.png"><img class="alignnone size-full wp-image-1884" title="assets-organizados-por-namespace" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-organizados-por-namespace.png" alt="" width="213" height="322" &#47;><&#47;a></p>
+<p>Veja o conte&uacute;do do <code>site_application.css<&#47;code>:<br />
+[code language="css"]&#47;*<br />
+ *= require_self<br />
+ *= require_tree .&#47;common<br />
+ *= require_tree .&#47;site<br />
+ *&#47;[&#47;code]<br />
+E do <code>admin_application.css<&#47;code>:<br />
+[code language="css"]&#47;*<br />
+ *= require_self<br />
+ *= require_tree .&#47;common<br />
+ *= require_tree .&#47;admin<br />
+ *&#47;[&#47;code]<br />
+Por fim, basta <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;18&#47;adicionar-arquivos-a-serem-compilados-no-asset-pipeline&#47;" target="_blank">adicionar os novos arquivos para serem compilados no asset pipeline<&#47;a>:<br />
+[code language="ruby"]config.assets.precompile += ['site_application.js', 'site_application.css', 'admin_application.js', 'admin_application.css'][&#47;code]<br />
+Ao compilar os assets agora (<code>rake assets:precompile<&#47;code>) teremos o que desejamos:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;compilando-assets.png"><img class="alignnone size-full wp-image-1887" title="compilando-assets" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;compilando-assets.png" alt="" width="1475" &#47;><&#47;a></p>
+<div class="alert">S&oacute; n&atilde;o esque&ccedil;a de alterar nos layouts o padr&atilde;o <code>application<&#47;code> pelos nomes definidos (nesse caso <code>site_application<&#47;code> para o site e <code>admin_application<&#47;code> para o layout admin).<&#47;div><br />
+Por hoje &eacute; s&oacute; pessoal. Gostaram da dica?</p>
+<p>Abra&ccedil;os.</p>

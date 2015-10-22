@@ -1,0 +1,55 @@
+---
+layout: post
+status: publish
+published: true
+title: Navegando com CTags no Sublime Text
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3315
+wordpress_url: http://blog.glaucocustodio.com/?p=3315
+date: '2015-01-10 01:20:12 -0200'
+date_gmt: '2015-01-10 01:20:12 -0200'
+categories:
+- Sem categoria
+tags:
+- ctags
+comments: []
+---
+<p>Uma coisa legal em IDEs &eacute; o recurso de navega&ccedil;&atilde;o no c&oacute;digo usando atalhos de teclado e mouse ("Go To Definition" da vida).</p>
+<p>O Sublime Text &eacute; apenas um editor de texto, por&eacute;m, gra&ccedil;as a sua extensibilidade, podemos obter o mesmo comportamento via plugin.</p>
+<h2>Instala&ccedil;&atilde;o e Setup<&#47;h2></p>
+<p>Instale o plugin CTags: <code>Ctrl+Shift+P > Package Control: Install Package > CTags<&#47;code>.</p>
+<p>Instale a biblioteca <code>exuberant-ctags<&#47;code> via <code>sudo apt-get install exuberant-ctags<&#47;code> (veja <a href="https:&#47;&#47;github.com&#47;SublimeText&#47;CTags#additional-setup-steps" rel="external nofollow" target="_blank">aqui<&#47;a> instru&ccedil;&otilde;es para outros sistemas).</p>
+<div class="note">No OSX com Xcode instalado, ser&aacute; necess&aacute;rio adicionar o caminho certo do bin&aacute;rio do ctags <code>{"command": "&#47;usr&#47;local&#47;bin&#47;ctags"<br />
+}<&#47;code> no arquivo <code>CTags.sublime-settings<&#47;code> do Sublime Text (<code>Packages Settings > CTags > Settings - User<&#47;code>). Veja mais <a href="https:&#47;&#47;github.com&#47;SublimeText&#47;CTags&#47;issues&#47;184" target="_blank" rel="external nofollow">aqui<&#47;a> e <a target="_blank" rel="external nofollow" href="http:&#47;&#47;gmarik.info&#47;blog&#47;2010&#47;10&#47;08&#47;ctags-on-OSX">aqui<&#47;a>.<&#47;div></p>
+<p>Agora precisamos gerar um arquivo de tags com a biblioteca acima para que o plugin possa "conhecer" nosso projeto.</p>
+<p>Entre no diret&oacute;rio do projeto que deseja mapear e rode o comando <code>ctags -R -f .tags<&#47;code>, isso nos gerar&aacute; um arquivo <code>.tags<&#47;code>.</p>
+<p>Pronto, j&aacute; podemos navegar pelo projeto, basta parar o cursor do mouse em cima de alguma classe ou m&eacute;todo e usar o atalho <code>Ctrl+Shift+Clique Esquerdo<&#47;code> para ir na defini&ccedil;&atilde;o e <code>Ctrl+Shift+Clique Direito<&#47;code> em qualquer lugar para retornar.</p>
+<h3>Regerando Arquivo de Tags<&#47;h3></p>
+<p>Ao adicionar c&oacute;digo, o mapa do projeto ficar&aacute; desatualizado, ent&atilde;o precisamos regerar um novo com as &uacute;ltimas mudan&ccedil;as inclusas.</p>
+<p>Podemos fazer isso clicando com bot&atilde;o direito dentro da barra lateral na pasta do projeto e clicando em <code>CTags: Rebuild Tags<&#47;code>, via Package Control procurando pelo nome do plugin ou via atalho, pressionando <code>Ctrl+T<&#47;code> e <code>Ctrl+R<&#47;code> (logo em seguida) e escolhendo o local a partir de onde ser&aacute; gerado e salvo o mapa (eu particularmente sempre escolha o &uacute;ltima op&ccedil;&atilde;o, que &eacute; a raiz do projeto, assim ficamos com um mapa s&oacute; para todo projeto).</p>
+<h3>Automatizando Gera&ccedil;&atilde;o de Tags<&#47;h3></p>
+<p>Se seu projeto usa git, voc&ecirc; pode configurar hooks para automaticamente regerar as tags. Em meu caso deixo ap&oacute;s cada commit (post-commit) e pull (post-merge).</p>
+<p>Basta entrar no diret&oacute;rio <code>.git&#47;hooks<&#47;code> do projeto e rodar:</p>
+<p>[code language="bash"]<br />
+$ echo 'ctags -R -f .tags' > post-commit && chmod +x post-commit<br />
+$ echo 'ctags -R -f .tags' > post-merge && chmod +x post-merge<br />
+[&#47;code]</p>
+<h3>Ocultando Arquivo de Tags<&#47;h3></p>
+<p>Aquivos de tags servem para o plugin apenas, podemos ocultar ele(s) da barra lateral com &aacute;rvore do projeto e das pesquisas adicionando o trecho abaixo no arquivo <code>Preferences.sublime-settings<&#47;code>:</p>
+<p>[code language="javascript"]<br />
+"file_exclude_patterns": [".tags", ".tags_sorted_by_file", ".gemtags"]<br />
+[&#47;code]</p>
+<h3>Adicionando no .gitignore<&#47;h3></p>
+<p>Eu tamb&eacute;m gosto de ignorar os arquivos de tags no git, basta adicionar as linhas abaixo no seu <code>.gitignore<&#47;code>:<br />
+[code language="bash"]<br />
+.tags<br />
+.tags_sorted_by_file<br />
+[&#47;code]</p>
+<p>At&eacute; mais.</p>

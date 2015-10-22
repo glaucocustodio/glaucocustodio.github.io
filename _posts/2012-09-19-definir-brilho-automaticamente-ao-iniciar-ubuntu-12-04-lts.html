@@ -1,0 +1,289 @@
+---
+layout: post
+status: publish
+published: true
+title: Definir Brilho Automaticamente ao Iniciar Ubuntu
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, tudo bom?\r\n\r\nComecei a usar <strong>Ubuntu<&#47;strong>
+  h&aacute; pouco tempo atr&aacute;s e estou me adaptando com o sistema. De vez em
+  quando preciso procurar por algumas solu&ccedil;&otilde;es para coisas simples e
+  s&oacute; encontro resultado em ingl&ecirc;s, para ajudar o pessoal que est&aacute;
+  come&ccedil;ando, irei postar algumas dicas. Vamos para primeira..\r\n\r\nUso notebook
+  e sempre quando inicio uma sess&atilde;o no Ubuntu 12.04 LTS preciso diminuir o
+  brilho do monitor pois estou acostumado a trabalhar com brilho baixo. Essa &eacute;
+  uma tarefa chata pois toda vez tenho que diminuir porque o Ubuntu n&atilde;o salva
+  essa configura&ccedil;&atilde;o.\r\n\r\n"
+wordpress_id: 453
+wordpress_url: http://blog.glaucocustodio.com/?p=453
+date: '2012-09-19 19:42:37 -0300'
+date_gmt: '2012-09-19 19:42:37 -0300'
+categories:
+- Linux
+tags:
+- linux
+- ubuntu
+comments:
+- id: 38
+  author: Almir Junior
+  author_email: oliveira_junior2011@hotmail.com
+  author_url: ''
+  date: '2012-09-26 22:10:54 -0300'
+  date_gmt: '2012-09-26 22:10:54 -0300'
+  content: Eu tenho uma Model chamada 'Carro', se eu quisesse setar os dados dessa
+    model na action 'Index' do controlador  'HomeController' como voc&ecirc; faria
+    ?
+- id: 40
+  author: Almir Junior
+  author_email: oliveira_junior2011@hotmail.com
+  author_url: ''
+  date: '2012-09-26 22:14:25 -0300'
+  date_gmt: '2012-09-26 22:14:25 -0300'
+  content: Ops comentei no artigo errado ! Esse coment&aacute;rio &eacute; pro artigo
+    de cakephp!
+- id: 76
+  author: Filipe Guerra
+  author_email: filipehmguerra@yahoo.com.br
+  author_url: ''
+  date: '2012-11-10 21:58:38 -0200'
+  date_gmt: '2012-11-10 21:58:38 -0200'
+  content: "N&atilde;o testei mas achei meio complexo! &Eacute; muito mais simples
+    fazer o seguinte:\r\n\r\nD&aacute; um\r\n\r\n$ lspci | grep VGA\r\n\r\npara localizar
+    o endere&ccedil;o da sua placa gr&aacute;fica, que no meu caso &eacute;; 00:02.0\r\nent&atilde;o
+    d&ecirc; o comando:\r\n\r\n$ sudo setpci -s 00:02.0 F4.B=N\r\n\r\nonde N &eacute;
+    um valor de 0 a 99, que &eacute; o brilho do seu monitor!\r\n\r\nPara iniciar
+    junto com o Ubuntu e evitar de digitar isso toda hora;\r\n\r\nDigite no terminal:\r\n$sudo
+    gedit &#47;etc&#47;rc.local\r\n\r\ne coloque \"sudo setpci -s 00:02.0 F4.B=30\"
+    antes do \"exit 0\"!"
+- id: 77
+  author: Glauco Cust&oacute;dio
+  author_email: glauco.custodio@gmail.com
+  author_url: http://glaucocustodio.com
+  date: '2012-11-12 10:17:41 -0200'
+  date_gmt: '2012-11-12 10:17:41 -0200'
+  content: Fica a dica pra galera ai tamb&eacute;m, mais uma alternativa!
+- id: 123
+  author: Pedrosa
+  author_email: paulo.pedrosa@zf.com
+  author_url: ''
+  date: '2012-11-26 00:52:30 -0200'
+  date_gmt: '2012-11-26 00:52:30 -0200'
+  content: "Sinto muito Felipe, mas sua op&ccedil;&atilde;o \"mais simples\" n&atilde;o
+    funcionou no meu Ubuntu com placa intel 00.20.0\r\nA do Glauco sim.  Talvez seja
+    minha placa..."
+- id: 145
+  author: Paulo Victor
+  author_email: paulovictor@msn.com
+  author_url: ''
+  date: '2012-12-07 11:14:30 -0200'
+  date_gmt: '2012-12-07 11:14:30 -0200'
+  content: "Sempre boas dicas para Ubuntu. Por isso, mesmo depois de 3 anos de volta
+    ao Windows, agora, desta vez que voltei, fui para o Ubuntu, e utilizava o Debian
+    anteriormene; por&eacute;m estou tendo problemas com todas as distribui&ccedil;&otilde;es
+    derivadas do Debian e consequentemente do Ubuntu, como o Mint. \r\n\r\nAcontece
+    &eacute; que depois da tela de loading do Ubuntu ele escurece totalmente a tela
+    de login, tendo eu que apertar o bot&atilde;o de brilho para que consiga ver,
+    digitar a senha e logar. J&aacute; tamb&eacute;m, depois de configurar como voc&ecirc;
+    explicou acima, digitar a senha mesmo com a tela escura, sem enxergar, e esperar
+    a tela pegar a configura&ccedil;&atilde;o, mas n&atilde;o, continua \"preta\"
+    e preciso sempre apertar o, no meu caso, f3, bot&atilde;o de energia. \r\n\r\nNa
+    dica do amigo Felipe Guerra tamb&eacute;m n&atilde;o tive sucesso. \r\n\r\nEm
+    busca de um sistema. :("
+- id: 256
+  author: Diego Moreira
+  author_email: diegofm300@gmail.com
+  author_url: ''
+  date: '2012-12-15 17:09:36 -0200'
+  date_gmt: '2012-12-15 17:09:36 -0200'
+  content: Os passos descritos por Glauco funcionaram perfeitamente no meu caso. Sem
+    problemas, inclusive compartilhei o t&oacute;pico no VOL e referenciei o endere&ccedil;o
+    dessa postagem.
+- id: 282
+  author: janclei pigatto
+  author_email: jancleipigatto@yahoo.com.br
+  author_url: ''
+  date: '2012-12-24 16:55:46 -0200'
+  date_gmt: '2012-12-24 16:55:46 -0200'
+  content: "No meu Acer 4736z \r\ndeu certo com o post do Filipe Guerra."
+- id: 538
+  author: Definir brilho automaticamente ao iniciar Ubuntu &laquo; Blog Di&aacute;rio
+    do Marcos!!!
+  author_email: ''
+  author_url: http://diariodomarcos.wordpress.com/2013/04/24/definir-brilho-automaticamente-ao-iniciar-ubuntu/
+  date: '2013-04-25 02:21:01 -0300'
+  date_gmt: '2013-04-25 02:21:01 -0300'
+  content: "[...] vasculhei a internet. Muita coisa que n&atilde;o tem nada haver.
+    E s&oacute; achei um site que tem algo haver (este) que &eacute; da onde irei
+    me basear. S&oacute; que l&aacute; tem alguns errinhos que me fizeram quebrar
+    a cabe&ccedil;a. [...]"
+- id: 582
+  author: Gustavo Moraes
+  author_email: gustavo_moraiss@hotmail.com
+  author_url: http://www.facebook.com/gustavosotnas
+  date: '2013-05-08 13:05:04 -0300'
+  date_gmt: '2013-05-08 13:05:04 -0300'
+  content: "Sou usu&aacute;rio novo do Ubuntu (uso o 13.04), conhe&ccedil;o um pouco
+    de Linux com o Android (sou f&atilde;za&ccedil;o do Android!!!), mas estou conhecendo
+    melhor o Linux principalmente por causa do curso de Engenharia de Software que
+    comecei agora, e pelo que estou usando, estou gostando um pouco deste SO. Acho
+    interessante a filosofia do software livre, \"computador para todos\" e em ALGUNS
+    ASPECTOS o Linux &eacute; melhor que o Windows. &Eacute; r&aacute;pido, est&aacute;vel,
+    &oacute;timo para quem usa o PC para navegar na Internet, n&atilde;o precisa de
+    antivirus de terceiros, nem de desfragmenta&ccedil;&atilde;o do disco. \r\n\r\nPor&eacute;m
+    estou com o mesmo problema relativo ao brilho da tela do laptop. N&atilde;o gosto
+    de tela brilhante demais, e toda vez depois que eu ligo ou volto do modo de suspens&atilde;o
+    eu tenho que ir em \"Configura&ccedil;&otilde;es do Sistema > Brilho e Bloqueio\"
+    e deslocar a barra para metade do brilho. \r\n\r\nSegui as instru&ccedil;&otilde;es
+    do Glauco e do Felipe Guerra e nenhuma das duas funcionaram, e agora toda vez
+    que o SO inicializa ele pede para digitar a senha novamente para \"ABRIR\" o arquivo
+    de texto \"brightness_changer.py\" e o script n&atilde;o &eacute; executado. Continua
+    com o brilho m&aacute;ximo do mesmo jeito. E ent&atilde;o eu removi o arquivo
+    da lista de inicializa&ccedil;&atilde;o para parar com isso. Eu n&atilde;o sei
+    o que aconteceu, n&atilde;o sei se precisa fazer alguma coisa e n&atilde;o fiz,
+    n&atilde;o sei...\r\n\r\nO que n&atilde;o eu entendo do Ubuntu &eacute; por que
+    umas fun&ccedil;&otilde;es simples como essa (salvar as configura&ccedil;&otilde;es
+    de brilho do monitor) n&atilde;o funcionam como padr&atilde;o do sistema, e ent&atilde;o
+    tem que MODIFICAR O SISTEMA para poder funcionar... Assim, o SO nunca ser&aacute;
+    um atrativo para um consumidor final! Como que querem que as pessoas usem Linux
+    sendo que quando encontram algum problema simples e busca ajuda, s&atilde;o empurradas
+    para o Terminal executar comandos de SuperUser!?! At&eacute; para instalar o software
+    da impressora precisa de um tutorial da Internet para usar o Terminal porque sen&atilde;o
+    ningu&eacute;m sem tal conhecimento conseguir&aacute; fazer tal coisa! Por que
+    o Ubuntu n&atilde;o utiliza um sistema de instala&ccedil;&atilde;o de aplicativos
+    semelhante ao do Android, os arquivos execut&aacute;veis \"APK\"? Assim n&atilde;o
+    d&aacute;!"
+- id: 714
+  author: Tiago
+  author_email: tiagoebox@hotmail.com
+  author_url: ''
+  date: '2013-06-17 04:38:32 -0300'
+  date_gmt: '2013-06-17 04:38:32 -0300'
+  content: "Tem alguma adapta&ccedil;&atilde;o para Kubuntu(KDE)?\r\nO setpci funciona
+    somente em sudo, como inicializar esse script python no KDE?"
+- id: 1284
+  author: Isaac
+  author_email: isaacfrancis-cm@hotmail.com
+  author_url: ''
+  date: '2013-09-30 00:19:46 -0300'
+  date_gmt: '2013-09-30 00:19:46 -0300'
+  content: No meu n&atilde;o t&aacute; funcionando nenhum, no meu caso, a tela fica
+    bem escura ao iniciar...
+- id: 1459
+  author: Thiago Mem&oacute;ria
+  author_email: thiago.memoria@gmail.com
+  author_url: ''
+  date: '2013-11-09 22:25:20 -0200'
+  date_gmt: '2013-11-09 22:25:20 -0200'
+  content: "N&atilde;o funcionou nenhum dos dois com o Ubuntu 13.04 AMD Radeon graphics
+    6290 Notebook Positivo Sim+ 1000m\r\nOBS: Driver AMD Catalyst 13.4 Instalado."
+- id: 1460
+  author: Thiago Mem&oacute;ria
+  author_email: thiago.memoria@gmail.com
+  author_url: ''
+  date: '2013-11-09 22:48:40 -0200'
+  date_gmt: '2013-11-09 22:48:40 -0200'
+  content: "Amigos encontrei um tutorial que funcionou com meu computador talvez possa
+    ajudar voc&ecirc;s tamb&eacute;m...\r\nhttp:&#47;&#47;tuxederivados.blogspot.com.br&#47;2012&#47;12&#47;forcar-o-brilho-do-ecra-na.html"
+- id: 1614
+  author: marcos
+  author_email: hadkyabira@hotmail.com
+  author_url: ''
+  date: '2014-02-06 14:35:48 -0200'
+  date_gmt: '2014-02-06 14:35:48 -0200'
+  content: "At&eacute; agora eu n&atilde;o ter encontrado um novo &oacute;timo trabalhar
+    em ubuntu - Valentina Studio. &Eacute; a edi&ccedil;&atilde;o gratuita pode fazer
+    mais coisas do que muitas ferramentas comerciais! \r\nAltamente recomendado para
+    verific&aacute;-lo. http:&#47;&#47;www.valentina-db.com&#47;en&#47;valentina-studio-overview"
+- id: 4542
+  author: Francis
+  author_email: francis-ricardo1@hotmail.com
+  author_url: ''
+  date: '2014-08-25 16:42:57 -0300'
+  date_gmt: '2014-08-25 16:42:57 -0300'
+  content: "Ola Glauco Cust&oacute;dio a sua dica aqui comigo n&atilde;o funcionou.\r\n\r\nToda
+    vez que o sistema &eacute; ligado fica pedindo a senha por causa do ==> gksudo
+    < === e o gedit se abre com o arquivo depois que coloca a senha."
+- id: 4548
+  author: Francis
+  author_email: francis-ricardo1@hotmail.com
+  author_url: ''
+  date: '2014-08-25 16:59:51 -0300'
+  date_gmt: '2014-08-25 16:59:51 -0300'
+  content: "Caro Filipe Guerra  a sua dica tamb&eacute;m n&atilde;o funciona.\r\n\r\nO
+    comando:\r\nsudo setpci -s 00:02.0 F4.B=30\r\n\r\nN&atilde;o funciona.\r\n\r\nPs:
+    A minha placa tamb&eacute;m &eacute; 00:02.0."
+- id: 6977
+  author: Matheus
+  author_email: matheuscumth@gmail.com
+  author_url: ''
+  date: '2014-09-05 18:51:31 -0300'
+  date_gmt: '2014-09-05 18:51:31 -0300'
+  content: "Sei que o t&oacute;pico &eacute; um pouco antigo, mas vou deixar uma pequena
+    observa&ccedil;&atilde;o, pois foi uma dificuldade que me fez encontrar essa solu&ccedil;&atilde;o
+    no seu blog. \r\n\r\nNa hora de inserir o comando no iniciar, basta digitar o
+    seguinte \"&#47;usr&#47;local&#47;bin&#47;brightness_changer.py\" sem aspas.\r\n\r\nNo
+    blog ta passando o caminho pra editar o script.\r\nAbra&ccedil;o"
+- id: 15015
+  author: Nathanael
+  author_email: nathanael.meireles@gmail.com
+  author_url: ''
+  date: '2014-10-23 00:18:38 -0200'
+  date_gmt: '2014-10-23 00:18:38 -0200'
+  content: "Super show de bola amig&atilde;o \r\n\r\nObrigado pela dica me ajudou
+    bastante a resolver esse pequeno probleminha que me incomodava demais.\r\n\r\nObrigado."
+- id: 21076
+  author: Jo&atilde;o Gabriel Bispo
+  author_email: jgfenix@yahoo.com.br
+  author_url: ''
+  date: '2015-01-27 15:38:19 -0200'
+  date_gmt: '2015-01-27 15:38:19 -0200'
+  content: "Obrigado pelo script, uma tremenda m&atilde;o na roda aqui e ainda me
+    deu uma ajuda pra saber como fazer os scripts em pyhton ao inv&eacute;s de shellscript.\r\n=]"
+- id: 29620
+  author: Johnny
+  author_email: johnnythejota@gmail.com
+  author_url: ''
+  date: '2015-05-03 13:11:06 -0300'
+  date_gmt: '2015-05-03 13:11:06 -0300'
+  content: comecei a usar ubuntu agora, no caso com (Fn seta) consigo alterar o brilho
+    e a configura&ccedil;&atilde;o &eacute; salva, mas tem que reiniciar o sistema
+    pra executar a altera&ccedil;&atilde;o. chato isso
+- id: 43244
+  author: Elton
+  author_email: eltonss@ufpa.br
+  author_url: ''
+  date: '2015-10-12 12:18:30 -0300'
+  date_gmt: '2015-10-12 12:18:30 -0300'
+  content: "Funcionou certinho....\r\nS&oacute; um coment&aacute;rio.\r\n1 - N&atilde;o
+    precisa usar gksudo. Sudo &eacute; suficiente\r\n2 - No Start App, n&atilde;o
+    precisa coloca \"Sudo gEdit\". \r\n\r\nMas o post foi perfeito e funcionou 100%
+    no meu Dell... Valew Glauco..."
+---
+<p>Fala pessoal, tudo bom?</p>
+<p>Comecei a usar <strong>Ubuntu<&#47;strong> h&aacute; pouco tempo atr&aacute;s e estou me adaptando com o sistema. De vez em quando preciso procurar por algumas solu&ccedil;&otilde;es para coisas simples e s&oacute; encontro resultado em ingl&ecirc;s, para ajudar o pessoal que est&aacute; come&ccedil;ando, irei postar algumas dicas. Vamos para primeira..</p>
+<p>Uso notebook e sempre quando inicio uma sess&atilde;o no Ubuntu 12.04 LTS preciso diminuir o brilho do monitor pois estou acostumado a trabalhar com brilho baixo. Essa &eacute; uma tarefa chata pois toda vez tenho que diminuir porque o Ubuntu n&atilde;o salva essa configura&ccedil;&atilde;o.</p>
+<p><a id="more"></a><a id="more-453"></a>Procurei na internet por como salvar configura&ccedil;&otilde;es de brilho e encontrei uma solu&ccedil;&atilde;o alternativa, que &eacute; fazer um script Python e rodar toda vez que o sistema iniciar para diminuir o brilho, isso tem resolvido..</p>
+<h2>Criando o Script<&#47;h2><br />
+Primeiro crie o arquivo respons&aacute;vel por diminuir o brilho executando esse comando <code>gksudo gedit &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code> no terminal.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;criar-script-para-ajuste-de-brilho.png"><img class="alignnone size-full wp-image-454" title="criar-script-para-ajuste-de-brilho" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;criar-script-para-ajuste-de-brilho.png" alt="" width="765" &#47;><&#47;a></p>
+<p>Ap&oacute;s isso ele ir&aacute; abrir o editor de texto, copie e cole o c&oacute;digo abaixo e salve. Onde est&aacute; <code>25<&#47;code> voc&ecirc; substitui pela porcentagem de brilho que deseja.<br />
+[code language="python"]#!&#47;usr&#47;bin&#47;python<br />
+import dbus<br />
+bus = dbus.SessionBus()<br />
+proxy = bus.get_object('org.gnome.SettingsDaemon',<br />
+'&#47;org&#47;gnome&#47;SettingsDaemon&#47;Power')<br />
+iface = dbus.Interface(proxy, dbus_interface='org.gnome.SettingsDaemon.Power.Screen')<br />
+iface.SetPercentage(25)[&#47;code]<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;ajuste-de-brilho.png"><img class="alignnone size-full wp-image-455" title="ajuste-de-brilho" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;ajuste-de-brilho.png" alt="" width="747" height="304" &#47;><&#47;a></p>
+<p>Execute o comando <code>sudo chmod 755 &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code>  para dar permiss&atilde;o para o arquivo.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;permissao-para-script.jpg"><img class="alignnone size-full wp-image-469" title="permissao-para-script" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;permissao-para-script.jpg" alt="" width="753" &#47;><&#47;a></p>
+<h2 id="run-command-when-system-starts">Adicionando Comandos para Iniciar com o Sistema<&#47;h2><br />
+Agora s&oacute; falta adicionar o script na inicializa&ccedil;&atilde;o do sistema, para isso, aperte a tecla <code>super<&#47;code> (tecla com bandeira do Windows), digite <code>start<&#47;code> e cline no &iacute;cone <code>Startup Applications<&#47;code>.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionar-comando-na-inicializa&ccedil;&atilde;o.jpg"><img class="alignnone size-full wp-image-458" title="adicionar-comando-na-inicializa&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionar-comando-na-inicializa&ccedil;&atilde;o.jpg" alt="" width="768" height="466" &#47;><&#47;a></p>
+<p>Na janela que abrir, clique em <code>Add<&#47;code> (ou <code>Adicionar<&#47;code> se estiver em portugu&ecirc;s), digite o nome da tarefa e o caminho do arquivo &agrave; ser executado, que em nosso caso &eacute; <code>gksudo gedit &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code> e pronto, agora o brilho sempre estar&aacute; como configurado.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionando-caminho-do-comando.jpg"><img class="alignnone size-full wp-image-459" title="adicionando-caminho-do-comando" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionando-caminho-do-comando.jpg" alt="" width="618" height="492" &#47;><&#47;a></p>
+<p>O que voc&ecirc;s acharam da dica?</p>
+<p>At&eacute; mais.</p>

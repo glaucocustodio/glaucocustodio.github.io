@@ -1,0 +1,221 @@
+---
+layout: post
+status: publish
+published: true
+title: Provisionando Aplica&ccedil;&otilde;es Rails com Mina, Unicorn e Nginx
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3002
+wordpress_url: http://blog.glaucocustodio.com/?p=3002
+date: '2014-09-19 17:18:59 -0300'
+date_gmt: '2014-09-19 17:18:59 -0300'
+categories:
+- Ruby
+- Servidor
+tags:
+- ruby on rails
+- nginx
+- mina
+- unicorn
+comments:
+- id: 10088
+  author: Kelvin
+  author_email: morais.kelvin@gmail.com
+  author_url: ''
+  date: '2014-09-22 14:36:12 -0300'
+  date_gmt: '2014-09-22 14:36:12 -0300'
+  content: Boa!
+- id: 10098
+  author: Ivo Roberto Batistela
+  author_email: irbatistela@gmail.com
+  author_url: ''
+  date: '2014-09-22 16:34:19 -0300'
+  date_gmt: '2014-09-22 16:34:19 -0300'
+  content: Bacana o post, por&eacute;m acho que faltou, na minha condi&ccedil;&atilde;o
+    de iniciante, um breve demonstrativo sobre o que exatamente essas gems fazem,
+    visto que tive que obter informa&ccedil;&otilde;es externas para entender o que
+    era esse unicorn.
+- id: 21148
+  author: Thiago Fernandes
+  author_email: iprodutora@gmail.com
+  author_url: http://ilprodutora.com.br
+  date: '2015-01-29 01:39:32 -0200'
+  date_gmt: '2015-01-29 01:39:32 -0200'
+  content: Parab&eacute;ns pelo trabalho.
+- id: 23544
+  author: Harlan
+  author_email: clarencecaesar@gawab.com
+  author_url: http://Christie.us
+  date: '2015-03-07 21:09:52 -0300'
+  date_gmt: '2015-03-07 21:09:52 -0300'
+  content: "Hello admin, i found this post on 17 spot in google's search results.\r\n\r\nI'm
+    sure that your low rankings are caused by high bounce rate.\r\nThis is very important
+    ranking factor. One of the biggest reason for high bounce rate is due \r\nto visitors
+    hitting the back button. The higher \r\nyour bounce rate the further down the
+    search results your posts and \r\npages will end up, so having reasonably low
+    bounce rate is important for increasing your rankings naturally.\r\nThere is very
+    handy wordpress plugin which can help you. Just search in google for:\r\nSeyiny's
+    Bounce Plugin"
+- id: 37864
+  author: Marlos
+  author_email: marlos.irapuan@gmail.com
+  author_url: ''
+  date: '2015-08-06 16:13:22 -0300'
+  date_gmt: '2015-08-06 16:13:22 -0300'
+  content: "Bacana, mas se n&atilde;o gerar as pastas `pids` e `sockets` ele vai dar
+    erro no deploy e dizer que n&atilde;o existem..\r\n\r\nO pids vai reclamar ja
+    no deploy e o sockets s&oacute; olhando o log de erro do unicorn..\r\n\r\nEnt&atilde;o
+    &eacute; s&oacute; acrescentar na tarefa do setup:\r\n\r\n# pids\r\nqueue! %[mkdir
+    -p \"#{deploy_to}&#47;shared&#47;pids\"]\r\nqueue! %[chmod g+rx,u+rwx \"#{deploy_to}&#47;shared&#47;pids\"]\r\n\r\n#
+    sockets\r\nqueue! %[mkdir -p \"#{deploy_to}&#47;shared&#47;sockets\"]\r\nqueue!
+    %[chmod g+rx,u+rwx \"#{deploy_to}&#47;shared&#47;sockets\"]"
+---
+<p>Depois de um tempo usando Passenger, migrei para o Unicorn, nesse post irei descrever o setup que tenho utilizado para provisionar aplica&ccedil;&otilde;es Rails em produ&ccedil;&atilde;o desde ent&atilde;o.</p>
+<p>Como o t&iacute;tulo j&aacute; diz, uso Nginx como servidor http, mas nesse post n&atilde;o mostrarei como instal&aacute;-lo, voc&ecirc; pode ver a <a href="http:&#47;&#47;wiki.nginx.org&#47;Install" rel="external nofollow" target="_blank">wiki oficial do projeto<&#47;a> pra isso.</p>
+<p>Vamos come&ccedil;ar adicionando a gema do Unicorn em nosso <code>Gemfile<&#47;code>:</p>
+<p>[code lang="ruby"]<br />
+group :production do<br />
+  gem 'unicorn'<br />
+end<br />
+[&#47;code]</p>
+<p>Como uso Unicorn apenas em produ&ccedil;&atilde;o, ent&atilde;o deixo dentro do bloco <code>production<&#47;code>.</p>
+<p>Criaremos agora um arquivo de configura&ccedil;&atilde;o do Unicorn, geralmente colocamos em <code>config&#47;unicorn.rb<&#47;code>, com o seguinte conte&uacute;do:</p>
+<p>[code lang="ruby" hl_lines="14"]<br />
+# Set your full path to application.<br />
+app_dir = File.expand_path('..&#47;..&#47;', __FILE__)<br />
+shared_dir = File.expand_path('..&#47;..&#47;..&#47;shared&#47;', __FILE__)</p>
+<p># Set unicorn options<br />
+worker_processes 1<br />
+preload_app true<br />
+timeout 30</p>
+<p># Fill path to your app<br />
+working_directory app_dir</p>
+<p># Set up socket location<br />
+listen "#{shared_dir}&#47;sockets&#47;unicorn.sock", :backlog => 64</p>
+<p># Loging<br />
+stderr_path "#{shared_dir}&#47;log&#47;unicorn.stderr.log"<br />
+stdout_path "#{shared_dir}&#47;log&#47;unicorn.stdout.log"</p>
+<p># Set master PID location<br />
+pid "#{shared_dir}&#47;pids&#47;unicorn.pid"</p>
+<p>before_fork do |server, worker|<br />
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!<br />
+  old_pid = "#{server.config[:pid]}.oldbin"<br />
+  if File.exists?(old_pid) && server.pid != old_pid<br />
+    begin<br />
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU<br />
+      Process.kill(sig, File.read(old_pid).to_i)<br />
+    rescue Errno::ENOENT, Errno::ESRCH<br />
+      # someone else did our job for us<br />
+    end<br />
+  end<br />
+end</p>
+<p>after_fork do |server, worker|<br />
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection<br />
+end</p>
+<p>before_exec do |server|<br />
+  ENV['BUNDLE_GEMFILE'] = "#{app_dir}&#47;Gemfile"<br />
+end<br />
+[&#47;code]</p>
+<p>O arquivo &eacute; auto explicativo e bem f&aacute;cil de entender, voc&ecirc; pode alterar as configura&ccedil;&otilde;es como quiser. Uma coisa importante que devemos atentar aqui &eacute; o caminho onde o socket ficar&aacute; armazenado (linha em destaque), precisaremos dele a seguir.</p>
+<p>Agora, vamos configurar nossa entrada no servidor, eu costumo criar um arquivo com o nome da aplica&ccedil;&atilde;o (nesse caso <code>my_app<&#47;code>) dentro da pasta <code>sites-enabled<&#47;code> no diret&oacute;rio do Nginx.</p>
+<p>[code lang="nginx" hl_lines="4"]<br />
+# &#47;opt&#47;nginx&#47;sites-enabled&#47;my_app<br />
+upstream my_app {<br />
+  # socket location<br />
+  server unix:&#47;home&#47;user&#47;my_app&#47;shared&#47;sockets&#47;unicorn.sock fail_timeout=0;<br />
+}<br />
+server {<br />
+  listen 80;<br />
+  server_name  my_app.com www.my_app.com;<br />
+  root &#47;home&#47;user&#47;my_app&#47;current&#47;public&#47;;</p>
+<p>  location &#47; {<br />
+    # if file does not exist, use the last, in this case, @app<br />
+    try_files $uri $uri&#47;index.html $uri.html @app;<br />
+  }</p>
+<p>  location @app {<br />
+    # must match the name of upstream directive which is defined above<br />
+    proxy_pass http:&#47;&#47;my_app;<br />
+    proxy_redirect off;<br />
+    proxy_set_header X-Forwarded-For $remote_addr;<br />
+    proxy_set_header Host $http_host;<br />
+    # below line is only required for HTTPS<br />
+    # proxy_set_header   X-Forwarded-Proto https;<br />
+  }</p>
+<p>  # cache control<br />
+  location ~ ^&#47;(assets|images|javascripts|stylesheets|swfs|system)&#47; {<br />
+    expires max;<br />
+    add_header Cache-Control public;<br />
+    add_header Last-Modified "";<br />
+    add_header ETag "";<br />
+    break;<br />
+  }<br />
+}<br />
+[&#47;code]</p>
+<p>Veja a linha destacada, ela deve apontar para o caminho onde o socket do Unicorn est&aacute;.</p>
+<p>Com isso j&aacute; conseguimos executar nossa aplica&ccedil;&atilde;o. Vamos ent&atilde;o configurar o <a href="http:&#47;&#47;mina-deploy.github.io&#47;mina&#47;" rel="external nofollow" target="_blank">Mina<&#47;a> para fazer deploy.</p>
+<p>O setup &eacute; bem r&aacute;pido e f&aacute;cil, veja o <a rel="external nofollow" target="_blank" href="http:&#47;&#47;mina-deploy.github.io&#47;mina&#47;setting_up_a_project.html">guia oficial<&#47;a> para isso.</p>
+<p>Ap&oacute;s fazer um deploy, precisamos reiniciar o servidor pra recarregar a aplica&ccedil;&atilde;o, o Unicorn armazena o n&uacute;mero do processo rodando num arquivo pid que configuramos no <code>unicorn.rb<&#47;code> acima, precisamos matar esse processo e iniciar o servidor de aplica&ccedil;&atilde;o novamente, isso fica f&aacute;cil com a gema <code>mina-unicorn<&#47;code> pois ela faz tudo pra n&oacute;s, s&oacute; precisamos inclui-la, passar o caminho do arquivo pid e chamar a tarefa <code>unicorn:restart<&#47;code>, veja abaixo:</p>
+<p>[code lang="ruby"]<br />
+# Gemfile<br />
+gem 'mina-unicorn', :require => false<br />
+[&#47;code]</p>
+<p>[code lang="ruby" hl_lines="6 14 57"]<br />
+# config&#47;deploy.rb<br />
+require 'mina&#47;bundler'<br />
+require 'mina&#47;rails'<br />
+require 'mina&#47;git'<br />
+require 'mina&#47;rvm'<br />
+require 'mina&#47;unicorn'</p>
+<p>set :domain, 'XXX.XXX.XX.XXX' # ip address<br />
+set :deploy_to, '&#47;home&#47;user&#47;my_app'<br />
+set :repository, 'git@github.com:user&#47;my_app.git'<br />
+set :branch, 'master'<br />
+set :user, 'user' # Username in the server to SSH to.</p>
+<p>set :unicorn_pid, "#{deploy_to}&#47;shared&#47;pids&#47;unicorn.pid"</p>
+<p># Set forward_agent to use local SSH keys<br />
+set :forward_agent, true</p>
+<p># Manually create these paths in shared&#47; (eg: shared&#47;config&#47;database.yml) in your server.<br />
+# They will be linked in the 'deploy:link_shared_paths' step.<br />
+set :shared_paths, ['config&#47;database.yml', 'log']</p>
+<p># This task is the environment that is loaded for most commands, such as<br />
+# `mina deploy` or `mina rake`.<br />
+task :environment do<br />
+  # For those using RVM, use this to load an RVM version@gemset.<br />
+  invoke :'rvm:use[ruby-2.1.2]'<br />
+end</p>
+<p># Put any custom mkdir's in here for when `mina setup` is ran.<br />
+# For Rails apps, we'll make some of the shared paths that are shared between<br />
+# all releases.<br />
+task :setup => :environment do<br />
+  queue! %[mkdir -p "#{deploy_to}&#47;shared&#47;log"]<br />
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}&#47;shared&#47;log"]</p>
+<p>  queue! %[mkdir -p "#{deploy_to}&#47;shared&#47;config"]<br />
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}&#47;shared&#47;config"]</p>
+<p>  queue! %[touch "#{deploy_to}&#47;shared&#47;config&#47;database.yml"]<br />
+  queue  %[echo "-----> Be sure to edit 'shared&#47;config&#47;database.yml'."]<br />
+end</p>
+<p>desc "Deploys the current version to the server."<br />
+task :deploy => :environment do<br />
+  deploy do<br />
+    # Put things that will set up an empty directory into a fully set-up<br />
+    # instance of your project.<br />
+    invoke :'git:clone'<br />
+    invoke :'deploy:link_shared_paths'<br />
+    invoke :'bundle:install'<br />
+    invoke :'rails:db_migrate'<br />
+    invoke :'rails:assets_precompile'<br />
+    invoke :'deploy:cleanup'</p>
+<p>    to :launch do<br />
+      invoke :'unicorn:restart'<br />
+    end<br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>Pronto, temos nosso setup conclu&iacute;do. Deixe sua opini&atilde;o nos coment&aacute;rios. </p>
+<p>At&eacute; mais.</p>

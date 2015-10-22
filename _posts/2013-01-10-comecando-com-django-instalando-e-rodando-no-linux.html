@@ -1,0 +1,498 @@
+---
+layout: post
+status: publish
+published: true
+title: Come&ccedil;ando com Django - Instalando e Rodando no Linux
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai pessoal, tudo bom?\r\n\r\nVenho falar de <strong>Django<&#47;strong>
+  hoje, irei mostrar como preparar um ambiente de desenvolvimento no <strong>Linux<&#47;strong>
+  (Ubuntu 12.04 LTS), explicar como essa ferramenta funciona e criar um projeto na
+  pr&aacute;tica. Se voc&ecirc; n&atilde;o conhece o Django, recomendo que leia <a
+  href=\"blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework#django-ref\"
+  target=\"_blank\">esse post<&#47;a> onde fa&ccedil;o uma breve introdu&ccedil;&atilde;o.\r\n\r\n<a
+  href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;01&#47;10&#47;comecando-com-django-instalando-e-rodando-no-linux&#47;\"><img
+  class=\"alignnone size-full wp-image-1104\" title=\"come&ccedil;ando-com-django-framework\"
+  src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;come&ccedil;ando-com-django-framework1.jpg\"
+  alt=\"come&ccedil;ando-com-django-framework\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n<h2>"
+wordpress_id: 927
+wordpress_url: http://blog.glaucocustodio.com/?p=927
+date: '2013-01-10 20:49:29 -0200'
+date_gmt: '2013-01-10 20:49:29 -0200'
+categories:
+- Python
+tags:
+- django
+comments:
+- id: 451
+  author: Leandro
+  author_email: leandro@professionalit.com.br
+  author_url: http://blog.professionalit.com.br
+  date: '2013-03-19 19:00:20 -0300'
+  date_gmt: '2013-03-19 19:00:20 -0300'
+  content: Muito Bom Glauco, parab&eacute;ns pelo tutorial.
+- id: 477
+  author: Henrique Leal
+  author_email: hm.leal@hotmail.com
+  author_url: ''
+  date: '2013-03-26 11:48:14 -0300'
+  date_gmt: '2013-03-26 11:48:14 -0300'
+  content: "Muito bom o artigo, mas ainda acho que deveria ser incentivado a utiliza&ccedil;&atilde;o
+    de um virtualenv pra separar a instala&ccedil;&atilde;o do Django do sistema ;)\r\n\r\nNo
+    mais excelente artigo, e considero o melhor framework da atualidade.\r\n\r\nAbra&ccedil;os"
+- id: 478
+  author: Glauco Cust&oacute;dio
+  author_email: glauco.custodio@gmail.com
+  author_url: http://glaucocustodio.com
+  date: '2013-03-26 12:00:25 -0300'
+  date_gmt: '2013-03-26 12:00:25 -0300'
+  content: "Virtualenv &eacute; bom, &eacute; que no meu caso n&atilde;o se aplica,
+    geralmente s&oacute; tenho uma vers&atilde;o do Django.\r\n\r\nMas &eacute; uma
+    boa alternativa pra quem precisa de ambientes heterog&ecirc;neos.\r\n\r\nAbra&ccedil;o."
+- id: 677
+  author: Helder Silva
+  author_email: helder.dds@gmail.com
+  author_url: ''
+  date: '2013-06-04 17:49:10 -0300'
+  date_gmt: '2013-06-04 17:49:10 -0300'
+  content: "Muito bom o tutorial.\r\nS&oacute; faltou alguns detalhes, como:\r\n*
+    ter o banco de dados j&aacute; criado e com o mesmo nome do projeto.\r\n* executar
+    o comando \"python manage.py syncdb\", ap&oacute;s liberar a &aacute;rea do admin.\r\nSou
+    iniciante, portanto essas informa&ccedil;&otilde;es me fizeram falta.\r\nMas estou
+    muito satisfeito com os resultados.\r\nParab&eacute;ns pela iniciativa.\r\nMe
+    ajudou muito, obrigado!"
+- id: 1092
+  author: Alex
+  author_email: alex.cc20@hotmail.com
+  author_url: ''
+  date: '2013-08-09 23:08:13 -0300'
+  date_gmt: '2013-08-09 23:08:13 -0300'
+  content: Muito bom o tutorial cara, parab&eacute;ns!
+- id: 1121
+  author: red
+  author_email: raymundoesjr@yahoo.com.br
+  author_url: ''
+  date: '2013-08-15 00:06:50 -0300'
+  date_gmt: '2013-08-15 00:06:50 -0300'
+  content: "Parab&eacute;ns pela continuidade em suas publica&ccedil;&otilde;es, e
+    de qualidade!\r\n\r\n\"\r\nComo irei utilizar banco de dados MySQL e o gerenciador
+    de pacotes PIP nesse tutorial, preciso instal&aacute;-los, rode o comando sudo
+    apt-get install python-mysqldb python-pip e tudo deve estar ok.\r\n\r\nVamos baixar
+    o Django agora, rode o comando wget https:&#47;&#47;www.djangoproject.com&#47;m&#47;releases&#47;1.4&#47;Django-1.4.3.tar.gz
+    no terminal onde deseja salvar o arquivo ou entre no site.\r\n\"\r\n\r\nUma coisa,
+    e se eu j&aacute; tiver instalado o xampp, o que s&oacute; preciso &eacute; instalar
+    o pip e o django?\r\n\r\nAbra&ccedil;o!"
+- id: 1186
+  author: Lucas Gomide
+  author_email: lucaslg200@gmail.com
+  author_url: ''
+  date: '2013-08-31 14:29:33 -0300'
+  date_gmt: '2013-08-31 14:29:33 -0300'
+  content: Cara muito louco, o Django &eacute; sensacional. Parab&eacute;ns pelo tutorial
+    !
+- id: 1204
+  author: Gabriel Barreto
+  author_email: gabriel_barreto_snp@hotmail.com
+  author_url: ''
+  date: '2013-09-03 13:30:00 -0300'
+  date_gmt: '2013-09-03 13:30:00 -0300'
+  content: "Eu gostei muito ficou &oacute;timo voc&ecirc;s poderiam me ajudar com
+    uma coisa\r\n\r\neu gostaria de saber se tem como eu criar uma pagina ali igual
+    fez com noticias mais agora de cadastro\r\ncom os campos\r\n\r\n- usu&aacute;rio\r\n-
+    senha\r\n- base\r\n- IP\r\n- porta"
+- id: 1230
+  author: Sidney Soares
+  author_email: contato@sidneysoares.com
+  author_url: ''
+  date: '2013-09-11 13:11:12 -0300'
+  date_gmt: '2013-09-11 13:11:12 -0300'
+  content: Fizeram falta para mim tamb&eacute;m, mas no geral o tutorial t&aacute;
+    bem explicado.
+- id: 1231
+  author: Sidney Soares
+  author_email: contato@sidneysoares.com
+  author_url: ''
+  date: '2013-09-11 13:27:34 -0300'
+  date_gmt: '2013-09-11 13:27:34 -0300'
+  content: O comando python manage.py syncdb n&atilde;o funciona...
+- id: 1277
+  author: lucas
+  author_email: lucas@hotmail.com
+  author_url: ''
+  date: '2013-09-27 12:36:59 -0300'
+  date_gmt: '2013-09-27 12:36:59 -0300'
+  content: Glauco voc&ecirc; poderia criar mais tutorias de como criar aplica&ccedil;&otilde;es
+    web no django
+- id: 1317
+  author: Gabriel Barreto
+  author_email: gabriel_barreto_snp@hotmail.com
+  author_url: ''
+  date: '2013-10-04 14:40:55 -0300'
+  date_gmt: '2013-10-04 14:40:55 -0300'
+  content: ai por favor algu&eacute;m me ajuda, eu gostaria de saber como colocar
+    um campo de select quem puder me ajudar fico grato.
+- id: 1361
+  author: Arthur
+  author_email: arthur.4lves@gmail.com
+  author_url: http://nop
+  date: '2013-10-12 20:48:28 -0300'
+  date_gmt: '2013-10-12 20:48:28 -0300'
+  content: "Excelente amigo, precisava de um tutorial de django simples e pratico
+    pra entender. S&oacute; aqui eu encontrei algo r&aacute;pido e bem explicado.\r\n\r\nParab&eacute;ns
+    e Abrasss"
+- id: 1481
+  author: Regis
+  author_email: rg3915@yahoo.com.br
+  author_url: http://latexbr.blogspot.com.br/
+  date: '2013-11-17 19:02:46 -0200'
+  date_gmt: '2013-11-17 19:02:46 -0200'
+  content: Parab&eacute;ns Glauco, agora s&oacute; falta voc&ecirc; fazer um post
+    sobre os formul&aacute;rios.
+- id: 1702
+  author: Natanael Souza
+  author_email: natan.cc@msn.com
+  author_url: ''
+  date: '2014-03-07 02:50:42 -0300'
+  date_gmt: '2014-03-07 02:50:42 -0300'
+  content: "Ol&aacute;, voc&ecirc; n&atilde;o ensina como criar o banco de dados,
+    por&eacute;m o comando seria, \"create database meu_projeto;\"?\r\n\r\nEstou rodando
+    esse c&oacute;digo no terminal do ubuntu 13.0 e tenho como resultado:  \"No comand
+    create found\".\r\n\r\n\r\nObrigado pelo tutorial, est&aacute; muito bem organizado!!!"
+- id: 1725
+  author: Natanael Souza
+  author_email: natan.cc@msn.com
+  author_url: ''
+  date: '2014-03-09 04:26:50 -0300'
+  date_gmt: '2014-03-09 04:26:50 -0300'
+  content: Acabei de terminar o tutorial, parab&eacute;ns. Estou ansioso por mais
+    tutoriais de Django.
+- id: 1811
+  author: Natanael Souza
+  author_email: nss@cin.ufpe.br
+  author_url: ''
+  date: '2014-04-03 17:28:04 -0300'
+  date_gmt: '2014-04-03 17:28:04 -0300'
+  content: "Fiz esse tutorial faz um tempo j&aacute;, voltei pra ver se tinha continua&ccedil;&atilde;o
+    :D\r\nSe voc&ecirc; aceitar sugest&otilde;es, seria legal um guia pra manipular
+    imagens e fazer um album de fotos :D"
+- id: 2320
+  author: Luan
+  author_email: luansilima@gmail.com
+  author_url: ''
+  date: '2014-05-23 16:12:42 -0300'
+  date_gmt: '2014-05-23 16:12:42 -0300'
+  content: mto cara, parab&eacute;ns pelo seu trabalho mto bom msm
+- id: 2864
+  author: Edilson
+  author_email: dinho326@gmail.com
+  author_url: ''
+  date: '2014-08-06 11:49:50 -0300'
+  date_gmt: '2014-08-06 11:49:50 -0300'
+  content: Parab&eacute;ns pelo tutorial brother, muito bom para quem t&aacute; iniciando.
+- id: 2872
+  author: diogo braga
+  author_email: diogobsb@hotmail.com
+  author_url: ''
+  date: '2014-08-07 12:29:33 -0300'
+  date_gmt: '2014-08-07 12:29:33 -0300'
+  content: muito bom, parabens pela otima introdu&ccedil;&atilde;o ao django.
+- id: 22993
+  author: fernando
+  author_email: fjanuarioazevedo@gmail.com
+  author_url: ''
+  date: '2015-03-02 03:36:04 -0300'
+  date_gmt: '2015-03-02 03:36:04 -0300'
+  content: esse tutorial top viu, valeuu.
+- id: 23012
+  author: Fl&aacute;vio Micheletti
+  author_email: flaviomicheletti@hotmail.com
+  author_url: http://www.devfuria.com.br
+  date: '2015-03-02 10:28:19 -0300'
+  date_gmt: '2015-03-02 10:28:19 -0300'
+  content: 'A comunidade carece de artigos  como este: muito bem escrito e de f&aacute;cil
+    acompanhamento! Parab&eacute;ns!'
+- id: 23013
+  author: Angelo
+  author_email: angelo.gemini@gmail.com
+  author_url: ''
+  date: '2015-03-02 10:41:48 -0300'
+  date_gmt: '2015-03-02 10:41:48 -0300'
+  content: Excelente! R&aacute;pido e eficiente nas explica&ccedil;&otilde;es. Tentei
+    aprender uma vez e a exper&ecirc;ncia n&atilde;o foi muito produtiva, mas depois
+    deste seu material ficou show. Parab&eacute;ns
+- id: 28149
+  author: Anselmo
+  author_email: anselmojacyntho@gmail.com
+  author_url: ''
+  date: '2015-04-18 01:22:57 -0300'
+  date_gmt: '2015-04-18 01:22:57 -0300'
+  content: "Cara, fant&aacute;stico! Estava em duvida se me dedicava a esse cara,
+    mas a resposta j&aacute; &eacute; obvia! \r\n\r\nMuito obrigado"
+- id: 28793
+  author: 'BibSonomy :: url :: Come&ccedil;ando com Django &ndash; Instalando e Rodando
+    no Linux | JustCode'
+  author_email: ''
+  author_url: http://www.bibsonomy.org/url/b9d88b9f287fe239a97ed7616211850d/christianoavila
+  date: '2015-04-24 13:51:02 -0300'
+  date_gmt: '2015-04-24 13:51:02 -0300'
+  content: "[...] date&nbsp;|&nbsp; title ) order:&nbsp;( ascending&nbsp;|&nbsp; descending
+    ) &nbsp;&nbsp;1Come&ccedil;ando com Django &ndash; Instalando e Rodando no Linux
+    | JustCode&nbsp;Aqui o assunto &eacute; c&oacute;digo: Ruby, Python, Git, Linux
+    e o que precisar. 4 minutes and 37 seconds ago [...]"
+- id: 28896
+  author: Jether Rodrigues
+  author_email: jetherrodrigues@gmail.com
+  author_url: http://www.i3focus.com.br
+  date: '2015-04-25 19:36:08 -0300'
+  date_gmt: '2015-04-25 19:36:08 -0300'
+  content: "Muito bom, estou come&ccedil;ando com Django e gostei muito do tutorial.\r\nParab&eacute;ns.\r\n\r\nObs.:
+    poderia utilizar o PIP para instalar o Django, fiz assim: pop install Django==1.8\r\n\r\nVlww!"
+- id: 30731
+  author: Pablo Ferreira
+  author_email: unixpablo@hotmail.com
+  author_url: http://unixpablo.blogspot.com.br/
+  date: '2015-05-15 18:38:19 -0300'
+  date_gmt: '2015-05-15 18:38:19 -0300'
+  content: "N&atilde;o cheguei a testar esse tutorial para saber se, seguindo a risca,
+    ele funcionaria. Mas acho que a iniciativa seria mais vista se voc&ecirc; colocasse
+    uma tradu&ccedil;&atilde;o do documento oficial do Django.\r\n\r\nDjango &eacute;
+    uma ferramenta para projetos profissionais, acho que os profissionais gostariam
+    de visualizar um documento oficial para ter mais seguran&ccedil;a."
+- id: 36622
+  author: Jo&atilde;o Paulo
+  author_email: jpaulo_pacheco@hotmail.com
+  author_url: ''
+  date: '2015-07-22 02:03:51 -0300'
+  date_gmt: '2015-07-22 02:03:51 -0300'
+  content: "<b>Parab&eacute;ns<b>pela iniciativa, a dificuldade do amigo do coment&aacute;rio
+    &eacute; a mesma minha, estou buscando as solu&ccedil;&otilde;es. Pessoas como
+    voc&ecirc; ( Glauco ) simplificam a vida e motivam as pessoas a vencer desafios.\r\nObrigado"
+---
+<p>E ai pessoal, tudo bom?</p>
+<p>Venho falar de <strong>Django<&#47;strong> hoje, irei mostrar como preparar um ambiente de desenvolvimento no <strong>Linux<&#47;strong> (Ubuntu 12.04 LTS), explicar como essa ferramenta funciona e criar um projeto na pr&aacute;tica. Se voc&ecirc; n&atilde;o conhece o Django, recomendo que leia <a href="blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework#django-ref" target="_blank">esse post<&#47;a> onde fa&ccedil;o uma breve introdu&ccedil;&atilde;o.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;01&#47;10&#47;comecando-com-django-instalando-e-rodando-no-linux&#47;"><img class="alignnone size-full wp-image-1104" title="come&ccedil;ando-com-django-framework" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;come&ccedil;ando-com-django-framework1.jpg" alt="come&ccedil;ando-com-django-framework" width="580" height="240" &#47;><&#47;a></p>
+<h2><a id="more"></a><a id="more-927"></a>&Iacute;ndice<&#47;h2></p>
+<ul>
+<li><a href="#installation">Instalar ambiente de desenvolvimento Django 1.4 no Linux (Ubuntu)<&#47;a><&#47;li>
+<li><a href="#how-django-works">Aprender como Django trabalha<&#47;a><&#47;li>
+<li><a href="#creating-a-project">Criar um site (projeto)<&#47;a><&#47;li>
+<li><a href="#setting-project">Configurar um projeto<&#47;a><&#47;li>
+<li><a href="#creating-a-plugable-application">Criar uma aplica&ccedil;&atilde;o plug&aacute;vel (sistema de not&iacute;cias)<&#47;a><&#47;li>
+<li><a href="#admin-interface">Gerenciar registros pela &aacute;rea administrativa<&#47;a><&#47;li>
+<li><a href="#displaying-records">Listar registros<&#47;a>
+<ul>
+<li><a href="#urls">Urls<&#47;a><&#47;li>
+<li><a href="#views">Views<&#47;a><&#47;li>
+<li><a href="#templates">Templates<&#47;a><&#47;li><br />
+<&#47;ul><br />
+<&#47;li><br />
+<&#47;ul></p>
+<h2 id="installation">Instala&ccedil;&atilde;o<&#47;h2><br />
+Os passos abaixo s&atilde;o destinados para Linux Ubuntu (12.04 LTS), caso voc&ecirc; esteja no Windows e n&atilde;o queira trocar (o que n&atilde;o &eacute; recomendado), pode ver como preparar um ambiente de desenvolvimento <a title="Instalando Django no Windows" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;02&#47;instalar-django-no-windows&#47;" target="_blank">aqui<&#47;a>.</p>
+<p>Django &eacute; um framework escrito em Python, por isso n&atilde;o precisamos nos preoupar com a linguagem no Linux porque ela j&aacute; vem instalada.</p>
+<p>Como irei utilizar banco de dados MySQL e o gerenciador de pacotes PIP nesse tutorial, preciso instal&aacute;-los, rode o comando <code>sudo apt-get install python-mysqldb python-pip<&#47;code> e tudo deve estar ok.</p>
+<p>Instale tamb&eacute;m as bibliotecas <code>libmysqlclient-dev<&#47;code> e <code>python-dev<&#47;code> atrav&eacute;s do comando <code>sudo apt-get install libmysqlclient-dev python-dev<&#47;code>.</p>
+<p>Vamos baixar o Django agora, rode o comando <code>wget https:&#47;&#47;www.djangoproject.com&#47;m&#47;releases&#47;1.4&#47;Django-1.4.3.tar.gz<&#47;code> no terminal onde deseja salvar o arquivo ou entre no <a href="https:&#47;&#47;www.djangoproject.com&#47;download&#47;" rel="external nofollow" target="_blank">site<&#47;a>.</p>
+<p>Extraia o arquivo:<br />
+[code language="bash"]tar xzvf Django-1.4.3.tar.gz[&#47;code]<br />
+Acesse a pasta:<br />
+[code language="bash"]cd Django-1.4.3[&#47;code]<br />
+E instale:<br />
+[code language="bash"]sudo python setup.py install[&#47;code]<br />
+Aguarde um instante e j&aacute; teremos nosso ambiente Django para brincar!</p>
+<h2 id="how-django-works">Entendendo o Django<&#47;h2><br />
+O Django &eacute; um framework MVC, ou seja, divide em tr&ecirc;s camadas nosso c&oacute;digo, por&eacute;m ele utiliza outro nome para o que conhecemos por model, view e controller. Com ele falamos em MVT, que &eacute; model, view e template. O que &eacute; isso?</p>
+<ul>
+<li>Model &eacute; onde a l&oacute;gica acontece, todo regra de neg&oacute;cio fica aqui.<&#47;li>
+<li>View &eacute; onde fazemos a intermedia&ccedil;&atilde;o entre a camada de l&oacute;gica (model) e apresenta&ccedil;&atilde;o (template). Ela faz o mesmo papel dos controllers do Rails e CakePHP.<&#47;li>
+<li>Template &eacute; a camada de apresenta&ccedil;&atilde;o, deve ser usada l&oacute;gica m&iacute;nima aqui, o Django tamb&eacute;m n&atilde;o nos permite fazermos muito al&eacute;m do que devemos. Essa camada faz o papel das views do Rails e CakePHP.<&#47;li><br />
+<&#47;ul><br />
+A forma de trabalho do Django tamb&eacute;m &eacute; um pouco diferente do que muitos podem estar acostumados, com ele falamos em aplica&ccedil;&otilde;es plug&aacute;veis. Esse conceito serve para aumentar a produtividade e evitar a repeti&ccedil;&atilde;o de c&oacute;digo (don't repeat yourself).</p>
+<p>Imagina que trabalhamos em uma empresa que faz sites e que em quase todos eles  temos uma galeria de fotos. Ap&oacute;s j&aacute; termos uma galeria pronta, o que voc&ecirc; faria quando chegasse um novo servi&ccedil;o? Faria outra do in&iacute;cio ou copiaria e adaptava uma j&aacute; existente?</p>
+<p>No Django, essa galeria de fotos seria uma aplica&ccedil;&atilde;o plug&aacute;vel, assim toda vez que chegasse um novo servi&ccedil;o apenas teriamos que "plugar".</p>
+<p>Cada novo site que chegasse na empresa seria um projeto Django, que nada mais &eacute; do que um conjunto de aplica&ccedil;&otilde;es plug&aacute;veis e configura&ccedil;&otilde;es espec&iacute;ficas.</p>
+<p>Assim temos a l&oacute;gica: um projeto pode possuir muitas aplica&ccedil;&otilde;es e uma aplica&ccedil;&atilde;o pode estar em muitos projetos.</p>
+<h2 id="creating-a-project">Criando um Projeto<&#47;h2><br />
+Acesse via terminal o local que deseja criar o projeto e execute o comando <code>django-admin.py startproject project_name<&#47;code>, substitua "project_name" pelo nome do seu projeto.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;criando-primeiro-projeto-django.jpg"><img class="alignnone size-full wp-image-930" title="criando-primeiro-projeto-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;criando-primeiro-projeto-django.jpg" alt="criando-primeiro-projeto-django" width="748"  &#47;><&#47;a></p>
+<p>Ser&aacute; criado um diret&oacute;rio com o nome do projeto, ao acessar e listar o conte&uacute;do veremos que temos outro diret&oacute;rio com o mesmo nome, o primeiro de fora n&atilde;o &eacute; importante, podemos dar o nome que quisermos, mas o interno ser&aacute; usado no projeto e deve-se tomar cuidado ao mudar.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;estrutura-do-projeto-django.jpg"><img class="alignnone size-full wp-image-932" title="estrutura-do-projeto-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;estrutura-do-projeto-django.jpg" alt="estrutura-do-projeto-django" width="760" &#47;><&#47;a></p>
+<p>Nesse ponto j&aacute; podemos rodar o projeto, para isso execute o comando <code>python manage.py runserver<&#47;code> na pasta do projeto.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;rodando-primeiro-projeto-django.jpg"><img class="alignnone size-full wp-image-934" title="rodando-primeiro-projeto-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;rodando-primeiro-projeto-django.jpg" alt="rodando-primeiro-projeto-django" width="750"  &#47;><&#47;a></p>
+<p>O Django validar&aacute; os models (ainda n&atilde;o temos nenhum) e iniciar&aacute; o servidor de desenvolvimento na porta 8000 por padr&atilde;o, ao acessar o endere&ccedil;o <code>127.0.0.1:8000<&#47;code> obteremos a tela inicial.</p>
+<div class="note">Podemos definir a porta que queremos rodar, basta colocar o n&uacute;mero na frente. Ex: <code>python manage.py runserver 8080<&#47;code> (para porta "8080").<&#47;div><br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;servidor-de-desenvolvimento-django-rodando.jpg"><img class="alignnone size-full wp-image-936" title="servidor-de-desenvolvimento-django-rodando" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;servidor-de-desenvolvimento-django-rodando.jpg" alt="servidor-de-desenvolvimento-django-rodando" width="915" &#47;><&#47;a></p>
+<div class="alert">Esse servidor &eacute; apenas para desenvolvimento e n&atilde;o deve ser usado em produ&ccedil;&atilde;o, para isso escolha outro como Apache, Ngix etc..<&#47;div></p>
+<h2 id="setting-project">Configurando o Projeto<&#47;h2><br />
+Abra o arquivo <code>settings.py<&#47;code> que est&aacute; dentro da pasta do projeto e vamos fazer algumas configura&ccedil;&otilde;es.</p>
+<p>Defina os dados de administrador do site:<br />
+[code language="python"]ADMINS = (<br />
+    ('Admin', 'admin@provedor.com'),<br />
+)[&#47;code]<br />
+Acerte o time zone e o language code para sua localidade:<br />
+[code language="python"]TIME_ZONE = 'America&#47;Sao_Paulo'<br />
+LANGUAGE_CODE = 'pt-br'[&#47;code]<br />
+Vamos configurar o banco de dados, defina os dados da conex&atilde;o como abaixo para utiliza&ccedil;&atilde;o do MySQL (adeque os dados de acesso para sua m&aacute;quina):<br />
+[code language="python"]DATABASES = {<br />
+    'default': {<br />
+        'ENGINE': 'django.db.backends.mysql',<br />
+        'NAME': 'first_django_project',<br />
+        'USER': 'root',<br />
+        'PASSWORD': '',<br />
+        'HOST': 'localhost',<br />
+        'PORT': '',<br />
+    }<br />
+}[&#47;code]</p>
+<div class="alert">
+N&atilde;o esque&ccedil;a de criar um banco de dados com o nome definido acima, no meu caso, irei criar um chamado <code>first_django_project<&#47;code>.<br />
+<&#47;div></p>
+<h3>Usando South para Migrar Banco de Dados<&#47;h3><br />
+O Django possui um comando chamado <code>syncdb<&#47;code>, toda vez que criamos uma aplica&ccedil;&atilde;o com um model, precisamos rodar o comando <code>python manage.py syncdb<&#47;code> para que o Django varra nosso model e crie uma tabela com os campos definidos.</p>
+<p>Isso &eacute; maravilhoso, &uacute;nico parte ruim, &eacute; que quando alteramos o model - implementamos um novo campo por exemplo, ele n&atilde;o espelha essa altera&ccedil;&atilde;o para n&oacute;s no banco de dados, ent&atilde;o precisamos editar a tabela manualmente.</p>
+<p>Para resolver isso, foi criado o South, ele &eacute; um migrador inteligente de dados e banco de dados para projetos Django.</p>
+<p>Primeiro, vamos instalar ele em nossa m&aacute;quina atrav&eacute;s do comando:<br />
+[code language="bash"]pip install south[&#47;code]</p>
+<div class="note">Rode como super usu&aacute;rio ou com <code>sudo<&#47;code> caso obtenha erro.<&#47;div><br />
+Agora precisamos adicionar ele em nosso projeto. Lembra que eu disse l&aacute; em cima que um projeto Django &eacute; constitu&iacute;do de v&aacute;rias aplica&ccedil;&otilde;es plug&aacute;veis? Ent&atilde;o, agora precisamos "plugar" o South em nosso projeto, para isso adicione <code>south<&#47;code> em <code>INSTALLED_APPS<&#47;code> dentro do arquivo <code>settings.py<&#47;code>. Toda vez que precisarmos plugar uma aplica&ccedil;&atilde;o em nosso projeto, deve-se adicionar o nome dela nessa tupla no arquivo de configura&ccedil;&atilde;o.</p>
+<p>Agora vamos rodar o comando respons&aacute;vel por criar as tabelas de nossa aplica&ccedil;&atilde;o, execute:<br />
+[code language="bash"]python manage.py syncdb[&#47;code]<br />
+O South utiliza algumas tabelas que ainda n&atilde;o est&atilde;o criadas, por isso precisamos rodar o comando <code>syncdb<&#47;code>, mas ser&aacute; s&oacute; dessa vez.</p>
+<p>Veja o retorno do comando:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;sincronizando-o-banco-de-dados-com-syncdb.jpg"><img class="alignnone size-full wp-image-944" title="sincronizando-o-banco-de-dados-com-syncdb" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;sincronizando-o-banco-de-dados-com-syncdb.jpg" alt="sincronizando-o-banco-de-dados-com-syncdb" width="790" height="732" &#47;><&#47;a></p>
+<p>Como temos o sistema de autentica&ccedil;&atilde;o <code>django.contrib.auth<&#47;code> que j&aacute; vem por padr&atilde;o nas aplica&ccedil;&otilde;es instaladas, quando rodamos pela primeira vez o <code>syncdb<&#47;code>, o Django pergunta se queremos criar um usu&aacute;rio, &eacute; recomendado que j&aacute; seja criado agora, isso ser&aacute; usado na &aacute;rea administrativa de nosso exemplo mais pra frente.</p>
+<p>Quanto ao South, ainda precisamos definir algumas coisas mais, assim que criarmos nossa primeira aplica&ccedil;&atilde;o volto a falar dele..</p>
+<h2 id="creating-a-plugable-application">Criando uma Aplica&ccedil;&atilde;o Plug&aacute;vel<&#47;h2><br />
+Vamos criar nossa primeira aplica&ccedil;&atilde;o Django agora, para isso execute o comando <code>python manage.py startapp news<&#47;code> no diret&oacute;rio do projeto, "news" &eacute; o nome de nossa aplica&ccedil;&atilde;o.</p>
+<p>Ser&aacute; criado uma pasta com o nome da aplica&ccedil;&atilde;o contendo os seguintes arquivos:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;primeira-aplicacao-criada-no-django.jpg"><img class="alignnone size-full wp-image-947" title="primeira-aplicacao-criada-no-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;primeira-aplicacao-criada-no-django.jpg" alt="primeira-aplicacao-criada-no-django" width="754" height="100" &#47;><&#47;a></p>
+<ul>
+<li>__init__.py: arquivo em branco que diz ao Python que esse diret&oacute;rio deve ser considerado como um Python package (veja mais <a href="http:&#47;&#47;docs.python.org&#47;2&#47;tutorial&#47;modules.html#packages" target="_blank">aqui<&#47;a>);<&#47;li>
+<li>models.py: esse arquivo conter&aacute; os campos e as principais regras de neg&oacute;cio de nossa aplica&ccedil;&atilde;o. Geralmente uma aplica&ccedil;&atilde;o pode ter mais de um model por arquivo - diferentemente do CakePHP e Ruby on Rails, por isso &eacute; chamado "models";<&#47;li>
+<li>views.py: arquivo que far&aacute; a intemedia&ccedil;&atilde;o entre os models e os templates;<&#47;li>
+<li>tests.py: como o nome j&aacute; diz, onde ser&atilde;o realizados os testes.<&#47;li><br />
+<&#47;ul><br />
+Agora que criamos nossa aplica&ccedil;&atilde;o, vamos plugar ela no projeto, lembra? Adicione a string <code>news<&#47;code> no <code>INSTALLED_APPS<&#47;code> do arquivo <code>settings.py<&#47;code>.</p>
+<p>Com nossa aplica&ccedil;&atilde;o plugada, vamos criar nosso primeiro model ent&atilde;o, abra o arquivo <code>models.py<&#47;code> e adicione o c&oacute;digo:<br />
+[code language="python"]# -*- coding: utf-8 -*-</p>
+<p>from django.db import models</p>
+<p>class News(models.Model):<br />
+  title = models.CharField('T&iacute;tulo', max_length=100)<br />
+  publication_date = models.DateTimeField('Data de publica&ccedil;&atilde;o', auto_now_add=True)<br />
+  content = models.TextField('Conte&uacute;do')</p>
+<p>  class Meta:<br />
+    verbose_name = 'not&iacute;cia'<br />
+    verbose_name_plural = 'not&iacute;cias'</p>
+<p>  def __unicode__(self):<br />
+    return self.title[&#47;code]</p>
+<div class="note">O trecho <code># -*- coding: utf-8 -*-<&#47;code> serve para informar qua estamos utilizando a codifica&ccedil;&atilde;o UTF-8.<&#47;div><br />
+Vamos analisar o que temos aqui..</p>
+<p>Come&ccedil;amos criando uma classe <code>News<&#47;code> que herda de <code>models.Model<&#47;code> para termos as funcionalidades de um model Django.</p>
+<p>Depois definimos tr&ecirc;s campos para nossa aplica&ccedil;&atilde;o, um t&iacute;tulo de tamanho m&aacute;ximo de 100 caracteres, um campo de data que &eacute; preenchido automaticamente (<code>auto_now_add=True<&#47;code>) e outro para o conte&uacute;do da not&iacute;cia que &eacute; do tipo texto. Outros tipos de campos podem ser vistos <a href="https:&#47;&#47;docs.djangoproject.com&#47;en&#47;1.4&#47;ref&#47;models&#47;fields&#47;#field-types" rel="external nofollow" target="_blank">aqui<&#47;a> na documenta&ccedil;&atilde;o oficial do Django.</p>
+<p>A classe <code>Meta<&#47;code> serve para definir algumas informa&ccedil;&otilde;es sobre o model, mais pra frente veremos seu uso.</p>
+<p>O m&eacute;todo <code>__unicode__<&#47;code> define o retorno padr&atilde;o, nesse caso definimos o t&iacute;tulo.</p>
+<p>Lembra do South? Ent&atilde;o, sempre quando queremos automatizar uma aplica&ccedil;&atilde;o para que as altera&ccedil;&otilde;es nos models sejam espelhadas no banco de dados, precisamos criar uma migra&ccedil;&atilde;o inicial, ela nada mais &eacute; do que um arquivo que poussi a estrutura de nossos models. Para criar a migra&ccedil;&atilde;o inicial rode o comando <code>python manage.py schemamigration news --initial<&#47;code> substituindo "news" pelo nome de sua aplica&ccedil;&atilde;o.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;usando-south-para-migracoes-no-django.jpg"><img class="alignnone size-full wp-image-958" title="usando-south-para-migracoes-no-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;usando-south-para-migracoes-no-django.jpg" alt="usando-south-para-migracoes-no-django" width="754" height="223" &#47;><&#47;a></p>
+<p>Depois de criada a migra&ccedil;&atilde;o inicial, vamos rodar ela agora para que as tabelas necess&aacute;rias possam ser criadas no banco de dados, execute o comando <code>python manage.py migrate news<&#47;code>.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;executando-migracao-com-south-em-projetos-django.jpg"><img class="alignnone size-full wp-image-961" title="executando-migracao-com-south-em-projetos-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;executando-migracao-com-south-em-projetos-django.jpg" alt="executando-migracao-com-south-em-projetos-django" width="764" height="171" &#47;><&#47;a></p>
+<p>Daqui pra frente, sempre quando alterarmos os models da aplica&ccedil;&atilde;o "news", basta executarmos <code>python manage.py schemamigration news --auto<&#47;code> para gerar a migra&ccedil;&atilde;o e depois <code>python manage.py migrate news<&#47;code> para que as altera&ccedil;&otilde;es sejam efetuadas no banco de dados, assim n&atilde;o precisamos ficar nos preocupando com campos de tabelas e focamos no desenvolvimento.</p>
+<div class="note">Podemos usar o comando <code>python manage.py migrate --list<&#47;code> para exibir todas migra&ccedil;&otilde;es definidas e se elas j&aacute; foram aplicadas ou n&atilde;o (lendo a tabela south_migrationhistory).<&#47;div></p>
+<h2 id="admin-interface">Interface Administrativa<&#47;h2><br />
+Uma das melhores features do Django sem d&uacute;vida &eacute; a interface administrativa, com ela podemos rapidamente construir funcionalidades rotineiras que nos tomariam mais tempo e c&oacute;digo utilizando outros ferramentas.</p>
+<p>Ela j&aacute; vem pronta e tudo o que precisamos fazer &eacute; plugar, para isso basta remover o coment&aacute;rio da linha <code>'django.contrib.admin'<&#47;code> no <code>INSTALLED_APPS<&#47;code> de nosso j&aacute; velho conhecido arquivo <code>settings.py<&#47;code>.<br />
+[code language="python"]INSTALLED_APPS = (<br />
+    'django.contrib.auth',<br />
+    'django.contrib.contenttypes',<br />
+    'django.contrib.sessions',<br />
+    'django.contrib.sites',<br />
+    'django.contrib.messages',<br />
+    'django.contrib.staticfiles',<br />
+    'south',<br />
+    'news',<br />
+    # Uncomment the next line to enable the admin:<br />
+    'django.contrib.admin',<br />
+    # Uncomment the next line to enable admin documentation:<br />
+    # 'django.contrib.admindocs',<br />
+)[&#47;code]<br />
+Caso voc&ecirc; queira, tamb&eacute;m podem ativar a documenta&ccedil;&atilde;o da &aacute;rea administrativa removendo o coment&aacute;rio da linha <code>'django.contrib.admindocs'<&#47;code>, mas por enquanto n&atilde;o irei fazer isso.</p>
+<p>A &aacute;rea administrativa j&aacute; est&aacute; ativa, s&oacute; precisamos habilitar o acesso a ela, basta abrirmos o arquivo <code>urls.py<&#47;code> dentro da pasta do projeto e remover o coment&aacute;rio das linhas pertinentes ao admin. Ficaremos com algo assim:<br />
+[code language="python"]from django.conf.urls import patterns, include, url</p>
+<p># Uncomment the next two lines to enable the admin:<br />
+from django.contrib import admin<br />
+admin.autodiscover()</p>
+<p>urlpatterns = patterns('',<br />
+    # Examples:<br />
+    # url(r'^$', 'first_django_project.views.home', name='home'),<br />
+    # url(r'^first_django_project&#47;', include('first_django_project.foo.urls')),</p>
+<p>    # Uncomment the admin&#47;doc line below to enable admin documentation:<br />
+    # url(r'^admin&#47;doc&#47;', include('django.contrib.admindocs.urls')),</p>
+<p>    # Uncomment the next line to enable the admin:<br />
+    url(r'^admin&#47;', include(admin.site.urls)),<br />
+)[&#47;code]</p>
+<div class="note">O arquivo <code>urls.py<&#47;code> &eacute; respons&aacute;vel por definir todas urls de nosso projeto, ele tem a mesma fun&ccedil;&atilde;o do <code>routes.rb<&#47;code> do Ruby on Rails.<&#47;div><br />
+Agora s&oacute; falta criar a tabela de log utilizada pelo admin, rode <code>python manage.py syncdb<&#47;code> pra isso. Ao acessar o projeto no endere&ccedil;o <code>http:&#47;&#47;127.0.0.1:8000&#47;<&#47;code> obteremos um aviso de p&aacute;gina n&atilde;o encontrada, mas n&atilde;o se preocupe com isso no momento..</p>
+<p>A &aacute;rea administrativa j&aacute; est&aacute; funcionando! Se voc&ecirc; acessar o endere&ccedil;o <code>http:&#47;&#47;127.0.0.1:8000&#47;admin<&#47;code> ver&aacute; a tela de login.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;area-administrativa-do-django.jpg"><img class="alignnone size-full wp-image-1028" title="area-administrativa-do-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;area-administrativa-do-django.jpg" alt="area-administrativa-do-django" width="902" height="379" &#47;><&#47;a></p>
+<p>Lembra do usu&aacute;rio que criamos anteriormente? Use ele para fazer login.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;aplicacoes-na-area-administrativa-do-django.jpg"><img class="alignnone size-full wp-image-1032" title="aplicacoes-na-area-administrativa-do-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;aplicacoes-na-area-administrativa-do-django.jpg" alt="aplicacoes-na-area-administrativa-do-django" width="903" height="254" &#47;><&#47;a></p>
+<p>Na p&aacute;gina inicial da interface administrativa podemos ver uma lista das aplica&ccedil;&otilde;es plug&aacute;veis que temos registradas, vamos incluir ai nosso sistema de not&iacute;cias tamb&eacute;m.</p>
+<h3> Registrando Models no Admin<&#47;h3><br />
+Na pasta de nossa aplica&ccedil;&atilde;o, crie um arquivo chamado <code>admin.py<&#47;code> e coloque o seguinte conte&uacute;do:<br />
+[code language="python"]from news.models import News<br />
+from django.contrib import admin</p>
+<p>admin.site.register(News)[&#47;code]<br />
+Na primeira linha importamos o model de nossa aplica&ccedil;&atilde;o, na segunda importamos o admin do Django e por &uacute;ltimos registramos nosso model <code>News<&#47;code> na &aacute;rea administrativa.</p>
+<p>Feito isso, reinicie o servidor e atualize a p&aacute;gina inicial do admin e l&aacute; estar&aacute; o link para o CRUD (cadastro, leitura, atualiza&ccedil;&atilde;o e exclus&atilde;o) de not&iacute;cias.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;registrando-aplicacoes-no-admin-do-django.png"><img class="alignnone size-full wp-image-1036" title="registrando-aplicacoes-no-admin-do-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;registrando-aplicacoes-no-admin-do-django.png" alt="registrando-aplicacoes-no-admin-do-django" width="748" height="287" &#47;><&#47;a></p>
+<p>Lembra da classe <code>Meta<&#47;code> que definimos dentro do model <code>News<&#47;code>? Nela criamos duas vari&aacute;veis, uma chamada <code>verbose_name<&#47;code> e outra chamada <code>verbose_name_plural<&#47;code>, a primeira serve para dar nome no singular e a segunda no plural, observe que dentro da aplica&ccedil;&atilde;o <code>News<&#47;code> na imagem acima temos um item chamado <code>Not&iacute;cias<&#47;code>, ele &eacute; exatamente o <code>verbose_name_plural<&#47;code> com a primeira letra em caixa alta que definimos no model.</p>
+<p>Agora, explore o admin e cadastre alguns registros no sistema de not&iacute;cias, nosso pr&oacute;ximo passo ser&aacute; fazer a listagem dos itens cadastrados na &aacute;rea p&uacute;blica do site.</p>
+<h2 id="displaying-records">Listando Registros<&#47;h2></p>
+<h3 id="urls">Urls<&#47;h3><br />
+Para fazer a listagem dos registros precisamos definir qual url ser&aacute; utilizada, abra o arquivo <code>urls.py<&#47;code> e adicione a linha abaixo:<br />
+[code language="python"]url(r'^$', 'news.views.index', name='home'),[&#47;code]</p>
+<div class="note">O mapeamento de urls no Django &eacute; feito com express&atilde;o regular.<&#47;div><br />
+Aqui criamos uma url de nome home (<code>name='home'<&#47;code>) que mapeia o endere&ccedil;o raiz do site (atrav&eacute;s da express&atilde;o regular <code>^$<&#47;code>) para a view <code>index<&#47;code> que est&aacute; no arquivo <code>views.py<&#47;code> da aplica&ccedil;&atilde;o <code>news<&#47;code>.</p>
+<h3 id="views">Views<&#47;h3><br />
+Vamos criar a view respons&aacute;vel por exibir os registros, abra o arquivo <code>views.py<&#47;code> de nossa aplica&ccedil;&atilde;o e adicione o seguinte c&oacute;digo:<br />
+[code language="python"]from django.shortcuts import render_to_response<br />
+from news.models import News</p>
+<p>def index(request):<br />
+  return render_to_response('news&#47;index.html',{<br />
+    'news': News.objects.all().order_by('-publication_date')<br />
+  })[&#47;code]<br />
+Nesse trecho fazemos as importa&ccedil;&otilde;es necess&aacute;rias, criamos a view <code>index<&#47;code> que renderiza o template <code>news&#47;index.html<&#47;code> e passamos a vari&aacute;vel <code>news<&#47;code> contendo todas as not&iacute;cias cadastradas ordenadas de forma decrescente (o <code>-<&#47;code> faz o papel de <code>DESC<&#47;code> no SQL) pela data de publica&ccedil;&atilde;o.</p>
+<div class="note">O Django nos fornece uma API para realizarmos opera&ccedil;&otilde;es com o banco de dados pelos models, no exemplo acima, utilizamos o m&eacute;todo <code>all<&#47;code> para obter todos os registros, veja mais <a href="https:&#47;&#47;docs.djangoproject.com&#47;en&#47;1.4&#47;topics&#47;db&#47;queries&#47;#retrieving-objects" rel="external nofollow" target="_blank">aqui<&#47;a>.<&#47;div></p>
+<h3 id="templates">Templates<&#47;h3><br />
+Precisamos agora dizer ao Django onde os templates de nossa aplica&ccedil;&atilde;o ser&atilde;o armazenados, eu escolhi criar uma pasta chamada "templates" no mesmo n&iacute;vel do arquivo <code>manage.py<&#47;code>. No arquivo <code>settings.py<&#47;code> temos uma vari&aacute;vel chamada <code>TEMPLATE_DIRS<&#47;code>, nela devemos adicionar os caminhos que o Django deve interpretar como templates do projeto, em meu arquivo eu deixei assim:<br />
+[code language="python"]TEMPLATE_DIRS = (<br />
+    os.path.join(PROJECT_ROOT_PATH, '..&#47;templates&#47;'),<br />
+    # Put strings here, like "&#47;home&#47;html&#47;django_templates" or "C:&#47;www&#47;django&#47;templates".<br />
+    # Always use forward slashes, even on Windows.<br />
+    # Don't forget to use absolute paths, not relative paths.<br />
+)[&#47;code]<br />
+E no come&ccedil;o do mesmo arquivo eu adiciono:<br />
+[code language="python"]import os, sys<br />
+PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))[&#47;code]<br />
+Aqui fazemos importa&ccedil;&otilde;es das classes <code>os<&#47;code> e <code>sys<&#47;code> e utilizamos os m&eacute;todos necess&aacute;rios para obter o caminho absoluto do arquivo <code>settings.py<&#47;code>.</p>
+<p>Para finalizar, vamos criar o template de nossa view, crie um arquivo chamado <code>index.html<&#47;code> dentro de <code>templates&#47;news<&#47;code> e adicione o seguinte conte&uacute;do:<br />
+[code language="html"]</p>
+<h1>Not&iacute;cias<&#47;h1></p>
+<p>{% for current in news %}</p>
+<h2>{{current.title}}<&#47;h2></p>
+<p><strong>{{current.publication_date}}<&#47;strong><&#47;p></p>
+<p>{{current.content}}<&#47;p><br />
+  <br&#47;><br />
+{% endfor %}<br />
+[&#47;code]</p>
+<div class="note">Utilize a tag <code>{{<&#47;code> de abertura e <code>}}<&#47;code> de fechamento para exibir dados.<&#47;div><br />
+Simplemente percorremos a vari&aacute;vel <code>news<&#47;code> atrav&eacute;s de um la&ccedil;o de repeti&ccedil;&atilde;o e exibimos os dados cadastrados. Veja o resultado:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;listando-registros-no-django.gif"><img class="alignnone size-full wp-image-1053" title="listando-registros-no-django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;listando-registros-no-django.gif" alt="listando-registros-no-django" width="903" height="393" &#47;><&#47;a></p>
+<p>O Django j&aacute; exibe a data de acordo com a localiza&ccedil;&atilde;o que definimos...</p>
+<p>Por hoje &eacute; s&oacute; pessoal, em breve volto com mais de Django. </p>
+<p>O c&oacute;digo fonte desse tutorial est&aacute; em meu <a rel="external nofollow" target="_blank" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Come%C3%A7ando%20com%20Django">GitHub<&#47;a>. O que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais.</p>

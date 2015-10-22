@@ -1,0 +1,67 @@
+---
+layout: post
+status: publish
+published: true
+title: Aplica&ccedil;&atilde;o Desktop Multiplataforma com Python
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3354
+wordpress_url: http://blog.glaucocustodio.com/?p=3354
+date: '2015-03-28 14:25:39 -0300'
+date_gmt: '2015-03-28 14:25:39 -0300'
+categories:
+- Python
+tags:
+- wxpython
+comments: []
+---
+<p>Logo nos dias de hoje, com ascens&atilde;o da web e mobile, voc&ecirc; vem me falar de aplica&ccedil;&otilde;es desktops, que rodam direto no sistema operacional?</p>
+<p>Se voc&ecirc; trabalha numa startup e deseja automatizar alguns processos fora do browser, por que n&atilde;o? O foco &eacute; entregar valor pro cliente, n&atilde;o importa de que forma.</p>
+<p>Voc&ecirc; precisa de algo alto n&iacute;vel, que seja r&aacute;pido pra fazer. O programa tem que ser multiplataforma, rodar em Linux e Windows principalmente.</p>
+<p>Esque&ccedil;a o Java, muito verboso, ser&aacute; que conseguimos fazer em Ruby ou Python?</p>
+<p>Python por ser uma linguagem mais madura e que tem abrang&ecirc;ncia n&atilde;o s&oacute; pra web parece uma boa solu&ccedil;&atilde;o.</p>
+<p>Pesquisando na net encontrei o <a href="http:&#47;&#47;www.wxpython.org&#47;" rel="external nofollow" target="_blank">wxPython<&#47;a>, um wrapper para a biblioteca cross-platform <a href="http:&#47;&#47;wxwidgets.org&#47;" rel="external nofollow" target="_blank">wxWidgets<&#47;a> que &eacute; feita em C++.</p>
+<h2>Setup<&#47;h2><br />
+Isso &eacute; o que precisamos para desenvolver com wxPython:<br />
+<!-- Biblioteca de desenvolvimento do GTK (libgtk2.0-dev): sudo apt-get install libgtk2.0-dev --></p>
+<ul>
+<li>Python 2.7 instalado (j&aacute; vem com Linux)<&#47;li>
+<li>wxPython: <code>sudo apt-get update &amp;&amp; sudo apt-get install python-wxtools<&#47;code><&#47;li>
+<li>CXFreeze (opcional, utilizado para construir os bin&aacute;rios): <code>sudo apt-get install cx-freeze<&#47;code><&#47;li>
+<li>PIP (opcional, &uacute;til se voc&ecirc; for instalar outras bibliotecas): <code>sudo apt-get install python-pip<&#47;code><&#47;li><br />
+<&#47;ul></p>
+<div class="alert">Como wxPython &eacute; uma biblioteca para construir aplica&ccedil;&otilde;es GUI, precisamos ter um ambiente X instalado. Voc&ecirc; ter&aacute; problemas se estiver instalando numa Vagrant box por exemplo.<&#47;div></p>
+<h2>Recursos<&#47;h2><br />
+Abaixo deixo alguns excelentes recursos que utilizei para aprender como desenvolver com wxPython (todos em ingl&ecirc;s):</p>
+<h3>Livros<&#47;h3></p>
+<ul>
+<li>wxPython 2.8 Application Development Cookbook (2010)<&#47;li>
+<li>wxPython in Action<&#47;li><br />
+<&#47;ul><br />
+O primeiro livro &eacute; muito bom, praticamente s&oacute; usei ele..</p>
+<h3>Tutoriais&#47;Documenta&ccedil;&atilde;o<&#47;h3></p>
+<ul>
+<li><a href="http:&#47;&#47;zetcode.com&#47;wxpython&#47;layout&#47;" rel="external nofollow" target="_blank">Layout management in wxPython<&#47;a><&#47;li>
+<li><a href="http:&#47;&#47;www.blog.pythonlibrary.org&#47;2014&#47;01&#47;31&#47;wxpython-how-to-catch-all-exceptions&#47;" rel="external nofollow" target="_blank">Catching all the Errors<&#47;a><&#47;li>
+<li><a href="http:&#47;&#47;xoomer.virgilio.it&#47;infinity77&#47;AGW_Docs&#47;index.html" rel="external nofollow" target="_blank">Advanced Generic Widgets (AGW)<&#47;a> &eacute; um pacote de widgets customizados&#47;melhorados. A partir da vers&atilde;o 2.8.9.2 ele foi integrado ao wxPython.<&#47;li><br />
+<&#47;ul><br />
+No projeto que criei, fiz uso do widget <code>UltimateListCtrl<&#47;code> contido no AGW, por&eacute;m, usei a vers&atilde;o standalone dispon&iacute;vel <a href="http:&#47;&#47;xoomer.virgilio.it&#47;infinity77&#47;main&#47;UltimateListCtrl.html" rel="external nofollow" target="_blank">aqui<&#47;a>.</p>
+<h3>Dicas<&#47;h3></p>
+<h4>Erros e feedback<&#47;h4><br />
+Por padr&atilde;o, os erros que ocorrem durante a execu&ccedil;&atilde;o do programa quando compilado n&atilde;o s&atilde;o exibidos. O programa trava e o usu&aacute;rio fica sem feedback. &Eacute; uma boa fazer uso do tutorial acima para exibir erros.</p>
+<h4>Use threads<&#47;h4><br />
+Opera&ccedil;&otilde;es bloqueantes como consumir dados de uma api ou manipular arquivos s&atilde;o recomendadas que sejam executas numa thread separada, para n&atilde;o obstruir o programa.</p>
+<p>S&oacute; tome cuidado porque uma thread paralela n&atilde;o pode modificar a interface gr&aacute;fica, voc&ecirc; deve fazer isso chamando callbacks. No primeiro livro citado tem um cap&iacute;tulo que fala sobre o tema, vale a penal ler.</p>
+<h4>Crie um Makefile<&#47;h4><br />
+Para buildar&#47;instalar a aplica&ccedil;&atilde;o, limpar arquivos&#47;banco de dados e tarefas como essas que necessitam de comandos shell, &eacute; bom colocar num Makefile, assim voc&ecirc; s&oacute; executa um comando para cada rotina.</p>
+<h4>Acessar janela principal<&#47;h4><br />
+Use <code>wx.GetApp().GetTopWindow()<&#47;code> em qualquer parte de sua aplica&ccedil;&atilde;o para ter acesso a janela principal (n&atilde;o esque&ccedil;a de importar o pacote <code>wx<&#47;code>). Se voc&ecirc; tem uma barra de status na primeira tela e deseja definir um texto nela a partir de outras classes por exemplo, inv&eacute;s de ficar passando o objeto principal como par&acirc;metro, basta voc&ecirc; usar o trecho acima que conseguir&aacute; acesso.</p>
+<h2>Conclus&atilde;o<&#47;h2></p>
+<p>&Eacute; isso pessoal, minha id&eacute;ia com esse post &eacute; apenas mostrar pra voc&ecirc;s que h&aacute; uma forma mais simples de criar esse tipo de aplica&ccedil;&atilde;o de uma forma menos dolorosa.</p>
+<p>At&eacute; mais.</p>

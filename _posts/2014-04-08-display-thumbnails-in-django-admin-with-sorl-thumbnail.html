@@ -1,0 +1,88 @@
+---
+layout: post
+status: publish
+published: true
+title: Display Thumbnails in Django Admin with Sorl Thumbnail
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 2877
+wordpress_url: http://blog.glaucocustodio.com/?p=2877
+date: '2014-04-08 14:48:22 -0300'
+date_gmt: '2014-04-08 14:48:22 -0300'
+categories:
+- Python
+tags:
+- django
+- sorl-thumbnail
+comments:
+- id: 28842
+  author: Mitch Davis
+  author_email: mjd+glaucocustodio@afork.com
+  author_url: ''
+  date: '2015-04-25 05:50:24 -0300'
+  date_gmt: '2015-04-25 05:50:24 -0300'
+  content: Thanks!  This was just the article I was looking for.  Now I have nice
+    thumbnails in my Django admin page.  I'd still like to see thumbnails on my details
+    page, but I'll work out how to do that another day.
+---
+<p>By default in Django 1.5, admin inline images display just the link to the picture:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images.png"><img class="alignnone size-full wp-image-2878" title="django-admin-inline-images" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images.png" alt="" &#47;><&#47;a></p>
+<p>In our <code>admin.py<&#47;code> we have something like:</p>
+<p>[code language="python"]<br />
+class ImageInline(AdminImageMixin, admin.TabularInline):<br />
+  model = Image</p>
+<p>class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):<br />
+  list_display = ('title', 'position', 'get_image_tag')<br />
+  inlines      = (ImageInline,)<br />
+[&#47;code]</p>
+<p>The thumbnails aren't there, so, let's display them:</p>
+<p>[code language="python" linenos="table" hl_lines="10"]<br />
+from django.contrib.admin.widgets import AdminFileWidget<br />
+from django.utils.safestring import mark_safe<br />
+from django.forms import ModelForm<br />
+from sorl.thumbnail import get_thumbnail</p>
+<p>class AdminImageWidget(AdminFileWidget):<br />
+  def render(self, name, value, attrs=None):<br />
+    output = []<br />
+    if value and getattr(value, "url", None):<br />
+      t = get_thumbnail(value,'80x80')<br />
+      output.append('<img src="{}">'.format(t.url))<br />
+    output.append(super(AdminFileWidget, self).render(name, value, attrs))<br />
+    return mark_safe(u''.join(output))</p>
+<p>class ImageForm(ModelForm):<br />
+  class Meta:<br />
+    model = Image<br />
+    widgets = {<br />
+      'image': AdminImageWidget,<br />
+    }</p>
+<p>class ImageInline(AdminImageMixin, admin.TabularInline):<br />
+  model = Image<br />
+  form  = ImageForm</p>
+<p>class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):<br />
+  list_display = ('title', 'position', 'get_image_tag')<br />
+  inlines      = (ImageInline,)<br />
+[&#47;code]</p>
+<p>We override the image widget in order to display images thumbnails, you can change its size in line 10. Result:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images-with-thumbnails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images-with-thumbnails.png" alt="" title="django-admin-inline-images-with-thumbnails" class="alignnone size-full wp-image-2887" &#47;><&#47;a></p>
+<p>Now, if for some reason your non-inline images are not showing its thumbnails like below:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images.png" alt="" title="django-admin-non-inline-images" class="alignnone size-full wp-image-2897" &#47;><&#47;a></p>
+<p>You can also override the image widget with the same class showed above (but this time the <code>form<&#47;code> goes inside your admin class instead inline class):</p>
+<p>[code language="python"]<br />
+class FooForm(ModelForm):<br />
+  class Meta:<br />
+    model = Foo<br />
+    widgets = {<br />
+      'main_image': AdminImageWidget, # same used above<br />
+    }</p>
+<p>class FooAdmin(AdminImageMixin, admin.ModelAdmin):<br />
+  form = FooForm<br />
+[&#47;code]</p>
+<p>Result:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images-with-thumbnails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images-with-thumbnails.png" alt="" title="django-admin-non-inline-images-with-thumbnails" class="alignnone size-full wp-image-2898" &#47;><&#47;a></p>
+<p>That's it, give us your feedback in the comments.</p>

@@ -1,0 +1,151 @@
+---
+layout: post
+status: publish
+published: true
+title: Init Ng-Model from Form Fields Attributes
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3087
+wordpress_url: http://blog.glaucocustodio.com/?p=3087
+date: '2014-10-20 20:02:05 -0200'
+date_gmt: '2014-10-20 20:02:05 -0200'
+categories:
+- JavaScript
+tags:
+- angularjs
+comments:
+- id: 22518
+  author: Denis
+  author_email: denismoureu@gmail.com
+  author_url: ''
+  date: '2015-02-20 10:43:22 -0200'
+  date_gmt: '2015-02-20 10:43:22 -0200'
+  content: Just one word. Thanks
+- id: 22607
+  author: kanabi
+  author_email: kanabi@gazeta.pl
+  author_url: ''
+  date: '2015-02-22 23:32:37 -0300'
+  date_gmt: '2015-02-22 23:32:37 -0300'
+  content: "Hi, thank you for a useful directive. I'm trying to implement it in my
+    angular form, since AngularJS doesn't parse hidden input values without ng-init
+    or other solutions. Still I can't get it to work:\r\n\r\n\r\n\r\nThe value filed
+    returns the {{post.title}} expression correctly, but submitted form shows only
+    {{post.title}} again. After hours spent on looking for the right solution I will
+    really appreciate any suggestions..."
+- id: 34718
+  author: Murali
+  author_email: mandadimuralidharreddy@gmail.com
+  author_url: http://www.altitudeclasses.org
+  date: '2015-06-28 21:29:34 -0300'
+  date_gmt: '2015-06-28 21:29:34 -0300'
+  content: "Hi.\r\nIn your codepen example.I made some change as my requirment when
+    $scope array present at that time also input filed having deafault value.\r\nI
+    want set input number filed value to 0 if input value not present in database.If
+    it is there in database display database value not defalut value.\r\nsee this
+    image of edited code pen\r\nhttps:&#47;&#47;drive.google.com&#47;file&#47;d&#47;0B3AxZcIXzIRSNmlLWng5NDU1bmM&#47;view?usp=sharing"
+- id: 37226
+  author: yjhf
+  author_email: fgh@gai.com
+  author_url: http://fgh
+  date: '2015-07-28 13:22:36 -0300'
+  date_gmt: '2015-07-28 13:22:36 -0300'
+  content: fgh
+- id: 37354
+  author: Shams
+  author_email: thalut@hotmail.com
+  author_url: http://web-scents.blogspot.com
+  date: '2015-07-30 06:07:21 -0300'
+  date_gmt: '2015-07-30 06:07:21 -0300'
+  content: is this valid to the Angular's team?
+- id: 37364
+  author: Xesenix
+  author_email: pkapalla@rednet.pl
+  author_url: http://xesenix.pl
+  date: '2015-07-30 11:50:05 -0300'
+  date_gmt: '2015-07-30 11:50:05 -0300'
+  content: "Why not just start your directive on all inputs:\r\n.directive('input',
+    function() {\r\n...\r\nreturn {\r\nrestrict: 'E',\r\n...\r\n}\r\nno need for adding
+    special attribute?"
+- id: 41148
+  author: Sajit
+  author_email: sajit.kunnumkal@gmail.com
+  author_url: ''
+  date: '2015-09-15 16:21:42 -0300'
+  date_gmt: '2015-09-15 16:21:42 -0300'
+  content: Thank you soo much.
+---
+<p>I have been using AngularJS's magic in some <strong>non<&#47;strong> single page applications to improve user experience and provide an instant feedback.</p>
+<p>A few days ago, not for the first time, I faced the issue to need starting form fields with server side provided data while making use of awesome AngularJS feautures.</p>
+<h2>Hands-on<&#47;h2></p>
+<p>Suppose we have an HTML like that:</p>
+<div data-height="268" data-theme-id="0" data-slug-hash="gBoEa" data-default-tab="html" data-user="glaucocustodio" class='codepen'>
+<pre><code><!DOCTYPE html><br />
+<html lang="en" ng-app=""><br />
+<head><br />
+  <script src="&#47;&#47;ajax.googleapis.com&#47;ajax&#47;libs&#47;angularjs&#47;1.3.0-rc.4&#47;angular.min.js"><&#47;script><br />
+<&#47;head><br />
+<body><br />
+  <input type="text" value="John" ng-model="name"><br />
+<&#47;body><br />
+<&#47;html><&#47;code><&#47;pre></p>
+<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;gBoEa&#47;'>gBoEa<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
+<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+<p>You can see that the value "John" is not being filled in input. By default, AngularJS does not initialize <code>ng-model<&#47;code> based on form fields attributes like <code>value<&#47;code>, <code>checked<&#47;code> and <code>selected<&#47;code>.</p>
+<p>Looking for some way to pull it off, I found three manners and I wanna share them with you.</p>
+<h3>Initialize Variable in Controller<&#47;h3></p>
+<p>The "angular" way I read around is to set the value inside a controller:</p>
+<div data-height="268" data-theme-id="0" data-slug-hash="Beldq" data-default-tab="js" data-user="glaucocustodio" class='codepen'>
+<pre><code>var app = angular.module(&#39;myApp&#39;, []);</p>
+<p>app.controller(&#39;MyCtrl&#39;, function ($scope) {<br />
+  $scope.name = &#39;John&#39;;<br />
+});<&#47;code><&#47;pre></p>
+<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;Beldq&#47;'>Beldq<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
+<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+<p>But when our entire page is coming from server, it does not seem a good approach, we would need mix the server language with JavaScript or mess up with another not cool thing.</p>
+<h3>Use Ng-Init Directive<&#47;h3></p>
+<p>The second one is about setting variable value inside <code>ng-init<&#47;code>:</p>
+<div data-height="268" data-theme-id="0" data-slug-hash="pIkdw" data-default-tab="html" data-user="glaucocustodio" class='codepen'>
+<pre><code><!DOCTYPE html><br />
+<html lang="en" ng-app=""><br />
+<head><br />
+  <script src="&#47;&#47;ajax.googleapis.com&#47;ajax&#47;libs&#47;angularjs&#47;1.3.0-rc.4&#47;angular.min.js"><&#47;script><br />
+<&#47;head><br />
+<body><br />
+  <input type="text" ng-model="name" ng-init="name=&#39;John&#39;"><br />
+<&#47;body><br />
+<&#47;html><&#47;code><&#47;pre></p>
+<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;pIkdw&#47;'>pIkdw<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
+<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+<p>It works. But I personally guess we can improve it.</p>
+<h3>Use a Custom Directive<&#47;h3></p>
+<p>Finally, we can use a <a target="_blank" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;angular-initial-value">custom directive<&#47;a> to load values based on form fields attributes:</p>
+<div data-height="268" data-theme-id="0" data-slug-hash="nhcmz" data-default-tab="js" data-user="glaucocustodio" class='codepen'>
+<pre><code>angular.module(&#39;initFromForm&#39;, [])<br />
+  .directive(&#39;ngInitial&#39;, function() {<br />
+    return {<br />
+      restrict: &#39;A&#39;,<br />
+      controller: [<br />
+        &#39;$scope&#39;, &#39;$element&#39;, &#39;$attrs&#39;, &#39;$parse&#39;, function($scope, $element, $attrs, $parse) {<br />
+          var getter, setter, val;<br />
+          val = $attrs.ngInitial || ($element.attr("checked") !== undefined ? true : &#39;&#39;) || $attrs.value || $element.val()<br />
+          getter = $parse($attrs.ngModel);<br />
+          setter = getter.assign;<br />
+          setter($scope, val);<br />
+        }<br />
+      ]<br />
+    };<br />
+  });</p>
+<p>var app = angular.module(&#39;myApp&#39;, [&#39;initFromForm&#39;]);<&#47;code><&#47;pre></p>
+<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;nhcmz&#47;'>nhcmz<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
+<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+<p>This directive is a improved version I made from <a href="http:&#47;&#47;stackoverflow.com&#47;a&#47;17823590" rel="external nofollow" target="_blank">this one<&#47;a> to support <code>textarea<&#47;code>, <code>checkbox<&#47;code> and <code>radio<&#47;code> as well.</p>
+<p>I really appreciated this approach, we just need add <code>initial-value<&#47;code> attribute to form field and voil&agrave;.</p>
+<p>Do you know another way to do the same? Share with us in the comments.</p>
+<p>See you.</p>

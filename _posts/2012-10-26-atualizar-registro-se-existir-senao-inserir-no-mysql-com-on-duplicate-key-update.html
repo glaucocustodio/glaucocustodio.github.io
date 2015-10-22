@@ -1,0 +1,142 @@
+---
+layout: post
+status: publish
+published: true
+title: Atualizar Registro se Existir Sen&atilde;o Inserir no MySQL com ON DUPLICATE
+  KEY UPDATE
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai galera, tudo certo?\r\n\r\nHoje estou aqui para dar uma dica r&aacute;pida
+  de <strong>MySQL<&#47;strong>. As vezes precisamos atualizar um registro caso ele
+  j&aacute; exista na tabela ou inserir um novo caso n&atilde;o exista, irei mostrar
+  como fazer isso utilizando a cl&aacute;usula <code>ON DUPLICATE KEY UPDATE<&#47;code>.\r\n\r\nSegundo
+  a <a title=\"http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html\"
+  href=\"http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html\"
+  rel=\"nofollow external\" target=\"_blank\">documenta&ccedil;&atilde;o oficial do
+  MySQL<&#47;a>, ela serve para verificar se um &iacute;ndice &uacute;nico (unique
+  index) ou uma chave prim&aacute;ria (primary key) est&atilde;o sendo duplicadas
+  com uma nova inser&ccedil;&atilde;o, caso esteja ent&atilde;o ela atualiza o registro
+  inv&eacute;s de inserir. Vamos para pr&aacute;tica..\r\n\r\n"
+wordpress_id: 659
+wordpress_url: http://blog.glaucocustodio.com/?p=659
+date: '2012-10-26 00:38:46 -0200'
+date_gmt: '2012-10-26 00:38:46 -0200'
+categories:
+- Banco de Dados Relacional
+tags:
+- mysql
+comments:
+- id: 535
+  author: Fellipe Guimar&atilde;es
+  author_email: freador@gmail.com
+  author_url: http://fellipeguimaraes.com.br/
+  date: '2013-04-24 12:16:10 -0300'
+  date_gmt: '2013-04-24 12:16:10 -0300'
+  content: Cara muito bom esse post! me ajudou!
+- id: 1163
+  author: william
+  author_email: williamweb2.0@gmail.com
+  author_url: http://webdascoisas.com
+  date: '2013-08-23 12:03:00 -0300'
+  date_gmt: '2013-08-23 12:03:00 -0300'
+  content: muito bm cara. mt obg por compartilhar.
+- id: 1379
+  author: Thalisson
+  author_email: deluxepublicidade@live.com
+  author_url: http://www.deluxepublicidade.com.br
+  date: '2013-10-17 00:38:34 -0300'
+  date_gmt: '2013-10-17 00:38:34 -0300'
+  content: obrigado amigo, sua dica me ajudou bastante!
+- id: 1407
+  author: fernando
+  author_email: fernandok@sanepar.com.br
+  author_url: ''
+  date: '2013-10-24 17:43:29 -0200'
+  date_gmt: '2013-10-24 17:43:29 -0200'
+  content: e se forem varios campos e serem atualizados, no meu caso eu tenho um cadastro
+    onde &eacute; atualizado o consumo dos meses, sao 50 campos mas eu s&oacute; presiso
+    que atualize somente o consumo o resto nao muda nada
+- id: 2755
+  author: Eduardo Ribeiro
+  author_email: eduardo.manuel.ribeiro@hotmail.com
+  author_url: ''
+  date: '2014-07-18 21:48:03 -0300'
+  date_gmt: '2014-07-18 21:48:03 -0300'
+  content: "Boas, tenho um script de importa&ccedil;&atilde;o de ficheiro CSV para
+    mysql, so que nao estou conseguindo  fazer a condi&ccedil;&atilde;o correcta,
+    se existe faz Update a tudo o que existe, se nao existe insere de novo, aqui segue
+    o codigo:\r\n\r\nif ($_FILES[csv][size] > 0) {\r\n\r\n    &#47;&#47;get the csv
+    file\r\n    $file = $_FILES[csv][tmp_name];\r\n    $handle = fopen($file,\"r\");\r\n
+    \   &#47;&#47;loop through the csv file and insert into database\r\n    do {\r\n
+    \       if ($data[0]) {\r\n\t\t\t$sql_exist = \"SELECT * FROM produto_ WHERE codigo
+    = $data[0]\";\r\n\t\t\t$result_exist = mysql_query ($sql_exist);\r\n\t\t\t$contador
+    = 0;\r\n\t\t\twhile($row_exist = mysql_fetch_assoc($result_exist)){\r\n\t\t\t\t$contador
+    ++;\r\n\t\t\t\t$total++;\r\n\t\t\t}\r\n\t\t\t\r\n\t\t\tif ($contador == 0){\r\n\t\t\t\t\t\r\n
+    \           mysql_query(\"INSERT INTO produto_ (codigo, observacao, designacao,
+    preco) VALUES\r\n                (\r\n                    '\".addslashes($data[0]).\"',\r\n
+    \                   '\".addslashes($data[1]).\"',\r\n                    '\".addslashes($data[2]).\"',\r\n\t\t\t\t\t'\".addslashes($data[3]).\"'\r\n
+    \               )\r\n            \");\r\n\t\t\t}\r\n\t\t\telse{\r\n\t\t\t\tmysql_query(\"UPDATE
+    SET produto_ (codigo, observacao, designacao ,preco) VALUES\r\n                (\r\n
+    \                   '\".addslashes($data[0]).\"',\r\n                    '\".addslashes($data[1]).\"',\r\n
+    \                   '\".addslashes($data[2]).\"',\r\n\t\t\t\t\t'\".addslashes($data[3]).\"'\r\n
+    \               )\r\n            \");\r\n\t\t\t}\r\n        }\r\n\t\t\r\n    }
+    while ($data = fgetcsv($handle,1000,\";\",\"'\"));\r\n    &#47;&#47;\r\n\r\n    &#47;&#47;redirect\r\n
+    \   header('Location: index2.php?accao=act94&amp;&amp;success=1&amp;&amp;teste='.$data.'');
+    die;\r\n\r\n}\r\n\r\n?>\r\n\r\nse me puder ajudar agrade&ccedil;o imenso, pois
+    so me falta isso ai para terminar o meu projecto!\r\n\r\nCumprimentos e felicita&ccedil;&otilde;es
+    pelo post acima!\r\n\r\nEduardo Ribeiro\r\nemail: eduardo.manuel.ribeiro@hotmail.com"
+- id: 6561
+  author: Nickolas
+  author_email: portalangra@gmail.com
+  author_url: http://minhacam.com
+  date: '2014-09-04 12:52:43 -0300'
+  date_gmt: '2014-09-04 12:52:43 -0300'
+  content: "Parab&eacute;ns Amigo, eu pensei v&aacute;rias vezes como explicar a mesma
+    coisa em uma p&aacute;gina para uns amigos. por&eacute;m eu s&oacute; encontrava
+    meios complexos de explicar o por que usar o DUPLICATE em vez de fazer checks
+    nas tabelas e usar ifs e mais ifs para ou adicionar ou atualizar.\r\n\r\nEnfim,
+    parab&eacute;ns.\r\n\r\n(encontrei por acaso seu texto e tive que vir parabeniz&aacute;-lo)"
+- id: 38110
+  author: Raul
+  author_email: rawamaral@gmail.com
+  author_url: ''
+  date: '2015-08-08 20:07:16 -0300'
+  date_gmt: '2015-08-08 20:07:16 -0300'
+  content: Boa dica, mas como fica o update se no banco tiver mais que dois campos????
+    Se separa por "," ????
+- id: 40428
+  author: sherman
+  author_email: shermancolasso@gmail.com
+  author_url: ''
+  date: '2015-09-08 20:40:33 -0300'
+  date_gmt: '2015-09-08 20:40:33 -0300'
+  content: "Kra legal, mas e se um dos VALUES eu quero q ele pegue baseado num valor
+    selecionado como fa&ccedil;o?\r\n\r\nex: INSERT INTO produtos (nome,estoque_atual)
+    VALUES ($_POST('nome'),1) ON DUPLICATE KEY UPDATE estoque_atual=estoque_atual+1\r\n\r\nquero
+    que o produto selecionado se existe receba +1 no estoque atual e nao to conseguindo.
+    Valew"
+---
+<p>E ai galera, tudo certo?</p>
+<p>Hoje estou aqui para dar uma dica r&aacute;pida de <strong>MySQL<&#47;strong>. As vezes precisamos atualizar um registro caso ele j&aacute; exista na tabela ou inserir um novo caso n&atilde;o exista, irei mostrar como fazer isso utilizando a cl&aacute;usula <code>ON DUPLICATE KEY UPDATE<&#47;code>.</p>
+<p>Segundo a <a title="http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html" href="http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html" rel="nofollow external" target="_blank">documenta&ccedil;&atilde;o oficial do MySQL<&#47;a>, ela serve para verificar se um &iacute;ndice &uacute;nico (unique index) ou uma chave prim&aacute;ria (primary key) est&atilde;o sendo duplicadas com uma nova inser&ccedil;&atilde;o, caso esteja ent&atilde;o ela atualiza o registro inv&eacute;s de inserir. Vamos para pr&aacute;tica..</p>
+<p><a id="more"></a><a id="more-659"></a>Vamos supor que voc&ecirc; tenha a seguinte tabela <code>customers<&#47;code> com os dados abaixo<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-a-ser-atualizada-com-on-duplicate-key-update.png"><img class="alignnone size-full wp-image-660" title="tabela-a-ser-atualizada-com-on-duplicate-key-update" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-a-ser-atualizada-com-on-duplicate-key-update.png" alt="" width="144" height="90" &#47;><&#47;a></p>
+<p>Queremos atualizar o nome do registro de <code>id = 2<&#47;code>, mas vamos imaginar um cen&aacute;rio em que n&atilde;o sabemos se esse registro existe ou n&atilde;o na tabela, ent&atilde;o executamos:<br />
+[code language="sql"]INSERT INTO customers (id, name) VALUES (2, 'Ant&ocirc;nio Silva') ON DUPLICATE KEY UPDATE name = 'Ant&ocirc;nio Silva';[&#47;code]<br />
+Resultado:<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-customers-atualizada.png"><img class="alignnone size-full wp-image-661" title="tabela-customers-atualizada" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-customers-atualizada.png" alt="" width="186" height="90" &#47;><&#47;a></p>
+<p>Se o campo <code>id<&#47;code> for um &iacute;ndice &uacute;nico ou chave prim&aacute;ria e for igual a 2 (que &eacute; o valor definido em <code>VALUES<&#47;code>), ent&atilde;o o registro ser&aacute; atualizado com <code>UPDATE name = 'Ant&ocirc;nio Silva'<&#47;code>, caso n&atilde;o exista um registro com <code>id = 2<&#47;code>, ent&atilde;o ser&aacute; inserido um novo com <code>INSERT INTO customers (id, name) VALUES (2, 'Ant&ocirc;nio Silva')<&#47;code>.</p>
+<p>Vamos ver agora a inser&ccedil;&atilde;o caso n&atilde;o exista o registro, executando o comando:<br />
+[code language="sql"]INSERT INTO customers (id, name) VALUES (5, 'Andr&eacute; Marcos') ON DUPLICATE KEY UPDATE name = 'Andr&eacute; Marcos';[&#47;code]<br />
+Resultado:<br />
+<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;inserindo-registros-na-tabela-customers.png"><img class="alignnone size-full wp-image-662" title="inserindo-registros-na-tabela-customers" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;inserindo-registros-na-tabela-customers.png" alt="" width="186" height="108" &#47;><&#47;a></p>
+<p>Como n&atilde;o existe nenhum registro de valor &uacute;nico igual a 5, ent&atilde;o cria-se um novo registro.</p>
+<div class="alert">A documenta&ccedil;&atilde;o oficial do MySQL recomenda evitar o uso da cl&aacute;usula "<strong>ON DUPLICATE KEY UPDATE<&#47;strong>" em tabelas que tenham v&aacute;rios &iacute;ndices &uacute;nicos.<&#47;div></p>
+<p>Bem simples n&eacute;? Espero que tenham gostado.</p>
+<p>At&eacute; mais.</p>

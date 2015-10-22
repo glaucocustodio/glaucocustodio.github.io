@@ -1,0 +1,178 @@
+---
+layout: post
+status: publish
+published: true
+title: Usando Media Player do Android Evitando Sobrecarga de Recursos do Sistema
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, hoje venho com meu primeiro post sobre <strong>Java<&#47;strong>
+  e desenvolvimento mobile para <strong>Android<&#47;strong>.\r\n\r\nTenho estudado
+  um pouco sobre Android ultimamente e daqui pra frente irei compartilhar algumas
+  dicas que podem ser &uacute;teis.\r\n\r\nCome&ccedil;ando ent&atilde;o, vamos falar
+  da classe <strong>MediaPlayer<&#47;strong>. Ela serve para controlar e executar
+  arquivos de &aacute;udios, v&iacute;deos e streams.\r\n\r\n"
+wordpress_id: 1395
+wordpress_url: http://blog.glaucocustodio.com/?p=1395
+date: '2013-03-29 15:53:47 -0300'
+date_gmt: '2013-03-29 15:53:47 -0300'
+categories:
+- Java
+- Mobile
+tags:
+- android
+comments:
+- id: 574
+  author: J&eacute;ssica
+  author_email: jessicapiresf@gmail.com
+  author_url: ''
+  date: '2013-05-07 04:53:52 -0300'
+  date_gmt: '2013-05-07 04:53:52 -0300'
+  content: "Fiz um aplicativo onde era necess&aacute;rio o uso de um mesmo &aacute;udio
+    muitas vezes e chegava uma hora que acabava parando de tocar, acredito que por
+    sobrecarregar o aplicativo. Fazendo como voc&ecirc; disse deu certinho! \r\n\r\nMuito
+    obrigada! ;)"
+- id: 903
+  author: cesar willian
+  author_email: willian@cesarwillian.net
+  author_url: ''
+  date: '2013-07-11 23:59:55 -0300'
+  date_gmt: '2013-07-11 23:59:55 -0300'
+  content: Valeu pela dica, foi muito &uacute;til em minha aplica&ccedil;&atilde;o!
+- id: 926
+  author: Jonas Santos
+  author_email: jonas.vieira.santos@hotmail.com
+  author_url: http://www.jonasdesign.com.br
+  date: '2013-07-18 21:20:52 -0300'
+  date_gmt: '2013-07-18 21:20:52 -0300'
+  content: "Fala Glauco bele?\r\n\r\nCara muito bom a dica, estava com esse problema
+    de sobrecarga no meu app, e resolveu meu problema hehe\r\n\r\nValeu grande abra&ccedil;o."
+- id: 1527
+  author: Valdir
+  author_email: valdir.df@gmail.com
+  author_url: ''
+  date: '2013-12-07 19:13:19 -0200'
+  date_gmt: '2013-12-07 19:13:19 -0200'
+  content: 'S&oacute; uma d&uacute;vida: E para parar  a m&uacute;sica assim que um
+    bot&atilde;o for apertado, pois dependendo do tamanho toca at&eacute; terminar.'
+- id: 1629
+  author: Jair Humberto
+  author_email: jairhumberto@gmail.com
+  author_url: ''
+  date: '2014-02-15 21:57:42 -0200'
+  date_gmt: '2014-02-15 21:57:42 -0200'
+  content: "P&ocirc; cara, legal...\r\n\r\nmas n&atilde;o funciona no Android 2.3.3
+    por exemplo, parece que s&oacute; o Android 4.1 pra cima t&aacute; conseguindo
+    rodar isso ai..., ai n&atilde;o rola. :&#47;\r\n\r\nEssa Google s&oacute; existe
+    para complicar a vida da gente. Sacanagem."
+- id: 24176
+  author: Jailson Santos
+  author_email: jailson_donald_cobain@hotmail.com
+  author_url: ''
+  date: '2015-03-13 01:17:16 -0300'
+  date_gmt: '2015-03-13 01:17:16 -0300'
+  content: Perfeito
+- id: 30865
+  author: Victor Minerva
+  author_email: victorminerva.m@gmail.com
+  author_url: ''
+  date: '2015-05-17 20:15:51 -0300'
+  date_gmt: '2015-05-17 20:15:51 -0300'
+  content: Excelente!!! Parabens, me ajudou muito!
+---
+<p>Fala pessoal, hoje venho com meu primeiro post sobre <strong>Java<&#47;strong> e desenvolvimento mobile para <strong>Android<&#47;strong>.</p>
+<p>Tenho estudado um pouco sobre Android ultimamente e daqui pra frente irei compartilhar algumas dicas que podem ser &uacute;teis.</p>
+<p>Come&ccedil;ando ent&atilde;o, vamos falar da classe <strong>MediaPlayer<&#47;strong>. Ela serve para controlar e executar arquivos de &aacute;udios, v&iacute;deos e streams.</p>
+<p><a id="more"></a><a id="more-1395"></a>Um "simples" (e errado) uso dessa classe seria:</p>
+<p>[code language="java" linenos="table" hl_lines="7 8"]<br />
+import android.media.MediaPlayer;</p>
+<p>protected void onCreate(Bundle savedInstanceState) {<br />
+    super.onCreate(savedInstanceState);<br />
+    setContentView(R.layout.activity_main);</p>
+<p>    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.meu_som);<br />
+    mp.start();<br />
+}<br />
+[&#47;code]</p>
+<p>Na primeira linha em destaque, criamos uma nova inst&acirc;ncia da classe <code>MediaPlayer<&#47;code> dizendo que o recurso (nesse caso, o &aacute;udio do tipo <code>raw<&#47;code>) a ser reproduzido ser&aacute; o arquivo <code>meu_som<&#47;code> que se encontra na pasta <code>res&#47;raw&#47;meu_som<&#47;code> (seguindo a conven&ccedil;&atilde;o do Android).</p>
+<p>Na segunda linha destacada simplesmente chamamos o m&eacute;todo <code>play<&#47;code> respons&aacute;vel por reproduzir o recurso.</p>
+<p>O c&oacute;digo acima pode at&eacute; parecer legal, mas n&atilde;o &eacute;..</p>
+<h2>Cen&aacute;rio<&#47;h2><!--<br />
+O m&eacute;todo "onCreate" &eacute; chamado toda vez que nossa aplica&ccedil;&atilde;o &eacute; criada, isso inclui tamb&eacute;m, toda vez que rotacionamos o dispositivo.<br />
+Se executarmos uma aplica&ccedil;&atilde;o com o bloco anterior, a cada rota&ccedil;&atilde;o da tela o m&eacute;todo "onCreate" ser&aacute; executado e consequentemente o &aacute;udio ser&aacute; reproduzido de novo.<br />
+Isso daria uma confus&atilde;o, iriamos ficar com v&aacute;rios arquivos sendo executados ao mesmo tempo, virando uma bagun&ccedil;a. Sem contar os recursos desnecess&aacute;rios alocados, mas isso fica pra frente..<br />
+-->Nosso objetivo aqui &eacute; aprender como executar um recurso multim&iacute;dia esporadicamente de maneira n&atilde;o obstrutiva, como exemplo, vamos supor que voc&ecirc; precise reproduzir um som ao clique de um bot&atilde;o, ou qualquer outro evento como esse..</p>
+<p>Se voc&ecirc; est&aacute; querendo deixar um &aacute;udio de fundo na sua aplica&ccedil;&atilde;o, talvez esse post n&atilde;o ajude muito, pois voc&ecirc; precisa aprender como <a target="_blank" rel="external nofollow" href="http:&#47;&#47;developer.android.com&#47;guide&#47;topics&#47;media&#47;mediaplayer.html#mpandservices">usar um servi&ccedil;o com MediaPlayer<&#47;a>.</p>
+<h2>Entrando no Cen&aacute;rio<&#47;h2></p>
+<p>Tendo o cen&aacute;rio descrito acima, vamos dizer que temos o seguinte layout:</p>
+<p>[code language="xml"]<br />
+<LinearLayout android:layout_width="match_parent"<br />
+        android:layout_height="match_parent"<br />
+        android:id="@+id&#47;main_layout"<br />
+        android:orientation="vertical"></p>
+<p>  <Button android:text="@string&#47;my_button"<br />
+          android:layout_height="wrap_content"<br />
+          android:layout_gravity="center"<br />
+            android:layout_width="160dp"<br />
+            android:onClick="playAudio"&#47;><br />
+<&#47;LinearLayout><br />
+[&#47;code]</p>
+<p>Nesse linear layout temos apenas um bot&atilde;o, onde ao clicar chamamos o m&eacute;todo <code>playSound<&#47;code> de nossa activity.</p>
+<p>Veja a implementa&ccedil;&atilde;o desse m&eacute;todo em nossa activity:</p>
+<p>[code language="java"]<br />
+public void playAudio(View view){<br />
+  MediaPlayer mp = MediaPlayer.create(this, R.raw.meu_som);<br />
+  mp.start();<br />
+}<br />
+[&#47;code]</p>
+<p>Assim como no primeiro exemplo, no trecho acima, a cada clique no bot&atilde;o estamos criando uma inst&acirc;ncia da classe <code>MediaPlayer<&#47;code> e reproduzindo o &aacute;udio.</p>
+<p>S&oacute; que veja o problema ai.. Cada vez que o usu&aacute;rio clicar no bot&atilde;o, criamos uma nova vari&aacute;vel e ocupamos recursos do sistema sem necessidade (isso &eacute; pouco, mas tem mais).</p>
+<p>Isso poderia ser melhorado, veja:</p>
+<p>[code language="java"]<br />
+public MediaPlayer mp = null;</p>
+<p>public void playAudio(View view){<br />
+  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
+  mp.start();<br />
+}<br />
+[&#47;code]</p>
+<p>Agora criamos uma &uacute;nica vari&aacute;vel <code>mp<&#47;code> em nossa aplica&ccedil;&atilde;o e ao rodar o m&eacute;todo do clique preenchemos ela com uma inst&acirc;ncia da classe <code>MediaPlayer<&#47;code>.</p>
+<p>Isso pode parecer bom, mas ainda <del datetime="2013-03-29T15:09:17+00:00">podemos<&#47;del> devemos melhorar.</p>
+<p>Se voc&ecirc; clicar v&aacute;rias vezes seguidas no bot&atilde;o, a classe <code>MediaPlayer<&#47;code> ficar&aacute; sobrecarregada e n&atilde;o ir&aacute; mais reproduzir som (eu disse que tinha mais)..</p>
+<p>A <a href="http:&#47;&#47;developer.android.com&#47;guide&#47;topics&#47;media&#47;mediaplayer.html#releaseplayer" rel="external nofollow" target="_blank">documenta&ccedil;&atilde;o oficial do Android<&#47;a> recomenda que seja implementada uma descarga da classe <code>MediaPlayer<&#47;code> para evitar que recursos do sistema sejam desperdi&ccedil;ados:</p>
+<p>[code language="java"]<br />
+mp.release();<br />
+mp = null;<br />
+[&#47;code]</p>
+<p>Precisamos adicionar o trecho acima ap&oacute;s a reprodu&ccedil;&atilde;o do arquivo, mas isso <b>n&atilde;o ir&aacute; funcionar<&#47;b>:</p>
+<p>[code language="java"]<br />
+public void playAudio(View view){<br />
+  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
+  mp.start();<br />
+  mp.release();<br />
+  mp = null;<br />
+}<br />
+[&#47;code]</p>
+<p>Acima, tentamos liberar os recursos ap&oacute;s o m&eacute;todo <code>start<&#47;code>, mas isso faria com que o arquivo n&atilde;o fosse reproduzido.</p>
+<h2>A Solu&ccedil;&atilde;o<&#47;h2></p>
+<p>Por fim chegamos na solu&ccedil;&atilde;o, o ideal para conseguirmos o que desejamos de uma forma legal, seria assim:</p>
+<p>[code language="java" linenos="table" hl_lines="5-11"]<br />
+public MediaPlayer mp = null;</p>
+<p>public void playAudio(View view){<br />
+  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
+  mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){<br />
+    public void onCompletion(MediaPlayer mp) {<br />
+      mp.stop();<br />
+      mp.release();<br />
+      mp = null;<br />
+    }<br />
+  });<br />
+  mp.start();<br />
+}<br />
+[&#47;code]</p>
+<p>O que fizemos aqui foi criar um evento <code>on completion<&#47;code> em nossa inst&acirc;ncia <code>mp<&#47;code>, assim, toda vez que o arquivo acabar de ser reproduzido, liberamos recursos do sistema e tamb&eacute;m ganhamos a possibilidade de reprodu&ccedil;&atilde;o m&uacute;ltipla sem travar.</p>
+<p>Essa foi a dica de hoje. O que voc&ecirc; achou?</p>
+<p>At&eacute; mais.</p>

@@ -1,0 +1,69 @@
+---
+layout: post
+status: publish
+published: true
+title: '"Debugando" Aplica&ccedil;&otilde;es Rails com Console do Firebug'
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Ae galera, tudo bom? Estou aqui hoje para compartilhar algo que aprendi
+  essa semana, &eacute; uma dica simples mas que pode ajudar na hora de debugar aplica&ccedil;&otilde;es
+  <strong>Ruby on Rails 3<&#47;strong>.\r\n\r\nTodo desenvolvedor provavelmente conhece
+  o <strong>Firebug<&#47;strong> n&eacute;? Se voc&ecirc; n&atilde;o conhece est&aacute;
+  perdendo tempo, n&atilde;o deixe de <a href=\"https:&#47;&#47;getfirebug.com&#47;\"
+  rel=\"external no-follow\" target=\"_blank\">testar<&#47;a>. Ele &eacute; um complemento
+  (extens&atilde;o) para os principais navegadores (Firefox e Chrome) que poupa um
+  tempo bacana no desenvolvimento de interfaces.\r\n\r\n"
+wordpress_id: 758
+wordpress_url: http://blog.glaucocustodio.com/?p=758
+date: '2012-11-19 19:11:56 -0200'
+date_gmt: '2012-11-19 19:11:56 -0200'
+categories:
+- Ruby
+tags:
+- ruby on rails
+- firebug
+comments: []
+---
+<p>Ae galera, tudo bom? Estou aqui hoje para compartilhar algo que aprendi essa semana, &eacute; uma dica simples mas que pode ajudar na hora de debugar aplica&ccedil;&otilde;es <strong>Ruby on Rails 3<&#47;strong>.</p>
+<p>Todo desenvolvedor provavelmente conhece o <strong>Firebug<&#47;strong> n&eacute;? Se voc&ecirc; n&atilde;o conhece est&aacute; perdendo tempo, n&atilde;o deixe de <a href="https:&#47;&#47;getfirebug.com&#47;" rel="external no-follow" target="_blank">testar<&#47;a>. Ele &eacute; um complemento (extens&atilde;o) para os principais navegadores (Firefox e Chrome) que poupa um tempo bacana no desenvolvimento de interfaces.</p>
+<p><a id="more"></a><a id="more-758"></a>Ele tem uma aba chamada console onde podemos exibir informa&ccedil;&otilde;es via Javascript, mas a partir de agora tamb&eacute;m podemos exibir informa&ccedil;&otilde;es diretamente do servidor.</p>
+<h2>Instalando a Biblioteca<&#47;h2><br />
+Precisamos executar alguns passos r&aacute;pidos para termos acesso a essa funcionalidade, sem muita delongas vamos come&ccedil;ar</p>
+<p>1- Crie um arquivo chamado <code>firebug_logger.rb<&#47;code> na pasta <code>lib<&#47;code> dentro de sua aplica&ccedil;&atilde;o e cole o c&oacute;digo desse <a href="https:&#47;&#47;gist.github.com&#47;jerodsanto&#47;252575" target="_blank" rel="external nofollow">gist<&#47;a> (voc&ecirc; pode criar um sub diret&oacute;rio dentro da <code>lib<&#47;code> se precisar).<br />
+2- Carregue a classe acima no arquivo <code>config&#47;boot.rb<&#47;code> atrav&eacute;s da linha:<br />
+[code language="ruby"]require File.expand_path('lib&#47;firebug_logger')[&#47;code]<br />
+3- No arquivo de ambiente de sua aplica&ccedil;&atilde;o <code>config&#47;environments&#47;development.rb<&#47;code> (no caso, desenvolvimento) adicione:<br />
+[code language="ruby"]config.middleware.use ::Rack::FirebugLogger[&#47;code]<br />
+4- Por &uacute;ltimo, crie um m&eacute;todo no <code>app&#47;controllers&#47;application_controller.rb<&#47;code> para que possamos chamar o c&oacute;digo respons&aacute;vel por logar informa&ccedil;&otilde;es no console do Firebug.<br />
+[code language="ruby"]helper_method :firebug<br />
+private<br />
+def firebug(message, type = :debug)<br />
+  request.env['firebug.logs'] ||= []<br />
+  request.env['firebug.logs'] << [type.to_sym, message.to_s]<br />
+end[&#47;code]<br />
+5- Caso esteja rodando o servidor Rails, <strong>reinicie<&#47;strong> para que voc&ecirc; possa usar essa funcionalidade, caso contr&aacute;rio n&atilde;o funcionar&aacute;.</p>
+<h2>"Debugando" no console do Firebug<&#47;h2><br />
+Enviando mensagens atrav&eacute;s dos controllers:</p>
+<p>[code language="ruby"]class HomeController < ApplicationController<br />
+  def index<br />
+    firebug('Debug')<br />
+    firebug('Warning', :warn)<br />
+    firebug('Error', :error)<br />
+    firebug('Info', :info)<br />
+  end<br />
+end[&#47;code]</p>
+<p>E por views:</p>
+<p>[code language="ruby"]<% firebug('Debug') %><br />
+<% firebug('Warning', :warn) %><br />
+<% firebug('Error', :error) %><br />
+<% firebug('Info', :info) %>[&#47;code]</p>
+<p>Resultado:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;11&#47;debugando-aplicacoes-rails-com-console-do-firebug.png"><img class="alignnone size-full wp-image-774" title="debugando-aplicacoes-rails-com-console-do-firebug" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;11&#47;debugando-aplicacoes-rails-com-console-do-firebug.png" alt="debugando-aplicacoes-rails-com-console-do-firebug" width="688" height="225" &#47;><&#47;a></p>
+<p>Essa foi a dica de hoje. O que acharam?</p>
+<p>At&eacute; mais.</p>

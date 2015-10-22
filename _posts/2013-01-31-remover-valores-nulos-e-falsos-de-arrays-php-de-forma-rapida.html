@@ -1,0 +1,34 @@
+---
+layout: post
+status: publish
+published: true
+title: Remover Valores Nulos e Falsos de Arrays PHP de Forma R&aacute;pida
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Dica r&aacute;pida de <strong>PHP<&#47;strong> hoje pessoal..\r\n\r\nImagina
+  que temos um array como esse:\r\n[code language=\"php\"]<?php $arrayComValoresNulos
+  = array('um', 'dois', '', NULL, false, array()); ?>[&#47;code]\r\n"
+wordpress_id: 1147
+wordpress_url: http://blog.glaucocustodio.com/?p=1147
+date: '2013-01-31 22:57:58 -0200'
+date_gmt: '2013-01-31 22:57:58 -0200'
+categories:
+- PHP
+tags: []
+comments: []
+---
+<p>Dica r&aacute;pida de <strong>PHP<&#47;strong> hoje pessoal..</p>
+<p>Imagina que temos um array como esse:<br />
+[code language="php"]<?php $arrayComValoresNulos = array('um', 'dois', '', NULL, false, array()); ?>[&#47;code]<br />
+<a id="more"></a><a id="more-1147"></a>Veja que temos uma <strong>string vazia<&#47;strong>, um valor <strong>nulo<&#47;strong>, um <strong>falso<&#47;strong> e um <strong>array vazio<&#47;strong>.</p>
+<p>Como voc&ecirc; faria para remover esses valores do array? Faria um <code>for&#47;foreach<&#47;code> com <code>if<&#47;code>? Bah..</p>
+<p>Veja como remover de forma r&aacute;pida e pragm&aacute;tica:<br />
+[code language="php"]<?php $arrayLimpo = array_filter($arrayComValoresNulos); ?>[&#47;code]<br />
+Exibindo o novo array teremos o desejado: <code>Array ([0] => um [1] => dois)<&#47;code>.</p>
+<p>At&eacute; mais.</p>

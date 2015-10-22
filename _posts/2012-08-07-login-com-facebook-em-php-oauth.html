@@ -1,0 +1,316 @@
+---
+layout: post
+status: publish
+published: true
+title: Login com Facebook em PHP (OAuth)
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala galera, beleza? Voc&ecirc;s j&aacute; viram <strong>sistema de autentica&ccedil;&atilde;o
+  pelo Facebook<&#47;strong> em algum site? Sabe o que &eacute;?\r\n\r\nNesse post
+  irei explicar como incluir login com Facebook (autentica&ccedil;&atilde;o OAuth)
+  em seu site usando PHP (portanto, server side). &Eacute; bem f&aacute;cil, vamos
+  ao tutorial.\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;07&#47;login-com-facebook-em-php-oauth&#47;\"><img
+  class=\"alignnone  wp-image-235\" title=\"Login com Facebook em PHP\" src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-auth.jpg\"
+  alt=\"Login com Facebook em PHP\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n\r\n"
+wordpress_id: 192
+wordpress_url: http://blog.glaucocustodio.com/?p=192
+date: '2012-08-07 20:47:58 -0300'
+date_gmt: '2012-08-07 20:47:58 -0300'
+categories:
+- PHP
+tags:
+- php
+- facebook
+- oauth
+comments:
+- id: 99
+  author: Anderson Viral
+  author_email: producao@agenciaviral.com
+  author_url: http://agenciaviral.com
+  date: '2012-11-17 11:37:39 -0200'
+  date_gmt: '2012-11-17 11:37:39 -0200'
+  content: Amigo, fiz tudo direitinho em meu server web, por&eacute;m nada funcionou.
+    At&eacute; permito o app, mas quando redireciona n&atilde;o aparece nada no html.
+    O que pode ser? Todos modelos que testei de conex&atilde;o que encontrei fizeram
+    a mesma coisa... Estranho n&atilde;o?
+- id: 100
+  author: Anderson Viral
+  author_email: producao@agenciaviral.com
+  author_url: http://agenciaviral.com
+  date: '2012-11-17 12:02:48 -0200'
+  date_gmt: '2012-11-17 12:02:48 -0200'
+  content: "&Eacute;. at&eacute; setei l&aacute; na APP as permiss&otilde;es que passei
+    id&ecirc;nticas pela URL html... e nada. A url de retorno volta pra index.php
+    e tudo em branco. Mesmo com o c&oacute;digo html que n&atilde;o consta aqui, que
+    est&aacute; no seu gitHub.. o que ser&aacute;? vc j&aacute; se deparou com isso?"
+- id: 368
+  author: Matheus Afonso
+  author_email: matheusafonso65@gmail.com
+  author_url: http://www.matheusafonso.com
+  date: '2013-02-17 02:05:29 -0300'
+  date_gmt: '2013-02-17 02:05:29 -0300'
+  content: Gostei muito fera!!! Bem simples e r&aacute;pido para intender! Parab&eacute;ns
+    pelo post.
+- id: 424
+  author: Isael Ferreira
+  author_email: isaelfm@gmail.com
+  author_url: ''
+  date: '2013-03-14 21:05:13 -0300'
+  date_gmt: '2013-03-14 21:05:13 -0300'
+  content: "Que massa cara, ficou &oacute;timo tanto o tutorial como o c&oacute;digo
+    funcionou perfeitamente t&aacute; de parab&eacute;ns. :D\r\nEu tava quebrando
+    a cabe&ccedil;a lendo aqueles tutoriais do Dev facebook."
+- id: 462
+  author: Renato
+  author_email: renatoweb2.0@hotmail.com
+  author_url: ''
+  date: '2013-03-22 13:54:56 -0300'
+  date_gmt: '2013-03-22 13:54:56 -0300'
+  content: "Como faz pra instalar a extens&atilde;o &ldquo;openssl&rdquo;? obs.: leigo\r\nValewww"
+- id: 550
+  author: Wagner
+  author_email: wagnerlucian@gmail.com
+  author_url: ''
+  date: '2013-04-29 14:21:05 -0300'
+  date_gmt: '2013-04-29 14:21:05 -0300'
+  content: Muito bom ! muito bem comentado os c&oacute;digos e o texto muito bem escrito
+    cara ! parab&eacute;ns
+- id: 591
+  author: Adriana
+  author_email: amvvaz@hotmail.com
+  author_url: ''
+  date: '2013-05-13 16:25:47 -0300'
+  date_gmt: '2013-05-13 16:25:47 -0300'
+  content: "* Loga usu&aacute;rio na sess&atilde;o. Substitua as linhas abaixo pelo
+    seu c&oacute;digo de registro de usu&aacute;rios logados\r\n        *&#47;\r\n
+    \       $_SESSION['user_data']['email'] = $user->email;\r\n        $_SESSION['user_data']['name']
+    = $user->name;\r\n\r\nN&atilde;o percebo esta parte. \"c&oacute;digo de registo
+    de usu&aacute;rios logados\". Tenho de escrever exatamente o que e onde?\r\n\r\nObrigado"
+- id: 646
+  author: Daniel Medina
+  author_email: j.danielmedina@gmail.com
+  author_url: http://daniel.bluestage.net/
+  date: '2013-05-27 03:11:03 -0300'
+  date_gmt: '2013-05-27 03:11:03 -0300'
+  content: "Ol&aacute;, finalmente consegui ligar o meu site ao Facebook.\r\nDesde
+    j&aacute; quero dar os parab&eacute;ns pelo c&oacute;digo estar limpo e bem comentado,
+    isso ajuda-nos bastante.\r\n\r\nN&atilde;o testei o seu c&oacute;digo, implementei-o
+    aos poucos no meu site e deparei com alguns problemas j&aacute; corrigidos.\r\nAgora
+    sim, sei como funciona este mecanismo.\r\n\r\nAh, tirei o seguinte c&oacute;digo
+    porque me dava erro. \r\n\"if($response){ \r\n    $params = null;\r\n    parse_str($response,
+    $params);\r\n}\"\r\n\r\nO facebook devolveu-me o conte&uacute;do j&aacute; com
+    '?access_token=' foi s&oacute; remover e colocar a vari&aacute;vel $response.\r\n\r\nAssim
+    que puder deixo o link da adapta&ccedil;&atilde;o que fiz.\r\n\r\nAbra&ccedil;o."
+- id: 754
+  author: Fabio Fernando da Silva rocha
+  author_email: fabiorokfernn@hotmail.com
+  author_url: http://eumudeidevida.com.br/?ref=rocha
+  date: '2013-06-22 20:37:50 -0300'
+  date_gmt: '2013-06-22 20:37:50 -0300'
+  content: "Deixe seu negocio no piloto automatico, atraia centenas de afiliados para
+    sua rede.\r\n\r\nAssista o video e saiba como automatizar e obter uma explosao
+    de afiliados em sua rede."
+- id: 964
+  author: eduardo herdem campos
+  author_email: eduardohc@xvideos.com
+  author_url: ''
+  date: '2013-07-24 19:46:56 -0300'
+  date_gmt: '2013-07-24 19:46:56 -0300'
+  content: "adorei seu post meu amigo\r\nte parabenizo pelo blog\r\n\r\nEduardo Herdem
+    Campos"
+- id: 1088
+  author: Cerebro Vasconcelos
+  author_email: cerebro.vasconcelos@zipmail.com.br
+  author_url: http://cerebrovasconcelos.tumblr.com/
+  date: '2013-08-08 12:58:27 -0300'
+  date_gmt: '2013-08-08 12:58:27 -0300'
+  content: Parece bom, mas ainda num testei, vou testar em breve
+- id: 1218
+  author: Joao
+  author_email: jovimalhaes@hotmail.com
+  author_url: ''
+  date: '2013-09-06 03:30:47 -0300'
+  date_gmt: '2013-09-06 03:30:47 -0300'
+  content: Ae cara, tutorial maneiro. Me fala ai quais s&atilde;o os echos das SESSIONs
+    para por no meu site. A sess&atilde;o fica logada at&eacute; sair do fb? Eeee
+    n&atilde;o entendi a linha 40 do &uacute;ltimo c&oacute;digo
+- id: 1376
+  author: Alex
+  author_email: Alex.f.soares@hotmail.com
+  author_url: ''
+  date: '2013-10-16 14:12:45 -0300'
+  date_gmt: '2013-10-16 14:12:45 -0300'
+  content: Ol&aacute;, eu estou com problema, a minha URL &eacute; localhost&#47;etc,
+    e ent&atilde;o configurei para vhost, por&eacute;m o campo site url n&atilde;o
+    aceita, e localhost&#47;etc apesar de aceitar como valido n&atilde;o ir&aacute;
+    funcionar como espera e j&aacute; citado aqui! O que fazer? Lembrando que ja configurei
+    o apache tudo certinho, acessando as coisas e tudo mais, entretanto e o &uacute;nico
+    problema &eacute; que n&atilde;o &eacute; aceito
+- id: 1382
+  author: Alex
+  author_email: Alex.f.soares@hotmail.com
+  author_url: ''
+  date: '2013-10-17 17:19:24 -0300'
+  date_gmt: '2013-10-17 17:19:24 -0300'
+  content: Algu&eacute;m fez esse tutorial utilizando virtual hosts, me da uma for&ccedil;a,
+    to precisando muito!
+- id: 1405
+  author: getulio
+  author_email: getuliolobo@msn.com
+  author_url: ''
+  date: '2013-10-24 12:46:52 -0200'
+  date_gmt: '2013-10-24 12:46:52 -0200'
+  content: "o meu ta dando erro parceiro, qual a M que eu to fazendo?\r\n\r\nhttp:&#47;&#47;www.brotherbusiness.com.br&#47;facebook&#47;\r\n\r\nParabens
+    pelo post"
+- id: 1497
+  author: alison Silva
+  author_email: alison.geek@gmail.com
+  author_url: ''
+  date: '2013-11-26 19:01:29 -0200'
+  date_gmt: '2013-11-26 19:01:29 -0200'
+  content: '&Oacute;tima tutorial parab&eacute;ns , eu comecei a desenvolver para
+    Web faz pouco tempo e me deparei com a necessidade de colocar uma autentica&ccedil;&atilde;o
+    atrav&eacute;s do facebook em um site porem s&oacute; da erro "Falha ao logar
+    no Facebook" oque pode ser ? teria como me dar um help ou gravar um video rsrs
+    ??'
+- id: 1917
+  author: P&igrave;tter
+  author_email: pitter775@gmail.com
+  author_url: http://www.embudasartes.sp.gov.br/
+  date: '2014-04-11 20:14:23 -0300'
+  date_gmt: '2014-04-11 20:14:23 -0300'
+  content: Do caralho! Parab&eacute;ns mlk!
+- id: 9333
+  author: R-TI
+  author_email: rogerioti@rocketmail.com
+  author_url: ''
+  date: '2014-09-16 11:01:06 -0300'
+  date_gmt: '2014-09-16 11:01:06 -0300'
+  content: "Glauco Cust&oacute;dio, o post &eacute; um pouco antigo, mas se puder
+    me ajudar, fico grato.\r\n\r\nQuando logo com o meu facebook o sistema funciona
+    corretamente, por&eacute;m quando logo com outra conta ele dar erro dizendo que
+    o aplicativo n&atilde;o foi configurado corretamente. Onde estou errando?"
+- id: 12313
+  author: Piterson
+  author_email: piterson_puma@hotmail.com
+  author_url: http://desenvolvimento
+  date: '2014-10-06 18:55:10 -0300'
+  date_gmt: '2014-10-06 18:55:10 -0300'
+  content: Show de bola Glauco  funcionou certinho parabens
+- id: 13335
+  author: aldenice meneses aguiar
+  author_email: nicelimaaguiar@gmail.com
+  author_url: ''
+  date: '2014-10-10 17:25:40 -0300'
+  date_gmt: '2014-10-10 17:25:40 -0300'
+  content: tudo muito bom
+- id: 16059
+  author: Roberta
+  author_email: meunamoro1@outlook.com
+  author_url: http://www.meunamoro.com.br
+  date: '2014-11-10 18:47:19 -0200'
+  date_gmt: '2014-11-10 18:47:19 -0200'
+  content: "muito obrigado, isso vai facilitar muito para as pessoas no Meu Namoro\r\n\r\nhttp:&#47;&#47;www.meunamoro.com.br"
+- id: 20189
+  author: jogos de acao
+  author_email: kraig_passmore@gmail.com
+  author_url: http://zombiegames.ofertou.com/
+  date: '2015-01-17 19:48:05 -0200'
+  date_gmt: '2015-01-17 19:48:05 -0200'
+  content: Hello to every one, it's truly a good for me to visit this site, iit includes
+    important Information.
+- id: 39001
+  author: Pika
+  author_email: s@s.com
+  author_url: http://www.glaucos.com.br
+  date: '2015-08-20 22:32:56 -0300'
+  date_gmt: '2015-08-20 22:32:56 -0300'
+  content: "Pika !!!!.\r\n<a href=\"\" title=\"\" rel=\"nofollow\"> <abbr title=\"\">
+    <acronym title=\"\"> <b> <blockquote cite=\"\"> <cite> <code> <del datetime=\"\">
+    <em> <i> <q cite=\"\"> <strike> <strong>"
+---
+<p>Fala galera, beleza? Voc&ecirc;s j&aacute; viram <strong>sistema de autentica&ccedil;&atilde;o pelo Facebook<&#47;strong> em algum site? Sabe o que &eacute;?</p>
+<p>Nesse post irei explicar como incluir login com Facebook (autentica&ccedil;&atilde;o OAuth) em seu site usando PHP (portanto, server side). &Eacute; bem f&aacute;cil, vamos ao tutorial.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;07&#47;login-com-facebook-em-php-oauth&#47;"><img class="alignnone  wp-image-235" title="Login com Facebook em PHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-auth.jpg" alt="Login com Facebook em PHP" width="580" height="240" &#47;><&#47;a></p>
+<p><a id="more"></a><a id="more-192"></a>Primeira coisa que precisamos &eacute; criar uma App no Facebook Developers, para isso, voc&ecirc; deve ter um cadastro no Facebook (isso &eacute; f&aacute;cil rs). Acesse o link <a title="http:&#47;&#47;developers.facebook.com" href="http:&#47;&#47;developers.facebook.com" target="_blank">http:&#47;&#47;developers.facebook.com<&#47;a>, clique em "Entrar" e digite seu email e senha do Facebook. Se ele pedir a senha novamente, digite mais uma vez, &eacute; por seguran&ccedil;a.</p>
+<p>Ap&oacute;s o login, estaremos na p&aacute;gina inicial do Facebook Developers, agora podemos criar nossa App. Clique em "Create New App", digite o nome da sua aplica&ccedil;&atilde;o em "App Name" (eu colocaria algo como "Meu site - login") e clique em "Continue". Digite o c&oacute;digo mostrado na imagem (<a title="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;CAPTCHA" href="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;CAPTCHA" target="_blank">CAPTCHA<&#47;a>) e pronto, sua app estar&aacute; criada e voc&ecirc; ser&aacute; redirecionado para p&aacute;gina de configura&ccedil;&atilde;o dela.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-app.png"><img class="alignnone size-full wp-image-214" title="Criar App no Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-app.png" alt="Criar App no Facebook" width="636" height="199" &#47;><&#47;a></p>
+<div class="alert">O Facebook pode pedir para confirmar sua conta solicitando um n&uacute;mero de celular no qual ele enviar&aacute; um c&oacute;digo que deve ser digitado para continuar. Caso voc&ecirc; tenha criado sua conta no Facebook a menos de 48 horas voc&ecirc; pode ter problemas nessa etapa, mas, &eacute; s&oacute; esperar esse prazo e tudo deve ocorrer normal (informa&ccedil;&atilde;o n&atilde;o oficial, encontrei em f&oacute;runs quando tive esse problema).<&#47;div></p>
+<p>Estando tudo certo, agora voc&ecirc; deve selecionar como sua aplica&ccedil;&atilde;o se integrar&aacute; com o Facebook, para isso, bastar marcar "Website with Facebook login", digitar o endere&ccedil;o do seu site que o Facebook ir&aacute; redirecionar ap&oacute;s fazer o login no campo "Site URL" e clicar em "Save Changes".</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb2.png"><img class="alignnone  wp-image-221" title="Configurando app no Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb2.png" alt="Configurando app no Facebook" width="972" height="532" &#47;><&#47;a></p>
+<p>O campo "Site URL" deve ser preenchido com um dom&iacute;nio v&aacute;lido (algo como http:&#47;&#47;glaucocustodio.com), portanto voc&ecirc; n&atilde;o pode inserir endere&ccedil;os como "http:&#47;&#47;localhost" ou "127.0.0.1" (endere&ccedil;os referentes &agrave; m&aacute;quina local). Mas como irei fazer isso se preciso testar em desenvolvimento (em sua m&aacute;quina e n&atilde;o no servidor de hospedagem) primeiro antes de subir em produ&ccedil;&atilde;o (online)? Essa &eacute; a pergunta que voc&ecirc; pode estar se fazendo agora. Para resolver isso, voc&ecirc; ter&aacute; que criar um redirecionamento em seu arquivo hosts (em caso de Windows). Abra um editor de texto como o bloco de notas como administrador, v&aacute; no menu <code>Arquivo -> Abrir<&#47;code>, acesse esse endere&ccedil;o <code>C:\Windows\System32\drivers\etc<&#47;code> e clique para abrir o arquivo <code>hosts<&#47;code>, feito isso, adicione <code>127.0.0.1 meusitedev.com.br<&#47;code> (sem aspas) na &uacute;ltima linha e salve o arquivo. Agora abra o navegador e digite o endere&ccedil;o digitado acima (meusitedev.com.br) na barra de endere&ccedil;os e voc&ecirc; dever&aacute; ver o conte&uacute;do da pasta <code>www<&#47;code> do Apache, basta clicar na pasta do seu projeto e pronto, agora voc&ecirc; pode desenvolver usando uma url como "http:&#47;&#47;meusitedev.com.br" inv&eacute;s de "http:&#47;&#47;localhost&#47;meusite". Caso isso n&atilde;o funcione, procure por "hosts Windows" e "Virtual hosts Apache" no Google que voc&ecirc; obter&aacute; ajuda f&aacute;cil.</p>
+<p>Ap&oacute;s configurarmos nossa app no Facebook, j&aacute; podemos come&ccedil;ar a codificar.. Primeira coisa que devemos fazer &eacute; adicionar um link para o endere&ccedil;o de autentica&ccedil;&atilde;o do Facebook.</p>
+<p>[code language="html"]<br />
+<a href="https:&#47;&#47;www.facebook.com&#47;dialog&#47;oauth?client_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES">Entrar com Facebook<&#47;a><br />
+[&#47;code]</p>
+<p>Substitua <code>YOUR_APP_ID<&#47;code> pelo id da sua aplica&ccedil;&atilde;o e <code>YOUR_REDIRECT_URI<&#47;code> pelo endere&ccedil;o digitado no campo "Site URL" (aquele que deve ser um dom&iacute;nio v&aacute;lido). Ambos dados s&atilde;o encontrados na p&aacute;gina de configura&ccedil;&atilde;o de sua aplica&ccedil;&atilde;o no Facebook Developers.</p>
+<p>O par&acirc;metro <code>scope<&#47;code> do link acima, diz para o Facebook quais s&atilde;o as permiss&otilde;es adicionais que seu site precisa para acessar dados dos usu&aacute;rios. Por padr&atilde;o, o Facebook disponibiliza id, nome, sexo e localidade (locale) dos usu&aacute;rios, se voc&ecirc; precisar de mais dados, como por exemplo o email (que tamb&eacute;m iremos precisar), voc&ecirc; deve informar nesse par&acirc;metro <code>scope<&#47;code> separado por v&iacute;rgulas (ex: <code>scope=email, user_website<&#47;code>). Ent&atilde;o substitua <code>COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES<&#47;code> pelas permiss&otilde;es que voc&ecirc; precisar&aacute; ou remova <code>scope<&#47;code> e seu valor caso n&atilde;o precise de permiss&otilde;es adicionais.</p>
+<p>Voc&ecirc; deve ficar com um link como abaixo ap&oacute;s as respectivas substitui&ccedil;&otilde;es.</p>
+<p>[code language="html+php"]<br />
+<a href="https:&#47;&#47;www.facebook.com&#47;dialog&#47;oauth?client_id=104463303035318&scope=email&redirect_uri=<?php echo urlencode('http:&#47;&#47;projetos.com&#47;glauco-blog-tutorials&#47;Login%20com%20Facebook&#47;') ?>">Entrar com Facebook<&#47;a><br />
+[&#47;code]</p>
+<p>Se voc&ecirc; clicar nele, ser&aacute; redirecionado para uma tela onde o Facebook solicita permiss&atilde;o para os itens definidos na vari&aacute;vel <code>scope<&#47;code> acima e&#47;ou apenas &agrave;s informa&ccedil;&otilde;es b&aacute;sicas.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb.png"><img class="alignnone size-full wp-image-196" title="Login com Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb.png" alt="Login com Facebook" width="671" height="303" &#47;><&#47;a></p>
+<p>Clique em "Go to App" para conceder acesso e continuar. Feito isso, voc&ecirc; ver&aacute; que foi redirecionado para a url informada no campo "Site URL" e que agora ela possui uma vari&aacute;vel chamada <code>code<&#47;code> na url. Nessa mesma p&aacute;gina, iremos incluir o c&oacute;digo PHP abaixo (no come&ccedil;o da p&aacute;gina) para conseguirmos o token de acesso (acess token) e depois obtermos os dados do usu&aacute;rio.</p>
+<p>[code language="php" linenos="1"]<br />
+<?php</p>
+<p>&#47;&#47; Verifica o tipo de requisi&ccedil;&atilde;o e se tem a vari&aacute;vel 'code' na url<br />
+if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['code'])){<br />
+  &#47;&#47; Informe o id da app<br />
+  $appId = '104463303035318';<br />
+  &#47;&#47; Senha da app<br />
+  $appSecret = 'sua_app_secret';<br />
+  &#47;&#47; Url informada no campo "Site URL"<br />
+  $redirectUri = urlencode('http:&#47;&#47;projetos.com&#47;glauco-blog-tutorials&#47;Login%20com%20Facebook&#47;');<br />
+  &#47;&#47; Obt&eacute;m o c&oacute;digo da query string<br />
+  $code = $_GET['code'];</p>
+<p>  &#47;&#47; Monta a url para obter o token de acesso<br />
+  $token_url = "https:&#47;&#47;graph.facebook.com&#47;oauth&#47;access_token?"<br />
+  . "client_id=" . $appId . "&redirect_uri=" . $redirectUri<br />
+  . "&client_secret=" . $appSecret . "&code=" . $code;</p>
+<p>  &#47;&#47; Requisita token de acesso<br />
+  $response = @file_get_contents($token_url);</p>
+<p>  if($response){<br />
+    $params = null;<br />
+    parse_str($response, $params);</p>
+<p>    &#47;&#47; Se veio o token de acesso<br />
+    if(isset($params['access_token']) && $params['access_token']){<br />
+      $graph_url = "https:&#47;&#47;graph.facebook.com&#47;me?access_token="<br />
+      . $params['access_token'];</p>
+<p>      &#47;&#47; Obt&eacute;m dados atrav&eacute;s do token de acesso<br />
+      $user = json_decode(file_get_contents($graph_url));</p>
+<p>      &#47;&#47; Se obteve os dados necess&aacute;rios<br />
+      if(isset($user->email) && $user->email){</p>
+<p>        &#47;*<br />
+        * Autentica&ccedil;&atilde;o feita com sucesso.<br />
+        * Loga usu&aacute;rio na sess&atilde;o. Substitua as linhas abaixo pelo seu c&oacute;digo de registro de usu&aacute;rios logados<br />
+        *&#47;<br />
+        $_SESSION['user_data']['email'] = $user->email;<br />
+        $_SESSION['user_data']['name'] = $user->name;</p>
+<p>        &#47;*<br />
+        * Aqui voc&ecirc; pode adicionar um c&oacute;digo que cadastra o email do usu&aacute;rio no banco de dados<br />
+        * A cada requisi&ccedil;&atilde;o feita em p&aacute;ginas de &aacute;rea restrita voc&ecirc; verifica se o email<br />
+        * que est&aacute; na sess&atilde;o &eacute; um email cadastrado no banco<br />
+        *&#47;<br />
+      }</p>
+<p>    }else{<br />
+      $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';<br />
+    }</p>
+<p>  }else{<br />
+    $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';<br />
+  }</p>
+<p>}else if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['error'])){<br />
+  $_SESSION['fb_login_error'] = 'Permiss&atilde;o n&atilde;o concedida';<br />
+}<br />
+?><br />
+[&#47;code]</p>
+<div class="note">Para executar o c&oacute;digo acima voc&ecirc; precisar&aacute; ter a extens&atilde;o <code>openssl<&#47;code> do PHP instalada.<&#47;div></p>
+<p>Pronto! Agora voc&ecirc; j&aacute; tem seu sistema de login e senha com autentica&ccedil;&atilde;o pelo Facebook. Voc&ecirc; pode conferir o c&oacute;digo completo desse exemplo em meu <a title="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Login%20com%20Facebook" rel="external nofollow" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Login%20com%20Facebook" target="_blank">GitHub<&#47;a>.</p>
+<p>O que voc&ecirc; achou? Gostou?</p>
+<p>At&eacute; mais.</p>

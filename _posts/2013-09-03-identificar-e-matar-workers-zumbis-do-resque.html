@@ -1,0 +1,40 @@
+---
+layout: post
+status: publish
+published: true
+title: Identificar e Matar Workers Zumbis do Resque
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "J&aacute; aconteceu algumas vezes comigo de ter os workers do Resque exportados
+  para o upstart do Ubuntu e precisar substituir por outros.\r\n\r\nO problema &eacute;
+  que ao excluir os arquivos de configura&ccedil;&atilde;o de <code>&#47;etc&#47;init<&#47;code>
+  e colocar os dos workers novos, por algum motivo o Ubuntu se perde e n&atilde;o
+  sobe o que deveria, mantendo os processos antigos. Se voc&ecirc; mata os processos
+  eles voltam.\r\n\r\n"
+wordpress_id: 1991
+wordpress_url: http://blog.glaucocustodio.com/?p=1991
+date: '2013-09-03 12:30:55 -0300'
+date_gmt: '2013-09-03 12:30:55 -0300'
+categories:
+- Ruby
+tags:
+- resque
+comments: []
+---
+<p>J&aacute; aconteceu algumas vezes comigo de ter os workers do Resque exportados para o upstart do Ubuntu e precisar substituir por outros.</p>
+<p>O problema &eacute; que ao excluir os arquivos de configura&ccedil;&atilde;o de <code>&#47;etc&#47;init<&#47;code> e colocar os dos workers novos, por algum motivo o Ubuntu se perde e n&atilde;o sobe o que deveria, mantendo os processos antigos. Se voc&ecirc; mata os processos eles voltam.</p>
+<p><a id="more"></a><a id="more-1991"></a>Uma solu&ccedil;&atilde;o que encontrei para matar os processos zumbis &eacute; entrar no console da aplica&ccedil;&atilde;o Rails, identificar os workers antigos (voc&ecirc; pode fazer isso via comando ou vendo pela interface web do Resque mesmo) e remov&ecirc;-los.</p>
+<p>Para ver os nomes dos workers rode:<br />
+[code language="ruby"]Resque.workers.select{|worker| puts worker}[&#47;code]<br />
+Para remover um worker do Resque:<br />
+[code language="ruby"]Resque.remove_worker('nome-do-worker')[&#47;code]<br />
+Caso tenha muitos e deseja matar todos, a jun&ccedil;&atilde;o dos dois tamb&eacute;m deve funcionar:<br />
+[code language="ruby"]Resque.workers.select{|worker| Resque.remove_worker(worker) }[&#47;code]<br />
+Agora &eacute; s&oacute; reiniciar seu job no upstart, esperar ele subir e pronto.</p>
+<p>Abra&ccedil;os.</p>

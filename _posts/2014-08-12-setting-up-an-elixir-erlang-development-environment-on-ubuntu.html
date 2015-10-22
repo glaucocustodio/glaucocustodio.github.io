@@ -1,0 +1,50 @@
+---
+layout: post
+status: publish
+published: true
+title: Setting up an Elixir&#47;Erlang Development Environment on Ubuntu
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 2982
+wordpress_url: http://blog.glaucocustodio.com/?p=2982
+date: '2014-08-12 16:59:14 -0300'
+date_gmt: '2014-08-12 16:59:14 -0300'
+categories:
+- Elixir
+tags: []
+comments: []
+---
+<p>Recently I have been curious about the <a href="http:&#47;&#47;elixir-lang.org&#47;" target="_blank" rel="external nofollow">Elixir<&#47;a> language and its benefits..</p>
+<p>As the title says, today I am going to show you how we can easily set up an Elixir&#47;Erlang development environment on Ubuntu (precisely 14.04).</p>
+<h2>Installing Erlang<&#47;h2></p>
+<p>Elixir is built on top of Erlang virtual machine, this way, we need to install Erlang first.</p>
+<p>Let's start by installing its dependencies:</p>
+<p>[code language="bash"]<br />
+sudo apt-get install build-essential libncurses5-dev openssl libssl-dev fop xsltproc unixodbc-dev<br />
+[&#47;code]</p>
+<p>Now, let's download Erlang's source code, compile and install it. You can check out the latest versions of Erlang <a href="http:&#47;&#47;erlang.org&#47;download&#47;" target="_blank" rel="external nofollow">in its own website<&#47;a>.</p>
+<p>[code language="bash"]<br />
+cd &#47;usr&#47;bin<br />
+wget http:&#47;&#47;erlang.org&#47;download&#47;otp_src_17.1.tar.gz<br />
+tar -xzvf otp_src_17.1.tar.gz<br />
+cd otp_src_17.1<br />
+sudo .&#47;configure && sudo make && sudo make install<br />
+[&#47;code]</p>
+<p>After installation, type <code>erl<&#47;code> to enter Erlang console.</p>
+<h2>Installing Elixir<&#47;h2></p>
+<p>Let's install the latest stable version of Elixir (check out on <a href="https:&#47;&#47;github.com&#47;elixir-lang&#47;elixir" target="_blank" rel="external nofollow">github<&#47;a>).</p>
+<p>[code language="bash"]<br />
+cd &#47;usr&#47;bin<br />
+sudo git clone https:&#47;&#47;github.com&#47;elixir-lang&#47;elixir<br />
+cd elixir<br />
+sudo git checkout v0.15.1<br />
+sudo make && sudo make install<br />
+[&#47;code]</p>
+<p>Ok, now we have Elixir v0.15 installed, just type <code>iex<&#47;code> to enter Interactive Elixir shell.</p>
+<p>Have fun!</p>

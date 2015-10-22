@@ -1,0 +1,88 @@
+---
+layout: post
+status: publish
+published: true
+title: Trackear (acompanhar) Diret&oacute;rios Vazios com Git
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Quem usa <strong>git<&#47;strong>, sabe que ele por padr&atilde;o s&oacute;
+  gerencia e versiona arquivos, e n&atilde;o diret&oacute;rios, isso significa que
+  caso voc&ecirc; tenha um <strong>diret&oacute;rio vazio<&#47;strong> em seu reposit&oacute;rio
+  ele n&atilde;o identificar&aacute; mudan&ccedil;as..\r\n\r\nAgora imagine que algum
+  diret&oacute;rio de nossa aplica&ccedil;&atilde;o pode ficar vazio por vezes, o
+  que &eacute; muito comum. Como fazer para o git trackear e reconhecer a pasta sem
+  conte&uacute;do?\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;05&#47;02&#47;trackear-acompanhar-diretorios-vazios-com-git&#47;\"><img
+  class=\"alignnone size-full wp-image-1602\" title=\"git\" src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;git.jpg\"
+  alt=\"\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n\r\n"
+wordpress_id: 1493
+wordpress_url: http://blog.glaucocustodio.com/?p=1493
+date: '2013-05-02 23:09:59 -0300'
+date_gmt: '2013-05-02 23:09:59 -0300'
+categories:
+- Git
+tags: []
+comments:
+- id: 564
+  author: Marcio Migueis
+  author_email: marcioa1@gmail.com
+  author_url: ''
+  date: '2013-05-03 12:11:29 -0300'
+  date_gmt: '2013-05-03 12:11:29 -0300'
+  content: Legal esta da exclama&ccedil;&atilde;o .N&atilde;o conhecia. Gostei.
+- id: 577
+  author: Lucas
+  author_email: lcomino3d@gmail.com
+  author_url: http://www.zoidepomba.com.br
+  date: '2013-05-08 00:46:36 -0300'
+  date_gmt: '2013-05-08 00:46:36 -0300'
+  content: Cara que show! Obrigado pela dica!
+- id: 1208
+  author: Jhonathas Matos
+  author_email: jhonathas@gmail.com
+  author_url: http://www.persisto.com.br
+  date: '2013-09-03 22:23:42 -0300'
+  date_gmt: '2013-09-03 22:23:42 -0300'
+  content: "Falae, blz, tb tem o .gitkeep  :D se criar um arquivo desse dentro da
+    pasta ele mant&eacute;m a pasta.\r\nValeu a dica, n&atilde;o conhecia essa forma.\r\n\r\nUm
+    abra&ccedil;o"
+- id: 1571
+  author: Diego Ramos
+  author_email: rdiego26@gmail.com
+  author_url: http://blog.diegoramos.info/
+  date: '2014-01-01 17:22:15 -0200'
+  date_gmt: '2014-01-01 17:22:15 -0200'
+  content: Boa dica!
+- id: 27767
+  author: Eduardo Moura
+  author_email: edoura@gmail.com
+  author_url: https://github.com/edoura
+  date: '2015-04-13 01:51:26 -0300'
+  date_gmt: '2015-04-13 01:51:26 -0300'
+  content: Obrigado! O simples e conciso que resolve.
+---
+<p>Quem usa <strong>git<&#47;strong>, sabe que ele por padr&atilde;o s&oacute; gerencia e versiona arquivos, e n&atilde;o diret&oacute;rios, isso significa que caso voc&ecirc; tenha um <strong>diret&oacute;rio vazio<&#47;strong> em seu reposit&oacute;rio ele n&atilde;o identificar&aacute; mudan&ccedil;as..</p>
+<p>Agora imagine que algum diret&oacute;rio de nossa aplica&ccedil;&atilde;o pode ficar vazio por vezes, o que &eacute; muito comum. Como fazer para o git trackear e reconhecer a pasta sem conte&uacute;do?</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;05&#47;02&#47;trackear-acompanhar-diretorios-vazios-com-git&#47;"><img class="alignnone size-full wp-image-1602" title="git" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;git.jpg" alt="" width="580" height="240" &#47;><&#47;a></p>
+<p><a id="more"></a><a id="more-1493"></a>Geralmente o pessoal cria um arquivo vazio com nome <code>empty<&#47;code> ou <code>.gitkeep<&#47;code> pra isso, assim o git entender&aacute; que a pasta n&atilde;o est&aacute; vazia e ent&atilde;o acompanhar&aacute;.</p>
+<p>Mas e se eu tiver um diret&oacute;rio que vive com arquivos tempor&aacute;rios cujos quais n&atilde;o posso apagar, n&atilde;o posso trackear com o git para n&atilde;o ficar enchendo o reposit&oacute;rio remoto com lixo e que deve permanecer existindo (mesmo vazio) quando comito? Eis a solu&ccedil;&atilde;o:</p>
+<p>Crie um arquivo <code>.gitignore<&#47;code> no diret&oacute;rio que ficar&aacute; os arquivos tempor&aacute;rios e dentro dele coloque a regra que o git utilizar&aacute; para ignorar os arquivos tempor&aacute;rios e logo abaixo adicione o trecho: <code>!.gitignore<&#47;code></p>
+<p>Veja alguns exemplos abaixo de <code>.gitignore<&#47;code> para manter o diret&oacute;rio vazio trackeado excluindo o conte&uacute;do:</p>
+<p>Para ignorar todos arquivos:<br />
+[code language="bash"]# ignorar todos<br />
+*<br />
+# exceto o .gitignore<br />
+!.gitignore[&#47;code]<br />
+Ignorar todos arquivos do tipo JPG:<br />
+[code language="bash"]# ignorar todos JPG<br />
+*.jpg<br />
+# exceto o .gitignore<br />
+!.gitignore[&#47;code]<br />
+Assim por diante.. Basta colocar a express&atilde;o desejada e pronto.</p>
+<p>O que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais.</p>

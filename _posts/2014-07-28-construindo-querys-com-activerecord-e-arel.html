@@ -1,0 +1,92 @@
+---
+layout: post
+status: publish
+published: true
+title: Construindo Querys com ActiveRecord e Arel
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 2953
+wordpress_url: http://blog.glaucocustodio.com/?p=2953
+date: '2014-07-28 19:56:17 -0300'
+date_gmt: '2014-07-28 19:56:17 -0300'
+categories:
+- Ruby
+tags:
+- ruby on rails
+- active record
+- arel
+comments: []
+---
+<p>Recentemente estava assistindo <a href="https:&#47;&#47;www.youtube.com&#47;watch?v=ShPAxNcLm3o&amp;list=PLE7tQUdRKcyZ5jfnbS_osIoWzK_FrwKz5&amp;index=15" rel="extenal nofollow" target="_blank">essa talk<&#47;a> da RailsConf 2014 e achei interessante a forma apresentado por Cameron Dutro de como construir querys com ActiveRecord e <a href="https:&#47;&#47;github.com&#47;rails&#47;arel" rel="extenal nofollow" target="_blank">Arel<&#47;a>.</p>
+<p>Ele mostra alguns exemplos de pesquisa utilizando strings em condi&ccedil;&otilde;es e joins e o porque isso pode ser ruim..</p>
+<p>Vejamos essa query:</p>
+<p>[code language="ruby"]<br />
+User.where("email ILIKE ?", '%teste%')<br />
+[&#47;code]</p>
+<p>Por utilizarmos string para especificar as condi&ccedil;&otilde;es de busca, podemos acabar usando uma sintaxe exclusiva de um banco de dados.. </p>
+<p>No exemplo acima, fa&ccedil;o uso de <code>ILIKE<&#47;code>, que existe no PostgreSQL, mas n&atilde;o no MySQL. Essa &eacute; apenas uma das dores de cabe&ccedil;a que podemos ter ao usar strings pra esse tipo de coisa.</p>
+<p>Como alternativa, Dutro sup&otilde;e o uso do Arel para a constru&ccedil;&atilde;o de querys mais limpas e f&aacute;ceis de manter. Veja como ficaria a busca acima com Arel:</p>
+<p>[code language="ruby"]<br />
+User.where(User.arel_table[:email].matches("%teste%"))<br />
+[&#47;code]</p>
+<p>O trecho acima, gera o mesmo SQL esperado que o primeiro:</p>
+<p>[code language="sql"]<br />
+SELECT "users".* FROM "users"  WHERE ("users"."email" ILIKE '%teste%')<br />
+[&#47;code]</p>
+<h2>Brincando com Arel<&#47;h2></p>
+<p>Veja abaixo mais alguns exemplos de como podemos brincar com Arel em nossas querys seguido do correspondente SQL..</p>
+<h3>Eq<&#47;h3></p>
+<p>[code language="ruby"]<br />
+User.where(User.arel_table[:email].eq('teste@provedor.com'))<br />
+[&#47;code]</p>
+<p>[code language="sql"]<br />
+SELECT "users".* FROM "users"  WHERE "users"."email" = 'teste@provedor.com'<br />
+[&#47;code]</p>
+<h3>Not Eq<&#47;h3></p>
+<p>[code language="ruby"]<br />
+User.where(User.arel_table[:email].not_eq('teste@provedor.com'))<br />
+[&#47;code]</p>
+<p>[code language="sql"]<br />
+SELECT "users".* FROM "users"  WHERE ("users"."email" != 'teste@provedor.com')<br />
+[&#47;code]</p>
+<h3>In<&#47;h3></p>
+<p>[code language="ruby"]<br />
+User.where(User.arel_table[:email].in(['teste@provedor.com', 'outro@provedor.com']))<br />
+[&#47;code]</p>
+<p>[code language="sql"]<br />
+SELECT "users".* FROM "users"  WHERE "users"."email" IN ('teste@provedor.com', 'outro@provedor.com')<br />
+[&#47;code]</p>
+<p>Temos ainda outros operadores de compara&ccedil;&atilde;o que podem ser vistos <a rel="extenal nofollow" target="_blank" href="https:&#47;&#47;github.com&#47;rails&#47;arel#more-sophisticated-queries">aqui<&#47;a>.</p>
+<h3>Or e And<&#47;h3></p>
+<p>Achei legal tamb&eacute;m que podemos usar os operadores <code>or<&#47;code> e <code>and<&#47;code>.. Veja:</p>
+<p>[code language="ruby"]<br />
+User.where(<br />
+  User.arel_table[:email].eq(<br />
+    'teste@provedor.com'<br />
+  ).or(<br />
+    User.arel_table[:gender].eq('m').and(<br />
+      User.arel_table[:name].eq('Teste')<br />
+    )<br />
+  )<br />
+)<br />
+[&#47;code]</p>
+<p>[code language="sql"]<br />
+SELECT "users".* FROM "users"  WHERE (<br />
+  (<br />
+    "users"."email"  = 'teste@provedor.com' OR<br />
+    "users"."gender" = 'm' AND "users"."name" = 'Teste'<br />
+  )<br />
+)<br />
+[&#47;code]</p>
+<h2>Arel Helpers Gem<&#47;h2></p>
+<p>Uma coisa chata &eacute; ter que ficar colocando <code>.arel_table<&#47;code> toda vez depois do nome do model para acessar os atributos..</p>
+<p>N&atilde;o s&oacute; para resolver esse problema, mas tamb&eacute;m outros e adicionar algumas features legais (como possibilitar a cria&ccedil;&atilde;o de query builders), o pr&oacute;prio Cameron Dutro criou uma gema chamada <a href="https:&#47;&#47;github.com&#47;camertron&#47;arel-helpers" rel="extenal nofollow" target="_blank">arel-helpers<&#47;a>.</p>
+<p>Fica a seu crit&eacute;rio utiliz&aacute;-la ou n&atilde;o.</p>
+<p>Essa foi a dica de hoje. O que acharam?</p>
+<p>Abra&ccedil;os.</p>

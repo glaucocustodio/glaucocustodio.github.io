@@ -1,0 +1,58 @@
+---
+layout: post
+status: publish
+published: true
+title: A Reminder about Base64#encode64 in Ruby
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3045
+wordpress_url: http://blog.glaucocustodio.com/?p=3045
+date: '2014-09-27 15:40:59 -0300'
+date_gmt: '2014-09-27 15:40:59 -0300'
+categories:
+- Ruby
+tags: []
+comments: []
+---
+<p>Some days ago I was in a integration with a third-party service, so I ended up making use of an HTTP authorization header.</p>
+<p>As normal, I needed to pass username and password base64-encoded in the format "username:password".</p>
+<p>The first thing on my mind was to use <code>Base64#encode64<&#47;code> from Ruby's standard library as usual (see the snippet below).</p>
+<p>[code lang="ruby"]<br />
+require 'base64'</p>
+<p>Base64.encode64('myusername:mysuperpassword')<br />
+[&#47;code]</p>
+<p>However, I could not authenticate, I just received the following error message "':' is missing".</p>
+<p>Not for the first time, after a while dealing with this particular issue, I found out the reason. As very <a href="http:&#47;&#47;ruby-doc.org&#47;stdlib-2.1.2&#47;libdoc&#47;base64&#47;rdoc&#47;Base64.html#method-i-encode64" rel="external nofollow" target="_blank">well documented<&#47;a>, <code>encode64<&#47;code> adds a <code>\n<&#47;code> to every 60 encoded chars in the output string.</p>
+<p>[code lang="ruby"]<br />
+require 'base64'</p>
+<p>Base64.encode64('a')           # => "YQ==\\n"<br />
+Base64.encode64('a') == "YQ==" # => false<br />
+[&#47;code]</p>
+<p>As solution, we could use <code>Base64#strict_encode64<&#47;code> or keep <code>Base64#encode64<&#47;code> and then replace <code>\n<&#47;code> occurrences. See below:</p>
+<p>[code lang="ruby"]<br />
+require 'base64'</p>
+<p>Base64.strict_encode64('a')           # => "YQ=="<br />
+Base64.strict_encode64('a') == "YQ==" # => true<br />
+[&#47;code]</p>
+<p>[code lang="ruby"]<br />
+require 'base64'</p>
+<p>Base64.encode64('a')                          # => "YQ==\\n"<br />
+Base64.encode64('a').gsub("\\n", '') == "YQ==" # => true<br />
+[&#47;code]</p>
+<p>But the first approach is faster (2x at least on avg):</p>
+<p>[code lang="ruby"]<br />
+puts Benchmark.measure { 5000.times{ Base64.strict_encode64('a')  } }</p>
+<p>0.010000   0.000000   0.010000 (  0.009167)<br />
+[&#47;code]</p>
+<p>[code lang="ruby"]<br />
+puts Benchmark.measure { 5000.times{ Base64.encode64('a').gsub("\\n", '')  } }</p>
+<p>0.020000   0.000000   0.020000 (  0.024225)<br />
+[&#47;code]</p>
+<p>I hope don't forget it anymore.</p>
+<p>See you.</p>

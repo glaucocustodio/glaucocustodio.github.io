@@ -1,0 +1,39 @@
+---
+layout: post
+status: publish
+published: true
+title: Iniciar Ubuntu com Bluetooth Desligado
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Hoje venho mostrar a voc&ecirc;s como configurar o <strong>Ubuntu<&#47;strong>
+  para <strong>iniciar com o bluetooth desligado<&#47;strong>. Essa &eacute; uma boa
+  dica para quem usa notebook e precisa economizar bateria.\r\n\r\nEm meu caso estou
+  usando a vers&atilde;o 12.04 LTS do sistema, mas creio que essa solu&ccedil;&atilde;o
+  tamb&eacute;m sirva para 12.10 e similares..\r\n\r\n"
+wordpress_id: 1472
+wordpress_url: http://blog.glaucocustodio.com/?p=1472
+date: '2013-04-20 13:40:58 -0300'
+date_gmt: '2013-04-20 13:40:58 -0300'
+categories:
+- Linux
+tags:
+- ubuntu
+- bluetooth
+comments: []
+---
+<p>Hoje venho mostrar a voc&ecirc;s como configurar o <strong>Ubuntu<&#47;strong> para <strong>iniciar com o bluetooth desligado<&#47;strong>. Essa &eacute; uma boa dica para quem usa notebook e precisa economizar bateria.</p>
+<p>Em meu caso estou usando a vers&atilde;o 12.04 LTS do sistema, mas creio que essa solu&ccedil;&atilde;o tamb&eacute;m sirva para 12.10 e similares..</p>
+<p><a id="more"></a><a id="more-1472"></a>Abra seu terminal e digite o seguinte c&oacute;digo para editarmos o arquivo <code>rc.local<&#47;code>: <code style="font-style: inherit;">sudo gedit &#47;etc&#47;rc.local<&#47;code></p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;desligando-bluetooth-na-inicializa&ccedil;&atilde;o-do-ubuntu-linux.png"><img class="alignnone size-full wp-image-1473" title="desligando bluetooth na inicializa&ccedil;&atilde;o do ubuntu linux" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;desligando-bluetooth-na-inicializa&ccedil;&atilde;o-do-ubuntu-linux.png" alt="" width="738" &#47;><&#47;a></p>
+<p>Digite a senha do usu&aacute;rio e quando o editor se abrir, adicione <code>rfkill block bluetooth<&#47;code> antes de <code>exit 0<&#47;code>.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;editando-arquivo-rc.local_.png"><img class="alignnone size-full wp-image-1476" title="editando arquivo rc.local" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;editando-arquivo-rc.local_.png" alt="" width="649" height="395" &#47;><&#47;a></p>
+<p>Salve o arquivo e pronto, toda vez que o sistema iniciar o bluetooth estar&aacute; desligado por padr&atilde;o, caso precise, voc&ecirc; pode lig&aacute;-lo manualmente perto do rel&oacute;gio.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;ligando-bluetooth-manualmente.png"><img class="alignnone size-full wp-image-1478" title="ligando bluetooth manualmente" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;ligando-bluetooth-manualmente.png" alt="" width="290" height="112" &#47;><&#47;a></p>
+<p>Essa foi a dica de hoje.</p>
+<p>At&eacute; mais.</p>

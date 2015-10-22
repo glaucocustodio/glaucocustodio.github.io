@@ -1,0 +1,51 @@
+---
+layout: post
+status: publish
+published: true
+title: Local Storage with AlaSQL in Cordova&#47;Ionic Framework
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3405
+wordpress_url: http://blog.glaucocustodio.com/?p=3405
+date: '2015-03-30 13:21:30 -0300'
+date_gmt: '2015-03-30 13:21:30 -0300'
+categories:
+- JavaScript
+tags:
+- cordova
+- ionic framework
+comments: []
+---
+<p>You are building a mobile application with <a href="http:&#47;&#47;ionicframework.com&#47;" target="_blank" rel="external nofollow">Ionic Framework<&#47;a> using <code>ionic serve<&#47;code> to test it in a browser, most likely, you will need to store some data.</p>
+<p>We can store in a SQLite database, however, your application will not work in a browser, because they dont support it.</p>
+<p>So you think in making use of local storage to pull it off. But we all know that it's just a key&#47;value storage, and we need to store relational data.</p>
+<p> I came across this situation last week and the best approach I found was to use the great <a href="https:&#47;&#47;github.com&#47;agershun&#47;alasql" target="_blank" rel="external nofollow">AlaSQL<&#47;a> library to reach my goal.</p>
+<p>This JavaScript library allows us to perform querys like that:</p>
+<p>[code language="javascript"]<br />
+alasql("SELECT * FROM products WHERE category_id = ?", [1]);<br />
+[&#47;code]</p>
+<p>Yeah! It's SQL in browser my friend. They support many kinds of storage like localStorage, indexedDB, text files (JSON, CSV) etc.</p>
+<p>In my <code>www&#47;js&#47;app.js<&#47;code> file I placed the database bootstrap like below:</p>
+<p>[code language="javascript"]<br />
+alasql('CREATE localStorage DATABASE IF NOT EXISTS db');<br />
+alasql('ATTACH localStorage DATABASE db');<br />
+alasql('USE db');</p>
+<p>alasql("CREATE TABLE IF NOT EXISTS products (id INT, category_id INT, name string, created_at DATE)");<br />
+alasql("CREATE TABLE IF NOT EXISTS categories (id INT, name string)");<br />
+[&#47;code]</p>
+<p>Then we can manipulate some data in controllers:</p>
+<p>[code language="javascript"]<br />
+var id         = $scope.id;<br />
+var categoryId = $scope.categoryId;</p>
+<p>alasql("INSERT INTO products (id, category_id, name, created_at) VALUES (?,?,?,?)", [parseInt(id), parseInt(categoryId), 'XYZ', new Date()]);</p>
+<p>alasql("SELECT * FROM products WHERE id = ?", [parseInt($state.params.id)]);</p>
+<p>alasql("SELECT * FROM products ORDER BY created_at DESC");<br />
+[&#47;code]</p>
+<p>See that we are using <code>parseInt()<&#47;code> to ensure that int fields will receive a proper value. You can have problems like I had if dont care about it.</p>
+<p>That is all, see you.</p>

@@ -1,0 +1,138 @@
+---
+layout: post
+status: publish
+published: true
+title: Git Nosso de Cada Dia (Git Cheatsheet)
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal! Segue abaixo uma lista com os principais comandos de git usados
+  no dia-a-dia, com o passar do tempo vou adicionando mais..\r\n\r\n"
+wordpress_id: 1321
+wordpress_url: http://blog.glaucocustodio.com/?p=1321
+date: '2013-03-06 13:28:14 -0300'
+date_gmt: '2013-03-06 13:28:14 -0300'
+categories:
+- Git
+tags:
+- git
+- cheat sheet
+comments:
+- id: 394
+  author: Aner&atilde;o J&uacute;nior
+  author_email: webmaster@alliancemmo.com.br
+  author_url: http://muonline.alliancemmo.com.br
+  date: '2013-03-08 12:16:25 -0300'
+  date_gmt: '2013-03-08 12:16:25 -0300'
+  content: 'Massa : )'
+- id: 578
+  author: beneti
+  author_email: beneti@beneti.com.br
+  author_url: ''
+  date: '2013-05-08 02:05:16 -0300'
+  date_gmt: '2013-05-08 02:05:16 -0300'
+  content: Gosto do git stash pop tbm. E cade o git pull --rebase?
+- id: 1603
+  author: Lucas Moraes
+  author_email: mineiro@live.be
+  author_url: ''
+  date: '2014-01-23 01:09:06 -0200'
+  date_gmt: '2014-01-23 01:09:06 -0200'
+  content: Muito bom, simples e eficiente.
+- id: 2170
+  author: Leandro
+  author_email: cadastroz@gmail.com
+  author_url: ''
+  date: '2014-04-29 19:33:16 -0300'
+  date_gmt: '2014-04-29 19:33:16 -0300'
+  content: Muito bom, essa lista foi para os favoritos, valeu.
+- id: 21778
+  author: Leandro
+  author_email: leandrow@01s.me
+  author_url: http://01s.me
+  date: '2015-02-06 11:27:24 -0200'
+  date_gmt: '2015-02-06 11:27:24 -0200'
+  content: "&Oacute;timas dicas Glauco!\r\nPoderia me explicar melhor o que seriam
+    \"arquivos trackeados\"?\r\n\r\nObg"
+---
+<p>Fala pessoal! Segue abaixo uma lista com os principais comandos de git usados no dia-a-dia, com o passar do tempo vou adicionando mais..</p>
+<p><a id="more"></a><a id="more-1321"></a></p>
+<h2>Geral<&#47;h2><br />
+Adicionar todos arquivos alterados no stage (deixar pronto para serem comitados):<br />
+[code language="bash"]git add .[&#47;code]<br />
+Adicionar arquivos trackeados exclu&iacute;dos no stage:<br />
+[code language="bash"]git add -u[&#47;code]<br />
+Remover arquivos do stage (prontos para commit) que j&aacute; s&atilde;o trackeados:<br />
+[code language="bash"]git reset HEAD nome_arquivo[&#47;code]<br />
+Remover arquivos do stage que ainda n&atilde;o s&atilde;o trackeados:<br />
+[code language="bash"]git rm --cached nome_arquivo[&#47;code]<br />
+Refazer um commit quando necess&aacute;rio:<br />
+[code language="bash"]git commit -m "mensagem" --amend[&#47;code]<br />
+Exibir altera&ccedil;&otilde;es feitas depois do &uacute;ltimo commit que ainda n&atilde;o foram stageadas:<br />
+[code language="bash"]git diff[&#47;code]<br />
+Exibir altera&ccedil;&otilde;es feitas depois do &uacute;ltimo commit que j&aacute; foram stageadas:<br />
+[code language="bash"]git diff --cached[&#47;code]<br />
+Excluir um commit local (substitua o n&uacute;mero abaixo pelo seu commit)<br />
+[code language="bash"]git reset --hard 7d01b96b7fd1a1e5bfa1971b50c51e55efa75646[&#47;code]<br />
+For&ccedil;ar o git a excluir um commit no reposit&oacute;rio remoto, primeiro exclua localmente e depois rode:<br />
+[code language="bash"]git push origin HEAD --force[&#47;code]<br />
+Abrir interface gr&aacute;fica (gitk):<br />
+[code language="bash"]gitk[&#47;code]<br />
+Ver n&uacute;mero de commits por usu&aacute;rio:<br />
+[code language="bash"]git shortlog -s[&#47;code]</p>
+<h2>Stash<&#47;h2><br />
+Jogar altera&ccedil;&otilde;es para o stash:<br />
+[code language="bash"]git stash[&#47;code]<br />
+Ver itens no stash:<br />
+[code language="bash"]git stash list[&#47;code]<br />
+Aplicar o &uacute;ltimo item adicionado no stash:<br />
+[code language="bash"]git stash apply[&#47;code]<br />
+Aplicar um stash espec&iacute;fico (liste todos os stashs e substitua 'numero_do_stash' pelo n&uacute;mero desejado):<br />
+[code language="bash"]git stash apply stash@{numero_do_stash}[&#47;code]<br />
+Limpar stash:<br />
+[code language="bash"]git stash clear[&#47;code]</p>
+<h2>Branches<&#47;h2><br />
+Criar um branch:<br />
+[code language="bash"]git branch nome_branch[&#47;code]<br />
+Criar um branch e dar checkout (mudar pra ele):<br />
+[code language="bash"]git checkout -b nome_branch[&#47;code]<br />
+Criar um branch "trackeando" (fazendo acompanhar) um branch remoto:<br />
+[code language="bash"]git checkout -b nome_branch_local origin&#47;nome_branch_remoto[&#47;code]<br />
+Mudar de branch:<br />
+[code language="bash"]git checkout nome_branch[&#47;code]<br />
+Excluir um branch local:<br />
+[code language="bash"]git branch -d nome_branch[&#47;code]<br />
+Excluir um branch remoto:<br />
+[code language="bash"]git push origin --delete nome_branch[&#47;code]<br />
+Exibir todos os branches locais:<br />
+[code]git branch[&#47;code]<br />
+Exibir todos os branches locais e remotos:<br />
+[code language="bash"]git branch -a [&#47;code]<br />
+Fazer o git enxergar todos branches remotos:<br />
+[code language="bash"]git remote update[&#47;code]<br />
+Ver origens remotas definadas para o branch atual:<br />
+[code language="bash"]git remote show [&#47;code]<br />
+Excluir origem remota para o branch atual:<br />
+[code language="bash"]git remote rm nome-origin[&#47;code]<br />
+Adicionar origem remota para o branch atual:<br />
+[code language="bash"]git remote add nome-origin git@xxxbucket.com:username&#47;nome-repositorio.git[&#47;code]<br />
+Trazer ("mergear") altera&ccedil;&otilde;es de outro branch para o branch atual:<br />
+[code language="bash"]git merge nome-branch-a-ser-baixado     [&#47;code]<br />
+Ver apontamentos de branches do git, na pasta do .git, rode:<br />
+[code language="bash"]cat .git&#47;config   [&#47;code]</p>
+<h2>Configura&ccedil;&atilde;o<&#47;h2><br />
+Definir configura&ccedil;&atilde;o de nome global:<br />
+[code language="bash"]git config --global user.name "Seu nome"  [&#47;code]<br />
+Definir configura&ccedil;&atilde;o de email global:<br />
+[code language="bash"]git config --global user.email "email@dominio.com.br"[&#47;code]<br />
+Colorizar sa&iacute;das:<br />
+[code language="bash"]git config --global color.ui auto [&#47;code]<br />
+Criar alias (cria um alias "st" para "status", agora pode-se usar <code>git st<&#47;code>):<br />
+[code language="bash"]git config --global alias.st 'status'  [&#47;code]<br />
+Definir editor padr&atilde;o do git (utilizado em merges etc)<br />
+[code language="bash"]git config --global core.editor "vim"[&#47;code]</p>

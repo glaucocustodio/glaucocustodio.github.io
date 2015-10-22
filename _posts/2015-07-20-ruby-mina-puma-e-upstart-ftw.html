@@ -1,0 +1,68 @@
+---
+layout: post
+status: publish
+published: true
+title: Ruby, Mina, Puma e Upstart ftw!
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3435
+wordpress_url: http://blog.glaucocustodio.com/?p=3435
+date: '2015-07-20 17:26:20 -0300'
+date_gmt: '2015-07-20 17:26:20 -0300'
+categories:
+- Ruby
+- Servidor
+tags:
+- puma
+- mina
+comments: []
+---
+<p>Faz um tempo que mudei do Unicorn para o Puma, o motivo &eacute; porque precisavamos de um servidor multi-thread, dado que o Unicorn &eacute; baseado em fork de processos..</p>
+<p>Assim como o Unicorn, precisamos fazer o controle de pid files com Puma, na net a gente encontra v&aacute;rios scripts para fazer isso, por&eacute;m eu prefiro utilizar a gema <a href="https:&#47;&#47;github.com&#47;sandelius&#47;mina-puma" rel="external nofollow" target="_blank">mina-puma<&#47;a> j&aacute; que tamb&eacute;m uso o <a href="http:&#47;&#47;nadarei.co&#47;mina&#47;" rel="external nofollow" target="_blank">mina<&#47;a> para deploys.</p>
+<p>Basta incluir <code>gem 'mina-puma', require: false<&#47;code> no <code>Gemfile<&#47;code> e ent&atilde;o j&aacute; ganhamos algumas tarefas pra iniciar, parar, e reiniciar o Puma.</p>
+<p>Usamos um servi&ccedil;o de CI para rodar testes e fazer deploy no staging, por&eacute;m, vira e mexe acontecia deste &uacute;ltimo falhar na task de reinicar o Puma retornando a mensagem <code>Puma is not running!<&#47;code>.</p>
+<p>Para contornar isso, simplesmente adicionei uma verifica&ccedil;&atilde;o antes da task no <code>config&#47;deploy.rb<&#47;code>:</p>
+<p>[code language="ruby"]<br />
+to :launch do<br />
+  # ....<br />
+  result = capture("[ -e #{deploy_to}&#47;#{shared_path}&#47;tmp&#47;sockets&#47;pumactl.sock ] && echo 'running' || echo 'not running'")</p>
+<p>  if result.include?('not')<br />
+    puts 'not running'<br />
+    invoke :'puma:start'<br />
+  else<br />
+    puts 'running'<br />
+    if rails_env == 'staging'<br />
+      puts 'puma:restart'<br />
+      invoke :'puma:restart'<br />
+    else<br />
+      puts 'puma:phased_restart'<br />
+      invoke :'puma:phased_restart'<br />
+    end<br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>Na primeira linha checamos se o servidor de aplica&ccedil;&atilde;o est&aacute; rodando e ent&atilde;o iniciamos ou reiniciamos..</p>
+<p>Estava tudo ok, at&eacute; que um dia precisamos reinicar o servidor e ele n&atilde;o subiu o Puma tamb&eacute;m, ou seja, site off. Como solu&ccedil;&atilde;o eu criei um servi&ccedil;o no Upstart do servidor para executar o mesmo script que a gema <code>mina-puma<&#47;code> roda:</p>
+<p>[code language="bash"]<br />
+# &#47;etc&#47;init&#47;puma.conf<br />
+description "Puma"<br />
+start on runlevel [2345]<br />
+stop on runlevel [016]<br />
+respawn</p>
+<p>env APP_BASE_PATH=&#47;ebs&#47;storage&#47;www&#47;my_app<br />
+env APP_ENV=staging</p>
+<p>post-start script<br />
+  exec su - deploy -c "cd $APP_BASE_PATH&#47;current && bundle exec puma -q -d -e $APP_ENV -b unix:&#47;&#47;$APP_BASE_PATH&#47;shared&#47;tmp&#47;sockets&#47;puma.sock -S $APP_BASE_PATH&#47;shared&#47;tmp&#47;sockets&#47;puma.state --pidfile $APP_BASE_PATH&#47;shared&#47;tmp&#47;pids&#47;puma.pid --control unix:&#47;&#47;$APP_BASE_PATH&#47;shared&#47;tmp&#47;sockets&#47;pumactl.sock"<br />
+end script</p>
+<p>post-stop script<br />
+  exec su - deploy -c "cd $APP_BASE_PATH&#47;current && bundle exec pumactl -S $APP_BASE_PATH&#47;shared&#47;tmp&#47;sockets&#47;puma.state stop; rm -f $APP_BASE_PATH&#47;shared&#47;tmp&#47;sockets&#47;pumactl.sock"<br />
+end script<br />
+[&#47;code]</p>
+<p>Agora ao ligar o servidor o Puma ser&aacute; inicado automaticamente e tamb&eacute;m podemos usar <code>sudo service puma start<&#47;code> e <code>sudo service puma stop<&#47;code> para iniciar&#47;parar.</p>
+<p>Abs.</p>

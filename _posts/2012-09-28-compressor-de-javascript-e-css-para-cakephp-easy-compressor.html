@@ -1,0 +1,128 @@
+---
+layout: post
+status: publish
+published: true
+title: Compressor de Javascript e CSS para CakePHP (EasyCompressor)
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, beleza?\r\n\r\nTem algu&eacute;m ai precisando de um <strong>compressor<&#47;strong>
+  simples de Javascript e CSS pra <strong>CakePHP<&#47;strong>? Se sim, ent&atilde;o
+  aqui &eacute; o lugar certo..\r\n\r\nEsses dias eu precisei de um compressor&#47;minificador
+  para usar em um projeto em Cake mas n&atilde;o gostei das op&ccedil;&otilde;es dispon&iacute;veis,
+  ent&atilde;o decidi fazer o meu, o <a title=\"https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin\"
+  href=\"https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin\"
+  rel=\"external nofollow\" target=\"_blank\">EasyCompressor<&#47;a>.\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;28&#47;compressor-de-javascript-e-css-para-cakephp-easycompressor&#47;\"><img
+  class=\"alignnone  wp-image-537\" title=\"easy-compressor-cakephp-js-and-css-compressor\"
+  src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;easy-compressor-cakephp-js-and-css-compressor.gif\"
+  alt=\"EasyCompressor - CakePHP Js and CSS Compressor\" width=\"580\" height=\"240\"
+  &#47;><&#47;a>\r\n\r\n"
+wordpress_id: 503
+wordpress_url: http://blog.glaucocustodio.com/?p=503
+date: '2012-09-28 21:27:17 -0300'
+date_gmt: '2012-09-28 21:27:17 -0300'
+categories:
+- PHP
+tags:
+- php
+- cakephp
+- compressor
+- easy compressor
+comments:
+- id: 299
+  author: Evandro Ribeiro
+  author_email: ribeiroevandro@live.com
+  author_url: http://www.fb.me/ribeiroevandro
+  date: '2013-01-03 03:11:27 -0200'
+  date_gmt: '2013-01-03 03:11:27 -0200'
+  content: "Fala Glauco, parab&eacute;ns por mais um excelente artigo, no trabalho
+    uso o CakePHP e para compress&atilde;o do script e style, vem sendo usado o YUI
+    Compressor, mas comecei a colocar o conceito dos pr&eacute;-processadores e por
+    isso gostaria de fazer uma pequena corre&ccedil;&atilde;o caso me permita, voc&ecirc;
+    acima citou um alguns pr&eacute;-processadores e um deles eu fa&ccedil;o uso que
+    &eacute; o Sass e voc&ecirc; colocou SAAS, essa sigla pra mim representa outra
+    coisa, caso tenha feito refer&ecirc;ncia ao Sass pr&eacute;-processador de Css,
+    isso seria a &uacute;nica sugest&atilde;o de corre&ccedil;&atilde;o que tenho
+    &agrave; fazer.\r\nMais uma vez parab&eacute;ns pelo conte&uacute;do rico que
+    vem compartilhando com a comunidade..."
+- id: 527
+  author: Tiago Muniz
+  author_email: tiago@voltsstudio.com.br
+  author_url: http://www.voltsstudio.com.br/
+  date: '2013-04-22 02:37:45 -0300'
+  date_gmt: '2013-04-22 02:37:45 -0300'
+  content: "Eu to tentando usar esse plugin no cake 2.3 mas to com uma dificuldade.\r\n\r\nFiz
+    todos os passos conforme foi explicado no post, a principio funcionou, porem tentei
+    usar esse plugin dentro de outro plugin e ai foi onde deu o problema, o arquivo
+    final gerado est&aacute; vindo vazio, como se os js que eu coloquei pra incluir
+    n&atilde;o existissem.\r\n\r\nO que &eacute; curioso &eacute; que quando eu aponto
+    pro js que est&aacute; no webroot da minha App funciona mas quando eu aponto para
+    o js que est&aacute; no webroot do meu Plugin o arquio gerado fica vazio.\r\n\r\nAlguem
+    pode me ajudar ai com esse problema?\r\n\r\nValeu! :)"
+- id: 6687
+  author: Rafael Bordallo
+  author_email: rafaelbordallo@gmail.com
+  author_url: ''
+  date: '2014-09-04 20:33:46 -0300'
+  date_gmt: '2014-09-04 20:33:46 -0300'
+  content: "Glaucio, parab&eacute;ns pelo artigo! Acabo de usar e super funcional
+    e pr&aacute;tico.\r\n\r\nN&atilde;o olhei seu c&oacute;digo, mas acredito que
+    para uma poss&iacute;vel atualiza&ccedil;&atilde;o &eacute; gerar uma criptografia
+    no caminho gerado final, para dificultar a chegada no arquivo original via navegador.\r\n\r\nDe
+    qualquer forma, parab&eacute;ns pelo post!"
+---
+<p>Fala pessoal, beleza?</p>
+<p>Tem algu&eacute;m ai precisando de um <strong>compressor<&#47;strong> simples de Javascript e CSS pra <strong>CakePHP<&#47;strong>? Se sim, ent&atilde;o aqui &eacute; o lugar certo..</p>
+<p>Esses dias eu precisei de um compressor&#47;minificador para usar em um projeto em Cake mas n&atilde;o gostei das op&ccedil;&otilde;es dispon&iacute;veis, ent&atilde;o decidi fazer o meu, o <a title="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin" rel="external nofollow" target="_blank">EasyCompressor<&#47;a>.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;28&#47;compressor-de-javascript-e-css-para-cakephp-easycompressor&#47;"><img class="alignnone  wp-image-537" title="easy-compressor-cakephp-js-and-css-compressor" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;easy-compressor-cakephp-js-and-css-compressor.gif" alt="EasyCompressor - CakePHP Js and CSS Compressor" width="580" height="240" &#47;><&#47;a></p>
+<p><a id="more"></a><a id="more-503"></a>O pessoal da comunidade usa bastante o <a title="https:&#47;&#47;github.com&#47;markstory&#47;asset_compress" href="https:&#47;&#47;github.com&#47;markstory&#47;asset_compress" target="_blank">AssetCompress<&#47;a> feito pelo Mark Story, mas eu precisava de algo mais simples, sem contar de que n&atilde;o gosto de ter que usar um arquivo de configura&ccedil;&atilde;o para especificar os Js e CSS que desejo comprimir ou ter que refatorar todo meu projeto alterando o m&eacute;todo de inclus&atilde;o.</p>
+<p>Nesse post irei mostrar como instalar e usar o EasyCompressor em sua aplica&ccedil;&atilde;o, mas primeiro, vamos conhecer um pouco mais ele.</p>
+<h2>Recursos<&#47;h2></p>
+<ul>
+<li style="text-align: left;">F&aacute;cil de implementar e usar<&#47;li>
+<li style="text-align: left;">Obt&eacute;m arquivos CSS e Javascript diretamente dos blocos padr&atilde;o do CakePHP (n&atilde;o precisa refatorar nada)<&#47;li>
+<li style="text-align: left;">Define cache<&#47;li>
+<li style="text-align: left;">Evita cache em arquivos alterados<&#47;li>
+<li style="text-align: left;">Sem configura&ccedil;&atilde;o<&#47;li><br />
+<&#47;ul></p>
+<h2>Requisitos<&#47;h2></p>
+<ul>
+<li>CakePHP 2.1 ou acima<&#47;li><br />
+<&#47;ul></p>
+<h2>Funcionamento<&#47;h2><br />
+EasyCompressor gera um arquivo minificado para os scripts e estilos do layout e outro para os scripts&#47;estilos de cada view. Vamos supor que voc&ecirc; tenha 4 arquivos CSS inlcusos no layout de sua aplica&ccedil;&atilde;o e 2 arquivos CSS espec&iacute;ficos da view da p&aacute;gina inicial do site, quando ativo, o compressor ir&aacute; gerar um arquivo minificado contendo o conte&uacute;do dos 4 arquivos CSS do layout e outro contendo o conte&uacute;do dos 2 arquivos da view. Isso foi feito para o arquivo minificado do layout ser mantido em cache sem ter que fazer download em cada view carregada, mas se quiser, voc&ecirc; pode usar apenas um arquivo de estilo&#47;script.</p>
+<p>Na tag HTML gerada, &eacute; adicionado uma query string com um hash md5 da soma da data de modifica&ccedil;&atilde;o de cada arquivo incluso, isso for&ccedil;ar&aacute; o download de uma nova vers&atilde;o quando alguma altera&ccedil;&atilde;o tiver sido feita em um dos arquivos.</p>
+<p>Atualmente o EasyCompressor usa as bibliotecas JsMin e CSSMin para compress&atilde;o de Javascript e CSS respectivamente e n&atilde;o possui suporte para CoffeeScript, LESS e Sass pois um dos seus objetivos &eacute; ser simples e enxuto.</p>
+<h2>Instala&ccedil;&atilde;o e uso<&#47;h2><br />
+1- Baixe ou clone o plugin no <a target="_blank" rel="external nofollow" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin">github<&#47;a>, crie uma pasta com nome <code>EasyCompressor<&#47;code> dentro de <code>app&#47;Plugin&#47;<&#47;code> e cole os arquivos do compressor <br&#47;><img class="alignnone size-full wp-image-509" style="color: #333333; font-size: 15.555556297302246px; font-style: normal; line-height: 26.666667938232422px;" title="instalando-easy-compressor-plugin" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;instalando-easy-compressor-plugin.jpg" alt="instalando-easy-compressor-plugin" width="459" height="758" &#47;></p>
+<p>2- Fa&ccedil;a download das &uacute;ltimas vers&otilde;es das bibliotecas <a target="_blank" rel="external nofollow" href="https:&#47;&#47;github.com&#47;rgrove&#47;jsmin-php&#47;blob&#47;master&#47;jsmin.php">JsMin<&#47;a> e <a href="http:&#47;&#47;code.google.com&#47;p&#47;cssmin&#47;downloads&#47;list" target="_blank" rel="external nofollow">CSSMin<&#47;a> e coloque dentro de <code>app&#47;Vendor&#47;jsmin&#47;<&#47;code> e <code>app&#47;Vendor&#47;cssmin&#47;<&#47;code> respectivamente</p>
+<p>3- Adicione <code>CakePlugin::load(array('EasyCompressor' => array('routes' => true)));<&#47;code> no arquivo <code>app&#47;Config&#47;bootstrap.php<&#47;code> para carregar o plugin</p>
+<p>4- Adicione <code>EasyCompressor.EasyCompressor<&#47;code> no array de helpers usados em <code>app&#47;Controller&#47;AppController<&#47;code></p>
+<p>5- Inclua no layout os m&eacute;todos respons&aacute;veis por obter os arquivos Js e CSS, veja abaixo</p>
+<p>Para incluir arquivos em todas as p&aacute;ginas do site voc&ecirc; pode usar:<br />
+[code language="php"]<?php<br />
+&#47;&#47; Adiciona arquivos no bloco 'layout_script'<br />
+$this->Html->script(array('jquery.js', 'modernizr.js'), array('inline' => false, 'block' => 'layout_script'));<br />
+&#47;&#47; Exibe<br />
+echo $this->EasyCompressor->getLayoutScript();<br />
+?>[&#47;code]<br />
+O c&oacute;digo acima ir&aacute; gerar um arquivo minificado com os dois arquivos, podemos usar ele para fazer uma &uacute;nica requisi&ccedil;&atilde;o para arquivos que n&atilde;o mudam no site inteiro (scripts do layout). Tamb&eacute;m podemos gerar um outro arquivo minificado contendo somente os scripts da view que est&aacute; sendo carregada, veja abaixo.<br />
+[code language="php"]<?php<br />
+&#47;&#47; Adiciona arquivos no bloco padr&atilde;o 'script'<br />
+$this->Html->script(array('carousel.js'), array('inline' => false));<br />
+&#47;&#47; Exibe<br />
+echo $this->EasyCompressor->getViewScript();<br />
+?><br />
+[&#47;code]<br />
+Com isso mantemos no cache os arquivos do layout e da view, s&oacute; tendo que fazer download novamente ao acessar uma view ainda n&atilde;o visitada ou quando houver alguma altera&ccedil;&atilde;o.</p>
+<div class="note">O exemplo acima vale para CSS tamb&eacute;m, basta substituir <code>getLayoutScript<&#47;code> por <code>getLayoutCSS<&#47;code> e <code>getViewScript<&#47;code> por <code>getViewCSS<&#47;code> nas chamadas dos m&eacute;todos.<&#47;div><br />
+6- Agora basta setar o n&iacute;vel de debug para 0 em <code>app&#47;Config&#47;core.php<&#47;code> <span style="text-decoration: underline;">ou<&#47;span> caso queira testar em ambiente de desenvolvimento tamb&eacute;m &eacute; poss&iacute;vel ativar o compressor adicionando <code>Configure::write('EasyCompressor.enabled', true);<&#47;code> no mesmo arquivo.</p>
+<p>Feito isso, voc&ecirc; obter&aacute; as tags como na imagem.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;tag-html-gerada-pelo-compressor-cakephp.jpg"><img class="alignnone size-full wp-image-519" title="tag-html-gerada-pelo-compressor-cakephp" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;tag-html-gerada-pelo-compressor-cakephp.jpg" alt="tag-html-gerada-pelo-compressor-cakephp" width="1267" height="78" &#47;><&#47;a></p>
+<div class="note">Se o compressor estiver desabilitado ele ir&aacute; gerar as tags de todos arquivos como se estivesse sendo exibido da forma padr&atilde;o do Cake (<code>echo $this->Html->fetch('script');<&#47;code>).<&#47;div><br />
+Bem simples n&eacute;? Como o pr&oacute;prio nome diz, &eacute; f&aacute;cil de usar.. Deixe sua opini&atilde;o nos coment&aacute;rios.</p>
+<p>At&eacute; mais pessoal.</p>

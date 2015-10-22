@@ -1,0 +1,150 @@
+---
+layout: post
+status: publish
+published: true
+title: Heran&ccedil;a (extens&atilde;o) de Views e Blocos no CakePHP
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "Fala pessoal, tudo bom?\r\n\r\nEstou aqui para falar sobre extens&atilde;o
+  de views (view extending) e uso de blocos (view blocks) no <strong>CakePHP<&#47;strong>,
+  voc&ecirc; conhece?\r\n\r\nEssas funcionalidades - que lembra muito o sistema de
+  templates do Django - foram inclu&iacute;das na vers&atilde;o 2.1 do Cake, por isso
+  se voc&ecirc; ainda est&aacute; usando a vers&atilde;o 2.0, 1.3 ou alguma anterior
+  n&atilde;o perca tempo para migrar para a &uacute;ltima, pois s&oacute; essa nova
+  feature j&aacute; vale a pena (sem falar de outras..).\r\n<h2>"
+wordpress_id: 667
+wordpress_url: http://blog.glaucocustodio.com/?p=667
+date: '2012-10-26 19:24:10 -0200'
+date_gmt: '2012-10-26 19:24:10 -0200'
+categories:
+- PHP
+tags:
+- php
+- cakephp
+comments:
+- id: 796
+  author: Francisco
+  author_email: chicos.souza@gmail.com
+  author_url: ''
+  date: '2013-06-27 07:22:54 -0300'
+  date_gmt: '2013-06-27 07:22:54 -0300'
+  content: "Fala Glauco, tudo beleza?!\r\nCara, valew pelo post... mas ve se pode
+    me ajudar....\r\nestou tentando usar a extensao de view, porem, quando eu uso
+    a entensao, aparece na tela apenas a view que eu estendi, e nao as duas views
+    juntas.\r\n\r\nsabe o que pode ser?\r\nvalew"
+- id: 1119
+  author: William Duarte
+  author_email: wsduarte@outlook.com
+  author_url: ''
+  date: '2013-08-14 17:45:03 -0300'
+  date_gmt: '2013-08-14 17:45:03 -0300'
+  content: "Glauco Cust&oacute;dio, primeiramente parab&eacute;ns pelo blog.\r\n\r\nSeguindo
+    seu tutorial fiz tudo certo j&aacute; testado pela url, mas quando coloco o seguinte
+    c&oacute;digo ha home\r\n\r\n\r\n\t\r\n\t\r\n\t\r\n\r\n\r\nda o seguinte erro:\r\nNotice
+    (8): Undefined variable: posts [APP\\View\\Posts\\listar.ctp, line 2]\r\nWarning
+    (2): Invalid argument supplied for foreach() [APP\\View\\Posts\\listar.ctp, line
+    2]\r\n\r\nVe se tem como me ajudar.\r\nGrato!"
+- id: 1120
+  author: William Duarte
+  author_email: wsduarte@outlook.com
+  author_url: ''
+  date: '2013-08-14 17:47:51 -0300'
+  date_gmt: '2013-08-14 17:47:51 -0300'
+  content: "Esqueci do c&oacute;digo\r\n\r\n\r\n\t\r\n\t\r\n\t\r\n\r\n\r\nEstou extendendo
+    desta forma\r\n\r\nextend('&#47;Posts&#47;listar');?>"
+- id: 2748
+  author: Estanislau
+  author_email: estanislau@live.com
+  author_url: ''
+  date: '2014-07-17 09:26:29 -0300'
+  date_gmt: '2014-07-17 09:26:29 -0300'
+  content: Muito bom mesmo, obrigado!
+- id: 8945
+  author: Willians Souza
+  author_email: tecnico@sacws.com.br
+  author_url: ''
+  date: '2014-09-13 13:58:39 -0300'
+  date_gmt: '2014-09-13 13:58:39 -0300'
+  content: Para quem esta come&ccedil;ando como eu, isso &eacute; maravilhoso.
+---
+<p>Fala pessoal, tudo bom?</p>
+<p>Estou aqui para falar sobre extens&atilde;o de views (view extending) e uso de blocos (view blocks) no <strong>CakePHP<&#47;strong>, voc&ecirc; conhece?</p>
+<p>Essas funcionalidades - que lembra muito o sistema de templates do Django - foram inclu&iacute;das na vers&atilde;o 2.1 do Cake, por isso se voc&ecirc; ainda est&aacute; usando a vers&atilde;o 2.0, 1.3 ou alguma anterior n&atilde;o perca tempo para migrar para a &uacute;ltima, pois s&oacute; essa nova feature j&aacute; vale a pena (sem falar de outras..).</p>
+<h2><a id="more"></a><a id="more-667"></a>Extens&atilde;o de View<&#47;h2><br />
+Vamos supor que tenhamos uma view respons&aacute;vel por listar os carros cadastrados no sistema, ela simplesmente percorre todos os registros e exibe em uma lista.</p>
+<p>[code language="html+php"]<br />
+&#47;&#47; View&#47;Cars&#47;list.ctp</p>
+<ul>
+  <?php foreach($cars as $c): ?></p>
+<li><?php echo $c['Car']['name'] ?><&#47;li><br />
+  <?php endforeach ?><br />
+<&#47;ul><br />
+[&#47;code]</p>
+<p>Agora imagine que precisamos exibir a mesma listagem na p&aacute;gina inicial do site, ao inv&eacute;s de repetirmos c&oacute;digo, podemos extender a view acima e j&aacute; teremos o que precisamos, veja como ficaria:</p>
+<p>[code language="html+php" linenos="1" hl_lines="5"]<br />
+&#47;&#47; View&#47;Home&#47;index.ctp</p>
+<h1>Seja bem vindo<&#47;h1></p>
+<p><?php $this->extend('&#47;Cars&#47;list'); ?><br />
+[&#47;code]</p>
+<p>Pronto, dissemos ao Cake para extender a view <code>list.ctp<&#47;code>, agora tudo o que estiver nela tamb&eacute;m estar&aacute; na home.</p>
+<h2>Usando Blocos de View<&#47;h2><br />
+Suponha que voc&ecirc; tenha uma regi&atilde;o no layout de seu site que em cada view possuir&aacute; um conte&uacute;do diferente, voc&ecirc; pode utilizar blocos de view para isso, ao inv&eacute;s de ter que verificar qual p&aacute;gina est&aacute; para definir o conte&uacute;do, veja:</p>
+<p>[code language="html+php" linenos="1" hl_lines="27"]<br />
+&#47;&#47; View&#47;Layouts&#47;default.ctp</p>
+<p><html><br />
+<head><br />
+<?php echo $this->Html->charset(); ?><br />
+<title><br />
+  JustCode Blog<br />
+<&#47;title><br />
+<?php<br />
+echo $this->Html->css('cake.generic');</p>
+<p>echo $this->fetch('css');<br />
+echo $this->fetch('script');<br />
+?><br />
+<&#47;head><br />
+<body></p>
+<div id="container">
+<div id="header">
+  <&#47;div></p>
+<div id="content">
+<p>    <?php echo $this->Session->flash(); ?></p>
+<p>    <?php echo $this->fetch('content'); ?></p>
+<div id="section-1">
+      <?php echo $this->fetch('section-1') ?><br />
+    <&#47;div></p>
+<p>  <&#47;div></p>
+<div id="footer">
+  <&#47;div><br />
+<&#47;div><br />
+<&#47;body><br />
+<&#47;html><br />
+[&#47;code]</p>
+<p>Acima vemos o c&oacute;digo de nosso layout, na linha 27 em destaque definimos um bloco chamado <code>section-1<&#47;code>, por enquanto apenas estamos exibindo o conte&uacute;do dele (que ainda &eacute; vazio).</p>
+<p>Vamos iniciar o bloco <code>section-1<&#47;code> criado no layout e definir um conte&uacute;do para ele na view <code>index.ctp<&#47;code>:</p>
+<p>[code language="html+php"]<br />
+&#47;&#47; View&#47;Home&#47;index.ctp</p>
+<h1>Seja bem vindo<&#47;h1></p>
+<p><?php $this->start('section-1'); ?></p>
+<h2>Categorias<&#47;h2><br />
+<?php $this->end() ?><br />
+[&#47;code]</p>
+<p>Agora na view <code>about.ctp<&#47;code>:</p>
+<p>[code language="html+php"]<br />
+&#47;&#47; View&#47;Home&#47;about.ctp</p>
+<h1>Sobre<&#47;h1></p>
+<p><?php $this->start('section-1'); ?></p>
+<h2>Quem somos<&#47;h2><br />
+<?php $this->end() ?><br />
+[&#47;code]</p>
+<p>Viu? O bloco <code>section-1<&#47;code> est&aacute; recebendo conte&uacute;do diferente em cada view, na primeira definimos <code><br />
+<h2>Categorias<&#47;h2><&#47;code> e na segunda definimos <code><br />
+<h2>Quem somos<&#47;h2><&#47;code>. Isso &eacute; fant&aacute;stico pois podemos setar conte&uacute;dos diferentes na mesma regi&atilde;o sem nenhuma dor de cabe&ccedil;a.</p>
+<p>&Eacute; s&oacute; isso pessoal, bem simples mas muito &uacute;til, o que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais.</p>

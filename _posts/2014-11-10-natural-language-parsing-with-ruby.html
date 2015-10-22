@@ -1,0 +1,103 @@
+---
+layout: post
+status: publish
+published: true
+title: Natural Language Parsing with Ruby
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+wordpress_id: 3132
+wordpress_url: http://blog.glaucocustodio.com/?p=3132
+date: '2014-11-10 18:14:27 -0200'
+date_gmt: '2014-11-10 18:14:27 -0200'
+categories:
+- Ruby
+tags: []
+comments: []
+---
+<p>Hi, today I am here to share with you a way to parse natural language with Ruby, using <a href="https:&#47;&#47;github.com&#47;cjheath&#47;treetop" rel="external nofollow" target="_blank">treetop<&#47;a> gem.</p>
+<h2>Why Do I Need it?<&#47;h2></p>
+<p>Imagine we need that a user from our application input some rule or condition to solve a problem. We could use a traditional field like <code>[type="text"]<&#47;code> to get it, no?!</p>
+<p>But, what if this input is so complex (too many logical&#47;comparison operators for instance) that you would need a lot of them to pull it off?</p>
+<p>I came across with this situation a time ago, so, the better solution I found, was to use natural language to let users input rules using their own mother language.</p>
+<h2>Hands-on<&#47;h2></p>
+<p>Treetop let us define the syntax that is going to be parsed, so then, we need to create a <code>treetop<&#47;code> file with desired rules.</p>
+<p>Let's suppose we need to take some action just if the result of the following rule were true: "if number of orders is greater than X" (X is an integer number).</p>
+<p>Below, we can see a <code>treetop<&#47;code> file describing the above statement.</p>
+<p>[code]<br />
+# my_grammar.treetop<br />
+grammar MyGrammar<br />
+  rule root<br />
+    if space number_of_orders space greater_than space value<br />
+  end</p>
+<p>  rule if<br />
+    "if"<br />
+  end</p>
+<p>  rule number_of_orders<br />
+    "number of orders is"<br />
+  end</p>
+<p>  rule space<br />
+    [\s]+<br />
+  end</p>
+<p>  rule greater_than<br />
+    "greater than" <GreaterThanOperator><br />
+  end</p>
+<p>  rule value<br />
+    [0-9]+ <Value><br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>Ok, we have the syntax set, now we need to parse and evaluate the statement.</p>
+<p>Our system does not know how to interpret the assertion, we need to help.. Let's create a file to put some assistance.</p>
+<p>[code]<br />
+# node_extensions.rb<br />
+module MyGrammar<br />
+  class GreaterThanOperator < Treetop::Runtime::SyntaxNode<br />
+    def text_value<br />
+      ">"<br />
+    end<br />
+  end</p>
+<p>  class Value < Treetop::Runtime::SyntaxNode<br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>The <code>text_value<&#47;code> method from each class inheriting from <code>Treetop::Runtime::SyntaxNode<&#47;code> represents the value to be returned when parsing some statement, so here, we say to return <code>><&#47;code> always that the parser find the snippet <code>greater than<&#47;code> (that is linked to the <code>GreaterThanOperator<&#47;code> in <code>treetop<&#47;code> file).</p>
+<p>Once the class does not override the <code>text_value<&#47;code> method, it will return the same value contained into assertion, but, to get the return, we need to create the class, as we did with <code>Value<&#47;code> class.</p>
+<p>Ok, now our system already knows how to deal with the statement, let's parse it:</p>
+<p>[code]<br />
+# parser.rb<br />
+require "treetop"</p>
+<p>BASE_PATH = File.expand_path(File.dirname(__FILE__))<br />
+require File.join(BASE_PATH, "node_extensions.rb")</p>
+<p>class Parser<br />
+  Treetop.load(File.join(BASE_PATH, "my_grammar.treetop"))</p>
+<p>  def self.go statement, number_of_orders<br />
+    parser = MyGrammarParser.new</p>
+<p>    tree = parser.parse(statement)<br />
+    if !tree.nil?<br />
+      tree = clean_tree(tree)<br />
+    end<br />
+    rule = tree.inject(number_of_orders.to_s) do |final, current|<br />
+      final += current.text_value<br />
+    end<br />
+    puts rule<br />
+    eval rule<br />
+  end</p>
+<p>  def self.clean_tree(root_node)<br />
+    return if(root_node.elements.nil?)<br />
+    root_node.elements.delete_if{|node| node.class.name == "Treetop::Runtime::SyntaxNode" }<br />
+    root_node.elements.each {|node| self.clean_tree(node) }<br />
+  end<br />
+end</p>
+<p>assertion = Parser.go "if number of orders is greater than 20", 50<br />
+puts assertion<br />
+[&#47;code]</p>
+<p>Here we call the parser passing the statement with the already known number of orders and clean the tree (as written in <a href="http:&#47;&#47;thingsaaronmade.com&#47;blog&#47;a-quick-intro-to-writing-a-parser-using-treetop.html" rel="external nofollow" target="_blank">this post<&#47;a>).</p>
+<p>We iterate over the extracted values from our assertion, create a valid Ruby statement and then evaluate it with the <code>eval<&#47;code> method.</p>
+<p>This is a simple example, but we can make use of more complex rules to parse any statement.</p>
+<p>You can check out the source code <a rel="external nofollow" target="_blank" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Natural%20Language%20Parsing%20with%20Ruby">here<&#47;a>. See you.</p>

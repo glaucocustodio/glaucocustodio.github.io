@@ -1,0 +1,101 @@
+---
+layout: post
+status: publish
+published: true
+title: Haml Sim Senhor, Porque N&atilde;o?
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai pessoal, estou aqui hoje para falar de um assunto meio pol&ecirc;mico
+  na comunidade Ruby, o <a href=\"http:&#47;&#47;haml.info&#47;\" rel=\"external nofollow\"
+  target=\"_blank\">Haml<&#47;a>..\r\n\r\nPara quem n&atilde;o conhece, o <strong>Haml<&#47;strong>
+  &eacute; como um LESS ou Sass do CSS s&oacute; que para ERB (HTML com Ruby embutido).
+  Ele foi criado por Hampton Catlin, o mesmo cara que criou o Sass.\r\n\r\nVamos conhecer
+  um pouco mais dessa ferramenta que pode facilitar nosso trabalho..\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;06&#47;08&#47;haml-sim-senhor-porque-nao&#47;\"><img
+  class=\"alignnone size-full wp-image-1656\" title=\"haml-cover\" src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;haml-cover.jpg?1\"
+  alt=\"Haml logo\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n\r\n"
+wordpress_id: 1643
+wordpress_url: http://blog.glaucocustodio.com/?p=1643
+date: '2013-06-08 16:51:45 -0300'
+date_gmt: '2013-06-08 16:51:45 -0300'
+categories:
+- Ruby
+- HTML
+tags:
+- slim
+- haml
+comments:
+- id: 930
+  author: Douglas C. Macedo
+  author_email: dodop3000@gmail.com
+  author_url: ''
+  date: '2013-07-21 12:22:20 -0300'
+  date_gmt: '2013-07-21 12:22:20 -0300'
+  content: "N&atilde;o &eacute; sempre que uso o Haml, mas toda vez que uso fico com
+    a impress&atilde;o de que o c&oacute;digo html gerado &eacute; muito mais limpo
+    que quando usando o erb.\r\n\r\n:)"
+- id: 2883
+  author: Jo&atilde;o Rafael
+  author_email: j.rafael.tux@gmail.com
+  author_url: ''
+  date: '2014-08-08 14:27:29 -0300'
+  date_gmt: '2014-08-08 14:27:29 -0300'
+  content: "Boa mat&eacute;ria, estou come&ccedil;ando a estudar sobre haml e utilizarei
+    em um projeto para testar. \r\n\r\nAtt."
+---
+<p>E ai pessoal, estou aqui hoje para falar de um assunto meio pol&ecirc;mico na comunidade Ruby, o <a href="http:&#47;&#47;haml.info&#47;" rel="external nofollow" target="_blank">Haml<&#47;a>..</p>
+<p>Para quem n&atilde;o conhece, o <strong>Haml<&#47;strong> &eacute; como um LESS ou Sass do CSS s&oacute; que para ERB (HTML com Ruby embutido). Ele foi criado por Hampton Catlin, o mesmo cara que criou o Sass.</p>
+<p>Vamos conhecer um pouco mais dessa ferramenta que pode facilitar nosso trabalho..</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;06&#47;08&#47;haml-sim-senhor-porque-nao&#47;"><img class="alignnone size-full wp-image-1656" title="haml-cover" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;haml-cover.jpg?1" alt="Haml logo" width="580" height="240" &#47;><&#47;a></p>
+<p><a id="more"></a><a id="more-1643"></a>Assim como muitos, quando comecei a trabalhar com ele n&atilde;o gostei muito, mas aos poucos pude experimentar a produtividade que ele pode proporcionar, al&eacute;m de deixar as views muito mais limpas, sem aquele monte de  <code><<&#47;code> e  <code>><&#47;code> que o velho HTML tem..</p>
+<p>Aqui temos um exemplo de Haml e HTML lado a lado:</p>
+<div style="float: left; width: 450px; margin-right: 20px;">
+[code language="ruby"]%div{:data => {:title => 'my-title'}}<br />
+  %ul.default-list<br />
+    %li<br />
+      = link_to "Home", root_url[&#47;code]<br />
+<&#47;div></p>
+<div style="float: left; width: 450px;">
+[code language="ruby"]
+<div data-title="my-title">
+<ul class="default-list">
+<li>
+      <%= link_to "Home", root_url %><br />
+    <&#47;li><br />
+  <&#47;ul><br />
+<&#47;div>[&#47;code]<br />
+<&#47;div><br />
+<br clear="all" &#47;><br />
+Observe a quantidade de c&oacute;digo e a clareza de cada um..</p>
+<p>Andei lendo bastante coisa sobre o Haml e gostaria de fazer uma breve abordagem a seguir.</p>
+<h2>Vantagens<&#47;h2></p>
+<ul>
+<li>agil: escreva HTML de uma forma r&aacute;pida<&#47;li>
+<li>simples: assim como o Ruby, ele vai direto ao assunto, esque&ccedil;a <code><<&#47;code> e <code>><&#47;code><&#47;li>
+<li>eficiente: esque&ccedil;a problemas de tags abertas<&#47;li>
+<li>elegante: seu c&oacute;digo sempre estar&aacute; indentado<&#47;li>
+<li>menos c&oacute;digo: a redu&ccedil;&atilde;o de c&oacute;digo nas view pode chegar a 60% usando Haml<&#47;li><br />
+<&#47;ul></p>
+<h2>Desvantagens<&#47;h2></p>
+<ul>
+<li>curva de aprendizado: o principal motivo que vejo o pessoal reclamando de Haml &eacute; esse, alguns dizem que designers podem precisar editar HTML e ent&atilde;o ficar perdidos. Eu n&atilde;o consigo ver uma diferen&ccedil;a gritante entre os dois, mas na internet temos muitas solu&ccedil;&otilde;es que podem ajudar, como <a href="http:&#47;&#47;htmltohaml.com&#47;" rel="external nofollow" target="_blank">essa<&#47;a> e <a href="http:&#47;&#47;html2haml.heroku.com&#47;" rel="external nofollow" target="_blank">essa<&#47;a><&#47;li>
+<li>c&oacute;digo cheio de <code>%<&#47;code>: isso &eacute; verdade, mas o HTML tamb&eacute;m &eacute; cheio dos sinais de menor e maior. Por&eacute;m n&atilde;o precisamos ficar digitando <code>%<&#47;code> toda hora, ao digitar <code>h1<&#47;code> por exemplo e apertar "Tab" o Sublime Text automaticamente adiciona <code>%<&#47;code> pra n&oacute;s..<&#47;li><br />
+<&#47;ul></p>
+<h2>Quem me garante?<&#47;h2><br />
+Voc&ecirc; pode ainda estar se questionando, vejamos ent&atilde;o um exemplo de uso no dia-a-dia.</p>
+<p>Existe um evento chamado <a href="http:&#47;&#47;railsrumble.com&#47;" rel="external nofollow" target="_blank">Rails Rumble<&#47;a> cujo objetivo &eacute; promover uma competi&ccedil;&atilde;o de equipes (de uma at&eacute; quatro pessoas) do mundo inteiro onde cada uma deve desenvolver uma aplica&ccedil;&atilde;o em Ruby on Rails ou em frameworks para web baseados em Rack (como <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;13&#47;desenvolvimento-web-com-sinatra-criando-um-blog-estatico&#47;" target="_blank">Sinatra<&#47;a> por exemplo) em no m&aacute;ximo 48 horas. Ap&oacute;s o prazo, um grupo de jurados escolhe os 10 melhores times.</p>
+<p>Esse tipo de evento nos ajuda a conhecer melhor a capacidade das ferramentas que usamos e tamb&eacute;m de analisar alguns fatores..</p>
+<p>Ao t&eacute;rmino do evento na edi&ccedil;&atilde;o de 2012, as equipes vencedoras <a href="http:&#47;&#47;www.dwellable.com&#47;blog&#47;Rails-Rumble-Winners-Gem-Teardown" rel="external nofollow" target="_blank">mostraram seus Gemfile<&#47;a>, entre algumas categorias vistas temos a de template engine, que gerou o gr&aacute;fico abaixo:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;uso-de-haml-erb-e-slim.jpg"><img class="alignnone size-full wp-image-1706" title="uso-de-haml-erb-e-slim" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;uso-de-haml-erb-e-slim.jpg" alt="uso-de-haml-erb-e-slim" width="195" height="140" &#47;><&#47;a></p>
+<p>Das 10 equipes vencedoras, 5 usaram Haml, 3 usaram Slim e 2 provavelmente foram de ERB. Isso mostra como esse tipo de tecnologia pode ajudar no desenvolvimento &aacute;gil.</p>
+<p>Meu objetivo com esse post &eacute; apresentar e incentivar o uso de tecnologias que podem facilitar nosso trabalho. Como vimos acima, n&atilde;o temos s&oacute; o Haml, existe um template engine chamado <a href="http:&#47;&#47;slim-lang.com&#47;" rel="external nofollow" target="_blank">Slim<&#47;a> que tamb&eacute;m se prop&otilde;e a fazer a mesma tarefa.</p>
+<p>Em v&aacute;rios posts que li na internet sobre Haml, v&aacute;rios autores comentam que quando come&ccedil;aram a us&aacute;-lo n&atilde;o gostaram, mas que depois acabaram pegando gosto e vendo os benef&iacute;cios que pode nos trazer. Eu desafio voc&ecirc;, inv&eacute;s de formar uma opini&atilde;o, fa&ccedil;a um teste de verdade e tire suas conclus&otilde;es..</p>
+<p>Deixe sua opini&atilde;o nos coment&aacute;rios, compartilhe seu ponto de vista tamb&eacute;m.</p>
+<p>At&eacute; mais.</p>
+<p><script type="text&#47;javascript" src="http:&#47;&#47;www.easypolls.net&#47;ext&#47;scripts&#47;emPoll.js?p=51b8e131e4b0604d061ee82d"><&#47;script><a class="OPP-powered-by" href="http:&#47;&#47;www.objectplanet.com&#47;opinio&#47;" style="text-decoration:none;">
+<div style="font: 9px arial; color: gray;">surveys & polls<&#47;div><&#47;a></p>

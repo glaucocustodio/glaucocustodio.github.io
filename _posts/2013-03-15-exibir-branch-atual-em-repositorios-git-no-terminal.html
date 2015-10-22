@@ -1,0 +1,100 @@
+---
+layout: post
+status: publish
+published: true
+title: Exibir Branch Atual em Reposit&oacute;rios Git no Terminal
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai galera, hoje venho para falar de <strong>git<&#47;strong> novamente..\r\n\r\nVoc&ecirc;
+  j&aacute; trabalhou em um projeto com muitos branches? J&aacute; se perdeu fazendo
+  coisas no branch errado?\r\n\r\nNesse post irei explicar como exibir o <strong>branch
+  atual<&#47;strong> no diret&oacute;rio do projeto, assim voc&ecirc; n&atilde;o precisa
+  ficar rodando <code>git status<&#47;code> toda hora pra saber em qual branch est&aacute;.\r\n\r\n"
+wordpress_id: 1348
+wordpress_url: http://blog.glaucocustodio.com/?p=1348
+date: '2013-03-15 20:11:44 -0300'
+date_gmt: '2013-03-15 20:11:44 -0300'
+categories:
+- Git
+- Linux
+tags:
+- git
+comments:
+- id: 801
+  author: Rafael
+  author_email: vieira.rrafael@gmail.com
+  author_url: ''
+  date: '2013-06-29 02:16:32 -0300'
+  date_gmt: '2013-06-29 02:16:32 -0300'
+  content: Boa dica! Valeu.
+- id: 2445
+  author: Leandro
+  author_email: leandro86marques@gmail.com
+  author_url: ''
+  date: '2014-06-12 02:54:20 -0300'
+  date_gmt: '2014-06-12 02:54:20 -0300'
+  content: "Editei meu .bashrc e ficou assim meu terminal:\r\n\r\nu@h[ [01;34m] w[
+    [0;32m] (master)[ [01;34m]u@h[ [01;34m] w[ [0;32m]$(__git_ps1 \" (%s)\")[ [01;34m]$[
+    [00m]\r\n\r\nRestaurei o arquivo pra voltar ao normal. Por enquanto n&atilde;o
+    consegui fazer exibir direito como informado aqui. Se algu&eacute;m tiver uma
+    solu&ccedil;&atilde;o. Estou usando o Ubuntu 14.04 LTS."
+- id: 2970
+  author: Lahana
+  author_email: lahana.lameira@secplus.com.br
+  author_url: ''
+  date: '2014-08-14 17:57:08 -0300'
+  date_gmt: '2014-08-14 17:57:08 -0300'
+  content: "Ol&aacute;, mandei esse tutorial para meu colega e n&atilde;o funcionou.
+    Ent&atilde;o abri o meu bashrc e copiei a vari&aacute;vel PS1:\r\n\r\nPS1='[\\A]
+    \\[\\e[32;1m\\]\\u\\[\\e[34;1m\\]@\\[\\e[36;1m\\]\\H:\\[\\e[34;1m\\]\\w\\[\\e[32;1m\\]`__git_ps1`
+    $ \\[\\e[0m\\]'\r\n\r\nE mandei para ele trocar pela dele e s&oacute; assim funcionou..."
+- id: 11755
+  author: Gustavo
+  author_email: gu.araujo25@gmail.com
+  author_url: ''
+  date: '2014-10-03 11:17:13 -0300'
+  date_gmt: '2014-10-03 11:17:13 -0300'
+  content: "No mac n&atilde;o funcionou...\r\nPara fazer funcionar no mac eu usei
+    isso: http:&#47;&#47;martinfitzpatrick.name&#47;article&#47;add-git-branch-name-to-terminal-prompt-mac&#47;"
+---
+<p>E ai galera, hoje venho para falar de <strong>git<&#47;strong> novamente..</p>
+<p>Voc&ecirc; j&aacute; trabalhou em um projeto com muitos branches? J&aacute; se perdeu fazendo coisas no branch errado?</p>
+<p>Nesse post irei explicar como exibir o <strong>branch atual<&#47;strong> no diret&oacute;rio do projeto, assim voc&ecirc; n&atilde;o precisa ficar rodando <code>git status<&#47;code> toda hora pra saber em qual branch est&aacute;.</p>
+<p><a id="more"></a><a id="more-1348"></a><br />
+Por padr&atilde;o n&atilde;o conseguimos ver o branch atual no reposit&oacute;rio. Quando acessamos um projeto versionado com git, obtemos a exibi&ccedil;&atilde;o padr&atilde;o, com apenas o usu&aacute;rio, host e path atual:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;terminal-sem-branch-do-git.png"><img class="alignnone size-full wp-image-1354" title="terminal-sem-branch-do-git" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;terminal-sem-branch-do-git.png" alt="" width="737" &#47;><&#47;a></p>
+<p>Para exibir o branch atual, precisamos alterar a vari&aacute;vel <code>PS1<&#47;code>. Basta adicionar o c&oacute;digo abaixo no <span style="text-decoration: underline;">fim<&#47;span> do arquivo <code>.bashrc<&#47;code> ou do <code>.bash_profile<&#47;code> (ambos se encontram na home do usu&aacute;rio <code>~&#47;<&#47;code>):<br />
+[code language="bash"]export PS1='\u@\h\[\033[01;34m\] \w\[\033[0;32m\]$(__git_ps1 " (%s)")\[\033[01;34m\]$\[\033[00m\] '[&#47;code]</p>
+<div class="note">Rode o comando <code>source ~&#47;.bashrc<&#47;code> ou <code>source ~&#47;.bash_profile<&#47;code> para recarregar e ver a altera&ccedil;&atilde;o sem precisar reiniciar o terminal.<&#47;div><br />
+S&oacute; isso e voc&ecirc; obter&aacute; o que deseja:</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;exibindo-branch-do-git-no-terminal.png"><img class="alignnone size-full wp-image-1356" title="exibindo-branch-do-git-no-terminal" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;exibindo-branch-do-git-no-terminal.png" alt="" width="735" &#47;><&#47;a></p>
+<p>Agora o branch atual, nesse caso o <code>master<&#47;code>, est&aacute; sendo exibido entre par&ecirc;nteses..</p>
+<p>Mas voc&ecirc; pode customizar tamb&eacute;m, modificando as cores e os valores exibidos. Abaixo temos uma breve rela&ccedil;&atilde;o do que podemos definir na vari&aacute;vel <code>PS1<&#47;code> para modificar nosso output. Divirta-se.</p>
+<h3>Valores<&#47;h3></p>
+<ul>
+<li>\u: usu&aacute;rio atual<&#47;li>
+<li>\h: nome da m&aacute;quina (host)<&#47;li>
+<li>\H: nome da m&aacute;quina completo<&#47;li>
+<li>\w: diret&oacute;rio de trabalho atual<&#47;li>
+<li>\W: diret&oacute;rio de trabalho atual com o nome base (&uacute;ltimo segmento) apenas<&#47;li>
+<li>$(__git_ps1 "%s"): branch atual caso esteja em um reposit&oacute;rio git, sen&atilde;o exibe nada.<&#47;li><br />
+<&#47;ul></p>
+<h3>Cores<&#47;h3></p>
+<ul>
+<li>azul: <code>\[\033[0;34m\]<&#47;code><&#47;li>
+<li>vermelho: <code>\[\033[0;31m\]<&#47;code><&#47;li>
+<li>vermelho fluorescente: <code>\[\033[1;31m\]<&#47;code><&#47;li>
+<li>verde: <code>\[\033[0;32m\]<&#47;code><&#47;li>
+<li>verde fluorescente: <code>\[\033[1;32m\]<&#47;code><&#47;li>
+<li>branco forte: <code>\[\033[1;37m\]<&#47;code><&#47;li>
+<li>cinza: <code>\[\033[0;37m\]<&#47;code><&#47;li>
+<li>padr&atilde;o: <code>\[\033[0m\]<&#47;code><&#47;li><br />
+<&#47;ul><br />
+O tutorial acima foi testado apenas no Ubuntu 12.04 e 12.10, mas deve funcionar em outras distribui&ccedil;&otilde;es Linux e possivelmente no OS X. Relate sua experi&ecirc;ncia nos coment&aacute;rios!</p>
+<p>At&eacute; mais.</p>

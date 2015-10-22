@@ -1,0 +1,212 @@
+---
+layout: post
+status: publish
+published: true
+title: Desenvolvimento Web com Sinatra - Criando um Blog Est&aacute;tico
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai galera, tudo bom?\r\n\r\nHoje estou aqui para falar sobre <strong>Sinatra<&#47;strong>,
+  uma DSL para criar aplica&ccedil;&otilde;es web em Ruby com o m&iacute;nimo de esfor&ccedil;o.
+  Como exemplo irei <strong>criar um blog est&aacute;tico<&#47;strong> no estilo de
+  <a title=\"https:&#47;&#47;github.com&#47;mojombo&#47;jekyll\" rel=\"external nofollow\"
+  href=\"https:&#47;&#47;github.com&#47;mojombo&#47;jekyll\" target=\"_blank\">Jekyll<&#47;a>.\r\n\r\nA
+  sigla DSL vem de \"Domain Specific-Language\" em ingl&ecirc;s e nada mais &eacute;
+  do que uma linguagem de especifica&ccedil;&atilde;o para o dom&iacute;nio particular
+  de um problema (vide <a title=\"http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Domain-specific_language\"
+  href=\"http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Domain-specific_language\" target=\"_blank\"
+  rel=\"external nofollow\">Wikipedia<&#47;a>).\r\n\r\n<a href=\"http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;13&#47;desenvolvimento-web-com-sinatra-criando-um-blog-estatico&#47;\"><img
+  class=\"alignnone size-full wp-image-588\" title=\"desenvolvimento web com Sinatra\"
+  src=\"http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;desenvolvimento-web-com-sinatra.jpg\"
+  alt=\"desenvolvimento web com Sinatra\" width=\"580\" height=\"240\" &#47;><&#47;a>\r\n<h2>"
+wordpress_id: 835
+wordpress_url: http://blog.glaucocustodio.com/?p=835
+date: '2012-12-13 00:12:03 -0200'
+date_gmt: '2012-12-13 00:12:03 -0200'
+categories:
+- Ruby
+tags:
+- sinatra
+comments:
+- id: 292
+  author: Luiz Cezer
+  author_email: lccezinha@gmail.com
+  author_url: ''
+  date: '2012-12-27 03:44:16 -0200'
+  date_gmt: '2012-12-27 03:44:16 -0200'
+  content: Muito bom o post, realmente sinatra &eacute; uma m&atilde;o na roda pra
+    apps simples de serem usadas =)
+- id: 683
+  author: Haml Sim Senhor, Porque N&atilde;o? | JustCode
+  author_email: ''
+  author_url: http://blog.glaucocustodio.com/2013/06/08/haml-sim-senhor-porque-nao/
+  date: '2013-06-08 16:51:51 -0300'
+  date_gmt: '2013-06-08 16:51:51 -0300'
+  content: "[...] deve desenvolver uma aplica&ccedil;&atilde;o em Ruby on Rails ou
+    em frameworks para web baseados em Rack (como Sinatra por exemplo) em no m&aacute;ximo
+    48 horas. Ap&oacute;s o prazo, um grupo de jurados escolhe os 10 melhores [...]"
+- id: 851
+  author: ricardo
+  author_email: ricardopcarvalho1@gmail.com
+  author_url: http://www.scriptcase.com.br
+  date: '2013-07-02 19:17:18 -0300'
+  date_gmt: '2013-07-02 19:17:18 -0300'
+  content: Parab&eacute;ns pelo blog muito bom.
+- id: 1042
+  author: Luis Paulo
+  author_email: luizpfl10@gmail.com
+  author_url: ''
+  date: '2013-08-01 18:37:47 -0300'
+  date_gmt: '2013-08-01 18:37:47 -0300'
+  content: Muito bom! Parab&eacute;ns.
+- id: 29897
+  author: Felipe
+  author_email: felipest9@gmail.com
+  author_url: ''
+  date: '2015-05-06 14:17:17 -0300'
+  date_gmt: '2015-05-06 14:17:17 -0300'
+  content: "Muito bom o post!\r\nTo come&ccedil;ando agora com ruby e quero saber
+    se existe alguma biblioteca pra fazer apps estilo o kivy do python.\r\nE como
+    funciona a hospedagem de um site feito com ruby e o sinatra ou rails? Todo servi&ccedil;o
+    de hospedagem comum suporta ou &eacute; mais caro?\r\n\r\nObrigado desde j&aacute;
+    e parab&eacute;ns pelo post!"
+- id: 36747
+  author: Arist&oacute;toteles
+  author_email: aristotelesbr@gmail.com
+  author_url: ''
+  date: '2015-07-22 19:59:58 -0300'
+  date_gmt: '2015-07-22 19:59:58 -0300'
+  content: Muito bom pra iniciar os estudos com Sinatra! Parab&eacute;ns!!!
+---
+<p>E ai galera, tudo bom?</p>
+<p>Hoje estou aqui para falar sobre <strong>Sinatra<&#47;strong>, uma DSL para criar aplica&ccedil;&otilde;es web em Ruby com o m&iacute;nimo de esfor&ccedil;o. Como exemplo irei <strong>criar um blog est&aacute;tico<&#47;strong> no estilo de <a title="https:&#47;&#47;github.com&#47;mojombo&#47;jekyll" rel="external nofollow" href="https:&#47;&#47;github.com&#47;mojombo&#47;jekyll" target="_blank">Jekyll<&#47;a>.</p>
+<p>A sigla DSL vem de "Domain Specific-Language" em ingl&ecirc;s e nada mais &eacute; do que uma linguagem de especifica&ccedil;&atilde;o para o dom&iacute;nio particular de um problema (vide <a title="http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Domain-specific_language" href="http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Domain-specific_language" target="_blank" rel="external nofollow">Wikipedia<&#47;a>).</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;13&#47;desenvolvimento-web-com-sinatra-criando-um-blog-estatico&#47;"><img class="alignnone size-full wp-image-588" title="desenvolvimento web com Sinatra" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;desenvolvimento-web-com-sinatra.jpg" alt="desenvolvimento web com Sinatra" width="580" height="240" &#47;><&#47;a></p>
+<h2><a id="more"></a><a id="more-835"></a>Onde Usar<&#47;h2><br />
+Sinatra &eacute; feito para casos espec&iacute;ficos e usado geralmente em aplica&ccedil;&otilde;es simples que demandam uma performance melhor do que de um framework como Ruby on Rails. Vamos supor que precisamos fazer uma API que retorne os dados de um cliente em JSON ao passarmos o id via GET, inv&eacute;s de fazermos uso de um framework mais completo, podemos f&aacute;cilmente criar um aplica&ccedil;&atilde;o Sinatra que s&oacute; fa&ccedil;a isso.</p>
+<h2>Iniciando com Sinatra<&#47;h2><br />
+Primeiro de tudo voc&ecirc; precisa ter o Ruby instalado em sua m&aacute;quina, isso pode ser feito via RVM, <a title="Instalando e Configurando Ambiente Ruby on Rails no Linux (Ubuntu)" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;23&#47;instalando-e-configurando-ambiente-ruby-on-rails-no-linux&#47;" target="_blank">nesse post<&#47;a> explico como instalar e configurar em ambiente Linux.</p>
+<p>Com o Ruby em m&atilde;os, vamos come&ccedil;ar instalando a gem do Sinatra, rode o comando abaixo no terminal:</p>
+<p>[code]<br />
+gem install sinatra<br />
+[&#47;code]</p>
+<p>Vamos criar uma pasta para o projeto e o arquivo principal de nosso blog, escolha o diret&oacute;rio de prefer&ecirc;ncia e rode:</p>
+<p>[code]<br />
+mkdir sinatra-blog && touch sinatra-blog&#47;main.rb<br />
+[&#47;code]</p>
+<p>No exemplo acima dei o nome de <code>sinatra-blog<&#47;code> para pasta, e <code>main<&#47;code> para o arquivo, escolha o que preferir.</p>
+<p>Abra o arquivo criado acima e jogue o c&oacute;digo abaixo:</p>
+<p>[code language="ruby"]<br />
+# encoding: UTF-8<br />
+require 'sinatra'</p>
+<p>get '&#47;' do<br />
+  "Ol&aacute; mundo"<br />
+end<br />
+[&#47;code]</p>
+<div class="note">O trecho <code># encoding: UTF-8<&#47;code> serve para definir a codifica&ccedil;&atilde;o e permitir a utiliza&ccedil;&atilde;o de caracteres UTF-8.<&#47;div></p>
+<p>Salve o arquivo, acesse a pasta do projeto via terminal e rode o comando <code>ruby main.rb<&#47;code>, agora se voc&ecirc; acessar <code>http:&#47;&#47;localhost:4567&#47;<&#47;code> dever&aacute; ver a mensagem na tela. Temos nossa primeira aplica&ccedil;&atilde;o Sinatra rodando! &Eacute; s&oacute; isso mesmo, basta importar o arquivo do Sinatra e definir o m&eacute;todo da p&aacute;gina inicial e pronto, j&aacute; temos uma aplica&ccedil;&atilde;o rodando.</p>
+<p>Sinatra usa REST, ou seja, sempre definimos o verbo HTTP que est&aacute; executando a requisi&ccedil;&atilde;o, cada defini&ccedil;&atilde;o &eacute; como uma rota do Rails.</p>
+<div class="alert">Caso alguma altera&ccedil;&atilde;o feita n&atilde;o tenha sido aplicada, deve-se reiniciar o servidor, para isso basta pressionar <code>Ctrl+C<&#47;code> para parar e <code>ruby main.rb<&#47;code> para iniciar novamente.<&#47;div></p>
+<h2>Criando um Blog Est&aacute;tico<&#47;h2></p>
+<h3>Layout<&#47;h3><br />
+Vamos criar uma p&aacute;gina HTML que possa servir de base para todo nosso blog, assim podemos chamar todas p&aacute;ginas dentro dela sem ter necessidade de ficar repetindo a parte que n&atilde;o ser&aacute; alterada, isso &eacute; chamado layout.</p>
+<p>Dentro da pasta do projeto, crie uma pasta chamada <code>views<&#47;code> e dentro dela crie um arquivo <code>layout.erb<&#47;code> e adicione um conte&uacute;do como abaixo:</p>
+<p>[code language="html" escaped="true"]<br />
+<!doctype html><br />
+<html lang="pt-BR"><br />
+  <head><br />
+    <meta charset="utf-8"&#47;><br />
+    <title>Blog feito com Sinatra<&#47;title><br />
+  <&#47;head><br />
+  <body><br />
+    Menu</p>
+<ul>
+<li>
+        <a href="&#47;">Home<&#47;a><br />
+      <&#47;li></p>
+<li>
+        <a href="&#47;sobre-o-autor">Sobre o autor<&#47;a><br />
+      <&#47;li><br />
+    <&#47;ul><br />
+    <%= yield %><br />
+  <&#47;body><br />
+<&#47;html><br />
+[&#47;code]</p>
+<p>O conte&uacute;do de todas as p&aacute;ginas de nosso blog ser&aacute; inserido no lugar que definimos <code><%= yield %><&#47;code>.</p>
+<h3>Criando a p&aacute;gina Inicial do Blog<&#47;h3><br />
+Altere o arquivo <code>main.rb<&#47;code> na rota padr&atilde;o (<code>get "&#47;"<&#47;code>) para inv&eacute;s de exibir uma mensagem chamar uma p&aacute;gina HTML:</p>
+<p>[code language="ruby"]<br />
+get '&#47;' do<br />
+  erb :index<br />
+end<br />
+[&#47;code]</p>
+<p>Crie um arquivo chamado <code>index.erb<&#47;code> (com a extens&atilde;o <code>erb<&#47;code> podemos embutir c&oacute;digo Ruby no HTML) e defina uma mensagem de boas vindas para a home do blog:</p>
+<p>[code language="html"]</p>
+<h1>Seja Bem Vindo<&#47;h1><br />
+[&#47;code]</p>
+<h3>Listando Arquivos HTML dos Posts NA HOME<&#47;h3><br />
+Como nosso blog ser&aacute; est&aacute;tico, cada post nada mais &eacute; do que uma p&aacute;gina HTML. Por organiza&ccedil;&atilde;o, vamos criar um pasta chamada <code>posts<&#47;code> dentro de <code>views<&#47;code> para manter todos os artigos.</p>
+<p>Vamos criar um script que leia o conte&uacute;do dessa pasta e exiba na home do blog todos os posts cadastrados. O arquivo <code>main.rb<&#47;code> ficar&aacute; assim:</p>
+<p>[code language="ruby"]<br />
+# encoding: UTF-8<br />
+require 'sinatra'<br />
+require 'find'</p>
+<p>def get_files(path)<br />
+  files = []<br />
+  Find.find(path) do |c|<br />
+    files << File.basename(c, ".erb") if !File.directory?(c)<br />
+  end<br />
+  return files<br />
+end</p>
+<p>get '&#47;' do<br />
+  @posts = get_files('.&#47;views&#47;posts&#47;')<br />
+  erb :index<br />
+end<br />
+[&#47;code]</p>
+<p>Primeiro importamos a classe <code>find<&#47;code>, depois criamos um m&eacute;todo que recebe um caminho, verifica se n&atilde;o &eacute; um diret&oacute;rio e retorna um array com o nome de todos arquivos encontrados. Na rota inicial, apenas chamamos a fun&ccedil;&atilde;o acima e armazenamos o retorno em uma vari&aacute;vel de inst&acirc;ncia que estar&aacute; dispon&iacute;vel na view.</p>
+<p>Coloque o c&oacute;digo abaixo no arquivo <code>index.html<&#47;code> para percorrer todos os posts e exibir na home:</p>
+<p>[code language="ruby"]</p>
+<ul>
+  <% @posts.each do |c| %></p>
+<li>
+      <a href="&#47;visualizar&#47;<%= c %>"><%= c %><&#47;a><br />
+    <&#47;li><br />
+  <% end %><br />
+<&#47;ul><br />
+[&#47;code]</p>
+<h3>Exibindo Posts Salvos<&#47;h3><br />
+Como j&aacute; temos links para os posts do blog, precisamos criar o m&eacute;todo respons&aacute;vel por exibir os posts. Inclua o c&oacute;digo abaixo no arquivo <code>main.rb<&#47;code>:</p>
+<p>[code language="ruby"]<br />
+get '&#47;visualizar&#47;:post&#47;?' do<br />
+  halt 404 unless File.exist?("views&#47;posts&#47;#{params[:post]}.erb")<br />
+  erb :"posts&#47;#{params[:post]}"<br />
+end<br />
+[&#47;code]</p>
+<div class="note">O <code>&#47;?<&#47;code> serve para deixar opcional o uso de <code>&#47;<&#47;code> no final da url.<&#47;div></p>
+<p>Aqui definimos uma rota que espera um par&acirc;metro, verifica se existe o arquivo (se n&atilde;o existir lan&ccedil;a um erro 404) e exibe do post.</p>
+<h3>Criando P&aacute;gina de Erro Personalizada<&#47;h3><br />
+Criar uma p&aacute;gina de erro personalizada &eacute; facil, basta adicionar o c&oacute;digo abaixo e criar o arquivo <code>404.erb<&#47;code> dentro da pasta <code>views<&#47;code>.</p>
+<p>[code language="ruby"]<br />
+not_found do<br />
+  erb :"404"<br />
+end<br />
+[&#47;code]</p>
+<h3>Criando P&aacute;gina Sobre o Autor<&#47;h3><br />
+Por fim, vamos criar uma p&aacute;gina respons&aacute;vel por exibir dados do autor, ela simplesmente carrega um HTML, veja:</p>
+<p>[code language="ruby"]<br />
+get '&#47;sobre-o-autor&#47;?' do<br />
+  erb :author<br />
+end<br />
+[&#47;code]</p>
+<h2>Resultado<&#47;h2></p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;blog-feito-com-sinatra.png"><img class="alignnone size-full wp-image-662" title="blog feito com Sinatra" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;blog-feito-com-sinatra.png" alt="blog feito com Sinatra" width="662" height="481" &#47;><&#47;a></p>
+<h2>Conclus&atilde;o<&#47;h2><br />
+Sinatra sem d&uacute;vida &eacute; uma &oacute;tima ferramenta para completar a lista de qualquer desenvolvedor web e espero ter apresentado com clareza.</p>
+<p>O c&oacute;digo fonte completo desse tutorial est&aacute; em meu <a href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Blog%20Est%C3%A1tico%20Feito%20com%20Sinatra" target="_blank" rel="external nofollow">GitHub<&#47;a>.</p>
+<p>Deixe sua opini&atilde;o abaixo, o que voc&ecirc; achou?</p>
+<p>At&eacute; mais.</p>

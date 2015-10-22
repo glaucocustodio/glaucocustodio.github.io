@@ -1,0 +1,128 @@
+---
+layout: post
+status: publish
+published: true
+title: Javascript Discreto (UJS) e AJAX no Ruby on Rails
+author:
+  display_name: Glauco Custódio
+  login: glauco-custodio
+  email: glauco.custodio@gmail.com
+  url: http://glaucocustodio.com
+author_login: glauco-custodio
+author_email: glauco.custodio@gmail.com
+author_url: http://glaucocustodio.com
+excerpt: "E ai pessoal, hoje estou aqui para ensinar como utilizar Javascript discreto
+  (unobtrusive Javascript - UJS) no Ruby on Rails para implementa&ccedil;&atilde;o
+  <strong>AJAX<&#47;strong>.\r\n\r\nVamos supor que temos um scaffold simples gerado
+  pelo Rails e desejamos implantar requisi&ccedil;&otilde;es ass&iacute;ncronas via
+  Javascript.\r\n\r\n"
+wordpress_id: 1212
+wordpress_url: http://blog.glaucocustodio.com/?p=1212
+date: '2013-02-23 15:13:00 -0300'
+date_gmt: '2013-02-23 15:13:00 -0300'
+categories:
+- Ruby
+tags:
+- ruby on rails
+- ajax
+comments: []
+---
+<p>E ai pessoal, hoje estou aqui para ensinar como utilizar Javascript discreto (unobtrusive Javascript - UJS) no Ruby on Rails para implementa&ccedil;&atilde;o <strong>AJAX<&#47;strong>.</p>
+<p>Vamos supor que temos um scaffold simples gerado pelo Rails e desejamos implantar requisi&ccedil;&otilde;es ass&iacute;ncronas via Javascript.</p>
+<p><a id="more"></a><a id="more-1212"></a></p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;scaffold-simples-rails.png"><img class="alignnone size-full wp-image-1213" title="scaffold-simples-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;scaffold-simples-rails.png" alt="scaffold-simples-rails" width="524" height="170" &#47;><&#47;a></p>
+<p>Poderiamos criar um arquivo Javascript e com a ajuda de algum framework como jQuery fazer uso das fun&ccedil;&otilde;es apropriadas para isso..</p>
+<p>Mas nosso objetivo aqui &eacute; utilizar o Javascript discreto que vem por padr&atilde;o com o Rails desde a vers&atilde;o 3.</p>
+<h2>Javascript Discreto<&#47;h2><br />
+As vers&otilde;es antigas do Rails, utilizavam-se de um Javascript inline (junto com HTML) e dependente de recursos do framework Prototype para implementa&ccedil;&atilde;o de funcionalidades como submiss&atilde;o de formul&aacute;rios de maneira ass&iacute;ncrona. Isso deixava o c&oacute;digo mais sujo e n&atilde;o muito manuten&iacute;vel.</p>
+<p>Para resolver esse problema passou-se a utilizar uma biblioteca chamada Unobtrusive Javascript que permite a gera&ccedil;&atilde;o de c&oacute;digo mais limpo e bem organizado utilizando recursos de HTML 5. Existem vers&otilde;es para v&aacute;rios frameworks Javascripts (como <a href="https:&#47;&#47;github.com&#47;rails&#47;jquery-ujs" rel="external nofollow" target="_blank">jQuery<&#47;a>, <a rel="external nofollow" href="https:&#47;&#47;github.com&#47;rails&#47;prototype-ujs" target="_blank">Prototype<&#47;a> e <a rel="external nofollow" href="https:&#47;&#47;github.com&#47;kevinvaldek&#47;mootools-ujs" target="_blank">MooTools<&#47;a>), assim o desenvolvedor n&atilde;o precisa ficar preso h&aacute; um framework como era antes.</p>
+<h2>Utilizando UJS para AJAX<&#47;h2><br />
+Agora vamos ver como utilizar a biblioteca que citamos acima para AJAX.</p>
+<p>Primeiro de tudo, precisamos garantir duas coisas:</p>
+<ul>
+<li>O layout da aplica&ccedil;&atilde;o est&aacute; em HTML 5: seu HTML deve come&ccedil;ar com <code><!DOCTYPE html><&#47;code> .<&#47;li>
+<li>Temos incluso o jQuery e o UJS para jQuery no layout: se voc&ecirc; tiver <code><%= javascript_include_tag "application" %><&#47;code> no layout j&aacute; estar&aacute; sendo incluso pelo Rails.<&#47;li><br />
+<&#47;ul><br />
+J&aacute; temos o que precisamos para come&ccedil;ar, que tal agora passarmos o m&eacute;todo de exclus&atilde;o do scaffold para AJAX?</p>
+<p>Na listagem de registros temos o seguinte c&oacute;digo gerado pelo Rails:<br />
+[code language="ruby"]<br />
+<% @posts.each do |post| %></p>
+<tr>
+<td><%= post.name %><&#47;td></p>
+<td><%= post.content %><&#47;td></p>
+<td><%= post.date %><&#47;td></p>
+<td><%= link_to 'Show', post %><&#47;td></p>
+<td><%= link_to 'Edit', edit_post_path(post) %><&#47;td></p>
+<td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %><&#47;td><br />
+  <&#47;tr><br />
+<% end %><br />
+[&#47;code]</p>
+<p>Irei dizer ao Rails para que o m&eacute;todo de exclus&atilde;o seja chamado de forma ass&iacute;ncrona, apenas adicionando o trecho <code>remote: true<&#47;code>, veja:</p>
+<p>[code language="ruby" linenos="1" hl_lines="2 8"]<br />
+<% @posts.each do |post| %></p>
+<tr class="<%= post.id %>"></p>
+<td><%= post.name %><&#47;td></p>
+<td><%= post.content %><&#47;td></p>
+<td><%= post.date %><&#47;td></p>
+<td><%= link_to 'Show', post %><&#47;td></p>
+<td><%= link_to 'Edit', edit_post_path(post) %><&#47;td></p>
+<td><%= link_to 'Destroy', post, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %><&#47;td><br />
+  <&#47;tr><br />
+<% end %><br />
+[&#47;code]</p>
+<div class="note">Observe em destaque que adiciono uma classe para a <code>tr<&#47;code> de cada registro com o id, isso ser&aacute; usado para remover a linha com Javascript depois que o registro for exclu&iacute;do.<&#47;div></p>
+<p>Olhando o c&oacute;digo fonte, veremos que o Rails adiciona um atributo <code>data-remote<&#47;code> com o valor <code>true<&#47;code> em nosso link, isso &eacute; o que a biblioteca UJS precisa saber para fazer a requisi&ccedil;&atilde;o via AJAX.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;usando-ujs-rails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;usando-ujs-rails.png" alt="usando-ujs-rails" title="usando-ujs-rails" width="773" class="alignnone size-full wp-image-1254" &#47;><&#47;a></p>
+<p>Se voc&ecirc; for na listagem de registros e clicar no link <code>Destroy<&#47;code> ver&aacute; que a requisi&ccedil;&atilde;o j&aacute; est&aacute; sendo de forma ass&iacute;ncrona, s&oacute; que como o Rails ainda n&atilde;o sabe como manipular ela, obtemos um erro de rota.</p>
+<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;erro-de-rota-rails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;erro-de-rota-rails.png" alt="erro-de-rota-rails" title="erro-de-rota-rails" width="570" class="alignnone size-full wp-image-1230" &#47;><&#47;a></p>
+<p>Para resolver isso, basta dizermos ao Rails como responder as chamadas feitas via Javascript adicionando <code>format.js<&#47;code> no <code>respond_to<&#47;code> da action que est&aacute; sendo requisitada. Com isso nossa action <code>destroy<&#47;code> ficar&aacute; assim:</p>
+<p>[code language="ruby" linenos="1" hl_lines="8"]<br />
+def destroy<br />
+  @post = Post.find(params[:id])<br />
+  @post.destroy</p>
+<p>  respond_to do |format|<br />
+    format.html { redirect_to posts_url }<br />
+    format.json { head :no_content }<br />
+    format.js<br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>Esse trecho adicionado far&aacute; com que o Rails procure por um arquivo com o nome da action e com a extens&atilde;o <code>.js.erb<&#47;code> na pasta de views, nesse caso, ele procurar&aacute; por <code>destroy.js.erb<&#47;code>. Dentro desse arquivo podemos colocar c&oacute;digo Javascript e Ruby que ser&atilde;o executados depois da chamada ass&iacute;ncrona ter sido executada.</p>
+<p>Em meu arquivo <code>destroy.js.erb<&#47;code> eu adicionei o c&oacute;digo abaixo respons&aacute;vel por excluir a linha do registro exclu&iacute;do:</p>
+<p>[code language="ruby"]<br />
+$('tr.<%= @post.id %>').remove();<br />
+[&#47;code]</p>
+<h2>Callbacks AJAX via Eventos Customizados<&#47;h2></p>
+<p>Imagina que desejamos aplicar exclus&atilde;o via AJAX para todos CRUDs de nossa aplica&ccedil;&atilde;o, existe uma maneira mais f&aacute;cil de executarmos algo no callback da requisi&ccedil;&atilde;o ass&iacute;ncrona inv&eacute;s de ter que criar um arquivo <code>.js.erb<&#47;code> para cada action.</p>
+<p>As chamadas AJAX do UJS nos fornece os seguintes callbacks para as requisi&ccedil;&otilde;es ass&iacute;ncronas:</p>
+<ul>
+<li><strong>ajax:before<&#47;strong>: antes da chamada AJAX<&#47;li>
+<li><strong>ajax:loading<&#47;strong>: antes da chamada AJAX, mas depois da cria&ccedil;&atilde;o do objeto XmlHttpRequest<&#47;li>
+<li><strong>ajax:success<&#47;strong>: chamada AJAX executada com sucesso<&#47;li>
+<li><strong>ajax:failure<&#47;strong>: chamada AJAX que falhou<&#47;li>
+<li><strong>ajax:complete<&#47;strong>: chamada AJAX terminada (executada depois do <code>ajax:success<&#47;code> e <code>ajax:failure<&#47;code>)<&#47;li>
+<li><strong>ajax:after<&#47;strong>: depois da chamda AJAX ter sido feita (antes do retorno)<&#47;li><br />
+<&#47;ul></p>
+<p>Na action podemos definir que n&atilde;o queremos nenhuma renderiza&ccedil;&atilde;o quando a requisi&ccedil;&atilde;o vier por Javascript:</p>
+<p>[code language="ruby" linenos="1" hl_lines="8"]<br />
+def destroy<br />
+  @post = Post.find(params[:id])<br />
+  @post.destroy</p>
+<p>  respond_to do |format|<br />
+    format.html { redirect_to posts_url }<br />
+    format.json { head :no_content }<br />
+    format.js { render :nothing => true}<br />
+  end<br />
+end<br />
+[&#47;code]</p>
+<p>Ent&atilde;o criamos um bloco Javascript no <code>application.js<&#47;code> respons&aacute;vel por tratar todos callbacks de chamadas AJAX com sucesso por exemplo:</p>
+<p>[code language="javascript"]<br />
+$(function(){<br />
+  $('.delete-link').on('ajax:success', function() {<br />
+      $(this).parents('tr:first').remove();<br />
+  });<br />
+});<br />
+[&#47;code]</p>
+<p>Nesse exemplo, para cada link de exclus&atilde;o que for via AJAX ser&aacute; necess&aacute;rio adicionar a classe <code>delete-link<&#47;code> para passar pelo callback.</p>
+<p>Essa foi a dica de hoje. O que voc&ecirc;s acharam?</p>
+<p>At&eacute; mais.</p>
