@@ -32,57 +32,77 @@ comments:
     page, but I'll work out how to do that another day.
 ---
 <p>By default in Django 1.5, admin inline images display just the link to the picture:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images.png"><img class="alignnone size-full wp-image-2878" title="django-admin-inline-images" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images.png" alt="" &#47;><&#47;a></p>
-<p>In our <code>admin.py<&#47;code> we have something like:</p>
-<p>[code language="python"]<br />
-class ImageInline(AdminImageMixin, admin.TabularInline):<br />
-  model = Image</p>
-<p>class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):<br />
-  list_display = ('title', 'position', 'get_image_tag')<br />
-  inlines      = (ImageInline,)<br />
-[&#47;code]</p>
-<p>The thumbnails aren't there, so, let's display them:</p>
-<p>[code language="python" linenos="table" hl_lines="10"]<br />
-from django.contrib.admin.widgets import AdminFileWidget<br />
-from django.utils.safestring import mark_safe<br />
-from django.forms import ModelForm<br />
-from sorl.thumbnail import get_thumbnail</p>
-<p>class AdminImageWidget(AdminFileWidget):<br />
-  def render(self, name, value, attrs=None):<br />
-    output = []<br />
-    if value and getattr(value, "url", None):<br />
-      t = get_thumbnail(value,'80x80')<br />
-      output.append('<img src="{}">'.format(t.url))<br />
-    output.append(super(AdminFileWidget, self).render(name, value, attrs))<br />
-    return mark_safe(u''.join(output))</p>
-<p>class ImageForm(ModelForm):<br />
-  class Meta:<br />
-    model = Image<br />
-    widgets = {<br />
-      'image': AdminImageWidget,<br />
-    }</p>
-<p>class ImageInline(AdminImageMixin, admin.TabularInline):<br />
-  model = Image<br />
-  form  = ImageForm</p>
-<p>class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):<br />
-  list_display = ('title', 'position', 'get_image_tag')<br />
-  inlines      = (ImageInline,)<br />
-[&#47;code]</p>
+
+<p><a href="{{ site.baseurl }}/assets/django-admin-inline-images.png"><img class="alignnone size-full wp-image-2878" title="django-admin-inline-images" src="{{ site.baseurl }}/assets/django-admin-inline-images.png" alt="" /></a></p>
+
+<p>In our <code>admin.py</code> we have something like:</p>
+
+{% highlight python %}
+class ImageInline(AdminImageMixin, admin.TabularInline):
+  model = Image
+
+class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):
+  list_display = ('title', 'position', 'get_image_tag')
+  inlines      = (ImageInline,)
+{% endhighlight %}
+
+The thumbnails aren't there, so, let's display them:
+
+{% highlight python linenos %}
+from django.contrib.admin.widgets import AdminFileWidget
+from django.utils.safestring import mark_safe
+from django.forms import ModelForm
+from sorl.thumbnail import get_thumbnail
+
+class AdminImageWidget(AdminFileWidget):
+  def render(self, name, value, attrs=None):
+    output = []
+    if value and getattr(value, "url", None):
+      t = get_thumbnail(value,'80x80')
+      output.append('<img src="{}">'.format(t.url))
+    output.append(super(AdminFileWidget, self).render(name, value, attrs))
+    return mark_safe(u''.join(output))
+
+class ImageForm(ModelForm):
+  class Meta:
+    model = Image
+    widgets = {
+      'image': AdminImageWidget,
+    }
+
+class ImageInline(AdminImageMixin, admin.TabularInline):
+  model = Image
+  form  = ImageForm
+
+class ServiceAdmin(AdminImageMixin, admin.ModelAdmin):
+  list_display = ('title', 'position', 'get_image_tag')
+  inlines      = (ImageInline,)
+{% endhighlight %}
+
 <p>We override the image widget in order to display images thumbnails, you can change its size in line 10. Result:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images-with-thumbnails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-inline-images-with-thumbnails.png" alt="" title="django-admin-inline-images-with-thumbnails" class="alignnone size-full wp-image-2887" &#47;><&#47;a></p>
+
+<p></p><a href="{{ site.baseurl }}/assets/django-admin-inline-images-with-thumbnails.png"><img src="{{ site.baseurl }}/assets/django-admin-inline-images-with-thumbnails.png" alt="" title="django-admin-inline-images-with-thumbnails" class="alignnone size-full wp-image-2887" /></a>
+
 <p>Now, if for some reason your non-inline images are not showing its thumbnails like below:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images.png" alt="" title="django-admin-non-inline-images" class="alignnone size-full wp-image-2897" &#47;><&#47;a></p>
-<p>You can also override the image widget with the same class showed above (but this time the <code>form<&#47;code> goes inside your admin class instead inline class):</p>
-<p>[code language="python"]<br />
-class FooForm(ModelForm):<br />
-  class Meta:<br />
-    model = Foo<br />
-    widgets = {<br />
-      'main_image': AdminImageWidget, # same used above<br />
-    }</p>
-<p>class FooAdmin(AdminImageMixin, admin.ModelAdmin):<br />
-  form = FooForm<br />
-[&#47;code]</p>
+
+<p><a href="{{ site.baseurl }}/assets/django-admin-non-inline-images.png"><img src="{{ site.baseurl }}/assets/django-admin-non-inline-images.png" alt="" title="django-admin-non-inline-images" class="alignnone size-full wp-image-2897" /></a></p>
+
+<p>You can also override the image widget with the same class showed above (but this time the <code>form</code> goes inside your admin class instead inline class):</p>
+
+{% highlight python %}
+class FooForm(ModelForm):
+  class Meta:
+    model = Foo
+    widgets = {
+      'main_image': AdminImageWidget, # same used above
+    }
+
+class FooAdmin(AdminImageMixin, admin.ModelAdmin):
+  form = FooForm
+{% endhighlight %}
+
 <p>Result:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images-with-thumbnails.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;04&#47;django-admin-non-inline-images-with-thumbnails.png" alt="" title="django-admin-non-inline-images-with-thumbnails" class="alignnone size-full wp-image-2898" &#47;><&#47;a></p>
+
+<p><a href="{{ site.baseurl }}/assets/django-admin-non-inline-images-with-thumbnails.png"><img src="{{ site.baseurl }}/assets/django-admin-non-inline-images-with-thumbnails.png" alt="" title="django-admin-non-inline-images-with-thumbnails" class="alignnone size-full wp-image-2898" /></a></p>
+
 <p>That's it, give us your feedback in the comments.</p>

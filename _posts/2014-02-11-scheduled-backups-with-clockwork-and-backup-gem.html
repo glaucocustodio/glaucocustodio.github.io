@@ -63,111 +63,141 @@ comments:
   content: Just make your life more simple with https:&#47;&#47;backup.foundation&#47;
 ---
 <p>Today I am here to demonstrate a solution I have used to backup a Rails application to Amazon S3.</p>
-<p>A popular library to perform backups in Ruby world, is <a href="https:&#47;&#47;github.com&#47;meskyanichi&#47;backup" rel="external nofollow" target="_blank">Backup<&#47;a>, it has a lot of options (for storage, compression, notification..) and seemed great to me.</p>
-<p>Having our backup gem chosen, it's time to pick a gem to deal with scheduled jobs in order we can schedule automatic backups. As&nbsp;<a href="https:&#47;&#47;github.com&#47;tomykaira&#47;clockwork" rel="external nofollow" target="_blank">Clockwork<&#47;a> already was in project's <code>Gemfile<&#47;code>, I used it.</p>
-<p><a id="more"></a><a id="more-2321"></a></p>
-<h2>Setting up Environment<&#47;h2><br />
-<u>It isn't recommended<&#47;u> include Backup gem in project's main <code>Gemfile<&#47;code>, a solution is to create a isolated environment to this gem.</p>
-<p>Firstly, let's install the gem:<br />
-[code language="bash"]<br />
-gem install backup -v '~> 4.0.1'<br />
-[&#47;code]</p>
+
+<p>A popular library to perform backups in Ruby world, is <a href="https://github.com/meskyanichi/backup" rel="external nofollow" target="_blank">Backup</a>, it has a lot of options (for storage, compression, notification..) and seemed great to me.</p>
+
+<p>Having our backup gem chosen, it's time to pick a gem to deal with scheduled jobs in order we can schedule automatic backups. As <a href="https://github.com/tomykaira/clockwork" rel="external nofollow" target="_blank">Clockwork</a> already was in project's <code>Gemfile</code>, I used it.</p>
+
+<h2>Setting up Environment</h2>
+<p><u>It isn't recommended</u> include Backup gem in project's main <code>Gemfile</code>, a solution is to create an isolated environment to this gem.</p>
+
+<p>Firstly, let's install the gem:</p>
+{% highlight ruby %}
+gem install backup -v '~> 4.0.1'
+{% endhighlight %}
+
 <p>Now, you will need to create the below structure:</p>
 <pre>
--my_rails_app<br />
- |-vendor<br />
-   |-backup<br />
-     |-Gemfile<&#47;pre><br />
-Inside <code>vendor&#47;backup&#47;Gemfile<&#47;code> you drop:<br />
-[code language="ruby"]source 'https:&#47;&#47;rubygems.org'<br />
-gem 'backup', '~> 4.0.1'[&#47;code]</p>
-<p>This <code>Gemfile<&#47;code> is just to Bundler recognize the folder as an isolated env.</p>
-<h3>Generating Backup Model<&#47;h3><br />
-In my case, I generated a simple backup model in order to backup a PostgreSQL database, compress the dump and send to Amazon S3:<br />
-[code language="bash"]bundle exec backup generate:model --trigger my_bkp_name --databases="postgresql" --storages="s3" --compressor="gzip" --config-file=".&#47;config.rb"[&#47;code]<br />
-Fill in your credentials (taken from your <code>.yml<&#47;code> files) in the recently created file inside <code>models<&#47;code> folder:<br />
-[code language="ruby"]<br />
-Model.new(:my_bkp_name, 'Description for my_bkp_name') do<br />
-  ##<br />
-  # PostgreSQL [Database]<br />
-  #<br />
-  database PostgreSQL do |db|<br />
-    DB = YAML.load_file("#{DIR}&#47;config&#47;database.yml")<br />
-    # try to get RAILS_ENV variable,<br />
-    # if it is not set, use 'production'<br />
-    RAILS_ENV = ENV.fetch('RAILS_ENV'){'production'}</p>
-<p>    # To dump all databases,<br />
-    # set `db.name = :all` (or leave blank)<br />
-    db.name               = DB[RAILS_ENV]['database']<br />
-    db.username           = DB[RAILS_ENV]['username']<br />
-    db.password           = DB[RAILS_ENV]['password']<br />
-    db.host               = DB[RAILS_ENV]['host']<br />
-    db.additional_options = ["-xc", "-E=utf8"]<br />
-  end</p>
-<p>  ##<br />
-  # Amazon Simple Storage Service [Storage]<br />
-  #<br />
-  store_with S3 do |s3|<br />
-    S3 = YAML.load_file("#{DIR}&#47;config&#47;s3.yml")</p>
-<p>    # AWS Credentials<br />
-    s3.access_key_id     = S3['access_key_id']<br />
-    s3.secret_access_key = S3['secret_access_key']</p>
-<p>    s3.region            = "us-east-1"<br />
-    s3.bucket            = "bucket-name"<br />
-    s3.path              = "path&#47;to&#47;backups"<br />
-    # max 7 files<br />
-    s3.keep              = 7<br />
-  end</p>
-<p>  ##<br />
-  # Gzip [Compressor]<br />
-  #<br />
-  compress_with Gzip<br />
-end<br />
-[&#47;code]</p>
-<p>We will need set our <code>DIR<&#47;code> variable in <code>config.rb<&#47;code> file also:<br />
-[code language="ruby"]<br />
-DIR = File.expand_path('..&#47;..&#47;..&#47;', __FILE__)<br />
-[&#47;code]</p>
+-my_rails_app
+ |-vendor
+   |-backup
+     |-Gemfile</pre>
+<p>Inside <code>vendor/backup/Gemfile</code> you drop:</p>
+{% highlight ruby %}
+source 'https://rubygems.org'
+gem 'backup', '~> 4.0.1'
+{% endhighlight %}
+
+<p>This <code>Gemfile</code> is just to Bundler recognize the folder as an isolated env.</p>
+
+<h3>Generating Backup Model</h3>
+<p>In my case, I generated a simple backup model in order to backup a PostgreSQL database, compress the dump and send to Amazon S3:</p>
+
+{% highlight bash %}
+bundle exec backup generate:model --trigger my_bkp_name --databases="postgresql" --storages="s3" --compressor="gzip" --config-file="./config.rb"
+{% endhighlight %}
+
+<p>Fill in your credentials (taken from your <code>.yml</code> files) in the recently created file inside <code>models</code> folder:</p>
+
+{% highlight ruby %}
+Model.new(:my_bkp_name, 'Description for my_bkp_name') do
+  ##
+  # PostgreSQL [Database]
+  #
+  database PostgreSQL do |db|
+    DB = YAML.load_file("#{DIR}/config/database.yml")
+    # try to get RAILS_ENV variable, 
+    # if it is not set, use 'production'
+    RAILS_ENV = ENV.fetch('RAILS_ENV'){'production'}
+
+    # To dump all databases,
+    # set `db.name = :all` (or leave blank)
+    db.name               = DB[RAILS_ENV]['database']
+    db.username           = DB[RAILS_ENV]['username']
+    db.password           = DB[RAILS_ENV]['password']
+    db.host               = DB[RAILS_ENV]['host']
+    db.additional_options = ["-xc", "-E=utf8"]
+  end
+
+  ##
+  # Amazon Simple Storage Service [Storage]
+  #
+  store_with S3 do |s3|
+    S3 = YAML.load_file("#{DIR}/config/s3.yml")
+
+    # AWS Credentials
+    s3.access_key_id     = S3['access_key_id']
+    s3.secret_access_key = S3['secret_access_key']
+
+    s3.region            = "us-east-1"
+    s3.bucket            = "bucket-name"
+    s3.path              = "path/to/backups"
+    # max 7 files
+    s3.keep              = 7
+  end
+
+  ##
+  # Gzip [Compressor]
+  #
+  compress_with Gzip
+end
+{% endhighlight %}
+
+<p>We will need set our <code>DIR</code> variable in <code>config.rb</code> file also:</p>
+{% highlight ruby %}
+DIR = File.expand_path('../../../', __FILE__)
+{% endhighlight %}
+
 <p>And after, run it:</p>
-<p>[code language="bash"]<br />
-bundle exec backup perform --trigger my_bkp_name --config-file=".&#47;config.rb"<br />
-[&#47;code]</p>
+
+{% highlight bash %}
+bundle exec backup perform --trigger my_bkp_name --config-file="./config.rb"
+{% endhighlight %}
+
 <p>It should works, access your bucket and check out your dump..</p>
-<h2>Scheduling Backups<&#47;h2></p>
-<p>Finally, I scheduled backups in <code>app&#47;clock.rb<&#47;code> file:<br />
-[code language="ruby"]<br />
-if Rails.env.production?<br />
-  every(1.day, 'database_backup', at: '03:30') do<br />
-    dir = File.expand_path('..&#47;..&#47;', __FILE__)<br />
-    Bundler.with_clean_env do<br />
-      system "cd #{dir}&#47;vendor&#47;backup&#47;; bundle exec backup perform --trigger my_bkp_name --config-file .&#47;config.rb"<br />
-    end<br />
-  end<br />
-end<br />
-[&#47;code]</p>
-<p>Here, we run the <code>perform<&#47;code> command inside our isolated env using <code>with_clean_env<&#47;code>, that ensure we are not in application's env.</p>
-<p>You can also create a rake task like this in <code>lib&#47;tasks&#47;db.rake<&#47;code>:<br />
-[code language="ruby"]<br />
-task :backup do<br />
-  dir = File.expand_path('..&#47;..&#47;..&#47;', __FILE__)<br />
-  Bundler.with_clean_env do<br />
-    system "cd #{dir}&#47;vendor&#47;backup&#47;; bundle exec backup perform --trigger my_bkp_name --config-file .&#47;config.rb"<br />
-  end<br />
-end<br />
-[&#47;code]</p>
-<p>However, you will have to create a method inside <code>app&#47;clock.rb<&#47;code> to invoke the rake:<br />
-[code language="ruby"]<br />
-def execute_rake(file,task)<br />
-  require 'rake'<br />
-  rake = Rake::Application.new<br />
-  Rake.application = rake<br />
-  Rake::Task.define_task(:environment)<br />
-  load "#{Rails.root}&#47;lib&#47;tasks&#47;#{file}"<br />
-  rake[task].invoke<br />
-end</p>
-<p>if Rails.env.production?<br />
-  every(1.day, 'database_backup', at: '03:30') { execute_rake "db.rake", 'db:backup' }<br />
-end<br />
-[&#47;code]</p>
+
+<h2>Scheduling Backups</h2>
+
+<p>Finally, I scheduled backups in <code>app/clock.rb</code> file:</p>
+{% highlight ruby %}
+if Rails.env.production?
+  every(1.day, 'database_backup', at: '03:30') do
+    dir = File.expand_path('../../', __FILE__)
+    Bundler.with_clean_env do
+      system "cd #{dir}/vendor/backup/; bundle exec backup perform --trigger my_bkp_name --config-file ./config.rb"
+    end
+  end
+end
+{% endhighlight %}
+
+<p>Here, we run the <code>perform</code> command inside our isolated env using <code>with_clean_env</code>, that ensure we are not in application's env.</p>
+
+<p>You can also create a rake task like this in <code>lib/tasks/db.rake</code>:</p>
+{% highlight ruby %}
+task :backup do
+  dir = File.expand_path('../../../', __FILE__)
+  Bundler.with_clean_env do
+    system "cd #{dir}/vendor/backup/; bundle exec backup perform --trigger my_bkp_name --config-file ./config.rb"
+  end
+end
+{% endhighlight %}
+
+<p>However, you will have to create a method inside <code>app/clock.rb</code> to invoke the rake:</p>
+{% highlight ruby %}
+def execute_rake(file,task)
+  require 'rake'
+  rake = Rake::Application.new
+  Rake.application = rake
+  Rake::Task.define_task(:environment)
+  load "#{Rails.root}/lib/tasks/#{file}"
+  rake[task].invoke
+end
+
+if Rails.env.production?
+  every(1.day, 'database_backup', at: '03:30') { execute_rake "db.rake", 'db:backup' }
+end
+{% endhighlight %}
+
 <p>After all, you must have your automatic backup scheduled successfully.</p>
+
 <p>See you.</p>

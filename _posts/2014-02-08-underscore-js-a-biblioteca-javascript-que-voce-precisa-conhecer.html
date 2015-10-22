@@ -28,92 +28,107 @@ tags:
 - underscore.js
 comments: []
 ---
-<p>Hoje estou aqui para compartilhar uma biblioteca JavaScript que conheci a pouco tempo e que voc&ecirc; tamb&eacute;m precisa saber de sua exist&ecirc;ncia!</p>
-<p>Acredito que os programadores Ruby est&atilde;o acostumados com m&eacute;todos simples como: <code>each, map, min, max<&#47;code> etc.. Agora voc&ecirc; pode ter eles em JavaScript, com a biblioteca <a href="http:&#47;&#47;underscorejs.org&#47;" rel="external nofollow" target="_blank">Underscore.js<&#47;a>.</p>
-<p>Escolhi alguns m&eacute;todos para apresent&aacute;-los, vejamos abaixo..</p>
-<p><a id="more"></a><a id="more-2299"></a></p>
-<h2>Each<&#47;h2></p>
-<p>Itera sobre uma lista de elementos, podendo acessar o valor e &iacute;ndice.<&#47;p><br />
-[code language="javascript"]<br />
-_.each([10, 20, 30, 40], function(v, i){<br />
-  &#47;&#47; listando [valor, &iacute;ndice]<br />
-  console.log([v, i]);<br />
-});<br />
-=> [10, 0]<br />
-=> [20, 1]<br />
-=> [30, 2]<br />
-=> [40, 3][&#47;code]</p>
-<h2>Map<&#47;h2></p>
-<p>Produz um novo array mapeando cada valor atrav&eacute;s da fun&ccedil;&atilde;o.<&#47;p><br />
-[code language="javascript"]<br />
-_.map([2, 4, 6],function(v){<br />
-  &#47;&#47; multiplica por 2<br />
-  return v * 2;<br />
-});<br />
-=> [4, 8, 12]<br />
-[&#47;code]</p>
-<h2>Filter<&#47;h2></p>
-<p>Percorre cada elemento, retornando um array de valores que passam na condi&ccedil;&atilde;o.<&#47;p><br />
-[code language="javascript"]<br />
-_.filter(['Jo&atilde;o', 'Pedro', 'Paulo'], function(v){<br />
-  &#47;&#47; apenas que come&ccedil;am com a letra "P"<br />
-  return v.charAt(0) == 'P';<br />
-});<br />
-=> ["Pedro", "Paulo"]<br />
-[&#47;code]</p>
-<h2>Contains<&#47;h2></p>
-<p>Retorna <code>true<&#47;code> se o valor est&aacute; presente na lista.<&#47;p><br />
-[code language="javascript"]<br />
-_.contains(['ruby', 'python', 'php'], 'javascript');<br />
-=> false<br />
-[&#47;code]</p>
-<h2>Max<&#47;h2></p>
-<p>Retorna o valor m&aacute;ximo da lista.<&#47;p><br />
-[code language="javascript"]<br />
-_.max([23, 45, 65, 34, 1, 35])<br />
-=> 65<br />
-[&#47;code]</p>
-<h2>Shuffle<&#47;h2></p>
-<p>Retorna uma c&oacute;pia misturada da lista.<&#47;p><br />
-[code language="javascript"]<br />
-_.shuffle([1, 2, 3, 4, 5]);<br />
-=> [5, 2, 1, 4, 3]<br />
-[&#47;code]</p>
-<h2>Last<&#47;h2></p>
-<p>Retorna o &uacute;ltimo elemento do array.<&#47;p><br />
-[code language="javascript"]<br />
-_.last([{name: 'Andr&eacute;', age: 21}, {name: 'Marta', age: 37}]);<br />
-=> Object { name="Marta", age=37}<br />
-[&#47;code]</p>
-<h2>Flatten<&#47;h2></p>
-<p>"Achata" um array.<&#47;p><br />
-[code language="javascript"]<br />
-_.flatten([[1, 2], [[[4, 5]]], [[[[6], 7]]]])<br />
-=> [1, 2, 4, 5, 6, 7]<br />
-[&#47;code]</p>
-<h2>Range<&#47;h2></p>
-<p>Cria um faixa de valores.<&#47;p><br />
-[code language="javascript"]<br />
-&#47;&#47; Come&ccedil;a em 100, vai at&eacute; 200, de 10 em 10<br />
-_.range(100, 210, 10);<br />
-=> [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]<br />
-[&#47;code]</p>
-<h2>Has<&#47;h2></p>
-<p>Retorna <code>true<&#47;code> se o objeto cont&eacute;m uma dada chave.<&#47;p><br />
-[code language="javascript"]<br />
-_.has({a: 1, b: 2, c: 3}, 'd');<br />
-=> false<br />
-[&#47;code]</p>
-<h2>Times<&#47;h2></p>
-<p>Invoca uma fun&ccedil;&atilde;o iteradora dado o n&uacute;mero de vezes.<&#47;p><br />
-[code language="javascript"]<br />
-_(4).times(function(n){<br />
-  console.log("n&uacute;mero " + n)<br />
-});<br />
-=> n&uacute;mero 0<br />
-=> n&uacute;mero 1<br />
-=> n&uacute;mero 2<br />
-=> n&uacute;mero 3<br />
-[&#47;code]</p>
-<p>Essa s&atilde;o apenas algumas fun&ccedil;&otilde;es, <a href="http:&#47;&#47;underscorejs.org&#47;" rel="external nofollow" target="_blank">entre no site<&#47;a> e confira todas.</p>
-<p>Abra&ccedil;os.</p>
+<p>Hoje estou aqui para compartilhar uma biblioteca JavaScript que conheci a pouco tempo e que você também precisa saber de sua existência!</p>
+
+<p>Acredito que os programadores Ruby estão acostumados com métodos simples como: <code>each, map, min, max</code> etc.. Agora você pode ter eles em JavaScript, com a biblioteca <a href="http://underscorejs.org/" rel="external nofollow" target="_blank">Underscore.js</a>.</p>
+
+<p>Escolhi alguns métodos para apresentá-los, vejamos abaixo..</p>
+
+<h2>Each</h2>
+<p>Itera sobre uma lista de elementos, podendo acessar o valor e índice.</p>
+{% highlight javascript %}
+_.each([10, 20, 30, 40], function(v, i){
+  // listando [valor, índice]
+  console.log([v, i]);
+});
+=> [10, 0]
+=> [20, 1]
+=> [30, 2]
+=> [40, 3]
+{% endhighlight %}
+
+<h2>Map</h2>
+<p>Produz um novo array mapeando cada valor através da função.</p>
+{% highlight javascript %}
+_.map([2, 4, 6],function(v){
+  // multiplica por 2
+  return v * 2;
+});
+=> [4, 8, 12]
+{% endhighlight %}
+
+<h2>Filter</h2>
+<p>Percorre cada elemento, retornando um array de valores que passam na condição.</p>
+{% highlight javascript %}
+_.filter(['João', 'Pedro', 'Paulo'], function(v){
+  // apenas que começam com a letra "P"
+  return v.charAt(0) == 'P';
+});
+=> ["Pedro", "Paulo"]
+{% endhighlight %}
+
+<h2>Contains</h2>
+<p>Retorna <code>true</code> se o valor está presente na lista.</p>
+{% highlight javascript %}
+_.contains(['ruby', 'python', 'php'], 'javascript');
+=> false
+{% endhighlight %}
+
+<h2>Max</h2>
+<p>Retorna o valor máximo da lista.</p>
+{% highlight javascript %}
+_.max([23, 45, 65, 34, 1, 35])
+=> 65
+{% endhighlight %}
+
+<h2>Shuffle</h2>
+<p>Retorna uma cópia misturada da lista.</p>
+{% highlight javascript %}
+_.shuffle([1, 2, 3, 4, 5]);
+=> [5, 2, 1, 4, 3]
+{% endhighlight %}
+
+<h2>Last</h2>
+<p>Retorna o último elemento do array.</p>
+{% highlight javascript %}
+_.last([{name: 'André', age: 21}, {name: 'Marta', age: 37}]);
+=> Object { name="Marta", age=37}
+{% endhighlight %}
+
+<h2>Flatten</h2>
+<p>"Achata" um array.</p>
+{% highlight javascript %}
+_.flatten([[1, 2], [[[4, 5]]], [[[[6], 7]]]])
+=> [1, 2, 4, 5, 6, 7]
+{% endhighlight %}
+
+<h2>Range</h2>
+<p>Cria um faixa de valores.</p>
+{% highlight javascript %}
+// Começa em 100, vai até 200, de 10 em 10
+_.range(100, 210, 10);
+=> [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+{% endhighlight %}
+
+<h2>Has</h2>
+<p>Retorna <code>true</code> se o objeto contém uma dada chave.</p>
+{% highlight javascript %}
+_.has({a: 1, b: 2, c: 3}, 'd');
+=> false
+{% endhighlight %}
+
+<h2>Times</h2>
+<p>Invoca uma função iteradora dado o número de vezes.</p>
+{% highlight javascript %}
+_(4).times(function(n){
+  console.log("número " + n)
+});
+=> número 0
+=> número 1
+=> número 2
+=> número 3
+{% endhighlight %}
+
+<p>Essa são apenas algumas funções, <a href="http://underscorejs.org/" rel="external nofollow" target="_blank">entre no site</a> e confira todas.</p>
+
+<p>Abraços.</p>

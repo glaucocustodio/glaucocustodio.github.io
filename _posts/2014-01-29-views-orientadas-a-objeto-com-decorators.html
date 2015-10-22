@@ -46,53 +46,74 @@ comments:
   date_gmt: '2014-01-29 11:11:50 -0200'
   content: Legal M&aacute;rcio! Decorators s&atilde;o animais!
 ---
-<p>Voc&ecirc; j&aacute; se pegou criando muitos <strong>helpers<&#47;strong> em aplica&ccedil;&otilde;es Rails?</p>
-<p>Os helpers nos ajudam oferecendo um recurso extra para trabalharmos a l&oacute;gica da apresenta&ccedil;&atilde;o de dados. Por&eacute;m, eles <strong>n&atilde;o s&atilde;o orientados a objeto<&#47;strong>, isso significa que podemos estar escrevendo c&oacute;digo desnecessariamente e de maneira n&atilde;o elegante neles.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2014&#47;01&#47;29&#47;views-orientadas-a-objeto-com-decorators&#47;"><img class="alignnone size-full wp-image-2269" title="Views Orientadas a Objeto com Decorators" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;01&#47;helpers-are-not-object-oriented.gif" alt="" width="657" height="352" &#47;><&#47;a><br />
-<a id="more"></a><a id="more-2266"></a></p>
-<h2>Case<&#47;h2><br />
-Hoje estava trabalhando no <a href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;conf_trail" rel="external nofollow" target="_blank">ConfTrail<&#47;a> e me deparei com o seguinte cen&aacute;rio: eventos podem ter um pre&ccedil;o m&iacute;nimo e um pre&ccedil;o m&aacute;ximo, ou apenas um dos dois. Como lidar com essa l&oacute;gica na apresenta&ccedil;&atilde;o de dados?</p>
-<h2>Utilizar Helpers (wrong way)<&#47;h2><br />
-A primeira (e talvez) mais comum solu&ccedil;&atilde;o seja criar uma fun&ccedil;&atilde;o em um helper para cuidar disso:<br />
-[code language="ruby"]# app&#47;helpers&#47;events_helper.rb<br />
-module EventsHelper<br />
-  def price(event)<br />
-    [event.min_price, event.max_price].map do |c|<br />
-      number_to_currency(c) if c.present?<br />
-    end<br />
-    .reject(&:blank?).join(' - ')<br />
-  end<br />
-end</p>
-<p># app&#47;views&#47;whatever&#47;view.haml<br />
-= price(@event)[&#47;code]<br />
-Aqui, recebemos a inst&acirc;ncia do evento como par&acirc;metro e retornamos uma string com os pre&ccedil;os presentes formatados e separados por <code>-<&#47;code>.</p>
-<p>Mas, se essa l&oacute;gica de apresenta&ccedil;&atilde;o faz parte de todos eventos, porque devo ficar passando toda hora o evento que desejo como par&acirc;metro? Isso cheira mal.</p>
-<h2>Utilizar Decorators<&#47;h2><br />
-Em programa&ccedil;&atilde;o orientada a objetos, existe um padr&atilde;o chamado <a href="http:&#47;&#47;en.wikipedia.org&#47;wiki&#47;Decorator_pattern" rel="external nofollow" target="_blank">decorator<&#47;a>, ele serve para adicionar responsabilidades h&aacute; um objeto, extendendo assim suas capacidades.</p>
-<p>Existe uma outra nomenclatura tamb&eacute;m, chamada presenter, ela nada mais &eacute; do que um decorator, s&oacute; que unicamente respons&aacute;vel por extender funcionalidades de l&oacute;gica de apresenta&ccedil;&atilde;o.</p>
-<p>Mas independente do nome que voc&ecirc; chamar, j&aacute; sabemos a sua fun&ccedil;&atilde;o e daqui pra frente irei chamar de decorators.</p>
-<p>Por padr&atilde;o, o Rails n&atilde;o vem com nada pronto para trabalhar com esse design, mas existem <a href="https:&#47;&#47;www.ruby-toolbox.com&#47;categories&#47;rails_presenters" rel="external nofollow" target="_blank">v&aacute;rias gemas<&#47;a> criadas pela comunidade que d&atilde;o conta do recado.</p>
-<p>Segundo o site "The Ruby Toolbox", a gema <a href="https:&#47;&#47;github.com&#47;drapergem&#47;draper" rel="external nofollow" target="_blank">Draper<&#47;a> &eacute; a mais utilizada para isso (inclusive o <a href="http:&#47;&#47;railscasts.com&#47;episodes&#47;286-draper" rel="external nofollow" target="_blank">epis&oacute;dio #286 do Railscasts<&#47;a> &eacute; sobre ela), por&eacute;m, eu n&atilde;o gostei de ter que chamar o m&eacute;todo <code>decorate<&#47;code> toda vez que estiver instanciando o objeto no controller.</p>
-<p>Preferi a <a href="https:&#47;&#47;github.com&#47;amatsuda&#47;active_decorator" rel="external nofollow" target="_blank">ActiveDecorator<&#47;a>, que foi criada pelo Akira Matsuda (mesmo criador do <a href="https:&#47;&#47;github.com&#47;amatsuda&#47;kaminari" rel="external nofollow" target="_blank">Kaminari<&#47;a>) e irei mostrar agora como utilizar:</p>
-<p>[code language="ruby"]# app&#47;decorators&#47;event_decorator.rb<br />
-module EventDecorator<br />
-  def price<br />
-    [min_price, max_price].map do |c|<br />
-      number_to_currency(c) if c.present?<br />
-    end<br />
-    .reject(&:blank?).join(' - ')<br />
-  end<br />
-end</p>
-<p># app&#47;views&#47;whatever&#47;view.haml<br />
-= @event.price[&#47;code]<br />
-Veja a diferen&ccedil;a! N&atilde;o precisamos passar nenhum par&acirc;metro para o m&eacute;todo <code>price<&#47;code>, apenas chamamos os atributos <code>min_price<&#47;code> e <code>max_price<&#47;code> e o decorator j&aacute; sabe que se trata de atributos do model Event.</p>
-<p>Use o comando <code>rails g decorator model<&#47;code> (substituindo "model" pelo nome de seu modelo) para criar o decorator dentro da pasta <code>app&#47;decorators<&#47;code>.</p>
-<h2>Conclus&atilde;o<&#47;h2></p>
+<p>Você já se pegou criando muitos <strong>helpers</strong> em aplicações Rails?</p>
+
+<p>Os helpers nos ajudam oferecendo um recurso extra para trabalharmos a lógica da apresentação de dados. Porém, eles <strong>não são orientados a objeto</strong>, isso significa que podemos estar escrevendo código desnecessariamente e de maneira não elegante neles.</p>
+
+<p><a href="{{ site.baseurl }}/assets/helpers-are-not-object-oriented.gif"><img class="alignnone size-full wp-image-2269" title="Views Orientadas a Objeto com Decorators" src="{{ site.baseurl }}/assets/helpers-are-not-object-oriented.gif" alt="" width="657" height="352" /></a></p>
+
+<h2>Case</h2>
+<p>Hoje estava trabalhando num projeto e me deparei com o seguinte cenário: eventos podem ter um preço mínimo e um preço máximo, ou apenas um dos dois. Como lidar com essa lógica na apresentação de dados?</p>
+
+<h2>Utilizar Helpers (wrong way)</h2>
+
+<p>A primeira (e talvez) mais comum solução seja criar uma função em um helper para cuidar disso:</p>
+
+{% highlight ruby %}
+# app/helpers/events_helper.rb
+module EventsHelper
+  def price(event)
+    [event.min_price, event.max_price].map do |c| 
+      number_to_currency(c) if c.present?
+    end
+    .reject(&:blank?).join(' - ')
+  end
+end
+
+# app/views/whatever/view.haml
+= price(@event)
+{% endhighlight %}
+<p>Aqui, recebemos a instância do evento como parâmetro e retornamos uma string com os preços presentes formatados e separados por <code>-</code>.</p>
+
+<p>Mas, se essa lógica de apresentação faz parte de todos eventos, porque devo ficar passando toda hora o evento que desejo como parâmetro? Isso cheira mal.</p>
+<h2>Utilizar Decorators</h2>
+<p>Em programação orientada a objetos, existe um design pattern chamado <a href="http://en.wikipedia.org/wiki/Decorator_pattern" rel="external nofollow" target="_blank">decorator</a>, ele serve para adicionar responsabilidades há um objeto, extendendo assim suas capacidades.</p>
+
+<p>Existe uma outra nomenclatura também, chamada presenter, ela nada mais é do que um decorator, só que unicamente responsável por extender funcionalidades de lógica de apresentação.</p>
+
+<p>Mas independente do nome que você chamar, já sabemos a sua função e daqui pra frente irei chamar de decorators.</p>
+
+<p>Por padrão, o Rails não vem com nada pronto para trabalhar com esse design, mas existem <a href="https://www.ruby-toolbox.com/categories/rails_presenters" rel="external nofollow" target="_blank">várias gemas</a> criadas pela comunidade que dão conta do recado.</p>
+
+<p>Segundo o site "The Ruby Toolbox", a gema <a href="https://github.com/drapergem/draper" rel="external nofollow" target="_blank">Draper</a> é a mais utilizada para isso (inclusive o <a href="http://railscasts.com/episodes/286-draper" rel="external nofollow" target="_blank">episódio #286 do Railscasts</a> é sobre ela), porém, eu não gostei de ter que chamar o método <code>decorate</code> toda vez que estiver instanciando o objeto no controller.</p>
+
+<p>Preferi a <a href="https://github.com/amatsuda/active_decorator" rel="external nofollow" target="_blank">ActiveDecorator</a>, que foi criada pelo Akira Matsuda (mesmo criador do <a href="https://github.com/amatsuda/kaminari" rel="external nofollow" target="_blank">Kaminari</a>) e irei mostrar agora como utilizar:</p>
+
+{% highlight ruby %}
+# app/decorators/event_decorator.rb
+module EventDecorator
+  def price
+    [min_price, max_price].map do |c| 
+      number_to_currency(c) if c.present?
+    end
+    .reject(&:blank?).join(' - ')
+  end
+end
+
+# app/views/whatever/view.haml
+= @event.price
+{% endhighlight %}
+<p>Veja a diferença! Não precisamos passar nenhum parâmetro para o método <code>price</code>, apenas chamamos os atributos <code>min_price</code> e <code>max_price</code> e o decorator já sabe que se trata de atributos do model Event.</p>
+
+<p>Use o comando <code>rails g decorator model</code> (substituindo "model" pelo nome de seu modelo) para criar o decorator dentro da pasta <code>app/decorators</code>.</p>
+
+<h2>Conclusão</h2>
 <ul>
-<li>Use decorator quando helpers ou m&eacute;todos do model dizerem respeito h&aacute; um comportamento de apresenta&ccedil;&atilde;o de dados (criar tags HTML, utilizar helpers do Rails..) <span style="text-decoration: underline;">relacionados h&aacute; um ou mais objetos<&#47;span>.<&#47;li>
-<li>Mantenha a l&oacute;gica de apresenta&ccedil;&atilde;o em um &uacute;nico lugar<&#47;li>
-<li>Utilize helpers <span style="text-decoration: underline;">apenas<&#47;span> para l&oacute;gicas que n&atilde;o dizem respeito h&aacute; um objeto<&#47;li>
-<li>Siga o SRP (Single Responsible Principle), cada um faz seu papel<&#47;li><br />
-<&#47;ul><br />
-Essa foi dica de hoje, deixe sua opini&atilde;o nos coment&aacute;rios.</p>
-<p>Abra&ccedil;os.</p>
+  <li>Use decorator quando helpers ou métodos do model dizerem respeito há um comportamento de apresentação de dados (criar tags HTML, utilizar helpers do Rails..) <span style="text-decoration: underline;">relacionados há um ou mais objetos</span>.</li>
+  <li>Mantenha a lógica de apresentação em um único lugar</li>
+  <li>Utilize helpers <span style="text-decoration: underline;">apenas</span> para lógicas que não dizem respeito há um objeto</li>
+  <li>Siga o SRP (Single Responsible Principle), cada um faz seu papel</li>
+</ul>
+<p>Essa foi dica de hoje, deixe sua opinião nos comentários.</p>
+
+<p>Abraços.</p>

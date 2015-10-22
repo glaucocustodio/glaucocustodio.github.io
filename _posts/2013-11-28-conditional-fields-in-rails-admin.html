@@ -29,41 +29,49 @@ tags:
 - rails_admin
 comments: []
 ---
-<p>All we know that <a href="https:&#47;&#47;github.com&#47;sferik&#47;rails_admin" rel="external nofollow" target="_blank">Rails Admin<&#47;a> give us capability to <a href="https:&#47;&#47;github.com&#47;sferik&#47;rails_admin&#47;wiki&#47;Associations-scoping#restricting-records-through-authorization" rel="external nofollow" target="_blank">restrict records through authorization<&#47;a>, I have made a heavy use this feature, but sometimes we need to restrict a few fields in a given model through roles or something else. How could we get it?</p>
-<p>Let's suppose we have a field called <code>product_type<&#47;code> in <code>Product<&#47;code> model, in our rails_admin initializer file we would have something like that:</p>
-<p><a id="more"></a><a id="more-2242"></a><br />
-[code language="ruby"]config.model Product do<br />
-  # ...<br />
-  create do<br />
-    field :name<br />
-    field :product_type do<br />
-      label 'Product Type'<br />
-    end<br />
-  end<br />
-end[&#47;code]<br />
-This way, all users could be changing the product type, let's restrict this field now in order to just users with role <code>master<&#47;code> can be changing it:<br />
-[code language="ruby"]config.model Product do<br />
-  # ...<br />
-  create do<br />
-    field :name<br />
-    field :product_type do<br />
-      label do<br />
-        if bindings[:view]._current_user.has_role? :master<br />
-          'Product Type'<br />
-        else<br />
-          false<br />
-        end<br />
-      end<br />
-      help false<br />
-      render do<br />
-        if bindings[:view]._current_user.has_role? :master<br />
-          bindings[:view].render :partial => "rails_admin&#47;main&#47;#{partial}", :locals => {:field => self, :form => bindings[:form] }<br />
-        else<br />
-          ''<br />
-        end<br />
-      end<br />
-    end<br />
-  end<br />
-end[&#47;code]<br />
-In the <code>render<&#47;code> block is where the magic happens, if the condition is satisfied then we call the default behavior from Rails Admin that is <a href="https:&#47;&#47;github.com&#47;sferik&#47;rails_admin&#47;blob&#47;master&#47;lib&#47;rails_admin&#47;config&#47;fields&#47;base.rb#L212" rel="external nofollow" target="_blank">here<&#47;a>, otherwise we just return an empty string.</p>
+<p>All we know that <a href="https://github.com/sferik/rails_admin" rel="external nofollow" target="_blank">Rails Admin</a> give us capability to <a href="https://github.com/sferik/rails_admin/wiki/Associations-scoping#restricting-records-through-authorization" rel="external nofollow" target="_blank">restrict records through authorization</a>, I have made a heavy use this feature, but sometimes we need to restrict a few fields in a given model through roles or something else. How could we get it?</p>
+
+<p>Let's suppose we have a field called <code>product_type</code> in <code>Product</code> model, in our rails_admin initializer file we would have something like that:</p>
+
+{% highlight ruby %}
+config.model Product do
+  # ...
+  create do
+    field :name
+    field :product_type do
+      label 'Product Type'
+    end
+  end
+end
+{% endhighlight %}
+
+<p>This way, all users could be changing the product type, let's restrict this field now in order to just users with role <code>master</code> can be changing it:</p>
+{% highlight ruby %}
+config.model Product do
+  # ...
+  create do
+    field :name
+    field :product_type do
+      label do
+        if bindings[:view]._current_user.has_role? :master
+          'Product Type'
+        else
+          false
+        end
+      end
+      help false
+      render do
+        if bindings[:view]._current_user.has_role? :master
+          bindings[:view].render :partial => "rails_admin/main/#{partial}", :locals => {:field => self, :form => bindings[:form] }
+        else
+          ''
+        end
+      end
+    end
+  end
+end
+{% endhighlight %}
+
+<p>In the <code>render</code> block is where the magic happens, if the condition is satisfied then we call the default behavior from Rails Admin that is <a href="https://github.com/sferik/rails_admin/blob/master/lib/rails_admin/config/fields/base.rb#L212" rel="external nofollow" target="_blank">here</a>, otherwise we just return an empty string.</p>
+
 <p>See you.</p>

@@ -21,21 +21,31 @@ tags:
 - wordpress
 comments: []
 ---
-<p>Few days ago I changed the layout of my blog, and I chose using the great <a href="http:&#47;&#47;pygments.org&#47;" rel="external nofollow" target="_blank">Pygments<&#47;a> for code syntax highlighting.</p>
-<p>I searched for some plugin to pull it off but the only one I found was <a href="https:&#47;&#47;bitbucket.org&#47;jsturgill&#47;pygments-for-wordpress" rel="external nofollow" target="_blank">this<&#47;a>, but I missed something..</p>
-<p>How the last commit was just in 2013, I decided fork the project in <a href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;pygment-it" rel="external nofollow" target="_blank">my personal github<&#47;a> and improve it.</p>
+<p>Few days ago I changed the layout of my blog, and I chose using the great <a href="http://pygments.org/" rel="external nofollow" target="_blank">Pygments</a> for code syntax highlighting.</p>
+
+<p>I searched for some plugin to pull it off but the only one I found was <a href="https://bitbucket.org/jsturgill/pygments-for-wordpress" rel="external nofollow" target="_blank">this</a>, but I missed something..</p>
+
+<p>How the last commit was just in 2013, I decided fork the project in <a href="https://github.com/glaucocustodio/pygment-it" rel="external nofollow" target="_blank">my personal github</a> and improve it.</p>
+
 <p>I have added more themes, embedded an admin interface (see below) to choose defaults and some more little adjusts.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;05&#47;pygment-it.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;05&#47;pygment-it.png" alt="" title="pygment-it" class="alignnone size-full wp-image-2912" &#47;><&#47;a></p>
-<p>Here you can see some code samples with monokai theme:</p>
-<p>[code]<br />
-def index<br />
-  @events = Event.upcoming_events.page params[:page]<br />
-end<br />
-[&#47;code]</p>
-<p>[code language="javascript"]<br />
-(function(){<br />
-  alert("Hello!");<br />
-})();<br />
-[&#47;code]</p>
-<p>For more information about how to use, installation and options, check out the repo in <a href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;pygment-it" rel="external nofollow" target="_blank">github<&#47;a>.</p>
+
+<a href="{{ site.baseurl }}/assets/pygment-it.png"><img src="{{ site.baseurl }}/assets/pygment-it.png" alt="" title="pygment-it" class="alignnone size-full wp-image-2912" /></a>
+
+<p>Here you can see some code samples with my blog theme:</p>
+
+{% highlight ruby %}
+def index
+  @events = Event.upcoming_events.page params[:page]
+end
+{% endhighlight %}
+
+
+{% highlight javascript %}
+(function(){
+  alert("Hello!");
+})();
+{% endhighlight %}
+
+<p>For more information about how to use, installation and options, check out the repo in <a href="https://github.com/glaucocustodio/pygment-it" rel="external nofollow" target="_blank">github</a>.</p>
+
 <p>See you.</p>
