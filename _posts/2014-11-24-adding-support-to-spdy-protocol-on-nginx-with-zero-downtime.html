@@ -33,34 +33,55 @@ comments:
     nginx reload will suffice. ;)
 ---
 <p>As fast as the SPDY protocol is the post today..</p>
+
 <p>Looking for articles about how to add SPDY support to Nginx, I just found ones showing the installation process from scratch. But, what if I already have a running server?</p>
-<p>To accept SPDY, Nginx needs to be compiled with the flag <code>--with-http_spdy_module<&#47;code>. But remember, our goal is pull it off with zero downtime.</p>
+
+<p>To accept SPDY, Nginx needs to be compiled with the flag <code>--with-http_spdy_module</code>. But remember, our goal is pull it off with zero downtime.</p>
+
 <p>Suppose we have a Rails application running on Nginx and we wanna add support to SPDY protocol.</p>
+
 <p>Passenger is our application server, thus, the web server needs to be compiled with it. How to proceed?</p>
+
 <p>First, ensure you have passenger gem installed:</p>
-<p>[code language="bash"]<br />
-gem install passenger<br />
-[&#47;code]</p>
-<p>Now, we need to reinstall Nginx with the quoted flag above. Running <code>rvmsudo passenger-install-nginx-module<&#47;code> we can start the installation process. But how we are going to customize the installation process, let's download and extract first Nginx's source code.</p>
-<p>[code language="bash"]<br />
-wget http:&#47;&#47;nginx.org&#47;download&#47;nginx-1.6.2.tar.gz<br />
-tar -xvf nginx-1.6.2.tar.gz<br />
-pwd<br />
-[&#47;code]</p>
-<p>Ok, the last issued command was <code>pwd<&#47;code> cause we need to know the path. Now, we need to compile Nginx together with Passenger:</p>
-<p>[code language="bash"]<br />
-rvmsudo passenger-install-nginx-module<br />
-[&#47;code]</p>
+
+{% highlight bash %}
+gem install passenger
+{% endhighlight %}
+
+<p>Now, we need to reinstall Nginx with the quoted flag above. Running <code>rvmsudo passenger-install-nginx-module</code> we can start the installation process. But how we are going to customize the installation process, let's download and extract first Nginx's source code.</p>
+
+{% highlight bash %}
+wget http://nginx.org/download/nginx-1.6.2.tar.gz
+tar -xvf nginx-1.6.2.tar.gz
+pwd
+{% endhighlight %}
+
+<p>Ok, the last issued command was <code>pwd</code> cause we need to know the path. Now, we need to compile Nginx together with Passenger:</p>
+
+{% highlight bash %}
+rvmsudo passenger-install-nginx-module
+{% endhighlight %}
+
 <p>It will ask for the languages we are interested in, and later, it will ask if we wanna automatically download and install Nginx or customize the installation, we choose the second option.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;11&#47;passenger-custom-installation.png"><img class="alignnone size-full wp-image-3205" title="passenger-custom-installation" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;11&#47;passenger-custom-installation.png" alt="" &#47;><&#47;a></p>
+
+<a href="{{ site.baseurl }}/assets/passenger-custom-installation.png"><img class="alignnone size-full wp-image-3205" title="passenger-custom-installation" src="{{ site.baseurl }}/assets/passenger-custom-installation.png" alt="" /></a>
+
 <p>It will ask for the path where Nginx's source code is, we tell, later, it will ask where we want to install Nginx, I keep the default and go ahead.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;11&#47;compiling-nginx-with-spdy-support.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2014&#47;11&#47;compiling-nginx-with-spdy-support.png" alt="" title="compiling-nginx-with-spdy-support" class="alignnone size-full wp-image-3221" &#47;><&#47;a></p>
-<p>On latest and most important step, we need to specify extra arguments we want to pass, we add <code>--with-http_spdy_module<&#47;code>, go forward and voil&aacute;, after a while it will finish.</p>
-<p>To ensure our new binary has the flag, we access its path (<code>&#47;opt&#47;nginx&#47;sbin<&#47;code>) and run <code>.&#47;nginx -V<&#47;code> to see all included modules.</p>
-<p>Now, we just need add the <code>spdy<&#47;code> keyword in our config files, like below:</p>
-<p>[code language="nginx"]<br />
-listen 443 ssl spdy;<br />
-[&#47;code]</p>
-<p>Once done, we run <code>sudo pkill nginx && sudo service nginx start<&#47;code> to restart Nginx.</p>
-<p>Finally, we can enter this website <a href="http:&#47;&#47;spdycheck.org" target="_blank" rel="external nofollow">http:&#47;&#47;spdycheck.org<&#47;a> and confirm the progress.</p>
+
+<a href="{{ site.baseurl }}/assets/compiling-nginx-with-spdy-support.png"><img src="{{ site.baseurl }}/assets/compiling-nginx-with-spdy-support.png" alt="" title="compiling-nginx-with-spdy-support" class="alignnone size-full wp-image-3221" /></a>
+
+<p>On latest and most important step, we need to specify extra arguments we want to pass, we add <code>--with-http_spdy_module</code>, go forward and voilá, after a while it will finish.</p>
+
+<p>To ensure our new binary has the flag, we access its path (<code>/opt/nginx/sbin</code>) and run <code>./nginx -V</code> to see all included modules.</p>
+
+<p>Now, we just need add the <code>spdy</code> keyword in our config files, like below:</p>
+
+{% highlight nginx %}
+listen 443 ssl spdy;
+{% endhighlight %}
+
+<p>Once done, we run <code>sudo pkill nginx && sudo service nginx start</code> to restart Nginx.</p>
+
+<p>Finally, we can enter this website <a href="http://spdycheck.org" target="_blank" rel="external nofollow">http://spdycheck.org</a> and confirm the progress.</p>
+
 <p>See you.</p>

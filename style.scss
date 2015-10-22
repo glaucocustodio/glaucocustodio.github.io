@@ -18,7 +18,7 @@ html {
 }
 
 body {
-	background: $white;
+	background: #fcf9f9;
   font: 18px/1.4 $helvetica;
   color: $darkGray;
 }
@@ -281,6 +281,17 @@ nav {
 footer {
   padding: 20px 0;
   text-align: center;
+}
+
+.note {
+  background: #e4f8fb url("assets/info-icon.png") no-repeat scroll 7px 10px;
+  border: 1px solid #b9d9e0;
+  color: #235f67;
+}
+.alert, .note {
+  border-radius: 10px;
+  margin: 0 0 1em;
+  padding: 10px 10px 10px 45px;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

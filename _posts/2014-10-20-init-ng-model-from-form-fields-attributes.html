@@ -81,71 +81,55 @@ comments:
   date_gmt: '2015-09-15 16:21:42 -0300'
   content: Thank you soo much.
 ---
-<p>I have been using AngularJS's magic in some <strong>non<&#47;strong> single page applications to improve user experience and provide an instant feedback.</p>
+<p>I have been using AngularJS's magic in some <strong>non</strong> single page applications to improve user experience and provide an instant feedback.</p>
+
 <p>A few days ago, not for the first time, I faced the issue to need starting form fields with server side provided data while making use of awesome AngularJS feautures.</p>
-<h2>Hands-on<&#47;h2></p>
+<h2>Hands-on</h2>
 <p>Suppose we have an HTML like that:</p>
-<div data-height="268" data-theme-id="0" data-slug-hash="gBoEa" data-default-tab="html" data-user="glaucocustodio" class='codepen'>
-<pre><code><!DOCTYPE html><br />
-<html lang="en" ng-app=""><br />
-<head><br />
-  <script src="&#47;&#47;ajax.googleapis.com&#47;ajax&#47;libs&#47;angularjs&#47;1.3.0-rc.4&#47;angular.min.js"><&#47;script><br />
-<&#47;head><br />
-<body><br />
-  <input type="text" value="John" ng-model="name"><br />
-<&#47;body><br />
-<&#47;html><&#47;code><&#47;pre></p>
-<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;gBoEa&#47;'>gBoEa<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
-<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
-<p>You can see that the value "John" is not being filled in input. By default, AngularJS does not initialize <code>ng-model<&#47;code> based on form fields attributes like <code>value<&#47;code>, <code>checked<&#47;code> and <code>selected<&#47;code>.</p>
-<p>Looking for some way to pull it off, I found three manners and I wanna share them with you.</p>
-<h3>Initialize Variable in Controller<&#47;h3></p>
-<p>The "angular" way I read around is to set the value inside a controller:</p>
-<div data-height="268" data-theme-id="0" data-slug-hash="Beldq" data-default-tab="js" data-user="glaucocustodio" class='codepen'>
-<pre><code>var app = angular.module(&#39;myApp&#39;, []);</p>
-<p>app.controller(&#39;MyCtrl&#39;, function ($scope) {<br />
-  $scope.name = &#39;John&#39;;<br />
-});<&#47;code><&#47;pre></p>
-<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;Beldq&#47;'>Beldq<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
-<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+<div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="gBoEa" data-default-tab="html" data-user="glaucocustodio">
+<pre><code>&lt;!DOCTYPE html&gt; &lt;html lang="en" ng-app=""&gt; &lt;head&gt; &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;input type="text" value="John" ng-model="name"&gt; &lt;/body&gt; &lt;/html&gt;</code></pre>
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/gBoEa/">gBoEa</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+
+</div>
+<script type="text/javascript" src="//codepen.io/assets/embed/ei.js"></script>
+<p>You can see that the value "John" is not being filled in input. By default, AngularJS does not initialize <code>ng-model</code> based on form fields attributes like <code>value</code>, <code>checked</code> and <code>selected</code>. Looking for some way to pull it off, I found three manners and I wanna share them with you. </p>
+
+<h3>Initialize Variable in Controller</h3>
+
+<p>The "angular" way I read around is to set the value inside a controller: </p>
+
+<div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="Beldq" data-default-tab="js" data-user="glaucocustodio">
+<pre><code>var app = angular.module('myApp', []); app.controller('MyCtrl', function ($scope) { $scope.name = 'John'; });</code></pre>
+
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/Beldq/">Beldq</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+</div>
+
 <p>But when our entire page is coming from server, it does not seem a good approach, we would need mix the server language with JavaScript or mess up with another not cool thing.</p>
-<h3>Use Ng-Init Directive<&#47;h3></p>
-<p>The second one is about setting variable value inside <code>ng-init<&#47;code>:</p>
-<div data-height="268" data-theme-id="0" data-slug-hash="pIkdw" data-default-tab="html" data-user="glaucocustodio" class='codepen'>
-<pre><code><!DOCTYPE html><br />
-<html lang="en" ng-app=""><br />
-<head><br />
-  <script src="&#47;&#47;ajax.googleapis.com&#47;ajax&#47;libs&#47;angularjs&#47;1.3.0-rc.4&#47;angular.min.js"><&#47;script><br />
-<&#47;head><br />
-<body><br />
-  <input type="text" ng-model="name" ng-init="name=&#39;John&#39;"><br />
-<&#47;body><br />
-<&#47;html><&#47;code><&#47;pre></p>
-<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;pIkdw&#47;'>pIkdw<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
-<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
+
+<h3>Use Ng-Init Directive</h3>
+
+<p>The second one is about setting variable value inside <code>ng-init</code>:</p>
+
+<div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="pIkdw" data-default-tab="html" data-user="glaucocustodio">
+<pre><code>&lt;!DOCTYPE html&gt; &lt;html lang="en" ng-app=""&gt; &lt;head&gt; &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;input type="text" ng-model="name" ng-init="name='John'"&gt; &lt;/body&gt; &lt;/html&gt;</code></pre>
+
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/pIkdw/">pIkdw</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+</div>
+
+<script type="text/javascript" src="//codepen.io/assets/embed/ei.js"></script>
 <p>It works. But I personally guess we can improve it.</p>
-<h3>Use a Custom Directive<&#47;h3></p>
-<p>Finally, we can use a <a target="_blank" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;angular-initial-value">custom directive<&#47;a> to load values based on form fields attributes:</p>
-<div data-height="268" data-theme-id="0" data-slug-hash="nhcmz" data-default-tab="js" data-user="glaucocustodio" class='codepen'>
-<pre><code>angular.module(&#39;initFromForm&#39;, [])<br />
-  .directive(&#39;ngInitial&#39;, function() {<br />
-    return {<br />
-      restrict: &#39;A&#39;,<br />
-      controller: [<br />
-        &#39;$scope&#39;, &#39;$element&#39;, &#39;$attrs&#39;, &#39;$parse&#39;, function($scope, $element, $attrs, $parse) {<br />
-          var getter, setter, val;<br />
-          val = $attrs.ngInitial || ($element.attr("checked") !== undefined ? true : &#39;&#39;) || $attrs.value || $element.val()<br />
-          getter = $parse($attrs.ngModel);<br />
-          setter = getter.assign;<br />
-          setter($scope, val);<br />
-        }<br />
-      ]<br />
-    };<br />
-  });</p>
-<p>var app = angular.module(&#39;myApp&#39;, [&#39;initFromForm&#39;]);<&#47;code><&#47;pre></p>
-<p>See the Pen <a href='http:&#47;&#47;codepen.io&#47;glaucocustodio&#47;pen&#47;nhcmz&#47;'>nhcmz<&#47;a> by Glauco Cust&oacute;dio (<a href='http:&#47;&#47;codepen.io&#47;glaucocustodio'>@glaucocustodio<&#47;a>) on <a href='http:&#47;&#47;codepen.io'>CodePen<&#47;a>.<&#47;p><br />
-<&#47;div><script async src="&#47;&#47;codepen.io&#47;assets&#47;embed&#47;ei.js"><&#47;script></p>
-<p>This directive is a improved version I made from <a href="http:&#47;&#47;stackoverflow.com&#47;a&#47;17823590" rel="external nofollow" target="_blank">this one<&#47;a> to support <code>textarea<&#47;code>, <code>checkbox<&#47;code> and <code>radio<&#47;code> as well.</p>
-<p>I really appreciated this approach, we just need add <code>initial-value<&#47;code> attribute to form field and voil&agrave;.</p>
+<h3>Use a Custom Directive</h3>
+<p>Finally, we can use a <a href="https://github.com/glaucocustodio/angular-initial-value" target="_blank">custom directive</a> to load values based on form fields attributes:</p>
+<div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="nhcmz" data-default-tab="js" data-user="glaucocustodio">
+<pre><code>angular.module('initFromForm', []) .directive('ngInitial', function() { return { restrict: 'A', controller: [ '$scope', '$element', '$attrs', '$parse', function($scope, $element, $attrs, $parse) { var getter, setter, val; val = $attrs.ngInitial || ($element.attr("checked") !== undefined ? true : '') || $attrs.value || $element.val() getter = $parse($attrs.ngModel); setter = getter.assign; setter($scope, val); } ] }; }); var app = angular.module('myApp', ['initFromForm']);</code></pre>
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/nhcmz/">nhcmz</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+
+</div>
+
+<p>This directive is a improved version I made from <a href="http://stackoverflow.com/a/17823590" rel="external nofollow" target="_blank">this one</a> to support <code>textarea</code>, <code>checkbox</code> and <code>radio</code> as well.</p>
+
+<p>I really appreciated this approach, we just need add <code>initial-value</code> attribute to form field and voilà.</p>
+
 <p>Do you know another way to do the same? Share with us in the comments.</p>
+
 <p>See you.</p>

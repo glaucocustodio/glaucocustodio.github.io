@@ -21,13 +21,13 @@ tags:
 - ios
 comments: []
 ---
-If you are an iOS developer very likely you faced this problem: when user clicks on some field to type, the keyboard pops up and covers the text field.
+<p>If you are an iOS developer very likely you faced this problem: when user clicks on some field to type, the keyboard pops up and covers the text field.</p>
 
-Recently I had this problem as well, looking for solution I found <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html#//apple_ref/doc/uid/TP40009542-CH5-SW7" rel="external nofollow" target="_blank">this link from Apple's iOS Developer Library</a>.
+<p>Recently I had this problem as well, looking for solution I found <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html#//apple_ref/doc/uid/TP40009542-CH5-SW7" rel="external nofollow" target="_blank">this link from Apple's iOS Developer Library</a>.</p>
 
-Despite the good source, I didn't like having to place my views (like <code>UITextField</code>) inside a <code>UIScrollView</code> to solve this matter.
+<p>Despite the good source, I didn't like having to place my views (like <code>UITextField</code>) inside a <code>UIScrollView</code> to solve this matter.</p>
 <h2>Another Approach To Solve</h2>
-I found a simpler way, did some changes and then wrapped it in a <code>UIViewController</code>:
+<p>I found a simpler way, did some changes and then wrapped it in a <code>UIViewController</code>:</p>
 
 {% highlight swift %}
 import UIKit
@@ -82,11 +82,11 @@ class UncoveredContentViewController: UIViewController {
 }
 {% endhighlight %}
 
-There is no secret here. We observe <code>UIKeyboardWillShowNotification</code> and <code>UIKeyboardWillHideNotification</code> calling its respectives bound methods when the events are fired.
+<p>There is no secret here. We observe <code>UIKeyboardWillShowNotification</code> and <code>UIKeyboardWillHideNotification</code> calling its respectives bound methods when the events are fired.</p>
 
-The handler methods then scrolls up the parent view according with keyboard's height.
+<p>The handler methods then scrolls up the parent view according with keyboard's height.</p>
 
-In the controllers you need this solution, just subclass <code>UncoveredContentViewController</code>:
+<p>In the controllers you need this solution, just subclass <code>UncoveredContentViewController</code>:</p>
 
 {% highlight swift %}
 import UIKit
@@ -95,9 +95,9 @@ class ViewController: UncoveredContentViewController {
 }
 {% endhighlight %}
 
-At last, don't forget to bind <code>Editing Did Begin</code> and <code>Editing Did End</code> to <code>textFieldEditingDidBegin</code> and <code>textFieldEditingDidEnd</code> respectively for each <code>UITextField</code> you need to fix.
+<p>At last, don't forget to bind <code>Editing Did Begin</code> and <code>Editing Did End</code> to <code>textFieldEditingDidBegin</code> and <code>textFieldEditingDidEnd</code> respectively for each <code>UITextField</code> you need to fix.</p>
 <p>
   <a href="{{ site.baseurl }}/assets/uitextfield-sent-events.png"><img class="alignnone size-full wp-image-3482" title="uitextfield-sent-events" src="{{ site.baseurl }}/assets/uitextfield-sent-events.png" alt="" /></a>
 </p>
 
-That's all. See you.
+<p>That's all. See you.</p>
