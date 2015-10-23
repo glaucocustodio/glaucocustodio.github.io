@@ -30,18 +30,35 @@ tags:
 - x-sendfile
 comments: []
 ---
-<p>O Rails <a href="http:&#47;&#47;guides.rubyonrails.org&#47;asset_pipeline.html#x-sendfile-headers" rel="external nofollow" target="_blank">recomenda<&#47;a> que usemos o Apache ou ngnix para servir os assets est&aacute;ticos quando em produ&ccedil;&atilde;o, isso pode ser feito habilitando a diretiva <code>x_sendfile_header<&#47;code> como mostra o Rails Guides.</p>
-<p>O problema &eacute; que ao ativar essa diretiva, os assets param de ser servidos na interface web do <a href="https:&#47;&#47;github.com&#47;resque&#47;resque" rel="external nofollow" target="_blank">Resque<&#47;a>.</p>
-<p><a id="more"></a><a id="more-1928"></a><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;resque-sem-assets.png"><img class="alignnone size-full wp-image-1934" title="resque-sem-assets" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;resque-sem-assets.png" alt="" width="784" height="396" &#47;><&#47;a></p>
-<p>Uma solu&ccedil;&atilde;o &eacute; criar uma tarefa no arquivo de configura&ccedil;&atilde;o de deploy (<code>deploy.rb<&#47;code>) do Capistrano que possa copiar os assets est&aacute;ticos da pasta do Resque para a pasta p&uacute;blica (mais especificamente <code>&#47;public&#47;resque<&#47;code>) de nossa aplica&ccedil;&atilde;o:<br />
-[code language="ruby" escaped="true"]after "deploy:restart", "deploy:cleanup", "deploy:copy_resque_assets"</p>
-<p>namespace :deploy do<br />
-  desc 'Copy resque-web assets into public folder'<br />
-  task :copy_resque_assets do<br />
-    target = File.join(release_path, 'public', 'resque')<br />
-    run "cp -r `cd #{release_path} &amp;&amp; bundle show resque`&#47;lib&#47;resque&#47;server&#47;public&#47;. #{target}"<br />
-  end<br />
-end[&#47;code]</p>
-<div class="note">Observe que eu adiciono a tarefa criada no m&eacute;todo <code>after<&#47;code> para que possa ser executada depois do deploy.<&#47;div><br />
-Agora &eacute; s&oacute; fazer um deploy e ver o resultado:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;interface-resque-web.png"><img class="alignnone size-full wp-image-1935" title="interface-resque-web" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;interface-resque-web.png" alt="" width="1024" height="305" &#47;><&#47;a></p>
+<p>O Rails <a href="http://guides.rubyonrails.org/asset_pipeline.html#x-sendfile-headers" rel="external nofollow" target="_blank">recomenda</a> que usemos o Apache ou Ngnix para servir os assets estáticos quando em produção, isso pode ser feito habilitando a diretiva <code>x_sendfile_header</code> como mostra o Rails Guides.</p>
+
+<p>O problema é que ao ativar essa diretiva, os assets param de ser servidos na interface web do <a href="https://github.com/resque/resque" rel="external nofollow" target="_blank">Resque</a>.</p>
+
+<p><a href="{{ site.baseurl }}/assets/resque-sem-assets.png"><img class="alignnone size-full wp-image-1934" title="resque-sem-assets" src="{{ site.baseurl }}/assets/resque-sem-assets.png" alt="" width="784" height="396" /></a></p>
+
+<p>Uma solução é criar uma tarefa no arquivo de configuração de deploy (<code>deploy.rb</code>) do Capistrano (ou do Mina) que possa copiar os assets estáticos da pasta do Resque para a pasta pública (mais especificamente <code>/public/resque</code>) de nossa aplicação:</p>
+
+Capistrano:
+{% highlight ruby %}
+after "deploy:restart", "deploy:cleanup", "deploy:copy_resque_assets"
+
+namespace :deploy do
+  desc 'Copy resque-web assets into public folder'
+  task :copy_resque_assets do
+    target = File.join(release_path, 'public', 'resque')
+    run "cp -r `cd #{release_path} && bundle show resque`/lib/resque/server/public/* #{target}"
+  end
+end
+{% endhighlight %}
+
+<div class="note">Observe que eu adiciono a tarefa criada no método <code>after</code> para que possa ser executada depois do deploy.</div>
+
+Mina:
+{% highlight ruby %}
+queue "cp -r `cd #{deploy_to}/#{current_path} && bundle show resque`/lib/resque/server/public/* #{File.join(deploy_to, current_path, 'public', 'resque')}"
+{% endhighlight %}
+
+<p>Agora é só fazer um deploy e ver o resultado:</p>
+
+<p><a href="{{ site.baseurl }}/assets/interface-resque-web.png"><img class="alignnone size-full wp-image-1935" title="interface-resque-web" src="{{ site.baseurl }}/assets/interface-resque-web.png" alt="" width="1024" height="305" /></a></p>
+

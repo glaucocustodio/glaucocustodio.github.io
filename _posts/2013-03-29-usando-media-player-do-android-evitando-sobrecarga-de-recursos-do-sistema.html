@@ -85,94 +85,134 @@ comments:
   date_gmt: '2015-05-17 20:15:51 -0300'
   content: Excelente!!! Parabens, me ajudou muito!
 ---
-<p>Fala pessoal, hoje venho com meu primeiro post sobre <strong>Java<&#47;strong> e desenvolvimento mobile para <strong>Android<&#47;strong>.</p>
-<p>Tenho estudado um pouco sobre Android ultimamente e daqui pra frente irei compartilhar algumas dicas que podem ser &uacute;teis.</p>
-<p>Come&ccedil;ando ent&atilde;o, vamos falar da classe <strong>MediaPlayer<&#47;strong>. Ela serve para controlar e executar arquivos de &aacute;udios, v&iacute;deos e streams.</p>
-<p><a id="more"></a><a id="more-1395"></a>Um "simples" (e errado) uso dessa classe seria:</p>
-<p>[code language="java" linenos="table" hl_lines="7 8"]<br />
-import android.media.MediaPlayer;</p>
-<p>protected void onCreate(Bundle savedInstanceState) {<br />
-    super.onCreate(savedInstanceState);<br />
-    setContentView(R.layout.activity_main);</p>
-<p>    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.meu_som);<br />
-    mp.start();<br />
-}<br />
-[&#47;code]</p>
-<p>Na primeira linha em destaque, criamos uma nova inst&acirc;ncia da classe <code>MediaPlayer<&#47;code> dizendo que o recurso (nesse caso, o &aacute;udio do tipo <code>raw<&#47;code>) a ser reproduzido ser&aacute; o arquivo <code>meu_som<&#47;code> que se encontra na pasta <code>res&#47;raw&#47;meu_som<&#47;code> (seguindo a conven&ccedil;&atilde;o do Android).</p>
-<p>Na segunda linha destacada simplesmente chamamos o m&eacute;todo <code>play<&#47;code> respons&aacute;vel por reproduzir o recurso.</p>
-<p>O c&oacute;digo acima pode at&eacute; parecer legal, mas n&atilde;o &eacute;..</p>
-<h2>Cen&aacute;rio<&#47;h2><!--<br />
-O m&eacute;todo "onCreate" &eacute; chamado toda vez que nossa aplica&ccedil;&atilde;o &eacute; criada, isso inclui tamb&eacute;m, toda vez que rotacionamos o dispositivo.<br />
-Se executarmos uma aplica&ccedil;&atilde;o com o bloco anterior, a cada rota&ccedil;&atilde;o da tela o m&eacute;todo "onCreate" ser&aacute; executado e consequentemente o &aacute;udio ser&aacute; reproduzido de novo.<br />
-Isso daria uma confus&atilde;o, iriamos ficar com v&aacute;rios arquivos sendo executados ao mesmo tempo, virando uma bagun&ccedil;a. Sem contar os recursos desnecess&aacute;rios alocados, mas isso fica pra frente..<br />
--->Nosso objetivo aqui &eacute; aprender como executar um recurso multim&iacute;dia esporadicamente de maneira n&atilde;o obstrutiva, como exemplo, vamos supor que voc&ecirc; precise reproduzir um som ao clique de um bot&atilde;o, ou qualquer outro evento como esse..</p>
-<p>Se voc&ecirc; est&aacute; querendo deixar um &aacute;udio de fundo na sua aplica&ccedil;&atilde;o, talvez esse post n&atilde;o ajude muito, pois voc&ecirc; precisa aprender como <a target="_blank" rel="external nofollow" href="http:&#47;&#47;developer.android.com&#47;guide&#47;topics&#47;media&#47;mediaplayer.html#mpandservices">usar um servi&ccedil;o com MediaPlayer<&#47;a>.</p>
-<h2>Entrando no Cen&aacute;rio<&#47;h2></p>
-<p>Tendo o cen&aacute;rio descrito acima, vamos dizer que temos o seguinte layout:</p>
-<p>[code language="xml"]<br />
-<LinearLayout android:layout_width="match_parent"<br />
-        android:layout_height="match_parent"<br />
-        android:id="@+id&#47;main_layout"<br />
-        android:orientation="vertical"></p>
-<p>  <Button android:text="@string&#47;my_button"<br />
-          android:layout_height="wrap_content"<br />
-          android:layout_gravity="center"<br />
-            android:layout_width="160dp"<br />
-            android:onClick="playAudio"&#47;><br />
-<&#47;LinearLayout><br />
-[&#47;code]</p>
-<p>Nesse linear layout temos apenas um bot&atilde;o, onde ao clicar chamamos o m&eacute;todo <code>playSound<&#47;code> de nossa activity.</p>
-<p>Veja a implementa&ccedil;&atilde;o desse m&eacute;todo em nossa activity:</p>
-<p>[code language="java"]<br />
-public void playAudio(View view){<br />
-  MediaPlayer mp = MediaPlayer.create(this, R.raw.meu_som);<br />
-  mp.start();<br />
-}<br />
-[&#47;code]</p>
-<p>Assim como no primeiro exemplo, no trecho acima, a cada clique no bot&atilde;o estamos criando uma inst&acirc;ncia da classe <code>MediaPlayer<&#47;code> e reproduzindo o &aacute;udio.</p>
-<p>S&oacute; que veja o problema ai.. Cada vez que o usu&aacute;rio clicar no bot&atilde;o, criamos uma nova vari&aacute;vel e ocupamos recursos do sistema sem necessidade (isso &eacute; pouco, mas tem mais).</p>
+<p>Fala pessoal, hoje venho com meu primeiro post sobre Java e desenvolvimento mobile para Android.</p>
+
+<p>Tenho estudado um pouco sobre Android ultimamente e daqui pra frente irei compartilhar algumas dicas que podem ser úteis.</p>
+
+<p>Começando então, vamos falar da classe <code>MediaPlayer</code>. Ela serve para controlar e executar arquivos de áudios, vídeos e streams.</p>
+
+<p>Um "simples" (e errado) uso dessa classe seria:</p>
+
+{% highlight java linenos %}
+import android.media.MediaPlayer;
+
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.meu_som);
+    mp.start();
+}
+{% endhighlight %}
+
+<p>Na linha 7, criamos uma nova instância da classe <code>MediaPlayer</code> dizendo que o recurso (nesse caso, o áudio do tipo <code>raw</code>) a ser reproduzido será o arquivo <code>meu_som</code> que se encontra na pasta <code>res/raw/meu_som</code> (seguindo a convenção do Android).</p>
+
+<p>Na linha 8 simplesmente chamamos o método <code>play</code> responsável por reproduzir o recurso.</p>
+
+<p>O código acima pode até parecer legal, mas não é..</p>
+
+<h2>Cenário</h2>
+<!--
+O método "onCreate" é chamado toda vez que nossa aplicação é criada, isso inclui também, toda vez que rotacionamos o dispositivo.
+Se executarmos uma aplicação com o bloco anterior, a cada rotação da tela o método "onCreate" será executado e consequentemente o áudio será reproduzido de novo.
+Isso daria uma confusão, iriamos ficar com vários arquivos sendo executados ao mesmo tempo, virando uma bagunça. Sem contar os recursos desnecessários alocados, mas isso fica pra frente..
+-->
+<p>Nosso objetivo aqui é aprender como executar um recurso multimídia esporadicamente de maneira não obstrutiva, como exemplo, vamos supor que você precise reproduzir um som ao clique de um botão, ou qualquer outro evento como esse..</p>
+
+<p>Se você está querendo deixar um áudio de fundo na sua aplicação, talvez esse post não ajude muito, pois você precisa aprender como <a target="_blank" rel="external nofollow" href="http://developer.android.com/guide/topics/media/mediaplayer.html#mpandservices">usar um serviço com MediaPlayer</a>.</p>
+
+<h2>Entrando no Cenário</h2>
+
+<p>Tendo o cenário descrito acima, vamos dizer que temos o seguinte layout:</p>
+
+{% highlight xml %}
+<LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_layout"
+        android:orientation="vertical">
+
+  <Button android:text="@string/my_button"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+            android:layout_width="160dp"
+            android:onClick="playAudio"/>
+</LinearLayout>
+{% endhighlight %}
+
+<p>Nesse linear layout temos apenas um botão, onde ao clicar chamamos o método <code>playSound</code> de nossa activity.</p>
+
+<p>Veja a implementação desse método em nossa activity:</p>
+
+{% highlight java %}
+public void playAudio(View view){
+  MediaPlayer mp = MediaPlayer.create(this, R.raw.meu_som);
+  mp.start();
+}
+{% endhighlight %}
+
+<p>Assim como no primeiro exemplo, no trecho acima, a cada clique no botão estamos criando uma instância da classe <code>MediaPlayer</code> e reproduzindo o áudio.</p>
+
+<p>Só que veja o problema ai.. Cada vez que o usuário clicar no botão, criamos uma nova variável e ocupamos recursos do sistema sem necessidade (isso é pouco, ainda tem mais).</p>
+
 <p>Isso poderia ser melhorado, veja:</p>
-<p>[code language="java"]<br />
-public MediaPlayer mp = null;</p>
-<p>public void playAudio(View view){<br />
-  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
-  mp.start();<br />
-}<br />
-[&#47;code]</p>
-<p>Agora criamos uma &uacute;nica vari&aacute;vel <code>mp<&#47;code> em nossa aplica&ccedil;&atilde;o e ao rodar o m&eacute;todo do clique preenchemos ela com uma inst&acirc;ncia da classe <code>MediaPlayer<&#47;code>.</p>
-<p>Isso pode parecer bom, mas ainda <del datetime="2013-03-29T15:09:17+00:00">podemos<&#47;del> devemos melhorar.</p>
-<p>Se voc&ecirc; clicar v&aacute;rias vezes seguidas no bot&atilde;o, a classe <code>MediaPlayer<&#47;code> ficar&aacute; sobrecarregada e n&atilde;o ir&aacute; mais reproduzir som (eu disse que tinha mais)..</p>
-<p>A <a href="http:&#47;&#47;developer.android.com&#47;guide&#47;topics&#47;media&#47;mediaplayer.html#releaseplayer" rel="external nofollow" target="_blank">documenta&ccedil;&atilde;o oficial do Android<&#47;a> recomenda que seja implementada uma descarga da classe <code>MediaPlayer<&#47;code> para evitar que recursos do sistema sejam desperdi&ccedil;ados:</p>
-<p>[code language="java"]<br />
-mp.release();<br />
-mp = null;<br />
-[&#47;code]</p>
-<p>Precisamos adicionar o trecho acima ap&oacute;s a reprodu&ccedil;&atilde;o do arquivo, mas isso <b>n&atilde;o ir&aacute; funcionar<&#47;b>:</p>
-<p>[code language="java"]<br />
-public void playAudio(View view){<br />
-  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
-  mp.start();<br />
-  mp.release();<br />
-  mp = null;<br />
-}<br />
-[&#47;code]</p>
-<p>Acima, tentamos liberar os recursos ap&oacute;s o m&eacute;todo <code>start<&#47;code>, mas isso faria com que o arquivo n&atilde;o fosse reproduzido.</p>
-<h2>A Solu&ccedil;&atilde;o<&#47;h2></p>
-<p>Por fim chegamos na solu&ccedil;&atilde;o, o ideal para conseguirmos o que desejamos de uma forma legal, seria assim:</p>
-<p>[code language="java" linenos="table" hl_lines="5-11"]<br />
-public MediaPlayer mp = null;</p>
-<p>public void playAudio(View view){<br />
-  mp = MediaPlayer.create(this, R.raw.meu_som);<br />
-  mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){<br />
-    public void onCompletion(MediaPlayer mp) {<br />
-      mp.stop();<br />
-      mp.release();<br />
-      mp = null;<br />
-    }<br />
-  });<br />
-  mp.start();<br />
-}<br />
-[&#47;code]</p>
-<p>O que fizemos aqui foi criar um evento <code>on completion<&#47;code> em nossa inst&acirc;ncia <code>mp<&#47;code>, assim, toda vez que o arquivo acabar de ser reproduzido, liberamos recursos do sistema e tamb&eacute;m ganhamos a possibilidade de reprodu&ccedil;&atilde;o m&uacute;ltipla sem travar.</p>
-<p>Essa foi a dica de hoje. O que voc&ecirc; achou?</p>
-<p>At&eacute; mais.</p>
+
+{% highlight java %}
+public MediaPlayer mp = null;
+
+public void playAudio(View view){
+  mp = MediaPlayer.create(this, R.raw.meu_som);
+  mp.start();
+}
+{% endhighlight %}
+
+<p>Agora criamos uma única variável <code>mp</code> em nossa aplicação e ao rodar o método do clique preenchemos ela com uma instância da classe <code>MediaPlayer</code>.</p>
+
+<p>Isso pode parecer bom, mas ainda <del datetime="2013-03-29T15:09:17+00:00">podemos</del> devemos melhorar.</p>
+
+<p>Se você clicar várias vezes seguidas no botão, a classe <code>MediaPlayer</code> ficará sobrecarregada e não irá mais reproduzir som (eu disse que tinha mais)..</p>
+
+<p>A <a href="http://developer.android.com/guide/topics/media/mediaplayer.html#releaseplayer" rel="external nofollow" target="_blank">documentação oficial do Android</a> recomenda que seja implementada uma descarga da classe <code>MediaPlayer</code> para evitar que recursos do sistema sejam desperdiçados:</p>
+
+{% highlight java %}
+mp.release();
+mp = null;
+{% endhighlight %}
+
+<p>Precisamos adicionar o trecho acima após a reprodução do arquivo, mas isso <b>não irá funcionar</b>:</p>
+
+{% highlight java %}
+public void playAudio(View view){
+  mp = MediaPlayer.create(this, R.raw.meu_som);
+  mp.start();
+  mp.release();
+  mp = null;
+}
+{% endhighlight %}
+
+<p>Acima, tentamos liberar os recursos após o método <code>start</code>, mas isso faria com que o arquivo não fosse reproduzido.</p>
+
+<h2>A Solução</h2>
+
+<p>Por fim chegamos na solução, o ideal para conseguirmos o que desejamos de uma forma legal, seria assim:</p>
+
+{% highlight java %}
+public MediaPlayer mp = null;
+
+public void playAudio(View view){
+  mp = MediaPlayer.create(this, R.raw.meu_som);
+  mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+    public void onCompletion(MediaPlayer mp) {
+      mp.stop();
+      mp.release();
+      mp = null;
+    }
+  });
+  mp.start();
+}
+{% endhighlight %}
+
+<p>O que fizemos aqui foi criar um evento <code>on completion</code> em nossa instância <code>mp</code>, assim, toda vez que o arquivo acabar de ser reproduzido, liberamos recursos do sistema e também ganhamos a possibilidade de reprodução múltipla sem travar.</p>
+
+<p>Essa foi a dica de hoje. O que você achou?</p>
+
+<p>Até mais.</p>

@@ -27,14 +27,74 @@ tags:
 - resque
 comments: []
 ---
-<p>J&aacute; aconteceu algumas vezes comigo de ter os workers do Resque exportados para o upstart do Ubuntu e precisar substituir por outros.</p>
-<p>O problema &eacute; que ao excluir os arquivos de configura&ccedil;&atilde;o de <code>&#47;etc&#47;init<&#47;code> e colocar os dos workers novos, por algum motivo o Ubuntu se perde e n&atilde;o sobe o que deveria, mantendo os processos antigos. Se voc&ecirc; mata os processos eles voltam.</p>
-<p><a id="more"></a><a id="more-1991"></a>Uma solu&ccedil;&atilde;o que encontrei para matar os processos zumbis &eacute; entrar no console da aplica&ccedil;&atilde;o Rails, identificar os workers antigos (voc&ecirc; pode fazer isso via comando ou vendo pela interface web do Resque mesmo) e remov&ecirc;-los.</p>
-<p>Para ver os nomes dos workers rode:<br />
-[code language="ruby"]Resque.workers.select{|worker| puts worker}[&#47;code]<br />
-Para remover um worker do Resque:<br />
-[code language="ruby"]Resque.remove_worker('nome-do-worker')[&#47;code]<br />
-Caso tenha muitos e deseja matar todos, a jun&ccedil;&atilde;o dos dois tamb&eacute;m deve funcionar:<br />
-[code language="ruby"]Resque.workers.select{|worker| Resque.remove_worker(worker) }[&#47;code]<br />
-Agora &eacute; s&oacute; reiniciar seu job no upstart, esperar ele subir e pronto.</p>
-<p>Abra&ccedil;os.</p>
+<p>Já aconteceu algumas vezes comigo de ter os workers do Resque exportados para o upstart do Ubuntu e precisar substituir por outros.</p>
+
+<p>O problema é que ao excluir os arquivos de configuração de <code>/etc/init</code> e colocar os dos workers novos, por algum motivo o Ubuntu se perde e não sobe o que deveria, mantendo os processos antigos. Se você mata os processos eles voltam.</p>
+
+<p>Uma solução que encontrei para matar os processos zumbis é entrar no console da aplicação Rails, identificar os workers antigos (você pode fazer isso via comando ou vendo pela interface web do Resque mesmo) e removê-los.</p>
+
+<p>Para ver os nomes dos workers rode:</p>
+{% highlight ruby %}
+Resque.workers.select{|worker| puts worker}
+{% endhighlight %}
+
+<p>Para remover um worker do Resque:</p>
+{% highlight ruby %}
+Resque.remove_worker('nome-do-worker')
+{% endhighlight %}
+
+<p>Caso tenha muitos e deseja matar todos, a junção dos dois também deve funcionar:</p>
+{% highlight ruby %}
+Resque.workers.select{|worker| Resque.remove_worker(worker) }
+{% endhighlight %}
+
+<p>Agora é só reiniciar seu job no upstart, esperar ele subir e pronto.</p>
+
+<h2>Modo hard</h2>
+
+<p>Caso o procedimento acima não resolva, podemos fazer da seguinte forma:</p>
+
+<p>Execute o comando <code>netstat</code> com os parâmetros <code>ntp</code> para procurar por conexões TCP que ainda estão estabelecidas na porta 6379 (porta padrão do redis)</p>
+
+{% highlight text %}
+user@server:~$ sudo netstat -ntp | grep 6379
+tcp        0      0 127.0.0.1:6379          127.0.0.1:44597         ESTABLISHED 1671/redis-server
+tcp        0      0 127.0.0.1:6379          127.0.0.1:44543         FIN_WAIT2   -               
+tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock) 
+tcp        0      0 127.0.0.1:6379          127.0.0.1:55760         ESTABLISHED 1671/redis-server
+tcp        0      0 127.0.0.1:46408         127.0.0.1:6379          TIME_WAIT   -               
+tcp        0      0 127.0.0.1:55760         127.0.0.1:6379          ESTABLISHED 8223/resque-1.25.2:
+tcp        0      0 127.0.0.1:46410         127.0.0.1:6379          TIME_WAIT   -               
+tcp        1      0 127.0.0.1:54364         127.0.0.1:6379          CLOSE_WAIT  14490/ruby      
+tcp        0      0 127.0.0.1:46402         127.0.0.1:6379          TIME_WAIT   -               
+tcp        0      0 127.0.0.1:37607         127.0.0.1:6379          TIME_WAIT   -               
+tcp        0      0 127.0.0.1:50442         127.0.0.1:6379          TIME_WAIT   -               
+tcp        0      0 127.0.0.1:37608         127.0.0.1:6379          TIME_WAIT   -               
+tcp        1      0 127.0.0.1:44543         127.0.0.1:6379          CLOSE_WAIT  7395/current    
+{% endhighlight %}
+
+<p>Estamos interessados somente nas linhas em que ainda há conexões abertas (<code>ESTABLISHED</code>), se quiser, pode aplicar mais um <code>grep</code> com pipe para filtrar a saída:</p>
+{% highlight text %}
+user@server:~$ sudo netstat -ntp | grep 6379 | grep ESTABLISHED
+tcp        0      0 127.0.0.1:6379          127.0.0.1:44597         ESTABLISHED 1671/redis-server
+tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock) 
+tcp        0      0 127.0.0.1:6379          127.0.0.1:55760         ESTABLISHED 1671/redis-server
+tcp        0      0 127.0.0.1:55760         127.0.0.1:6379          ESTABLISHED 8223/resque-1.25.2:
+{% endhighlight %}
+
+<p>Ficou fácil observar que o worker zumbi é o worker de PID 8223 (único worker resque que ainda está conectado mesmo quando todos deveriam estar desativados), para checar se isso é verdade você pode usar um <code>ps aux</code>:</p>
+{% highlight text %}
+user@server:~$ ps aux | grep 8223
+user      5008  0.0  0.0   8080   620 pts/4    S+   16:20   0:00 grep 8223
+deploy    8223  0.0  3.7 1311088 286760 ?      Sl   Dec04   5:42 resque-1.25.2: Waiting for scraper, mailer e normal
+{% endhighlight %}
+
+<p>Um worker escutando as filas <code>scraper</code>, <code>mailer</code> e <code>normal</code> que não está ligado a aplicação.
+Agora é só matá-lo:</p>
+{% highlight text %}
+user@server:~$ sudo kill -9 8223
+{% endhighlight %}
+
+<p>E reiniciar os workers.</p>
+
+<p>Abraços.</p>

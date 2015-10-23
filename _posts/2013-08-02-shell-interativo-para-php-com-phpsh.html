@@ -51,28 +51,52 @@ comments:
   date_gmt: '2014-07-06 14:20:17 -0300'
   content: "Bacana Glauco!\r\nAinda n&atilde;o tinha visto, Mto bom! ;)"
 ---
-<p>Quem est&aacute; acostumado a trabalhar com linguagens como Python e Ruby sabe da m&atilde;o na roda que &eacute; ter um shell (tamb&eacute;m chamado de console) onde podemos testar trechos de c&oacute;digos.</p>
-<p>Trabalhei um tempo com PHP (e as vezes ainda preciso) mas nunca utilizei nenhuma ferramenta como essa para auxiliar no desenvolvimento, at&eacute; porque n&atilde;o conhecia uma do tipo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;08&#47;02&#47;shell-interativo-para-php-com-phpsh&#47;"><img class="alignnone size-full wp-image-1907" title="Shell Interativo para PHP com phpsh" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;shell-interativo-php.jpg" alt="" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-1897"></a>Essa semana conheci (e estou aqui para apresentar) um shell interativo para PHP chamado <a href="http:&#47;&#47;www.phpsh.org&#47;" rel="external nofollow" target="_blank">phpsh<&#47;a>, ele foi criado pelo Facebook e possui recursos como hist&oacute;rico, auto complete e r&aacute;pido acesso a documenta&ccedil;&atilde;o.</p>
-<p>Voc&ecirc; pode me falar que o PHP tem um shell interativo nativo via <code>php -a<&#47;code>, mas na minha opini&atilde;o, o phpsh tem mais recursos, por isso estou aqui para mostrar.</p>
-<h2>Instala&ccedil;&atilde;o e Uso<&#47;h2><br />
-A instala&ccedil;&atilde;o &eacute; bem tranquila, basicamente voc&ecirc; precisar ter o Python e PHP 5.3 instalados. Se voc&ecirc; usa Linux e j&aacute; trabalha com PHP melhor ainda.</p>
-<p>Irei acessar um diret&oacute;rio onde desejo instalar e clonar o c&oacute;digo fonte que est&aacute; no <a href="https:&#47;&#47;github.com&#47;facebook&#47;phpsh" rel="external nofollow" target="_blank">github<&#47;a>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;clonando-phpsh.png"><img class="alignnone size-full wp-image-1899" title="clonando-phpsh" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;clonando-phpsh.png" alt="" width="646"&#47;><&#47;a></p>
-<p>Depois de clonar, basta acessar a pasta, compilar e instalar.<br />
-[code language="bash"]cd phpsh<br />
-sudo python setup.py build<br />
-sudo python setup.py install[&#47;code]<br />
-J&aacute; temos nosso shell instalado, basta digitar <code>phpsh<&#47;code> no terminal para inici&aacute;-lo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;iniciando-shell-interativo-php.png"><img class="alignnone size-full wp-image-1901" title="iniciando-shell-interativo-php" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;iniciando-shell-interativo-php.png" alt="" width="445" height="79" &#47;><&#47;a></p>
-<p>Ao digitarmos "h" podemos ver algumas informa&ccedil;&otilde;es &uacute;teis, como usar "=" no come&ccedil;o da linha para exibir valores em tela.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;phpsh-help.png"><img class="alignnone size-full wp-image-1900" title="phpsh-help" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;phpsh-help.png" alt="" width="701" height="309" &#47;><&#47;a></p>
-<p>Ao digitar "d" antes de um nome de fun&ccedil;&atilde;o, podemos ver a documenta&ccedil;&atilde;o.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;documenta&ccedil;&atilde;o-no-phpsh.png"><img class="alignnone size-full wp-image-1903" title="documenta&ccedil;&atilde;o-no-phpsh" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;documenta&ccedil;&atilde;o-no-phpsh.png" alt="" width="651" height="441" &#47;><&#47;a></p>
-<p>Outro recurso legal tamb&eacute;m &eacute; o auto complete de fun&ccedil;&otilde;es, se digitarmos "array_" por exemplo e apertarmos "tab" teremos uma lista de m&eacute;todos coincidentes.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;phpsh-autocomplete.png"><img class="alignnone size-full wp-image-1904" title="phpsh-autocomplete" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;phpsh-autocomplete.png" alt="" width="891" height="252" &#47;><&#47;a></p>
-<p>Al&eacute;m disso e outras coisas mais (como hist&oacute;rico) ele &eacute; um console onde podemos testar trechos de c&oacute;digos.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;console-php.png"><img class="alignnone size-full wp-image-1905" title="console-php" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;08&#47;console-php.png" alt="" width="573" height="165" &#47;><&#47;a></p>
-<p>Essa foi a dica de hoje, o que voc&ecirc; achou?</p>
-<p>At&eacute; mais.</p>
+<p>Quem está acostumado a trabalhar com linguagens como Python e Ruby sabe da mão na roda que é ter um shell (também chamado de console) onde podemos testar trechos de códigos.</p>
+
+<p>Trabalhei um tempo com PHP (e as vezes ainda preciso) mas nunca utilizei nenhuma ferramenta como essa para auxiliar no desenvolvimento, até porque não conhecia uma do tipo.</p>
+
+<p><a href="{{ site.baseurl }}/assets/shell-interativo-php.jpg/"><img class="alignnone size-full wp-image-1907" title="Shell Interativo para PHP com phpsh" src="{{ site.baseurl }}/assets/shell-interativo-php.jpg" alt="" width="580" height="240" /></a></p>
+
+<p>Essa semana conheci (e estou aqui para apresentar) um shell interativo para PHP chamado <a href="http://www.phpsh.org/" rel="external nofollow" target="_blank">phpsh</a>, ele foi criado pelo Facebook e possui recursos como histórico, auto complete e rápido acesso a documentação.</p>
+
+<p>Você pode me falar que o PHP tem um shell interativo nativo via <code>php -a</code>, mas na minha opinião, o phpsh tem mais recursos, por isso estou aqui para mostrar.</p>
+
+<h2>Instalação e Uso</h2>
+
+<p>A instalação é bem tranquila, basicamente você precisar ter o Python e PHP 5.3 instalados. Se você usa Linux e já trabalha com PHP melhor ainda.</p>
+
+<p>Irei acessar um diretório onde desejo instalar e clonar o código fonte que está no <a href="https://github.com/facebook/phpsh" rel="external nofollow" target="_blank">github</a>.</p>
+
+<p><a href="{{ site.baseurl }}/assets/clonando-phpsh.png"><img class="alignnone size-full wp-image-1899" title="clonando-phpsh" src="{{ site.baseurl }}/assets/clonando-phpsh.png" alt="" width="646"/></a></p>
+
+<p>Depois de clonar, basta acessar a pasta, compilar e instalar.</p>
+
+{% highlight bash %}
+cd phpsh
+sudo python setup.py build
+sudo python setup.py install
+{% endhighlight %}
+
+<p>Já temos nosso shell instalado, basta digitar <code>phpsh</code> no terminal para iniciá-lo.</p>
+
+<p><a href="{{ site.baseurl }}/assets/iniciando-shell-interativo-php.png"><img class="alignnone size-full wp-image-1901" title="iniciando-shell-interativo-php" src="{{ site.baseurl }}/assets/iniciando-shell-interativo-php.png" alt="" width="445" height="79" /></a></p>
+
+<p>Ao digitarmos "h" podemos ver algumas informações úteis, como usar "=" no começo da linha para exibir valores em tela.</p>
+
+<p><a href="{{ site.baseurl }}/assets/phpsh-help.png"><img class="alignnone size-full wp-image-1900" title="phpsh-help" src="{{ site.baseurl }}/assets/phpsh-help.png" alt="" width="701" height="309" /></a></p>
+
+<p>Ao digitar "d" antes de um nome de função, podemos ver a documentação.</p>
+
+<p><a href="{{ site.baseurl }}/assets/documentação-no-phpsh.png"><img class="alignnone size-full wp-image-1903" title="documentação-no-phpsh" src="{{ site.baseurl }}/assets/documentação-no-phpsh.png" alt="" width="651" height="441" /></a></p>
+
+<p>Outro recurso legal também é o auto complete de funções, se digitarmos "array_" por exemplo e apertarmos "tab" teremos uma lista de métodos coincidentes.</p>
+
+<p><a href="{{ site.baseurl }}/assets/phpsh-autocomplete.png"><img class="alignnone size-full wp-image-1904" title="phpsh-autocomplete" src="{{ site.baseurl }}/assets/phpsh-autocomplete.png" alt="" width="891" height="252" /></a></p>
+
+<p>Além disso e outras coisas mais (como histórico) ele é um console onde podemos testar trechos de códigos.</p>
+
+<p><a href="{{ site.baseurl }}/assets/console-php.png"><img class="alignnone size-full wp-image-1905" title="console-php" src="{{ site.baseurl }}/assets/console-php.png" alt="" width="573" height="165" /></a></p>
+
+<p>Essa foi a dica de hoje, o que você achou?</p>
+
+<p>Até mais.</p>

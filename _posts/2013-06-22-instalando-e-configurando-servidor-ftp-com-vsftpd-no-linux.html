@@ -310,63 +310,121 @@ comments:
   date_gmt: '2015-10-05 20:22:07 -0300'
   content: Excelente, funcionou perfeitamente!
 ---
-<p>Fala pessoal, hoje venho ensinar como <strong>instalar e configurar um servidor FTP no Linux<&#47;strong>, mais precisamente no Ubuntu 12.04.</p>
-<p>Dentre as muitas op&ccedil;&otilde;es de programas que temos por ai, irei instalar o <a href="https:&#47;&#47;security.appspot.com&#47;vsftpd.html" rel="external nofollow" target="_blank"><strong>vsftpd<&#47;strong><&#47;a>, que parece ser muito seguro e &eacute; utilizado pela RedHat e OpenSuse al&eacute;m de outras empresas..</p>
-<p><a id="more"></a><a id="more-1746"></a></p>
-<h2>Entendendo o FTP<&#47;h2><br />
-Por padr&atilde;o o protocolo de transfer&ecirc;ncia de arquivos utiliza duas portas para comunica&ccedil;&atilde;o, a 21 para comandos e 20 para transfer&ecirc;ncia dos dados.</p>
-<p>Por&eacute;m nem sempre a porta 20 &eacute; utilizada para transfer&ecirc;ncia de dados, isso depende do modo que ele est&aacute; configurado: ativou ou passivo.</p>
-<h3>Modo Ativo<&#47;h3><br />
-No modo ativo, o cliente conecta-se atrav&eacute;s de uma porta rand&ocirc;mica maior que 1023 (N > 1023) na porta 21 do servidor. Ent&atilde;o o cliente come&ccedil;a ouvir na porta N + 1 e envia para o servidor essa porta, o servidor conecta-se de volta na porta especificada pelo cliente (N + 1) atrav&eacute;s da porta local 20.</p>
-<p>Representa&ccedil;&atilde;o:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_ativo.gif"><img class="alignnone size-full wp-image-1752" title="ftp_ativo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_ativo.gif" alt="" width="318" height="294" &#47;><&#47;a></p>
-<p>O problema com esse modo do FTP &eacute; que o servidor que come&ccedil;a uma conex&atilde;o para transfer&ecirc;ncia de dados, isso pode gerar problemas com o firewall do cliente pois est&aacute; recebendo uma solicita&ccedil;&atilde;o de fora e que geralmente &eacute; bloqueada.</p>
-<h3>Modo Passivo<&#47;h3><br />
-Para resolver essa quest&atilde;o, foi desenvolvido o modo passivo (PASV). Nesse modo, o cliente abre duas portas rand&ocirc;micas maiores do que 1023 (N > 1023 e N+1). A primeira porta conecta-se com a porta 21 do servidor, mas inv&eacute;s de informar o servidor a porta para comunica&ccedil;&atilde;o de dados, o cliente usar&aacute; o comando PASV. Como resultado, o servidor vai abrir uma porta rand&ocirc;mica (ou n&atilde;o, se configurarmos) P e ent&atilde;o enviar&aacute; essa porta P como resposta ao PASV para o cliente. Por fim, o cliente inicia o conex&atilde;o atrav&eacute;s da porta N+1 na porta P do servidor para transfer&ecirc;ncia de dados.</p>
-<p>Representa&ccedil;&atilde;o:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_passivo.gif"><img class="alignnone size-full wp-image-1756" title="ftp_passivo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp_passivo.gif" alt="" width="358" height="286" &#47;><&#47;a></p>
-<div class="note">Observe que no modo passivo n&atilde;o utilizamos a porta 20.<&#47;div><br />
-Essa foi uma breve abordagem sobre o funcionamento do FTP e dos modos ativo e passivo, recomendo esse <a href="http:&#47;&#47;slacksite.com&#47;other&#47;ftp.html" rel="external nofollow" target="_blank">excelente link<&#47;a> caso voc&ecirc; queira saber mais.</p>
-<h2>Instala&ccedil;&atilde;o e Configura&ccedil;&atilde;o<&#47;h2><br />
-Agora que j&aacute; temos uma base, vamos &agrave; instala&ccedil;&atilde;o.</p>
-<p>Primeiro, atualize a lista de pacotes e depois instale o vsftpd:<br />
-[code language="bash"]sudo apt-get update[&#47;code]<br />
-[code language="bash"]sudo apt-get install vsftpd[&#47;code]<br />
-Ap&oacute;s a instala&ccedil;&atilde;o, podemos testar acessando o servidor FTP localmente como an&ocirc;nimo (usu&aacute;rio sem senha), basta rodarmos o comando <code>ftp localhost<&#47;code> e digitarmos "anonymous" no usu&aacute;rio e deixar a senha vazia.<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp-anonimo.png"><img class="alignnone size-full wp-image-1768" title="ftp-anonimo" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;ftp-anonimo.png" alt="" width="461" height="254" &#47;><&#47;a></p>
-<div class="note">Veja que estamos recebendo a mensagem "Consider usign PASV" porque estamos no modo ativo.<&#47;div><br />
-Com nosso servidor instalado e funcionando, vamos alterar algumas configura&ccedil;&otilde;es no arquivo que se encontra geralmente em <code>&#47;etc&#47;vsftpd.conf<&#47;code>.</p>
-<p>Vamos come&ccedil;ar desabilitando acesso an&ocirc;nimo de nosso servidor. Abra o arquivo de configura&ccedil;&atilde;o para editar e defina <code>anonymous_enable=NO<&#47;code>.<br />
-[code language="bash"]sudo vim &#47;etc&#47;vsftpd.conf[&#47;code]<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;removendo-acesso-anonimo.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;removendo-acesso-anonimo.png" alt="" title="removendo-acesso-anonimo" width="695" class="alignnone size-full wp-image-1772" &#47;><&#47;a><br />
-Se tentarmos acessar o servidor agora n&atilde;o conseguiremos pois estamos sem nenhuma forma de autentica&ccedil;&atilde;o.</p>
-<div class="alert">Toda vez que alterarmos o arquivo de configura&ccedil;&atilde;o precisamos reiniciar o servidor FTP, use o comando <code> sudo service vsftpd restart<&#47;code> para isso.<&#47;div><br />
-Precisamos de usu&aacute;rio para acessar nosso servidor, vamos dizer ao vsftpd para permitir login com usu&aacute;rios locais (do sistema operacional). Abra o arquivo de configura&ccedil;&atilde;o e descomente a linha <code>local_enable=YES<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permitir-usuarios-locais-no-ftp.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permitir-usuarios-locais-no-ftp.png" alt="" title="permitir-usuarios-locais-no-ftp" width="434" class="alignnone size-full wp-image-1780" &#47;><&#47;a></p>
-<p>Uma boa pr&aacute;tica &eacute; criar um grupo para usu&aacute;rios de FTP no Linux, assim facilita a administra&ccedil;&atilde;o de permiss&otilde;es para esses indiv&iacute;duos. Execute o comando abaixo para criar um grupo chamado "ftpusers".<br />
-[code language="bash"]sudo groupadd ftpusers[&#47;code]<br />
-J&aacute; temos o grupo, vamos criar um usu&aacute;rio chamado "ftpuser", adicionar ele no grupo "ftpusers" e definir uma senha:<br />
-[code language="bash"]useradd -g ftpusers ftpuser[&#47;code]<br />
-[code language="bash"]passwd ftpuser[&#47;code]<br />
-Se tentarmos acessar nosso servidor FTP agora, veremos que precisamos criar uma pasta com o mesmo nome do usu&aacute;rio dentro de <code>&#47;home<&#47;code>. Vamos criar esse diret&oacute;rio do usu&aacute;rio, mudar o owner para "ftpuser" e o grupo para "ftpusers". Tamb&eacute;m precisamos remover o acesso de escrita desse diret&oacute;rio, pois o vsftpd n&atilde;o permite que a pasta do usu&aacute;rio (somente ela, os subdiret&oacute;rios podem ter) tenha acesso de escrita:<br />
-[code language="bash"]cd &#47;home[&#47;code]<br />
-[code language="bash"]sudo mkdir ftpuser[&#47;code]<br />
-[code language="bash"]sudo chown ftpuser:ftpusers ftpuser[&#47;code]<br />
-[code language="bash"]sudo chmod a-w ftpuser[&#47;code]<br />
-Ap&oacute;s as opera&ccedil;&otilde;es acimas, devemos ter isso:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permissoes-do-diretorio-do-usuario-ftp.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;permissoes-do-diretorio-do-usuario-ftp.png" alt="" title="permissoes-do-diretorio-do-usuario-ftp" width="547" class="alignnone size-full wp-image-1789" &#47;><&#47;a></p>
-<p>Como o diret&oacute;rio do usu&aacute;rio n&atilde;o tem acesso de escrita, iremos criar um diret&oacute;rio chamado <code>public<&#47;code> dentro de <code>&#47;home&#47;ftpuser<&#47;code> onde o usu&aacute;rio poder&aacute; armazenar seus arquivos e depois mudaremos o owner para o usu&aacute;rio e seu grupo (para que ele consiga ter acesso total)<br />
-[code language="bash"]sudo mkdir &#47;home&#47;ftpuser&#47;public[&#47;code]<br />
-[code language="bash"]sudo chown ftpuser:ftpusers &#47;home&#47;ftpuser&#47;public[&#47;code]<br />
-A partir de agora j&aacute; conseguimos acessar o servidor FTP com o usu&aacute;rio criado, s&oacute; que tem algo de errado ai, o usu&aacute;rio consegue acessar qualquer diret&oacute;rio do sistema a partir do diret&oacute;rio dele, basta executar <code>cd &#47;<&#47;code> para acessar a raiz do Linux por exemplo.. </p>
-<p>Descomente a linha <code>chroot_local_user=YES<&#47;code> para enjaular o usu&aacute;rio apenas no diret&oacute;rio dele, assim ele s&oacute; poder&aacute; acessar subdiret&oacute;rios de sua pasta.<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;enjaular-usuario-no-seu-diretorio.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;enjaular-usuario-no-seu-diretorio.png" alt="" title="enjaular-usuario-no-seu-diretorio" width="673" class="alignnone size-full wp-image-1791" &#47;><&#47;a></p>
-<p>At&eacute; agora est&aacute; tudo certo, por&eacute;m ainda estamos utilizando o modo ativo, isso pode nos gerar problemas.. Vamos ativar o modo passivo, para isso precisamos definir <code>pasv_enable=YES<&#47;code> no arquivo de configura&ccedil;&atilde;o.<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;habilitando-ftp-passivo.png"><img src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;06&#47;habilitando-ftp-passivo.png" alt="" title="habilitando-ftp-passivo" width="449" class="alignnone size-full wp-image-1801" &#47;><&#47;a></p>
-<p>Nesse servidor n&atilde;o foi necess&aacute;rio, mas em alguns pode ser necess&aacute;rio definir o ip do servidor FTP no qual o cliente deve fazer a solicita&ccedil;&atilde;o, se for seu caso, basta definir <code>pasv_address=XXX.XXX.XXX.XXX<&#47;code> (troque XXX.XXX.XXX.XXX pelo ip do seu servidor FTP) no arquivo de configura&ccedil;&atilde;o.</p>
-<p>Pode-se tamb&eacute;m definir uma faixa de portas na qual o servidor FTP ir&aacute; usar para transferir arquivos, basta definir <code>pasv_min_port=9040<&#47;code> e <code>pasv_max_port=9050<&#47;code> no arquivo de configura&ccedil;&atilde;o, nesse caso estariamos liberando as portas 9040 at&eacute; 9050 para transfer&ecirc;ncia no modo passivo.</p>
-<p>Se voc&ecirc; desejar pode mudar onde ser&aacute; o diret&oacute;rio inicial do usu&aacute;rio FTP (o padr&atilde;o &eacute; <code>&#47;home&#47;nome_usuario<&#47;code>), basta definir <code>local_root=&#47;var&#47;$USER<&#47;code> no arquivo de configura&ccedil;&atilde;o, caso voc&ecirc; utilize a vari&aacute;vel <code>$USER<&#47;code> do sistema no caminho (como nesse exemplo), defina tamb&eacute;m a linha <code>user_sub_token=$USER<&#47;code> para o vsftpd entender como uma vari&aacute;vel. No exemplo dado, ao acessarmos o servidor FTP com o usu&aacute;rio "ftpuser" o vsftpd estaria procurando o diret&oacute;rio <code>&#47;var&#47;ftpuser<&#47;code>. </p>
-<div class="alert">N&atilde;o esque&ccedil;a que o diret&oacute;rio inicial deve ser do usu&aacute;rio e grupo desejados e a raiz n&atilde;o pode ter permiss&atilde;o de escrita.<&#47;div></p>
-<p>Para finalizar, muitas vezes podemos precisar que o diret&oacute;rio inicial do servidor FTP aponte para um outro diret&oacute;rio que n&atilde;o seja um subdiret&oacute;rio (que esteja fora da home), a melhor forma para fazer isso seria montar o diret&oacute;rio desejado dentro da pasta inicial do usu&aacute;rio. Temos aqui um exemplo: <code>sudo mount --bind &#47;var&#47;webapps&#47;meu-blog &#47;home&#47;usuario_ftp&#47;blog<&#47;code>, assim cada vez que acessarmos o diret&oacute;rio "blog" do usu&aacute;rio estaremos na verdade acessando o "meu-blog" dentro de "var".</p>
-<p>Por hoje &eacute; s&oacute;, n&atilde;o esque&ccedil;a de deixar sua opini&atilde;o nos coment&aacute;rios.</p>
-<p>At&eacute; mais.</p>
+<p>Fala pessoal, hoje venho ensinar como instalar e configurar um servidor FTP no Linux, mais precisamente no Ubuntu 12.04.</p>
+
+<p>Dentre as muitas opções de programas que temos por ai, irei instalar o <a href="https://security.appspot.com/vsftpd.html" rel="external nofollow" target="_blank">vsftpd</a>, que parece ser muito seguro e é utilizado pela RedHat e OpenSuse além de outras empresas..</p>
+
+<h2>Entendendo o FTP</h2>
+
+<p>Por padrão o protocolo de transferência de arquivos utiliza duas portas para comunicação, a 21 para comandos e 20 para transferência dos dados.</p>
+
+<p>Porém nem sempre a porta 20 é utilizada para transferência de dados, isso depende do modo que ele está configurado: ativou ou passivo.</p>
+
+<h3>Modo Ativo</h3>
+
+<p>No modo ativo, o cliente conecta-se através de uma porta randômica maior que 1023 (N &gt; 1023) na porta 21 do servidor. Então o cliente começa ouvir na porta N + 1 e envia para o servidor essa porta, o servidor conecta-se de volta na porta especificada pelo cliente (N + 1) através da porta local 20.</p>
+
+<p>Representação:</p>
+
+<a href="{{ site.baseurl }}/assets/ftp_ativo.gif"><img class="alignnone size-full wp-image-1752" title="ftp_ativo" src="{{ site.baseurl }}/assets/ftp_ativo.gif" alt="" width="318" height="294" /></a>
+
+<p>O problema com esse modo do FTP é que o servidor que começa uma conexão para transferência de dados, isso pode gerar problemas com o firewall do cliente pois está recebendo uma solicitação de fora e que geralmente é bloqueada.</p>
+
+<h3>Modo Passivo</h3>
+
+<p>Para resolver essa questão, foi desenvolvido o modo passivo (PASV). Nesse modo, o cliente abre duas portas randômicas maiores do que 1023 (N &gt; 1023 e N+1). A primeira porta conecta-se com a porta 21 do servidor, mas invés de informar o servidor a porta para comunicação de dados, o cliente usará o comando PASV. Como resultado, o servidor vai abrir uma porta randômica (ou não, se configurarmos) P e então enviará essa porta P como resposta ao PASV para o cliente. Por fim, o cliente inicia o conexão através da porta N+1 na porta P do servidor para transferência de dados.</p>
+
+<p>Representação:</p>
+
+<a href="{{ site.baseurl }}/assets/ftp_passivo.gif"><img class="alignnone size-full wp-image-1756" title="ftp_passivo" src="{{ site.baseurl }}/assets/ftp_passivo.gif" alt="" width="358" height="286" /></a>
+
+<div class="note">Observe que no modo passivo não utilizamos a porta 20.</div>
+
+<p>Essa foi uma breve abordagem sobre o funcionamento do FTP e dos modos ativo e passivo, recomendo esse <a href="http://slacksite.com/other/ftp.html" rel="external nofollow" target="_blank">excelente link</a> caso você queira saber mais.</p>
+
+<h2>Instalação e Configuração</h2>
+
+<p>Agora que já temos uma base, vamos à instalação.</p>
+
+<p>Primeiro, atualize a lista de pacotes e depois instale o vsftpd:</p>
+
+{% highlight bash %}sudo apt-get update{% endhighlight %}
+
+{% highlight bash %}sudo apt-get install vsftpd{% endhighlight %}
+
+<p>Após a instalação, podemos testar acessando o servidor FTP localmente como anônimo (usuário sem senha), basta rodarmos o comando <code>ftp localhost</code> e digitarmos "anonymous" no usuário e deixar a senha vazia.</p>
+
+<a href="{{ site.baseurl }}/assets/ftp-anonimo.png"><img class="alignnone size-full wp-image-1768" title="ftp-anonimo" src="{{ site.baseurl }}/assets/ftp-anonimo.png" alt="" width="461" height="254" /></a>
+
+<div class="note">Veja que estamos recebendo a mensagem "Consider using PASV" porque estamos no modo ativo.</div>
+
+<p>Com nosso servidor instalado e funcionando, vamos alterar algumas configurações no arquivo que se encontra geralmente em <code>/etc/vsftpd.conf</code>.</p>
+
+<p>Vamos começar desabilitando acesso anônimo de nosso servidor. Abra o arquivo de configuração para editar e defina <code>anonymous_enable=NO</code>.</p>
+
+{% highlight bash %}sudo vim /etc/vsftpd.conf{% endhighlight %}
+
+<a href="{{ site.baseurl }}/assets/removendo-acesso-anonimo.png"><img src="{{ site.baseurl }}/assets/removendo-acesso-anonimo.png" alt="" title="removendo-acesso-anonimo" width="695" class="alignnone size-full wp-image-1772" /></a>
+
+<p>Se tentarmos acessar o servidor agora não conseguiremos pois estamos sem nenhuma forma de autenticação.</p>
+
+<div class="alert">Toda vez que alterarmos o arquivo de configuração precisamos reiniciar o servidor FTP, use o comando <code> sudo service vsftpd restart</code> para isso.</div>
+
+<p>Precisamos de usuário para acessar nosso servidor, vamos dizer ao vsftpd para permitir login com usuários locais (do sistema operacional). Abra o arquivo de configuração e descomente a linha <code>local_enable=YES</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/permitir-usuarios-locais-no-ftp.png"><img src="{{ site.baseurl }}/assets/permitir-usuarios-locais-no-ftp.png" alt="" title="permitir-usuarios-locais-no-ftp" width="434" class="alignnone size-full wp-image-1780" /></a>
+
+<p>Uma boa prática é criar um grupo para usuários de FTP no Linux, assim facilita a administração de permissões para esses indivíduos. Execute o comando abaixo para criar um grupo chamado "ftpusers".</p>
+
+{% highlight bash %}sudo groupadd ftpusers{% endhighlight %}
+
+<p>Já temos o grupo, vamos criar um usuário chamado "ftpuser", adicionar ele no grupo "ftpusers" e definir uma senha:</p>
+
+{% highlight bash %}useradd -g ftpusers ftpuser{% endhighlight %}
+
+{% highlight bash %}passwd ftpuser{% endhighlight %}
+
+<p>Se tentarmos acessar nosso servidor FTP agora, veremos que precisamos criar uma pasta com o mesmo nome do usuário dentro de <code>/home</code>. Vamos criar esse diretório do usuário, mudar o owner para "ftpuser" e o grupo para "ftpusers". Também precisamos remover o acesso de escrita desse diretório, pois o vsftpd não permite que a pasta do usuário (somente ela, os subdiretórios podem ter) tenha acesso de escrita:</p>
+
+{% highlight bash %}cd /home{% endhighlight %}
+
+{% highlight bash %}sudo mkdir ftpuser{% endhighlight %}
+
+{% highlight bash %}sudo chown ftpuser:ftpusers ftpuser{% endhighlight %}
+
+{% highlight bash %}sudo chmod a-w ftpuser{% endhighlight %}
+
+<p>Após as operações acimas, devemos ter isso:</p>
+
+<a href="{{ site.baseurl }}/assets/permissoes-do-diretorio-do-usuario-ftp.png"><img src="{{ site.baseurl }}/assets/permissoes-do-diretorio-do-usuario-ftp.png" alt="" title="permissoes-do-diretorio-do-usuario-ftp" width="547" class="alignnone size-full wp-image-1789" /></a>
+
+<p>Como o diretório do usuário não tem acesso de escrita, iremos criar um diretório chamado <code>public</code> dentro de <code>/home/ftpuser</code> onde o usuário poderá armazenar seus arquivos e depois mudaremos o owner para o usuário e seu grupo (para que ele consiga ter acesso total)</p>
+
+{% highlight bash %}sudo mkdir /home/ftpuser/public{% endhighlight %}
+
+{% highlight bash %}sudo chown ftpuser:ftpusers /home/ftpuser/public{% endhighlight %}
+
+<p>A partir de agora já conseguimos acessar o servidor FTP com o usuário criado, só que tem algo de errado ai, o usuário consegue acessar qualquer diretório do sistema a partir do diretório dele, basta executar <code>cd /</code> para acessar a raiz do Linux por exemplo.. </p>
+
+<p>Descomente a linha <code>chroot_local_user=YES</code> para enjaular o usuário apenas no diretório dele, assim ele só poderá acessar subdiretórios de sua pasta.</p>
+
+<a href="{{ site.baseurl }}/assets/enjaular-usuario-no-seu-diretorio.png"><img src="{{ site.baseurl }}/assets/enjaular-usuario-no-seu-diretorio.png" alt="" title="enjaular-usuario-no-seu-diretorio" width="673" class="alignnone size-full wp-image-1791" /></a>
+
+<p>Até agora está tudo certo, porém ainda estamos utilizando o modo ativo, isso pode nos gerar problemas.. Vamos ativar o modo passivo, para isso precisamos definir <code>pasv_enable=YES</code> no arquivo de configuração.</p>
+
+<a href="{{ site.baseurl }}/assets/habilitando-ftp-passivo.png"><img src="{{ site.baseurl }}/assets/habilitando-ftp-passivo.png" alt="" title="habilitando-ftp-passivo" width="449" class="alignnone size-full wp-image-1801" /></a>
+
+<p>Nesse servidor não foi necessário, mas em alguns pode ser necessário definir o ip do servidor FTP no qual o cliente deve fazer a solicitação, se for seu caso, basta definir <code>pasv_address=XXX.XXX.XXX.XXX</code> (troque XXX.XXX.XXX.XXX pelo ip do seu servidor FTP) no arquivo de configuração.</p>
+
+<p>Pode-se também definir uma faixa de portas na qual o servidor FTP irá usar para transferir arquivos, basta definir <code>pasv_min_port=9040</code> e <code>pasv_max_port=9050</code> no arquivo de configuração, nesse caso estariamos liberando as portas 9040 até 9050 para transferência no modo passivo.</p>
+
+<p>Se você desejar pode mudar onde será o diretório inicial do usuário FTP (o padrão é <code>/home/nome_usuario</code>), basta definir <code>local_root=/var/$USER</code> no arquivo de configuração, caso você utilize a variável <code>$USER</code> do sistema no caminho (como nesse exemplo), defina também a linha <code>user_sub_token=$USER</code> para o vsftpd entender como uma variável. No exemplo dado, ao acessarmos o servidor FTP com o usuário "ftpuser" o vsftpd estaria procurando o diretório <code>/var/ftpuser</code>. </p>
+
+<div class="alert">Não esqueça que o diretório inicial deve ser do usuário e grupo desejados e a raiz não pode ter permissão de escrita.</div>
+
+<p>Para finalizar, muitas vezes podemos precisar que o diretório inicial do servidor FTP aponte para um outro diretório que não seja um subdiretório (que esteja fora da home), a melhor forma para fazer isso seria montar o diretório desejado dentro da pasta inicial do usuário. Temos aqui um exemplo: <code>sudo mount --bind /var/webapps/meu-blog /home/usuario_ftp/blog</code>, assim cada vez que acessarmos o diretório "blog" do usuário estaremos na verdade acessando o "meu-blog" dentro de "var".</p>
+
+<p>Por hoje é só, não esqueça de deixar sua opinião nos comentários.</p>
+
+<p>Até mais.</p>
+

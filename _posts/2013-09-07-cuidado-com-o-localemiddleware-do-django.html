@@ -32,10 +32,16 @@ tags:
 - django
 comments: []
 ---
-<p style="text-align: left;">Depois de um tempo sem falar sobre Python&#47;Django estou aqui de volta..<&#47;p></p>
-<p style="text-align: left;">Estava trabalhando em um projeto Django hoje e me deparei com uma situa&ccedil;&atilde;o recorrente que gostaria de compartilhar.<&#47;p></p>
-<p style="text-align: left;">Como <a href="https:&#47;&#47;docs.djangoproject.com&#47;en&#47;1.1&#47;topics&#47;i18n&#47;deployment&#47;" rel="external nofollow" target="_blank">est&aacute; na documenta&ccedil;&atilde;o do projeto<&#47;a>, o Django possui uma configura&ccedil;&atilde;o para definirmos o idioma a ser utilizado em toda instala&ccedil;&atilde;o atrav&eacute;s da vari&aacute;vel <code>LANGUAGE_CODE<&#47;code>, por padr&atilde;o ela vem setada como "en-us", mas podemos alter&aacute;-la segundo nossa prefer&ecirc;ncia (como "pt-br" para portugu&ecirc;s do Brasil).<&#47;p></p>
-<p style="text-align: left;"><a id="more"></a><a id="more-2027"></a>At&eacute; aqui tudo bem, s&oacute; devemos tomar cuidado se nosso projeto possui o <code style="font-style: inherit;">django.middleware.locale.LocaleMiddleware<&#47;code> ativo na tupla "MIDDLEWARE_CLASSES" no arquivo "settings.py".<&#47;p></p>
-<p style="text-align: left;">Caso esteja, o Django ir&aacute; tentar usar o idioma de prefer&ecirc;ncia do usu&aacute;rio baseado nas requisi&ccedil;&otilde;es, ou seja, se o usu&aacute;rio usar idioma ingl&ecirc;s por exemplo e o Django tiver esse idioma ent&atilde;o ser&aacute; utilizado ele.<&#47;p></p>
-<p style="text-align: left;">Esse recurso &eacute; bom, mas as vezes queremos fixar um idioma sem levar em conta prefer&ecirc;ncias dos usu&aacute;rios, para isso basta garantir que o "LocaleMiddleware" n&atilde;o est&aacute; entre os middlewares do projeto.<&#47;p></p>
-<p style="text-align: left;">At&eacute; mais.<&#47;p></p>
+<p>Depois de um tempo sem falar sobre Python/Django estou aqui de volta..</p>
+
+<p>Estava trabalhando em um projeto Django hoje e me deparei com uma situação recorrente que gostaria de compartilhar.</p>
+
+<p>Como <a href="https://docs.djangoproject.com/en/1.1/topics/i18n/deployment/" rel="external nofollow" target="_blank">está na documentação do projeto</a>, o Django possui uma configuração para definirmos o idioma a ser utilizado em toda instalação através da variável <code>LANGUAGE_CODE</code>, por padrão ela vem setada como "en-us", mas podemos alterá-la segundo nossa preferência (como "pt-br" para português do Brasil).</p>
+
+<p>Até aqui tudo bem, só devemos tomar cuidado se nosso projeto possui o <code style="font-style: inherit;">django.middleware.locale.LocaleMiddleware</code> ativo na tupla <code>MIDDLEWARE_CLASSES</code> no arquivo <code>settings.py</code>.</p>
+
+<p>Caso esteja, o Django irá tentar usar o idioma de preferência do usuário baseado nas requisições, ou seja, se o usuário usar idioma inglês por exemplo e o Django tiver esse idioma então será utilizado ele.</p>
+
+<p>Esse recurso é bom, mas as vezes queremos fixar um idioma sem levar em conta preferências dos usuários, para isso basta garantir que o <code>LocaleMiddleware</code> não está entre os middlewares do projeto.</p>
+
+<p>Até mais.</p>

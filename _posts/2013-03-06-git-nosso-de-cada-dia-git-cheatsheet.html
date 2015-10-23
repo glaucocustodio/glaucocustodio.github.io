@@ -61,78 +61,116 @@ comments:
     \"arquivos trackeados\"?\r\n\r\nObg"
 ---
 <p>Fala pessoal! Segue abaixo uma lista com os principais comandos de git usados no dia-a-dia, com o passar do tempo vou adicionando mais..</p>
-<p><a id="more"></a><a id="more-1321"></a></p>
-<h2>Geral<&#47;h2><br />
-Adicionar todos arquivos alterados no stage (deixar pronto para serem comitados):<br />
-[code language="bash"]git add .[&#47;code]<br />
-Adicionar arquivos trackeados exclu&iacute;dos no stage:<br />
-[code language="bash"]git add -u[&#47;code]<br />
-Remover arquivos do stage (prontos para commit) que j&aacute; s&atilde;o trackeados:<br />
-[code language="bash"]git reset HEAD nome_arquivo[&#47;code]<br />
-Remover arquivos do stage que ainda n&atilde;o s&atilde;o trackeados:<br />
-[code language="bash"]git rm --cached nome_arquivo[&#47;code]<br />
-Refazer um commit quando necess&aacute;rio:<br />
-[code language="bash"]git commit -m "mensagem" --amend[&#47;code]<br />
-Exibir altera&ccedil;&otilde;es feitas depois do &uacute;ltimo commit que ainda n&atilde;o foram stageadas:<br />
-[code language="bash"]git diff[&#47;code]<br />
-Exibir altera&ccedil;&otilde;es feitas depois do &uacute;ltimo commit que j&aacute; foram stageadas:<br />
-[code language="bash"]git diff --cached[&#47;code]<br />
-Excluir um commit local (substitua o n&uacute;mero abaixo pelo seu commit)<br />
-[code language="bash"]git reset --hard 7d01b96b7fd1a1e5bfa1971b50c51e55efa75646[&#47;code]<br />
-For&ccedil;ar o git a excluir um commit no reposit&oacute;rio remoto, primeiro exclua localmente e depois rode:<br />
-[code language="bash"]git push origin HEAD --force[&#47;code]<br />
-Abrir interface gr&aacute;fica (gitk):<br />
-[code language="bash"]gitk[&#47;code]<br />
-Ver n&uacute;mero de commits por usu&aacute;rio:<br />
-[code language="bash"]git shortlog -s[&#47;code]</p>
-<h2>Stash<&#47;h2><br />
-Jogar altera&ccedil;&otilde;es para o stash:<br />
-[code language="bash"]git stash[&#47;code]<br />
-Ver itens no stash:<br />
-[code language="bash"]git stash list[&#47;code]<br />
-Aplicar o &uacute;ltimo item adicionado no stash:<br />
-[code language="bash"]git stash apply[&#47;code]<br />
-Aplicar um stash espec&iacute;fico (liste todos os stashs e substitua 'numero_do_stash' pelo n&uacute;mero desejado):<br />
-[code language="bash"]git stash apply stash@{numero_do_stash}[&#47;code]<br />
-Limpar stash:<br />
-[code language="bash"]git stash clear[&#47;code]</p>
-<h2>Branches<&#47;h2><br />
-Criar um branch:<br />
-[code language="bash"]git branch nome_branch[&#47;code]<br />
-Criar um branch e dar checkout (mudar pra ele):<br />
-[code language="bash"]git checkout -b nome_branch[&#47;code]<br />
-Criar um branch "trackeando" (fazendo acompanhar) um branch remoto:<br />
-[code language="bash"]git checkout -b nome_branch_local origin&#47;nome_branch_remoto[&#47;code]<br />
-Mudar de branch:<br />
-[code language="bash"]git checkout nome_branch[&#47;code]<br />
-Excluir um branch local:<br />
-[code language="bash"]git branch -d nome_branch[&#47;code]<br />
-Excluir um branch remoto:<br />
-[code language="bash"]git push origin --delete nome_branch[&#47;code]<br />
-Exibir todos os branches locais:<br />
-[code]git branch[&#47;code]<br />
-Exibir todos os branches locais e remotos:<br />
-[code language="bash"]git branch -a [&#47;code]<br />
-Fazer o git enxergar todos branches remotos:<br />
-[code language="bash"]git remote update[&#47;code]<br />
-Ver origens remotas definadas para o branch atual:<br />
-[code language="bash"]git remote show [&#47;code]<br />
-Excluir origem remota para o branch atual:<br />
-[code language="bash"]git remote rm nome-origin[&#47;code]<br />
-Adicionar origem remota para o branch atual:<br />
-[code language="bash"]git remote add nome-origin git@xxxbucket.com:username&#47;nome-repositorio.git[&#47;code]<br />
-Trazer ("mergear") altera&ccedil;&otilde;es de outro branch para o branch atual:<br />
-[code language="bash"]git merge nome-branch-a-ser-baixado     [&#47;code]<br />
-Ver apontamentos de branches do git, na pasta do .git, rode:<br />
-[code language="bash"]cat .git&#47;config   [&#47;code]</p>
-<h2>Configura&ccedil;&atilde;o<&#47;h2><br />
-Definir configura&ccedil;&atilde;o de nome global:<br />
-[code language="bash"]git config --global user.name "Seu nome"  [&#47;code]<br />
-Definir configura&ccedil;&atilde;o de email global:<br />
-[code language="bash"]git config --global user.email "email@dominio.com.br"[&#47;code]<br />
-Colorizar sa&iacute;das:<br />
-[code language="bash"]git config --global color.ui auto [&#47;code]<br />
-Criar alias (cria um alias "st" para "status", agora pode-se usar <code>git st<&#47;code>):<br />
-[code language="bash"]git config --global alias.st 'status'  [&#47;code]<br />
-Definir editor padr&atilde;o do git (utilizado em merges etc)<br />
-[code language="bash"]git config --global core.editor "vim"[&#47;code]</p>
+
+<h2>Geral</h2>
+<p>Adicionar todos arquivos alterados no stage (deixar pronto para serem comitados):</p>
+{% highlight bash %}git add .{% endhighlight %}
+
+<p>Adicionar arquivos trackeados excluídos no stage:</p>
+{% highlight bash %}git add -u{% endhighlight %}
+
+<p>Remover arquivos do stage (prontos para commit) que já são trackeados:</p>
+{% highlight bash %}git reset HEAD nome_arquivo{% endhighlight %}
+
+<p>Remover arquivos do stage que ainda não são trackeados:</p>
+{% highlight bash %}git rm --cached nome_arquivo{% endhighlight %}
+
+<p>Refazer um commit quando necessário:</p>
+{% highlight bash %}git commit -m "mensagem" --amend{% endhighlight %}
+
+<p>Exibir alterações feitas depois do último commit que ainda não foram stageadas:</p>
+{% highlight bash %}git diff{% endhighlight %}
+
+<p>Exibir alterações feitas depois do último commit que já foram stageadas:</p>
+{% highlight bash %}git diff --cached{% endhighlight %}
+
+<p>Excluir um commit local (substitua o número abaixo pelo seu commit)</p>
+{% highlight bash %}git reset --hard 7d01b96b7fd1a1e5bfa1971b50c51e55efa75646{% endhighlight %}
+
+<p>Forçar o git a excluir um commit no repositório remoto, primeiro exclua localmente e depois rode:</p>
+{% highlight bash %}git push origin HEAD --force{% endhighlight %}
+
+<p>Abrir interface gráfica (gitk):</p>
+{% highlight bash %}gitk{% endhighlight %}
+
+<p>Ver número de commits por usuário:</p>
+{% highlight bash %}git shortlog -s{% endhighlight %}
+
+
+<h2>Stash</h2>
+<p>Jogar alterações para o stash:</p>
+{% highlight bash %}git stash{% endhighlight %}
+
+<p>Ver itens no stash:</p>
+{% highlight bash %}git stash list{% endhighlight %}
+
+<p>Aplicar o último item adicionado no stash:</p>
+{% highlight bash %}git stash apply{% endhighlight %}
+
+<p>Aplicar um stash específico (liste todos os stashs e substitua 'numero_do_stash' pelo número desejado):</p>
+{% highlight bash %}git stash apply stash@{numero_do_stash}{% endhighlight %}
+
+<p>Limpar stash:</p>
+{% highlight bash %}git stash clear{% endhighlight %}
+
+
+<h2>Branches</h2>
+<p>Criar um branch:</p>
+{% highlight bash %}git branch nome_branch{% endhighlight %}
+
+<p>Criar um branch e dar checkout (mudar pra ele):</p>
+{% highlight bash %}git checkout -b nome_branch{% endhighlight %}
+
+<p>Criar um branch "trackeando" (fazendo acompanhar) um branch remoto:</p>
+{% highlight bash %}git checkout -b nome_branch_local origin/nome_branch_remoto{% endhighlight %}
+
+<p>Mudar de branch:</p>
+{% highlight bash %}git checkout nome_branch{% endhighlight %}
+
+<p>Excluir um branch local:</p>
+{% highlight bash %}git branch -d nome_branch{% endhighlight %}
+
+<p>Excluir um branch remoto:</p>
+{% highlight bash %}git push origin --delete nome_branch{% endhighlight %}
+
+<p>Exibir todos os branches locais:</p>
+{% highlight bash %}git branch{% endhighlight %}
+
+<p>Exibir todos os branches locais e remotos:</p>
+{% highlight bash %}git branch -a {% endhighlight %}
+
+<p>Fazer o git enxergar todos branches remotos:</p>
+{% highlight bash %}git remote update{% endhighlight %}
+
+<p>Ver origens remotas definadas para o branch atual:</p>
+{% highlight bash %}git remote show {% endhighlight %}
+
+<p>Excluir origem remota para o branch atual:</p>
+{% highlight bash %}git remote rm nome-origin{% endhighlight %}
+
+<p>Adicionar origem remota para o branch atual:</p>
+{% highlight bash %}git remote add nome-origin git@xxxbucket.com:username/nome-repositorio.git{% endhighlight %}
+
+<p>Trazer ("mergear") alterações de outro branch para o branch atual:</p>
+{% highlight bash %}git merge nome-branch-a-ser-baixado     {% endhighlight %}
+
+<p>Ver apontamentos de branches do git, na pasta do .git, rode:</p>
+{% highlight bash %}cat .git/config   {% endhighlight %}
+
+
+<h2>Configuração</h2>
+<p>Definir configuração de nome global:</p>
+{% highlight bash %}git config --global user.name "Seu nome"  {% endhighlight %}
+
+<p>Definir configuração de email global:</p>
+{% highlight bash %}git config --global user.email "email@dominio.com.br"{% endhighlight %}
+
+<p>Colorizar saídas:</p>
+{% highlight bash %}git config --global color.ui auto {% endhighlight %}
+
+<p>Criar alias (cria um alias "st" para "status", agora pode-se usar <code>git st</code>):</p>
+{% highlight bash %}git config --global alias.st 'status'  {% endhighlight %}
+
+<p>Definir editor padrão do git (utilizado em merges etc)</p>
+{% highlight bash %}git config --global core.editor "vim"{% endhighlight %}
+

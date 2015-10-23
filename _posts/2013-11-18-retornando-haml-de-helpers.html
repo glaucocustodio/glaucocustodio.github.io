@@ -36,42 +36,64 @@ comments:
   date_gmt: '2013-11-19 15:31:10 -0200'
   content: Alguns detalhes fazem toda diferen&ccedil;a. Valeu Glauco.
 ---
-<p>Voc&ecirc; que trabalha com <strong>Haml<&#47;strong> j&aacute; deve ter precisado <strong>retornar c&oacute;digo HTML de algum helper<&#47;strong>, mas como j&aacute; usa esse template engine n&atilde;o quer voltar atr&aacute;s e usar a velha linguagem de marca&ccedil;&atilde;o..</p>
-<p>Suponha que em uma view index.haml temos a chamada para o seguinte helper:<br />
-[code language="ruby"]= verbose_order_state order.state[&#47;code]<br />
-Esse m&eacute;todo deve retornar um HTML com o estado do pedido com &iacute;cones e enfeites do tipo, mas lembre-se, desejamos escrever Haml.</p>
-<p><a id="more"></a><a id="more-2142"></a>Podemos escrever nosso m&eacute;todo do helper utilizando os m&eacute;todos <code>haml_tag<&#47;code> e <code>haml_concat<&#47;code> do Haml, veja:<br />
-[code language="ruby"]def verbose_order_state(order_state)<br />
-  case order_state<br />
-    when 'waiting_approval'<br />
-      haml_tag :div, style: 'text-align: center' do<br />
-        haml_tag :i, class: 'icon-time icon-2x'<br />
-        haml_tag :br<br />
-        haml_tag :span, class: 'text-warning' do<br />
-          haml_concat 'Aguardando Aprova&ccedil;&atilde;o'<br />
-        end<br />
-      end<br />
-    ...<br />
-  end<br />
-end[&#47;code]<br />
-Desse jeito, teriamos que trocar o <code>=<&#47;code> por <code>-<&#47;code> na view index, porque segundo a <a href="http:&#47;&#47;haml.info&#47;docs&#47;yardoc&#47;Haml&#47;Helpers.html#haml_tag-instance_method" rel="external nofollow" target="_blank">documenta&ccedil;&atilde;o<&#47;a>, o m&eacute;todo <code>haml_tag<&#47;code> tem a sa&iacute;da direta no buffer, n&atilde;o permitindo o retorno:<br />
-[code language="ruby"]- verbose_order_state order.state[&#47;code]<br />
-Agora, se voc&ecirc; preferir retornar uma string inv&eacute;s de mandar direto pro buffer, pode encapsular as tags no m&eacute;todo <code>capture_haml<&#47;code>:<br />
-[code language="ruby"]def verbose_order_state(order_state)<br />
-  case order_state<br />
-    when 'waiting_approval'<br />
-      capture_haml do<br />
-        haml_tag :div, style: 'text-align: center' do<br />
-          haml_tag :i, class: 'icon-time icon-2x'<br />
-          haml_tag :br<br />
-          haml_tag :span, class: 'text-warning' do<br />
-            haml_concat 'Aguardando Aprova&ccedil;&atilde;o'<br />
-          end<br />
-        end<br />
-      end<br />
-    ...<br />
-  end<br />
-end[&#47;code]<br />
-E ent&atilde;o voltar a usar <code>=<&#47;code> inv&eacute;s de <code>-<&#47;code> na view:<br />
-[code language="ruby"]= verbose_order_state order.state[&#47;code]<br />
-Abra&ccedil;os.</p>
+<p>Você que trabalha com Haml já deve ter precisado retornar código HTML de algum helper, mas como já usa esse template engine não quer voltar atrás e usar a velha linguagem de marcação..</p>
+
+<p>Suponha que em uma view <code>index.haml</code> temos a chamada para o seguinte helper:</p>
+
+{% highlight ruby %}
+= verbose_order_state order.state
+{% endhighlight %}
+
+<p>Esse método deve retornar um HTML com o estado do pedido com ícones e enfeites do tipo, mas lembre-se, desejamos escrever Haml.</p>
+
+<p>Podemos escrever nosso método do helper utilizando os métodos <code>haml_tag</code> e <code>haml_concat</code> do Haml, veja:</p>
+{% highlight ruby %}
+def verbose_order_state(order_state)
+  case order_state
+    when 'waiting_approval'
+      haml_tag :div, style: 'text-align: center' do
+        haml_tag :i, class: 'icon-time icon-2x'
+        haml_tag :br
+        haml_tag :span, class: 'text-warning' do
+          haml_concat 'Aguardando Aprovação'
+        end
+      end
+    ...
+  end
+end
+{% endhighlight %}
+
+<p>Desse jeito, teriamos que trocar o <code>=</code> por <code>-</code> na view index, porque segundo a <a href="http://haml.info/docs/yardoc/Haml/Helpers.html#haml_tag-instance_method" rel="external nofollow" target="_blank">documentação</a>, o método <code>haml_tag</code> tem a saída direta no buffer, não permitindo o retorno:</p>
+
+{% highlight ruby %}
+- verbose_order_state order.state
+{% endhighlight %}
+
+<p>Agora, se você preferir retornar uma string invés de mandar direto pro buffer, pode encapsular as tags no método <code>capture_haml</code>:</p>
+
+{% highlight ruby %}
+def verbose_order_state(order_state)
+  case order_state
+    when 'waiting_approval'
+      capture_haml do
+        haml_tag :div, style: 'text-align: center' do
+          haml_tag :i, class: 'icon-time icon-2x'
+          haml_tag :br
+          haml_tag :span, class: 'text-warning' do
+            haml_concat 'Aguardando Aprovação'
+          end
+        end
+      end
+    ...
+  end
+end
+{% endhighlight %}
+
+<p>E então voltar a usar <code>=</code> invés de <code>-</code> na view:</p>
+
+{% highlight ruby %}
+= verbose_order_state order.state
+{% endhighlight %}
+
+<p>Abraços.</p>
+

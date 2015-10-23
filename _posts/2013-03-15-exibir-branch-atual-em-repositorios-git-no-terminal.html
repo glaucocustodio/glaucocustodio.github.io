@@ -63,38 +63,54 @@ comments:
   content: "No mac n&atilde;o funcionou...\r\nPara fazer funcionar no mac eu usei
     isso: http:&#47;&#47;martinfitzpatrick.name&#47;article&#47;add-git-branch-name-to-terminal-prompt-mac&#47;"
 ---
-<p>E ai galera, hoje venho para falar de <strong>git<&#47;strong> novamente..</p>
-<p>Voc&ecirc; j&aacute; trabalhou em um projeto com muitos branches? J&aacute; se perdeu fazendo coisas no branch errado?</p>
-<p>Nesse post irei explicar como exibir o <strong>branch atual<&#47;strong> no diret&oacute;rio do projeto, assim voc&ecirc; n&atilde;o precisa ficar rodando <code>git status<&#47;code> toda hora pra saber em qual branch est&aacute;.</p>
-<p><a id="more"></a><a id="more-1348"></a><br />
-Por padr&atilde;o n&atilde;o conseguimos ver o branch atual no reposit&oacute;rio. Quando acessamos um projeto versionado com git, obtemos a exibi&ccedil;&atilde;o padr&atilde;o, com apenas o usu&aacute;rio, host e path atual:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;terminal-sem-branch-do-git.png"><img class="alignnone size-full wp-image-1354" title="terminal-sem-branch-do-git" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;terminal-sem-branch-do-git.png" alt="" width="737" &#47;><&#47;a></p>
-<p>Para exibir o branch atual, precisamos alterar a vari&aacute;vel <code>PS1<&#47;code>. Basta adicionar o c&oacute;digo abaixo no <span style="text-decoration: underline;">fim<&#47;span> do arquivo <code>.bashrc<&#47;code> ou do <code>.bash_profile<&#47;code> (ambos se encontram na home do usu&aacute;rio <code>~&#47;<&#47;code>):<br />
-[code language="bash"]export PS1='\u@\h\[\033[01;34m\] \w\[\033[0;32m\]$(__git_ps1 " (%s)")\[\033[01;34m\]$\[\033[00m\] '[&#47;code]</p>
-<div class="note">Rode o comando <code>source ~&#47;.bashrc<&#47;code> ou <code>source ~&#47;.bash_profile<&#47;code> para recarregar e ver a altera&ccedil;&atilde;o sem precisar reiniciar o terminal.<&#47;div><br />
-S&oacute; isso e voc&ecirc; obter&aacute; o que deseja:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;exibindo-branch-do-git-no-terminal.png"><img class="alignnone size-full wp-image-1356" title="exibindo-branch-do-git-no-terminal" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;03&#47;exibindo-branch-do-git-no-terminal.png" alt="" width="735" &#47;><&#47;a></p>
-<p>Agora o branch atual, nesse caso o <code>master<&#47;code>, est&aacute; sendo exibido entre par&ecirc;nteses..</p>
-<p>Mas voc&ecirc; pode customizar tamb&eacute;m, modificando as cores e os valores exibidos. Abaixo temos uma breve rela&ccedil;&atilde;o do que podemos definir na vari&aacute;vel <code>PS1<&#47;code> para modificar nosso output. Divirta-se.</p>
-<h3>Valores<&#47;h3></p>
+<p>E ai galera, hoje venho para falar de git novamente..</p>
+
+<p>Você já trabalhou em um projeto com muitos branches? Já se perdeu fazendo coisas no branch errado?</p>
+
+<p>Nesse post irei explicar como exibir o branch atual no diretório do projeto, assim você não precisa ficar rodando <code>git status</code> toda hora pra saber em qual branch está.</p>
+
+<p>Por padrão não conseguimos ver o branch atual no repositório. Quando acessamos um projeto versionado com git, obtemos a exibição padrão, com apenas o usuário, host e path atual:</p>
+
+<a href="{{ site.baseurl }}/assets/terminal-sem-branch-do-git.png"><img class="alignnone size-full wp-image-1354" title="terminal-sem-branch-do-git" src="{{ site.baseurl }}/assets/terminal-sem-branch-do-git.png"/></a>
+
+<p>Para exibir o branch atual, precisamos alterar a variável <code>PS1</code>. Basta adicionar o código abaixo no fim do arquivo <code>.bashrc</code> ou do <code>.bash_profile</code> (ambos se encontram na home do usuário <code>~/</code>):</p>
+
+{% highlight bash %}
+export PS1='\u@\h\[\033[01;34m\] \w\[\033[0;32m\]$(__git_ps1 " (%s)")\[\033[01;34m\]$\[\033[00m\] '
+{% endhighlight %}
+
+<div class="note">Rode o comando <code>source ~/.bashrc</code> ou <code>source ~/.bash_profile</code> para recarregar e ver a alteração sem precisar reiniciar o terminal.</div>
+
+<p>Só isso e você obterá o que deseja:</p>
+
+<a href="{{ site.baseurl }}/assets/exibindo-branch-do-git-no-terminal.png"><img class="alignnone size-full wp-image-1356" title="exibindo-branch-do-git-no-terminal" src="{{ site.baseurl }}/assets/exibindo-branch-do-git-no-terminal.png"/></a>
+
+<p>Agora o branch atual, nesse caso o <code>master</code>, está sendo exibido entre parênteses..</p>
+
+<p>Mas você pode customizar também, modificando as cores e os valores exibidos. Abaixo temos uma breve relação do que podemos definir na variável <code>PS1</code> para modificar nosso output. Divirta-se.</p>
+
+<h3>Valores</h3>
 <ul>
-<li>\u: usu&aacute;rio atual<&#47;li>
-<li>\h: nome da m&aacute;quina (host)<&#47;li>
-<li>\H: nome da m&aacute;quina completo<&#47;li>
-<li>\w: diret&oacute;rio de trabalho atual<&#47;li>
-<li>\W: diret&oacute;rio de trabalho atual com o nome base (&uacute;ltimo segmento) apenas<&#47;li>
-<li>$(__git_ps1 "%s"): branch atual caso esteja em um reposit&oacute;rio git, sen&atilde;o exibe nada.<&#47;li><br />
-<&#47;ul></p>
-<h3>Cores<&#47;h3></p>
+  <li>\u: usuário atual</li>
+  <li>\h: nome da máquina (host)</li>
+  <li>\H: nome da máquina completo</li>
+  <li>\w: diretório de trabalho atual</li>
+  <li>\W: diretório de trabalho atual com o nome base (último segmento) apenas</li>
+  <li>$(__git_ps1 "%s"): branch atual caso esteja em um repositório git, senão exibe nada.</li>
+</ul>
+
+<h3>Cores</h3>
 <ul>
-<li>azul: <code>\[\033[0;34m\]<&#47;code><&#47;li>
-<li>vermelho: <code>\[\033[0;31m\]<&#47;code><&#47;li>
-<li>vermelho fluorescente: <code>\[\033[1;31m\]<&#47;code><&#47;li>
-<li>verde: <code>\[\033[0;32m\]<&#47;code><&#47;li>
-<li>verde fluorescente: <code>\[\033[1;32m\]<&#47;code><&#47;li>
-<li>branco forte: <code>\[\033[1;37m\]<&#47;code><&#47;li>
-<li>cinza: <code>\[\033[0;37m\]<&#47;code><&#47;li>
-<li>padr&atilde;o: <code>\[\033[0m\]<&#47;code><&#47;li><br />
-<&#47;ul><br />
-O tutorial acima foi testado apenas no Ubuntu 12.04 e 12.10, mas deve funcionar em outras distribui&ccedil;&otilde;es Linux e possivelmente no OS X. Relate sua experi&ecirc;ncia nos coment&aacute;rios!</p>
-<p>At&eacute; mais.</p>
+  <li>azul: <code>\[\033[0;34m\]</code></li>
+  <li>vermelho: <code>\[\033[0;31m\]</code></li>
+  <li>vermelho fluorescente: <code>\[\033[1;31m\]</code></li>
+  <li>verde: <code>\[\033[0;32m\]</code></li>
+  <li>verde fluorescente: <code>\[\033[1;32m\]</code></li>
+  <li>branco forte: <code>\[\033[1;37m\]</code></li>
+  <li>cinza: <code>\[\033[0;37m\]</code></li>
+  <li>padrão: <code>\[\033[0m\]</code></li>
+</ul>
+<p>O tutorial acima foi testado apenas no Ubuntu 12.04 e 12.10, mas deve funcionar em outras distribuições Linux e possivelmente no OS X. Relate sua experiência nos comentários!</p>
+
+<p>Até mais.</p>
+

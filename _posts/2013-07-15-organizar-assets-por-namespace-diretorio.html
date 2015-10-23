@@ -45,37 +45,66 @@ comments:
   date_gmt: '2013-09-03 12:58:15 -0300'
   content: Parab&eacute;ns cara, &oacute;tima dica
 ---
-<p>Estou aqui para falar sobre Rails e <strong>asset<&#47;strong> pipeline novamente.</p>
-<p>H&aacute; um tempo atr&aacute;s escrevi <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;18&#47;adicionar-arquivos-a-serem-compilados-no-asset-pipeline&#47;" target="_blank">esse artigo<&#47;a> mostrando como podemos adicionar arquivos a serem compilados no asset do Rails.</p>
-<p>Trabalhando em outro projeto recentemente, surgiu a necessidade de poder compilar v&aacute;rios assets gerando um arquivo s&oacute; para cada <strong>namespace<&#47;strong>.<br />
-<a id="more"></a><a id="more-1872"></a><br />
-<h2>Exemplificando<&#47;h2></p>
-<p>Imagina que temos o namespace <code>admin<&#47;code> em nossa aplica&ccedil;&atilde;o como abaixo:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;aplicacao-rails-com-namespace.png"><img class="alignnone size-full wp-image-1875" title="aplicacao-rails-com-namespace" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;aplicacao-rails-com-namespace.png" alt="" width="763" height="207" &#47;><&#47;a></p>
-<p>E na pasta <code>stylesheets<&#47;code> dos assets temos os seguintes arquivos:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;stylesheets-assets.png"><img class="alignnone size-full wp-image-1882" title="stylesheets-assets" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;stylesheets-assets.png" alt="" width="209" height="224" &#47;><&#47;a></p>
-<p>Por padr&atilde;o, o Rails ir&aacute; incluir todos assets no layout de nossa aplica&ccedil;&atilde;o (por causa do <code>require_tree .<&#47;code>)</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-inclusos.png"><img class="alignnone size-full wp-image-1883" title="assets-inclusos" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-inclusos.png" alt="" width="861" height="109" &#47;><&#47;a></p>
-<p>Mas espera ai, queremos incluir no site apenas o <code>default.css<&#47;code> e o <code>style.css<&#47;code>, o <code>admin_default.css<&#47;code> e <code>admin_style.css<&#47;code> devem ser inclusos apenas quando estivermos no layout do namespace <code>admin<&#47;code>.</p>
-<h2>Solu&ccedil;&atilde;o<&#47;h2><br />
-Como solu&ccedil;&atilde;o, podemos criar pastas com nomes que facilitam identifica&ccedil;&atilde;o e incluir dentro de cada uma os assets respectivos de seus layouts. De quebra ainda pode-se criar um diret&oacute;rio que armazenar&aacute; os assets comuns entre os layouts. Veja:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-organizados-por-namespace.png"><img class="alignnone size-full wp-image-1884" title="assets-organizados-por-namespace" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;assets-organizados-por-namespace.png" alt="" width="213" height="322" &#47;><&#47;a></p>
-<p>Veja o conte&uacute;do do <code>site_application.css<&#47;code>:<br />
-[code language="css"]&#47;*<br />
- *= require_self<br />
- *= require_tree .&#47;common<br />
- *= require_tree .&#47;site<br />
- *&#47;[&#47;code]<br />
-E do <code>admin_application.css<&#47;code>:<br />
-[code language="css"]&#47;*<br />
- *= require_self<br />
- *= require_tree .&#47;common<br />
- *= require_tree .&#47;admin<br />
- *&#47;[&#47;code]<br />
-Por fim, basta <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;12&#47;18&#47;adicionar-arquivos-a-serem-compilados-no-asset-pipeline&#47;" target="_blank">adicionar os novos arquivos para serem compilados no asset pipeline<&#47;a>:<br />
-[code language="ruby"]config.assets.precompile += ['site_application.js', 'site_application.css', 'admin_application.js', 'admin_application.css'][&#47;code]<br />
-Ao compilar os assets agora (<code>rake assets:precompile<&#47;code>) teremos o que desejamos:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;compilando-assets.png"><img class="alignnone size-full wp-image-1887" title="compilando-assets" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;07&#47;compilando-assets.png" alt="" width="1475" &#47;><&#47;a></p>
-<div class="alert">S&oacute; n&atilde;o esque&ccedil;a de alterar nos layouts o padr&atilde;o <code>application<&#47;code> pelos nomes definidos (nesse caso <code>site_application<&#47;code> para o site e <code>admin_application<&#47;code> para o layout admin).<&#47;div><br />
-Por hoje &eacute; s&oacute; pessoal. Gostaram da dica?</p>
-<p>Abra&ccedil;os.</p>
+<p>Estou aqui para falar sobre Rails e asset pipeline novamente.</p>
+
+<p>Há um tempo atrás escrevi <a href="{% post_url 2012-12-18-adicionar-arquivos-a-serem-compilados-no-asset-pipeline %}" target="_blank">esse artigo</a> mostrando como podemos adicionar arquivos a serem compilados no asset do Rails.</p>
+
+<p>Trabalhando em outro projeto recentemente, surgiu a necessidade de poder compilar vários assets gerando um arquivo só para cada namespace.</p>
+
+<h2>Exemplificando</h2>
+
+<p>Imagina que temos o namespace <code>admin</code> em nossa aplicação como abaixo:</p>
+
+<p><a href="{{ site.baseurl }}/assets/aplicacao-rails-com-namespace.png"><img class="alignnone size-full wp-image-1875" title="aplicacao-rails-com-namespace" src="{{ site.baseurl }}/assets/aplicacao-rails-com-namespace.png" alt="" width="763" height="207" /></a></p>
+
+<p>E na pasta <code>stylesheets</code> dos assets temos os seguintes arquivos:</p>
+
+<p><a href="{{ site.baseurl }}/assets/stylesheets-assets.png"><img class="alignnone size-full wp-image-1882" title="stylesheets-assets" src="{{ site.baseurl }}/assets/stylesheets-assets.png" alt="" width="209" height="224" /></a></p>
+
+<p>Por padrão, o Rails irá incluir todos assets no layout de nossa aplicação (por causa do <code>require_tree .</code>)</p>
+
+<p><a href="{{ site.baseurl }}/assets/assets-inclusos.png"><img class="alignnone size-full wp-image-1883" title="assets-inclusos" src="{{ site.baseurl }}/assets/assets-inclusos.png" alt="" width="861" height="109" /></a></p>
+
+<p>Mas espera ai, queremos incluir no site apenas o <code>default.css</code> e o <code>style.css</code>, o <code>admin_default.css</code> e <code>admin_style.css</code> devem ser inclusos apenas quando estivermos no layout do namespace <code>admin</code>.</p>
+
+<h2>Solução</h2>
+
+<p>Como solução, podemos criar pastas com nomes que facilitem a identificação e incluir dentro de cada uma os assets respectivos de seus layouts. De quebra ainda pode-se criar um diretório que armazenará os assets comuns entre os layouts. Veja:</p>
+
+<p><a href="{{ site.baseurl }}/assets/assets-organizados-por-namespace.png"><img class="alignnone size-full wp-image-1884" title="assets-organizados-por-namespace" src="{{ site.baseurl }}/assets/assets-organizados-por-namespace.png" alt="" width="213" height="322" /></a></p>
+
+<p>Veja o conteúdo do <code>site_application.css</code>:</p>
+
+{% highlight css %}
+/*
+ *= require_self
+ *= require_tree ./common
+ *= require_tree ./site
+ */
+{% endhighlight %}
+
+<p>E do <code>admin_application.css</code>:</p>
+
+{% highlight css %}
+/*
+ *= require_self
+ *= require_tree ./common
+ *= require_tree ./admin
+ */
+{% endhighlight %}
+
+<p>Por fim, basta <a href="{% post_url 2012-12-18-adicionar-arquivos-a-serem-compilados-no-asset-pipeline %}" target="_blank">adicionar os novos arquivos para serem compilados no asset pipeline</a>:</p>
+
+{% highlight ruby %}
+config.assets.precompile += ['site_application.js', 'site_application.css', 'admin_application.js', 'admin_application.css']
+{% endhighlight %}
+
+<p>Ao compilar os assets agora (<code>rake assets:precompile</code>) teremos o que desejamos:</p>
+
+<p><a href="{{ site.baseurl }}/assets/compilando-assets.png"><img class="alignnone size-full wp-image-1887" title="compilando-assets" src="{{ site.baseurl }}/assets/compilando-assets.png" alt="" width="1475" /></a></p>
+
+<div class="alert">Só não esqueça de alterar nos layouts o padrão <code>application</code> pelos nomes definidos (nesse caso <code>site_application</code> para o site e <code>admin_application</code> para o layout admin).</div>
+
+<p>Por hoje é só pessoal. Gostaram da dica?</p>
+
+<p>Abraços.</p>

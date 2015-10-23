@@ -119,57 +119,91 @@ comments:
   date_gmt: '2015-01-16 21:54:43 -0200'
   content: Excelente artigo, muito &uacute;til!
 ---
-<p>Fala pessoal, hoje venho com meu primeiro post sobre <strong>Node.js<&#47;strong>.</p>
-<p>Pra quem n&atilde;o conhece, essa &eacute; uma plataforma feita sobre a engine V8 do navegador Chrome que possibilita a constru&ccedil;&atilde;o de aplica&ccedil;&otilde;es escal&aacute;veis que funcionam muito bem em tempo real (real-time).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;05&#47;15&#47;compilando-e-instalando-node-js&#47;"><img class="alignnone size-full wp-image-1589" title="compilando-e-instalando-nodejs" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;compilando-e-instalando-nodejs.jpg?1" alt="" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-1537"></a>Meu objetivo aqui &eacute; mostrar como baixar, <strong>compilar e instalar<&#47;strong> essa ferramenta no Linux, Ubuntu 12.10 pra ser mais preciso, mas creio que deva funcionar para a maioria das outras distribui&ccedil;&otilde;es. Se voc&ecirc; &eacute; desenvolvedor e est&aacute; no Windows, sugiro que use um sistema *nix like pra isso ao inv&eacute;s de tentar outras solu&ccedil;&otilde;es alternativas.</p>
-<h2>Muitos caminhos, qual o melhor?<&#47;h2><br />
-Por ai a fora na internet encontramos muitas formas de instalar o Node, dentre algumas que vi est&atilde;o:</p>
+<p>Fala pessoal, hoje venho com meu primeiro post sobre Node.js.</p>
+
+<p>Pra quem não conhece, essa é uma plataforma feita sobre a engine V8 do navegador Chrome que possibilita a construção de aplicações escaláveis que funcionam muito bem em tempo real (real-time).</p>
+
+<a href="{{ site.baseurl }}/assets/compilando-e-instalando-nodejs.jpg?1"><img class="alignnone size-full wp-image-1589" title="compilando-e-instalando-nodejs" src="{{ site.baseurl }}/assets/compilando-e-instalando-nodejs.jpg?1" alt="" width="580" height="240" /></a>
+
+<p>Meu objetivo aqui é mostrar como baixar, compilar e instalar essa ferramenta no Linux, Ubuntu 12.10 pra ser mais preciso, mas creio que deva funcionar para a maioria das outras distribuições. Se você é desenvolvedor e está no Windows, sugiro que use um sistema *nix like pra isso ao invés de tentar outras soluções alternativas.</p>
+
+<h2>Muitos caminhos, qual o melhor?</h2>
+
+<p>Por ai a fora na internet encontramos muitas formas de instalar o Node, dentre algumas que vi estão:</p>
+
 <ul style="list-style-type: circle;">
-<li><a href="https:&#47;&#47;github.com&#47;creationix&#47;nvm&#47;" rel="external nofollow" target="_blank">Node Version Manager - NVM<&#47;a><&#47;li>
-<li><a href="https:&#47;&#47;github.com&#47;isaacs&#47;nave&#47;" rel="external nofollow" target="_blank">nave<&#47;a><&#47;li>
-<li><a href="https:&#47;&#47;github.com&#47;joyent&#47;node&#47;wiki&#47;Installing-Node.js-via-package-manager" rel="external nofollow" target="_blank">Usar package manager do sistema operacional<&#47;a><&#47;li>
-<li>Baixar uma vers&atilde;o espec&iacute;fica via git ou n&atilde;o, compilar e instalar<&#47;li><br />
-<&#47;ul><br />
-Eu particularmente gostei da forma que clonamos o reposit&oacute;rio via git, compilamos e instalamos (essa que veremos aqui). Me parece ser simples, r&aacute;pida (n&atilde;o precisa mecher com arquivos de perfil manualmente) e f&aacute;cil de atualizar.</p>
-<p>Qual a melhor forma? N&atilde;o sei, &eacute; uma quest&atilde;o de gosto, fica a seu crit&eacute;rio. Se voc&ecirc; faz de uma forma diferente escreva nos coment&aacute;rios abaixo..</p>
-<h2>Pr&eacute;-requisitos<&#47;h2><br />
-Antes de instalarmos o Node, precisamos satisfazer os pr&eacute;-requisitos necess&aacute;rios..</p>
-<p>Comece atualizando a lista de pacotes:<br />
-[code language="bash"]sudo apt-get update[&#47;code]<br />
-Instale o compilador:<br />
-[code language="bash"]sudo apt-get install build-essential[&#47;code]<br />
-Como vamos clonar o reposit&oacute;rio precisamos do git instalado, instale-o caso ainda n&atilde;o tenha:<br />
-[code language="bash"]sudo apt-get install git-core[&#47;code]<br />
-Precisamos do Python (vers&atilde;o 2.6 ou 2.7), mas isso o Linux j&aacute; tem por padr&atilde;o.. Caso precise rode:<br />
-[code language="bash"]sudo apt-get install python[&#47;code]<br />
-Instale demais bibliotecas dependentes:<br />
-[code language="bash"]sudo apt-get install g++ curl libssl-dev apache2-utils[&#47;code]</p>
-<h2>Compilando e Instalando<&#47;h2><br />
-Agora que temos o necess&aacute;rio, vamos instalar o Node.</p>
-<p>Acesse a pasta que deseja instalar, clone o reposit&oacute;rio do Node (pode demorar um pouco) e entre no diret&oacute;rio criado:<br />
-[code language="bash"]cd &#47;usr&#47;bin[&#47;code]<br />
-[code language="bash"]sudo git clone git:&#47;&#47;github.com&#47;joyent&#47;node.git[&#47;code]<br />
-[code language="bash"]cd node[&#47;code]<br />
-Acesse o <a href="http:&#47;&#47;nodejs.org&#47;" rel="external nofollow" target="_blank">site do Node<&#47;a>, veja a &uacute;ltima vers&atilde;o est&aacute;vel e mude para o branch dela:<br />
-[code language="bash"]sudo git checkout v0.10.6-release[&#47;code]<br />
-Configure o c&oacute;digo para ser compilado, compile e instale:<br />
-[code language="bash"]sudo .&#47;configure[&#47;code]<br />
-[code language="bash"]sudo make[&#47;code]<br />
-[code language="bash"]sudo make install[&#47;code]<br />
-Agora j&aacute; temos o Node.js instalado, rode <code>node -v<&#47;code> para ver a vers&atilde;o:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;vers&atilde;o-do-node.js-instalada.png"><img class="alignnone size-full wp-image-1564" title="vers&atilde;o-do-node.js-instalada" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;vers&atilde;o-do-node.js-instalada.png" alt="vers&atilde;o-do-node.js-instalada" width="735"  &#47;><&#47;a></p>
-<h2>Rodando..<&#47;h2><br />
-Finalizando, vamos fazer um teste para confirmar se est&aacute; tudo certo.</p>
-<p>Crie um arquivo chamado <code>first.js<&#47;code> e adicione o c&oacute;digo abaixo:<br />
-[code language="javascript"]var http = require('http');</p>
-<p>http.createServer(function(request, response){<br />
-  response.writeHead(200);<br />
-  response.end("Node.js rodando..");<br />
-}).listen(8080);</p>
-<p>console.log('Rodando na porta 8080');[&#47;code]<br />
-No diret&oacute;rio do arquivo criado, rode <code>node first.js<&#47;code> no terminal. Agora abra o navegador no endere&ccedil;o <code>http:&#47;&#47;localhost:8080&#47;<&#47;code> e voc&ecirc; dever&aacute; ver a seguinte mensagem:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;testando-node.js.png"><img class="alignnone size-full wp-image-1576" title="testando-node.js" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;testando-node.js.png" alt="testando-node.js" width="565" height="137" &#47;><&#47;a></p>
+  <li><a href="https://github.com/creationix/nvm/" rel="external nofollow" target="_blank">Node Version Manager - NVM</a></li>
+  <li><a href="https://github.com/isaacs/nave/" rel="external nofollow" target="_blank">nave</a></li>
+  <li><a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager" rel="external nofollow" target="_blank">Usar package manager do sistema operacional</a></li>
+  <li>Baixar uma versão específica via git ou não, compilar e instalar</li>
+</ul>
+
+<p>Eu particularmente gostei da forma que clonamos o repositório via git, compilamos e instalamos (essa que veremos aqui). Me parece ser simples, rápida (não precisa mexer com arquivos de perfil manualmente) e fácil de atualizar.</p>
+
+<p>Qual a melhor forma? Não sei, é uma questão de gosto, fica a seu critério. Se você faz de uma forma diferente escreva nos comentários abaixo..</p>
+
+<h2>Pré-requisitos</h2>
+
+<p>Antes de instalarmos o Node, precisamos satisfazer os pré-requisitos necessários..</p>
+
+<p>Comece atualizando a lista de pacotes:</p>
+{% highlight bash %}sudo apt-get update{% endhighlight %}
+<p>Instale o compilador:</p>
+{% highlight bash %}sudo apt-get install build-essential{% endhighlight %}
+<p>Como vamos clonar o repositório precisamos do git instalado, instale-o caso ainda não tenha:</p>
+{% highlight bash %}sudo apt-get install git-core{% endhighlight %}
+<p>Precisamos do Python (versão 2.6 ou 2.7), mas isso o Linux já tem por padrão.. Caso precise rode:</p>
+{% highlight bash %}sudo apt-get install python{% endhighlight %}
+<p>Instale demais bibliotecas dependentes:</p>
+{% highlight bash %}sudo apt-get install g++ curl libssl-dev apache2-utils{% endhighlight %}
+
+<h2>Compilando e Instalando</h2>
+
+<p>Agora que temos o necessário, vamos instalar o Node.</p>
+
+<p>Acesse a pasta que deseja instalar, clone o repositório do Node (pode demorar um pouco) e entre no diretório criado:</p>
+
+{% highlight bash %}cd /usr/bin{% endhighlight %}
+{% highlight bash %}sudo git clone git://github.com/joyent/node.git{% endhighlight %}
+{% highlight bash %}cd node{% endhighlight %}
+
+<p>Acesse o <a href="http://nodejs.org/" rel="external nofollow" target="_blank">site do Node</a>, veja a última versão estável e mude para o branch dela:</p>
+
+{% highlight bash %}sudo git checkout v0.10.6-release{% endhighlight %}
+
+<p>Configure o código para ser compilado, compile e instale:</p>
+
+{% highlight bash %}sudo ./configure{% endhighlight %}
+{% highlight bash %}sudo make{% endhighlight %}
+{% highlight bash %}sudo make install{% endhighlight %}
+
+<p>Agora já temos o Node.js instalado, rode <code>node -v</code> para ver a versão:</p>
+
+<a href="{{ site.baseurl }}/assets/versão-do-node.js-instalada.png"><img class="alignnone size-full wp-image-1564" title="versão-do-node.js-instalada" src="{{ site.baseurl }}/assets/versão-do-node.js-instalada.png" alt="versão-do-node.js-instalada" width="735"  /></a>
+
+<h2>Rodando..</h2>
+
+<p>Finalizando, vamos fazer um teste para confirmar se está tudo certo.</p>
+
+<p>Crie um arquivo chamado <code>first.js</code> e adicione o código abaixo:</p>
+
+{% highlight javascript %}
+var http = require('http');
+
+http.createServer(function(request, response){
+  response.writeHead(200);
+  response.end("Node.js rodando..");
+}).listen(8080);
+
+console.log('Rodando na porta 8080');
+{% endhighlight %}
+
+<p>No diretório do arquivo criado, rode <code>node first.js</code> no terminal. Agora abra o navegador no endereço <code>http://localhost:8080/</code> e você deverá ver a seguinte mensagem:</p>
+
+<a href="{{ site.baseurl }}/assets/testando-node.js.png"><img class="alignnone size-full wp-image-1576" title="testando-node.js" src="{{ site.baseurl }}/assets/testando-node.js.png" alt="testando-node.js" width="565" height="137" /></a>
+
 <p>Pronto! Estamos prontos para brincar com a ferramenta..</p>
-<p>Por hoje &eacute; s&oacute; pessoal. O que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais.</p>
+
+<p>Por hoje é só pessoal. O que vocês acharam?</p>
+
+<p>Até mais.</p>

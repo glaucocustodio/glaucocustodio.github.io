@@ -19,7 +19,7 @@ html {
 
 body {
 	background: #fcf9f9;
-  font: 24px/1.4 $helvetica;
+  font: 300 24px/1.4 $helvetica;
   color: $darkGray;
 }
 
@@ -66,6 +66,13 @@ h4 {
 
 p {
   margin: 15px 0;
+}
+
+p, div, li {
+  > code {
+    background: #EDEDED;
+    padding: 3px;
+  }
 }
 
 a {
@@ -294,6 +301,11 @@ footer {
   border-radius: 10px;
   margin: 0 0 1em;
   padding: 10px 10px 10px 45px;
+}
+.alert {
+  background: #fafbd8 url("assets/alert-icon.png") no-repeat scroll 7px 10px;
+  border: 1px solid #e2e488;
+  color: #6e7019;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

@@ -28,52 +28,96 @@ tags:
 - nginx
 comments: []
 ---
-<p>Quando instalamos o Passenger em um servidor, primeiro instalamos a gema dele:<br />
-[code language="bash"]gem install passenger[&#47;code]<br />
-Depois instalamos o servidor web (com o Passenger embutido):</p>
-<div>Apache:<&#47;div><br />
-[code language="bash"]passenger-install-apache2-module[&#47;code]</p>
-<div>Nginx:<&#47;div><br />
-[code language="bash"]rvmsudo passenger-install-nginx-module[&#47;code]<br />
-<a id="more"></a><a id="more-2044"></a>Ap&oacute;s a instala&ccedil;&atilde;o, o Passenger ir&aacute; informar as configura&ccedil;&otilde;es que definem a vers&atilde;o do Ruby a ser utilizada em todas aplica&ccedil;&otilde;es por padr&atilde;o.</p>
-<div>Para Apache teremos algo como:<&#47;div><br />
-[code language="apache"]LoadModule passenger_module &#47;home&#47;username&#47;.rvm&#47;gems&#47;ruby-2.0.0-p247&#47;gems&#47;passenger-4.0.14&#47;buildout&#47;apache2&#47;mod_passenger.so<br />
-PassengerRoot &#47;home&#47;username&#47;.rvm&#47;gems&#47;ruby-2.0.0-p247&#47;gems&#47;passenger-4.0.14<br />
-PassengerRuby &#47;home&#47;username&#47;.rvm&#47;wrappers&#47;ruby-2.0.0-p247&#47;ruby[&#47;code]</p>
-<div>Para o Nginx teremos algo como:<&#47;div><br />
-[code language="nginx"]passenger_root &#47;home&#47;username&#47;.rvm&#47;gems&#47;ruby-2.0.0-p247&#47;gems&#47;passenger-4.0.5;<br />
-passenger_ruby &#47;home&#47;username&#47;.rvm&#47;wrappers&#47;ruby-2.0.0-p247&#47;ruby;[&#47;code]<br />
-Agora imagina que temos duas vers&otilde;es do Ruby instaladas em nosso servidor (<code>rvm list<&#47;code>):<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;09&#47;vers&otilde;es-do-ruby.png"><img class="alignnone size-full wp-image-2061" title="vers&otilde;es-do-ruby" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;09&#47;vers&otilde;es-do-ruby.png" alt="" width="263" &#47;><&#47;a></p>
-<p>Por padr&atilde;o, o servidor web ir&aacute; executar as aplica&ccedil;&otilde;es definidas nos vhosts com a vers&atilde;o do Ruby definida na vari&aacute;vel <code>PassengerRuby<&#47;code> do Apache e <code>passenger_ruby<&#47;code> do Nginx (em meu exemplo ruby-2.0.0-p247).</p>
-<h2>Como fazer para rodar m&uacute;ltiplas vers&otilde;es do Ruby ent&atilde;o?<&#47;h2><br />
-Gra&ccedil;as a <a href="http:&#47;&#47;blog.phusion.nl&#47;2013&#47;05&#47;06&#47;phusion-passenger-4-0-1-final-release&#47;" rel="external nofollow" target="_blank">vers&atilde;o 4 do Passenger<&#47;a>, agora podemos escolher vers&atilde;o do Ruby a ser executada por aplica&ccedil;&atilde;o, basta setar a diretiva <code>PassengerRuby<&#47;code> para Apache e <code>passenger_ruby<&#47;code> para Nginx com o caminho do bin&aacute;rio da vers&atilde;o desejada.</p>
-<p>O Passenger possui um helper para que usu&aacute;rios do RVM possam ver o caminho do bin&aacute;rio da vers&atilde;o atual do Ruby, basta rodar <code>passenger-config --ruby-command<&#47;code> e <code>passenger-config --root<&#47;code> pra saber o caminho do Passenger.</p>
-<div class="note">Lembre-se que voc&ecirc; deve fazer isso estando na vers&atilde;o do Ruby que deseja executar apenas em algumas aplica&ccedil;&otilde;es. Use <code>rvm use versao-do-ruby<&#47;code> para trocar de vers&atilde;o do Ruby.<&#47;div><br />
-Caso voc&ecirc; obtenha o erro abaixo, ser&aacute; necess&aacute;rio instalar o programa <code>passenger-config<&#47;code>, fa&ccedil;a isso usando <code>sudo apt-get install libapache2-mod-passenger<&#47;code>.<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;09&#47;passenger-config-ruby-comand.png"><img class="alignnone size-full wp-image-2095" title="passenger-config --ruby-comand" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;09&#47;passenger-config-ruby-comand.png" alt="" width="811" &#47;><&#47;a></p>
-<p>Ao executar o comando e obter um erro como esse:<br />
-[code language="bash"]&#47;home&#47;ubuntu&#47;.rvm&#47;rubies&#47;ruby-1.9.3-p392&#47;lib&#47;ruby&#47;site_ruby&#47;1.9.1&#47;rubygems&#47;custom_require.rb:36:in `require': cannot load such file -- phusion_passenger&#47;constants (LoadError)<br />
-from &#47;home&#47;ubuntu&#47;.rvm&#47;rubies&#47;ruby-1.9.3-p392&#47;lib&#47;ruby&#47;site_ruby&#47;1.9.1&#47;rubygems&#47;custom_require.rb:36:in `require'<br />
-from &#47;usr&#47;sbin&#47;passenger-config:27:in[&#47;code]<br />
-Voc&ecirc; dever&aacute; instalar a gema do Passenger na vers&atilde;o atual do Ruby, fa&ccedil;a isso atrav&eacute;s de <code>gem install passenger<&#47;code> (se voc&ecirc; est&aacute; usando Capistrano e n&atilde;o est&aacute; fazendo deploys como super usu&aacute;rio, provavelmente precisar&aacute; instalar a gema como sudoer primeiro e depois no usu&aacute;rio do deploy).</p>
-<p>Ao final, teremos algo como isso em nosso arquivo de vhosts do Apache para uma aplica&ccedil;&atilde;o Rails:<br />
-[code language="apache"]<br />
-<VirtualHost *:80><br />
- ServerName meusite.com<br />
- DocumentRoot &#47;home&#47;username&#47;www&#47;meusite&#47;current&#47;public&#47;<br />
- <Directory &#47;home&#47;username&#47;www&#47;meusite&#47;current&#47;public&#47;><br />
-   Options -MultiViews<br />
-   AllowOverride all<br />
-   PassengerRuby &#47;home&#47;username&#47;.rvm&#47;wrappers&#47;ruby-1.9.3-p392&#47;ruby<br />
- <&#47;Directory><br />
-<&#47;VirtualHost><br />
-[&#47;code]<br />
-Apenas a aplica&ccedil;&atilde;o com a diretiva <code>PassengerRuby<&#47;code> usar&aacute; outra vers&atilde;o do Ruby, nesse caso, a 1.9.3 p392.</p>
-<h2>Poss&iacute;veis erros e solu&ccedil;&otilde;es durante o processo<&#47;h2></p>
+<p>Quando instalamos o Passenger em um servidor, primeiro instalamos a gema dele:</p>
+
+{% highlight bash %}
+gem install passenger
+{% endhighlight %}
+
+<p>Depois instalamos o servidor web (com o Passenger embutido):</p>
+
+<p>Apache:</p>
+{% highlight bash %}
+passenger-install-apache2-module
+{% endhighlight %}
+
+<p>Nginx:</p>
+{% highlight bash %}
+rvmsudo passenger-install-nginx-module
+{% endhighlight %}
+
+<p>Após a instalação, o Passenger irá informar as configurações que definem a versão do Ruby a ser utilizada em todas aplicações por padrão.</p>
+
+<div>Para Apache teremos algo como:</div>
+
+{% highlight apache %}
+LoadModule passenger_module /home/username/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.14/buildout/apache2/mod_passenger.so 
+PassengerRoot /home/username/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.14 
+PassengerRuby /home/username/.rvm/wrappers/ruby-2.0.0-p247/ruby
+{% endhighlight %}
+
+<div>Para o Nginx teremos algo como:</div>
+
+{% highlight nginx %}
+passenger_root /home/username/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.5;
+passenger_ruby /home/username/.rvm/wrappers/ruby-2.0.0-p247/ruby;
+{% endhighlight %}
+
+<p>Agora imagina que temos duas versões do Ruby instaladas em nosso servidor (<code>rvm list</code>):</p>
+<p><a href="{{ site.baseurl }}/assets/versões-do-ruby.png"><img class="alignnone size-full wp-image-2061" title="versões-do-ruby" src="{{ site.baseurl }}/assets/versões-do-ruby.png" alt="" width="263" /></a></p>
+
+<p>Por padrão, o servidor web irá executar as aplicações definidas nos vhosts com a versão do Ruby definida na variável <code>PassengerRuby</code> do Apache e <code>passenger_ruby</code> do Nginx (em meu exemplo ruby-2.0.0-p247).</p>
+
+<h2>Como fazer para rodar múltiplas versões do Ruby então?</h2>
+
+<p>Graças a <a href="http://blog.phusion.nl/2013/05/06/phusion-passenger-4-0-1-final-release/" rel="external nofollow" target="_blank">versão 4 do Passenger</a>, agora podemos escolher versão do Ruby a ser executada por aplicação, basta setar a diretiva <code>PassengerRuby</code> para Apache e <code>passenger_ruby</code> para Nginx com o caminho do binário da versão desejada.</p>
+
+<p>O Passenger possui um helper para que usuários do RVM possam ver o caminho do binário da versão atual do Ruby, basta rodar <code>passenger-config --ruby-command</code> e <code>passenger-config --root</code> pra saber o caminho do Passenger.</p>
+
+<div class="note">
+Lembre-se que você deve fazer isso estando na versão do Ruby que deseja executar apenas em algumas aplicações. Use <code>rvm use versao-do-ruby</code> para trocar de versão do Ruby.
+</div>
+
+<p>Caso você obtenha o erro abaixo, será necessário instalar o programa <code>passenger-config</code>, faça isso usando <code>sudo apt-get install libapache2-mod-passenger</code>.</p>
+
+<p><a href="{{ site.baseurl }}/assets/passenger-config-ruby-comand.png"><img class="alignnone size-full wp-image-2095" title="passenger-config --ruby-comand" src="{{ site.baseurl }}/assets/passenger-config-ruby-comand.png" alt="" width="811" /></a></p>
+
+<p>Ao executar o comando e obter um erro como esse:</p>
+
+{% highlight bash %}
+/home/ubuntu/.rvm/rubies/ruby-1.9.3-p392/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- phusion_passenger/constants (LoadError)
+from /home/ubuntu/.rvm/rubies/ruby-1.9.3-p392/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+from /usr/sbin/passenger-config:27:in
+{% endhighlight %}
+
+<p>Você deverá instalar a gema do Passenger na versão atual do Ruby, faça isso através de <code>gem install passenger</code> (se você está usando Capistrano e não está fazendo deploys como super usuário, provavelmente precisará instalar a gema como sudoer primeiro e depois no usuário do deploy).</p>
+
+<p>Ao final, teremos algo como isso em nosso arquivo de vhosts do Apache para uma aplicação Rails:</p>
+
+{% highlight apache %}
+<VirtualHost *:80>
+ ServerName meusite.com
+ DocumentRoot /home/username/www/meusite/current/public/
+ <Directory /home/username/www/meusite/current/public/>
+   Options -MultiViews
+   AllowOverride all
+   PassengerRuby /home/username/.rvm/wrappers/ruby-1.9.3-p392/ruby
+ </Directory>
+</VirtualHost>
+{% endhighlight %}
+
+<p>Apenas a aplicação com a diretiva <code>PassengerRuby</code> usará outra versão do Ruby, nesse caso, a 1.9.3 p392.</p>
+
+<h2>Possíveis erros e soluções durante o processo</h2>
+
 <ul style="list-style-type: circle;">
-<li>Erros com gemas n&atilde;o encontradas (obtendo erro 500 ao acessar aplica&ccedil;&atilde;o): acesse a pasta do projeto com o usu&aacute;rio do Capistrano que faz deploy e rode um <code>bundle install<&#47;code> para instalar as gemas (sim, o Capistrano armazena as gemas na pasta "shared", mas isso resolveu).<br />
-<&#47;li></p>
-<li>Capistrano rolling back ao tentar fazer um deploy: no servidor, exclua a pasta do projeto, depois rode um <code>cap env deploy:setup<&#47;code> para preparar o ambiente, <code>cap env deploy:check<&#47;code> para verificar se est&aacute; tudo ok e <code>cap env deploy<&#47;code> para fazer novo deploy.<&#47;li>
-<li>Mensagem "module passenger_module is already loaded, skipping" ao reiniciar o Apache: isso pode acontecer pois o Apache j&aacute; est&aacute; carregando os m&oacute;dulos do Passenger e voc&ecirc; est&aacute; tentando carregar novamente. Basta colocar as diretivas de path do Passenger e Ruby nos arquivos "passenger.load" e "passenger.conf" respectivamente dentro da pasta "mods-enabled", <a href="http:&#47;&#47;www.duccioarmenise.net&#47;ruby-on-rails&#47;warn-module-passenger_module-is-already-loaded&#47;" rel="external nofollow" target="_blank">veja mais aqui<&#47;a>.<&#47;li><br />
-<&#47;ul></p>
+  <li>
+    Erros com gemas não encontradas (obtendo erro 500 ao acessar aplicação): acesse a pasta do projeto com o usuário do Capistrano que faz deploy e rode um <code>bundle install</code> para instalar as gemas (sim, o Capistrano armazena as gemas na pasta "shared", mas isso resolveu).
+  </li>
+  <li>
+    Capistrano rolling back ao tentar fazer um deploy: no servidor, exclua a pasta do projeto, depois rode um <code>cap env deploy:setup</code> para preparar o ambiente, <code>cap env deploy:check</code> para verificar se está tudo ok e <code>cap env deploy</code> para fazer novo deploy.
+  </li>
+  <li>
+    Mensagem "module passenger_module is already loaded, skipping" ao reiniciar o Apache: isso pode acontecer pois o Apache já está carregando os módulos do Passenger e você está tentando carregar novamente. Basta colocar as diretivas de path do Passenger e Ruby nos arquivos "passenger.load" e "passenger.conf" respectivamente dentro da pasta "mods-enabled", <a href="http://www.duccioarmenise.net/ruby-on-rails/warn-module-passenger_module-is-already-loaded/" rel="external nofollow" target="_blank">veja mais aqui</a>.
+  </li>
+</ul>

@@ -66,23 +66,40 @@ comments:
   date_gmt: '2015-04-13 01:51:26 -0300'
   content: Obrigado! O simples e conciso que resolve.
 ---
-<p>Quem usa <strong>git<&#47;strong>, sabe que ele por padr&atilde;o s&oacute; gerencia e versiona arquivos, e n&atilde;o diret&oacute;rios, isso significa que caso voc&ecirc; tenha um <strong>diret&oacute;rio vazio<&#47;strong> em seu reposit&oacute;rio ele n&atilde;o identificar&aacute; mudan&ccedil;as..</p>
-<p>Agora imagine que algum diret&oacute;rio de nossa aplica&ccedil;&atilde;o pode ficar vazio por vezes, o que &eacute; muito comum. Como fazer para o git trackear e reconhecer a pasta sem conte&uacute;do?</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;05&#47;02&#47;trackear-acompanhar-diretorios-vazios-com-git&#47;"><img class="alignnone size-full wp-image-1602" title="git" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;05&#47;git.jpg" alt="" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-1493"></a>Geralmente o pessoal cria um arquivo vazio com nome <code>empty<&#47;code> ou <code>.gitkeep<&#47;code> pra isso, assim o git entender&aacute; que a pasta n&atilde;o est&aacute; vazia e ent&atilde;o acompanhar&aacute;.</p>
-<p>Mas e se eu tiver um diret&oacute;rio que vive com arquivos tempor&aacute;rios cujos quais n&atilde;o posso apagar, n&atilde;o posso trackear com o git para n&atilde;o ficar enchendo o reposit&oacute;rio remoto com lixo e que deve permanecer existindo (mesmo vazio) quando comito? Eis a solu&ccedil;&atilde;o:</p>
-<p>Crie um arquivo <code>.gitignore<&#47;code> no diret&oacute;rio que ficar&aacute; os arquivos tempor&aacute;rios e dentro dele coloque a regra que o git utilizar&aacute; para ignorar os arquivos tempor&aacute;rios e logo abaixo adicione o trecho: <code>!.gitignore<&#47;code></p>
-<p>Veja alguns exemplos abaixo de <code>.gitignore<&#47;code> para manter o diret&oacute;rio vazio trackeado excluindo o conte&uacute;do:</p>
-<p>Para ignorar todos arquivos:<br />
-[code language="bash"]# ignorar todos<br />
-*<br />
-# exceto o .gitignore<br />
-!.gitignore[&#47;code]<br />
-Ignorar todos arquivos do tipo JPG:<br />
-[code language="bash"]# ignorar todos JPG<br />
-*.jpg<br />
-# exceto o .gitignore<br />
-!.gitignore[&#47;code]<br />
-Assim por diante.. Basta colocar a express&atilde;o desejada e pronto.</p>
-<p>O que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais.</p>
+<p>Quem usa git, sabe que ele por padrão só gerencia e versiona arquivos, e não diretórios, isso significa que caso você tenha um diretório vazio em seu repositório ele não identificará mudanças..</p>
+
+<p>Agora imagine que algum diretório de nossa aplicação pode ficar vazio por vezes, o que é muito comum. Como fazer para o git trackear e reconhecer a pasta sem conteúdo?</p>
+
+<a href="{{ site.baseurl }}/assets/git.jpg"><img class="alignnone size-full wp-image-1602" title="git" src="{{ site.baseurl }}/assets/git.jpg" alt="" width="580" height="240" /></a>
+
+<p>Geralmente o pessoal cria um arquivo vazio com nome <code>empty</code> ou <code>.gitkeep</code> pra isso, assim o git entenderá que a pasta não está vazia e então acompanhará.</p>
+
+<p>Mas e se eu tiver um diretório que vive com arquivos temporários cujos quais não posso apagar, não posso trackear com o git para não ficar enchendo o repositório remoto com lixo e que deve permanecer existindo (mesmo vazio) quando comito? Eis a solução:</p>
+
+<p>Crie um arquivo <code>.gitignore</code> no diretório que ficará os arquivos temporários e dentro dele coloque a regra que o git utilizará para ignorar os arquivos temporários e logo abaixo adicione o trecho: <code>!.gitignore</code></p>
+
+<p>Veja alguns exemplos abaixo de <code>.gitignore</code> para manter o diretório vazio trackeado excluindo o conteúdo:</p>
+
+<p>Para ignorar todos arquivos:</p>
+
+{% highlight bash %}
+# ignorar todos
+*
+# exceto o .gitignore
+!.gitignore
+{% endhighlight %}
+
+<p>Ignorar todos arquivos do tipo JPG:</p>
+
+{% highlight bash %}
+# ignorar todos JPG
+*.jpg
+# exceto o .gitignore
+!.gitignore
+{% endhighlight %}
+
+<p>Assim por diante.. Basta colocar a expressão desejada e pronto.</p>
+
+<p>O que vocês acharam?</p>
+
+<p>Até mais.</p>

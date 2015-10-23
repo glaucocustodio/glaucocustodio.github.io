@@ -33,21 +33,32 @@ comments:
   date_gmt: '2014-05-14 14:14:38 -0300'
   content: "Parab&eacute;ns. &Oacute;timo blog. \r\nContinue com as dicas."
 ---
-<p>Voc&ecirc; que j&aacute; trabalhou em mais de um projeto Rails ao mesmo tempo na mesma m&aacute;quina sabe o quanto &eacute; chato ter que ficar definindo a porta toda hora para subir o servidor..</p>
-<p>Por padr&atilde;o o Ruby on Rails roda na porta 3000, mas caso voc&ecirc; precise rodar outro projeto ao mesmo tempo, ter&aacute; que definir outra porta, como por exemplo: <code>rails s -p 3001.<&#47;code></p>
-<p><a id="more"></a><a id="more-1442"></a>A minha dica de hoje &eacute; mostrar como fazer para fixar uma porta por projeto, assim, toda vez que voc&ecirc; rodar <code>rails s<&#47;code> (apenas) na pasta do projeto, o Rails subir&aacute; o servidor na porta definida.</p>
-<p>Abra o arquivo <code>config&#47;boot.rb<&#47;code> e adicione o c&oacute;digo abaixo no final:<br />
-[code language="ruby" linenos="8" hl_lines="6"]require 'rails&#47;commands&#47;server'<br />
-module Rails<br />
-  class Server<br />
-    alias :default_options_alias :default_options<br />
-    def default_options<br />
-      default_options_alias.merge!(:Port => 3001)<br />
-    end<br />
-  end<br />
-end[&#47;code]<br />
-No caso acima, defino a porta 3001 como padr&atilde;o.</p>
-<p>Agora &eacute; s&oacute; subir o servidor e veja que temos o que desejamos:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;rails-com-porta-definida1.png"><img class="alignnone size-full wp-image-1455" title="rails-com-porta-definida" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;04&#47;rails-com-porta-definida1.png" alt="rails-com-porta-definida" width="735" &#47;><&#47;a></p>
-<p>O que voc&ecirc; achou?</p>
-<p>At&eacute; mais.</p>
+<p>Você que já trabalhou em mais de um projeto Rails ao mesmo tempo na mesma máquina sabe o quanto é chato ter que ficar definindo a porta toda hora para subir o servidor..</p>
+
+<p>Por padrão o Ruby on Rails roda na porta 3000, mas caso você precise rodar outro projeto ao mesmo tempo, terá que definir outra porta, como por exemplo: <code>rails s -p 3001</code>.</p>
+
+<p>A minha dica de hoje é mostrar como fazer para fixar uma porta por projeto, assim, toda vez que você rodar <code>rails s</code> (apenas) na pasta do projeto, o Rails subirá o servidor na porta definida.</p>
+
+<p>Abra o arquivo <code>config/boot.rb</code> e adicione o código abaixo no final:</p>
+
+{% highlight ruby %}
+require 'rails/commands/server'
+module Rails
+  class Server
+    alias :default_options_alias :default_options
+    def default_options
+      default_options_alias.merge!(:Port => 3001)
+    end
+  end
+end
+{% endhighlight %}
+
+<p>No caso acima, defino a porta 3001 como padrão.</p>
+
+<p>Agora é só subir o servidor e veja que temos o que desejamos:</p>
+
+<a href="{{ site.baseurl }}/assets/rails-com-porta-definida1.png"><img class="alignnone size-full wp-image-1455" title="rails-com-porta-definida" src="{{ site.baseurl }}/assets/rails-com-porta-definida1.png" alt="rails-com-porta-definida" width="735" /></a>
+
+<p>O que você achou?</p>
+
+<p>Até mais.</p>
