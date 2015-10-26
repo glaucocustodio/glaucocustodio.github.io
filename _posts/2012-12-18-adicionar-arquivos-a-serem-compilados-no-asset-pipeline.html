@@ -29,23 +29,32 @@ tags:
 - asset pipeline
 comments: []
 ---
-<p>Hoje estou aqui para dar uma dica r&aacute;pida sobre <strong>Asset Pipeline<&#47;strong> do <strong>Ruby on Rails<&#47;strong> 3.1+ que pode ser &uacute;til.</p>
-<p>Acabei agora de pouco de fazer o deploy da minha primeira aplica&ccedil;&atilde;o Rails na <a title="https:&#47;&#47;openshift.redhat.com&#47;" href="https:&#47;&#47;openshift.redhat.com&#47;" rel="external nofollow" target="_blank">OpenShift<&#47;a> (que recomendo) e enquanto estava nesse processo uma das coisas que aprendi, &eacute; que por padr&atilde;o, quando executamos o comando <code>rake assets:precompile<&#47;code>, s&oacute; s&atilde;o compilados os arquivos <code>application.js<&#47;code> e <code>application.css<&#47;code>.</p>
-<p><a id="more"></a><a id="more-883"></a></p>
-<p>Minha aplica&ccedil;&atilde;o possui dois layouts, o <code>application<&#47;code> que &eacute; o padr&atilde;o usado no site e o <code>admin<&#47;code> que &eacute; usado apenas na &aacute;rea administrativa, dentro deles tenho respectivamente as seguintes chamadas:</p>
-<p>[code language="erb"]<br />
-<%= stylesheet_link_tag    "application", :media => "all" %><br />
-<%= javascript_include_tag "application" %><br />
-[&#47;code]</p>
-<p>[code language="erb"]<br />
-<%= stylesheet_link_tag "admin", :media => "all" %><br />
-<%= javascript_include_tag "admin" %><br />
-[&#47;code]</p>
-<p>No arquivo <code>application<&#47;code> (duas primeiras linhas) tenho a chamada para os assets do site e no <code>admin<&#47;code> (duas &uacute;ltimas) chamo os assets da &aacute;rea restrita.</p>
-<p>Para fazer deploy, compilei usando o comando <code>rake assets:precompile<&#47;code> como deve ser feito. Por&eacute;m, ao acessar uma url administrativa do site recebi um erro, fui olhar no log e constatei que os arquivos <code>admin<&#47;code> n&atilde;o estavam sendo compilados, mas minha aplica&ccedil;&atilde;o esperava eles.</p>
-<p>Pesquisando na internet e lendo a documenta&ccedil;&atilde;o oficial do Rails vi que precisaria especificar quais arquivos mais gostaria de compilar al&eacute;m do padr&atilde;o e cheguei a resposta, basta adicionar a linha abaixo no <code>application.rb<&#47;code>:</p>
-<p>[code language="ruby"]<br />
-config.assets.precompile += ['admin.js', 'admin.css']<br />
-[&#47;code]</p>
+<p>Hoje estou aqui para dar uma dica rápida sobre Asset Pipeline do Ruby on Rails 3.1+ que pode ser útil.</p>
+
+<p>Acabei agora de pouco de fazer o deploy da minha primeira aplicação Rails na <a title="https://openshift.redhat.com/" href="https://openshift.redhat.com/" rel="external nofollow" target="_blank">OpenShift</a> (que recomendo) e enquanto estava nesse processo uma das coisas que aprendi, é que por padrão, quando executamos o comando <code>rake assets:precompile</code>, só são compilados os arquivos <code>application.js</code> e <code>application.css</code>.</p>
+
+<p>Minha aplicação possui dois layouts, o <code>application</code> que é o padrão usado no site e o <code>admin</code> que é usado apenas na área administrativa, dentro deles tenho respectivamente as seguintes chamadas:</p>
+
+{% highlight erb %}
+<%= stylesheet_link_tag "application", :media => "all" %>
+<%= javascript_include_tag "application" %>
+{% endhighlight %}
+
+{% highlight erb %}
+<%= stylesheet_link_tag "admin", :media => "all" %>
+<%= javascript_include_tag "admin" %>
+{% endhighlight %}
+
+<p>No arquivo <code>application</code> (duas primeiras linhas) tenho a chamada para os assets do site e no <code>admin</code> (duas últimas) chamo os assets da área restrita.</p>
+
+Para fazer deploy, compilei usando o comando <code>rake assets:precompile</code> como deve ser feito. Porém, ao acessar uma url administrativa do site recebi um erro, fui olhar no log e constatei que os arquivos <code>admin</code> não estavam sendo compilados, mas minha aplicação esperava eles.
+
+<p>Pesquisando na internet e lendo a documentação oficial do Rails vi que precisaria especificar quais arquivos mais gostaria de compilar além do padrão e cheguei a resposta, basta adicionar a linha abaixo no <code>application.rb</code>:</p>
+
+{% highlight ruby %}
+config.assets.precompile += ['admin.js', 'admin.css']
+{% endhighlight %}
+
 <p>Simples assim.</p>
-<p>Abra&ccedil;os!</p>
+
+<p>Abraços!</p>

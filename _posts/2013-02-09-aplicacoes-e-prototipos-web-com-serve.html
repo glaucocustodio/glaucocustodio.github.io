@@ -81,37 +81,63 @@ comments:
   date_gmt: '2014-10-10 15:08:04 -0300'
   content: "&Oacute;tima ferramenta para prototipa&ccedil;&atilde;o. Vou usar!"
 ---
-<p>Fala galera, hoje estou aqui para falar de uma ferramenta que conheci h&aacute; pouco tempo e que achei bem interessante, a gem <a href="http:&#47;&#47;get-serve.com&#47;" rel="external nofollow" target="_blank">Serve<&#47;a>.</p>
-<p>Voc&ecirc; j&aacute; precisou criar um prot&oacute;tipo ou um pequeno site para trabalho de escola, faculdade ou at&eacute; mesmo no servi&ccedil;o? Se j&aacute;, ent&atilde;o esse post &eacute; pra voc&ecirc;.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;02&#47;09&#47;aplicacoes-e-prototipos-web-com-serve&#47;"><img class="alignnone size-full wp-image-1190" title="Aplica&ccedil;&otilde;es e Prot&oacute;tipos Web com Serve" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;serve-cover.jpg" alt="Aplica&ccedil;&otilde;es e Prot&oacute;tipos Web com Serve" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-1170"></a>Ano passado mesmo, um professor da faculdade pediu para que cada grupo da sala fizesse um site puro em HTML de at&eacute; cinco p&aacute;ginas.</p>
-<p>Imagina a frusta&ccedil;&atilde;o ter que copiar uma p&aacute;gina pronta, colar e renomear para come&ccedil;ar a fazer outra. Sem contar quando precisa mudar algo no layout (header e footer por exemplo), l&aacute; vamos n&oacute;s ent&atilde;o abrindo HTML por HTML para alterar.</p>
-<p>Pra quem est&aacute; acostumado trabalhar com linguagens din&acirc;micas isso &eacute; um trabalho chato e muito desgastante.</p>
-<p>Por isso venho apresentar o <strong>Serve<&#47;strong>, segundo a pr&oacute;pria documenta&ccedil;&atilde;o oficial, <em>ele &eacute; um pequeno servidor web baseado em Rack e um framework de prototipagem r&aacute;pida para aplica&ccedil;&otilde;es web<&#47;em> <em>(especificamente Ruby on Rails)<&#47;em>.</p>
-<p>Com ele podemos criar e trabalhar em um projeto usando tecnologias como Sass, Compass, CoffeeScript, Markdown, Textile, Haml, ERB, Slim etc, al&eacute;m de recursos como views, layouts e partials.</p>
-<p>Depois de finalizar o projeto, voc&ecirc; pode facilmente exportar para HTML e CSS. Assim voc&ecirc; agiliza o desenvolvimento e minimiza seu trabalho.</p>
-<h2>Instala&ccedil;&atilde;o e Estrutura<&#47;h2><br />
-Como o Serve &eacute; um gem, tudo o que precisamos fazer para instalar &eacute; rodar o comando <code>gem install serve<&#47;code> no terminal.</p>
-<p>Vamos criar um projeto agora, acesse a pasta onde ele ficar&aacute; e rode o comando <code>serve create nome-do-projeto<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;criando-projeto-serve.jpg"><img class="alignnone size-full wp-image-1174" title="criando-projeto-serve" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;criando-projeto-serve.jpg" alt="criando-projeto-serve" width="745" height="462" &#47;><&#47;a></p>
+<p>Fala galera, hoje estou aqui para falar de uma ferramenta que conheci há pouco tempo e que achei bem interessante, a gem <a href="http://get-serve.com/" rel="external nofollow" target="_blank">Serve</a>.</p>
+
+<p>Você já precisou criar um protótipo ou um pequeno site para trabalho de escola, faculdade ou até mesmo no serviço? Se já, então esse post é pra você.</p>
+
+<a href="{{ site.baseurl }}/assets/serve-cover.jpg"><img class="alignnone size-full wp-image-1190" title="Aplicações e Protótipos Web com Serve" src="{{ site.baseurl }}/assets/serve-cover.jpg" alt="Aplicações e Protótipos Web com Serve" /></a>
+
+<p>Ano passado mesmo, um professor da faculdade pediu para que cada grupo da sala fizesse um site puro em HTML de até cinco páginas.</p>
+
+<p>Imagina a frustação ter que copiar uma página pronta, colar e renomear para começar a fazer outra. Sem contar quando precisa mudar algo no layout (header e footer por exemplo), lá vamos nós então abrindo HTML por HTML para alterar.</p>
+
+<p>Pra quem está acostumado trabalhar com linguagens dinâmicas isso é um trabalho chato e muito desgastante.</p>
+
+<p>Por isso venho apresentar o Serve, segundo a própria documentação oficial, <em>ele é um pequeno servidor web baseado em Rack e um framework de prototipagem rápida para aplicações web</em> <em>(especificamente Ruby on Rails)</em>.</p>
+
+<p>Com ele podemos criar e trabalhar em um projeto usando tecnologias como Sass, Compass, CoffeeScript, Markdown, Textile, Haml, ERB, Slim etc, além de recursos como views, layouts e partials.</p>
+
+<p>Depois de finalizar o projeto, você pode facilmente exportar para HTML e CSS. Assim você agiliza o desenvolvimento e minimiza seu trabalho.</p>
+
+<h2>Instalação e Estrutura</h2>
+
+<p>Como o Serve é um gem, tudo o que precisamos fazer para instalar é rodar o comando <code>gem install serve</code> no terminal.</p>
+
+<p>Vamos criar um projeto agora, acesse a pasta onde ele ficará e rode o comando <code>serve create nome-do-projeto</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/criando-projeto-serve.jpg"><img class="alignnone size-full wp-image-1174" title="criando-projeto-serve" src="{{ site.baseurl }}/assets/criando-projeto-serve.jpg" alt="criando-projeto-serve"/></a>
+
 <p>Vamos analisar a estrutura criada:</p>
 <ul>
-<li>public: onde deve ser armazenado todos arquivos p&uacute;blicos, como imagens, Javascript e CSS.<&#47;li>
-<li>views: onde s&atilde;o armazenadas as views, layout, helpers e partials. Aqui ficam os ERB, Haml, Slim etc..<&#47;li>
-<li>stylesheets: local que cont&eacute;m os arquivos Sass e Scss a serem compilados para CSS.<&#47;li>
-<li>Gemfile: arquivo que lista as depend&ecirc;ncias do projeto, aqui s&atilde;o incluidas as gems utilizadas.<&#47;li>
-<li>config.ru: arquivo de configura&ccedil;&atilde;o do servidor Rack.<&#47;li><br />
-<&#47;ul></p>
-<h2>Executando<&#47;h2><br />
-Vamos rodar nossa aplica&ccedil;&atilde;o, dentro da pasta do projeto, execute <code>bundle install<&#47;code> para ver se precisa instalar alguma depend&ecirc;ncia e depois rode <code>serve<&#47;code> para executar o servidor na porta 4000 (padr&atilde;o).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;rodando-projeto-serve.jpg"><img class="alignnone size-full wp-image-1176" title="rodando-projeto-serve" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;rodando-projeto-serve.jpg" alt="rodando-projeto-serve" width="1075" &#47;><&#47;a></p>
-<p>Tudo certo, agora &eacute; s&oacute; brincar com o framework e criar um projeto. Eu fiz um pequeno site utilizando Haml como template engine.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;projeto-serve.png"><img class="alignnone size-full wp-image-1180" title="projeto-serve" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;projeto-serve.png" alt="projeto-serve" width="1128" &#47;><&#47;a></p>
-<p>Deixo a dica aqui para criar links, basta voc&ecirc; colocar no <code>href<&#47;code> da tag <code>a<&#47;code> o nome da view sem a extens&atilde;o, por exemplo, criei uma view com nome de <code>about.html.haml<&#47;code>, no link, fa&ccedil;o a chamada para <code>&#47;about<&#47;code>.</p>
-<h2>Exportando<&#47;h2><br />
-Agora vem a melhor parte, hora de exportar o projeto Serve para HTML.</p>
-<p>&Eacute; muito simples, basta voc&ecirc; executar o comando <code>serve export nome-do-projeto pasta-de-saida<&#47;code>, substituindo l&oacute;gicamente "nome-do-projeto" pelo caminho da aplica&ccedil;&atilde;o Serve e "pasta-de-saida" pelo caminho onde voc&ecirc; deseja exportar.</p>
-<p>Feito isso, teremos nosso prot&oacute;tipo limpo e sem esfor&ccedil;os desnecess&aacute;rios.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;projeto-serve-exportado.png"><img class="alignnone size-full wp-image-1182" title="projeto-serve-exportado" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;02&#47;projeto-serve-exportado.png" alt="projeto-serve-exportado" width="1119" height="142" &#47;><&#47;a></p>
-<p>Essa foi a dica de hoje. Deixe sua opini&atilde;o abaixo, o que voc&ecirc; achou?</p>
-<p>Abra&ccedil;os.</p>
+  <li>public: onde deve ser armazenado todos arquivos públicos, como imagens, JavaScript e CSS.</li>
+  <li>views: onde são armazenadas as views, layout, helpers e partials. Aqui ficam os ERB, Haml, Slim etc..</li>
+  <li>stylesheets: local que contém os arquivos Sass a serem compilados para CSS.</li>
+  <li>Gemfile: arquivo que lista as dependências do projeto, aqui são incluidas as gems utilizadas.</li>
+  <li>config.ru: arquivo de configuração do servidor Rack.</li>
+</ul>
+
+<h2>Executando</h2>
+
+<p>Vamos rodar nossa aplicação, dentro da pasta do projeto, execute <code>bundle install</code> para ver se precisa instalar alguma dependência e depois rode <code>serve</code> para executar o servidor na porta 4000 (padrão).</p>
+
+<a href="{{ site.baseurl }}/assets/rodando-projeto-serve.jpg"><img class="alignnone size-full wp-image-1176" title="rodando-projeto-serve" src="{{ site.baseurl }}/assets/rodando-projeto-serve.jpg" alt="rodando-projeto-serve"/></a>
+
+<p>Tudo certo, agora é só brincar com o framework e criar um projeto. Eu fiz um pequeno site utilizando Haml como template engine.</p>
+
+<a href="{{ site.baseurl }}/assets/projeto-serve.png"><img class="alignnone size-full wp-image-1180" title="projeto-serve" src="{{ site.baseurl }}/assets/projeto-serve.png" alt="projeto-serve"/></a>
+
+<p>Deixo a dica aqui para criar links, basta você colocar no <code>href</code> da tag <code>a</code> o nome da view sem a extensão, por exemplo, criei uma view com nome de <code>about.html.haml</code>, no link, faço a chamada para <code>/about</code>.</p>
+
+<h2>Exportando</h2>
+
+<p>Agora vem a melhor parte, hora de exportar o projeto Serve para HTML.</p>
+
+<p>É muito simples, basta você executar o comando <code>serve export nome-do-projeto pasta-de-saida</code>, substituindo lógicamente "nome-do-projeto" pelo caminho da aplicação Serve e "pasta-de-saida" pelo caminho onde você deseja exportar.</p>
+
+<p>Feito isso, teremos nosso protótipo limpo e sem esforços desnecessários.</p>
+
+<a href="{{ site.baseurl }}/assets/projeto-serve-exportado.png"><img class="alignnone size-full wp-image-1182" title="projeto-serve-exportado" src="{{ site.baseurl }}/assets/projeto-serve-exportado.png" alt="projeto-serve-exportado"/></a>
+
+<p>Essa foi a dica de hoje. Deixe sua opinião abaixo, o que você achou?</p>
+
+<p>Abraços.</p>

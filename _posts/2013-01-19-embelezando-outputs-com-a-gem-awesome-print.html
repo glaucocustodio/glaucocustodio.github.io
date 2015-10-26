@@ -26,28 +26,55 @@ tags:
 - ruby on rails
 comments: []
 ---
-<p>Hoje venho apresentar a voc&ecirc;s - que ainda n&atilde;o conhecem, uma gem muito &uacute;til para inspe&ccedil;&atilde;o de objetos e outras estruturas de dados como array e hash no Ruby.</p>
-<p>Vamos supor que tenhamos uma vari&aacute;vel contendo o seguinte conte&uacute;do:<br />
-[code language="ruby"]my_array = [1, 'dois', DateTime.now(), [3, 'quatro', 0.2]][&#47;code]<br />
-<a id="more"></a><a id="more-1116"></a>Se precisarmos exibir o valor dela no terminal por algum motivo e usarmos o tradicional <code>puts<&#47;code>, ou seu primo <code>p<&#47;code> para isso, obteremos um output n&atilde;o muito leg&iacute;vel, veja como ficaria:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;exibindo-valores-no-terminal.png"><img class="alignnone size-full wp-image-1120" title="exibindo-valores-no-terminal" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;exibindo-valores-no-terminal.png" alt="exibindo-valores-no-terminal" width="339" height="170" &#47;><&#47;a></p>
-<p>Observe que o array interno est&aacute; sendo exibindo no mesmo n&iacute;vel que os outros valores, al&eacute;m do que a coloriza&ccedil;&atilde;o n&atilde;o ajuda muito.</p>
-<p>Imagina quando estamos inspecionando valores no Rails por exemplo, temos tantas sa&iacute;das sendo exibidas no terminal quando fazemos uma requisi&ccedil;&atilde;o, que fica at&eacute; dif&iacute;cil encontrar o valor que precisamos no meio de tanta informa&ccedil;&atilde;o.</p>
-<h2>A Solu&ccedil;&atilde;o<&#47;h2><br />
-Ainda bem que existe a gem <a href="https:&#47;&#47;github.com&#47;michaeldv&#47;awesome_print" rel="external nofollow" target="_blank">Awesome Print<&#47;a>, ela nos ajuda muito nesse processo de inspe&ccedil;&atilde;o.</p>
-<p>Instale em sua m&aacute;quina rodando <code>gem install awesome_print<&#47;code>, fa&ccedil;a a importa&ccedil;&atilde;o no IRB <code>require 'ap'<&#47;code> e seja feliz usando <code>ap<&#47;code> inv&eacute;s de <code>puts<&#47;code>&#47;<code>p<&#47;code>, veja:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;embelezando-outputs-com-a-gem-awesome-print.jpg"><img class="alignnone size-full wp-image-1124" title="embelezando-outputs-com-a-gem-awesome-print" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;embelezando-outputs-com-a-gem-awesome-print.jpg" alt="embelezando-outputs-com-a-gem-awesome-print" width="849" height="235" &#47;><&#47;a></p>
-<p>Temos uma sa&iacute;da muito mais clara, identada e colorida!</p>
-<div class="note">Voc&ecirc; pode incluir <code>gem 'awesome_print', :require => 'ap'<&#47;code> no <code>Gemfile<&#47;code> em seu projeto Rails para j&aacute; fazer o require automaticamente.<&#47;div></p>
-<h2>Customiza&ccedil;&atilde;o<&#47;h2><br />
-Essa gem tamb&eacute;m permite a customiza&ccedil;&atilde;o do output atrav&eacute;s do hash <code>options<&#47;code>, basta informar as configura&ccedil;&otilde;es desejadas como no exemplo abaixo:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;customizando-saidas-com-awesome-print.jpg"><img class="alignnone size-full wp-image-1126" title="customizando-saidas-com-awesome-print" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;customizando-saidas-com-awesome-print.jpg" alt="customizando-saidas-com-awesome-print" width="832" height="237" &#47;><&#47;a></p>
-<p>Aqui, defino 2 espa&ccedil;os para identa&ccedil;&atilde;o e mudo a cor de strings para vermelho. Outras op&ccedil;&otilde;es de customiza&ccedil;&atilde;o podem ser vistas <a href="https:&#47;&#47;github.com&#47;michaeldv&#47;awesome_print#usage" rel="external nofollow" target="_blank">aqui<&#47;a>.</p>
-<h2>Integra&ccedil;&atilde;o com IRB<&#47;h2><br />
-Para n&atilde;o ter que ficar importando a gem toda hora quando acessar o IRB ao abrir o terminal, voc&ecirc; pode definir ela como formatador padr&atilde;o, basta criar um arquivo chamado <code>.irbrc<&#47;code> no diret&oacute;rio home (<code>~&#47;<&#47;code>) e adicionar o conte&uacute;do:<br />
-[code language="bash"]require "awesome_print"<br />
-AwesomePrint.irb![&#47;code]<br />
-Recarregue o IRB e pronto! Toda vez que voc&ecirc; usar o <code>p<&#47;code> ter&aacute; uma sa&iacute;da incrivelmente bonita ;).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;gem-awesome-print-integrada-ao-irb.jpg"><img class="alignnone size-full wp-image-1131" title="gem-awesome-print-integrada-ao-irb" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2013&#47;01&#47;gem-awesome-print-integrada-ao-irb.jpg" alt="gem-awesome-print-integrada-ao-irb" width="380" height="217" &#47;><&#47;a></p>
+<p>Hoje venho apresentar a vocês - que ainda não conhecem, uma gem muito útil para inspeção de objetos e outras estruturas de dados como array e hash no Ruby.</p>
+
+<p>Vamos supor que tenhamos uma variável contendo o seguinte conteúdo:</p>
+
+{% highlight ruby %}
+my_array = [1, 'dois', DateTime.now(), [3, 'quatro', 0.2]]
+{% endhighlight %}
+
+<p>Se precisarmos exibir o valor dela no terminal por algum motivo e usarmos o tradicional <code>puts</code>, ou seu primo <code>p</code> para isso, obteremos um output não muito legível, veja como ficaria:</p>
+
+<a href="{{ site.baseurl }}/assets/exibindo-valores-no-terminal.png"><img class="alignnone size-full wp-image-1120" title="exibindo-valores-no-terminal" src="{{ site.baseurl }}/assets/exibindo-valores-no-terminal.png" alt="exibindo-valores-no-terminal"/></a>
+
+<p>Observe que o array interno está sendo exibindo no mesmo nível que os outros valores, além do que a colorização não ajuda muito.</p>
+
+<p>Imagina quando estamos inspecionando valores no Rails por exemplo, temos tantas saídas sendo exibidas no terminal quando fazemos uma requisição, que fica até difícil encontrar o valor que precisamos no meio de tanta informação.</p>
+
+<h2>A Solução</h2>
+
+<p>Ainda bem que existe a gem <a href="https://github.com/michaeldv/awesome_print" rel="external nofollow" target="_blank">Awesome Print</a>, ela nos ajuda muito nesse processo de inspeção.</p>
+
+<p>Instale em sua máquina rodando <code>gem install awesome_print</code>, faça a importação no IRB <code>require 'ap'</code> e seja feliz usando <code>ap</code> invés de <code>puts</code>/<code>p</code>, veja:</p>
+
+<a href="{{ site.baseurl }}/assets/embelezando-outputs-com-a-gem-awesome-print.jpg"><img class="alignnone size-full wp-image-1124" title="embelezando-outputs-com-a-gem-awesome-print" src="{{ site.baseurl }}/assets/embelezando-outputs-com-a-gem-awesome-print.jpg" alt="embelezando-outputs-com-a-gem-awesome-print"/></a>
+
+<p>Temos uma saída muito mais clara, identada e colorida!</p>
+
+<div class="note">Você pode incluir <code>gem 'awesome_print', :require =&gt; 'ap'</code> no <code>Gemfile</code> em seu projeto Rails para já fazer o require automaticamente.</div>
+
+<h2>Customização</h2>
+
+<p>Essa gem também permite a customização do output através do hash <code>options</code>, basta informar as configurações desejadas como no exemplo abaixo:</p>
+
+<a href="{{ site.baseurl }}/assets/customizando-saidas-com-awesome-print.jpg"><img class="alignnone size-full wp-image-1126" title="customizando-saidas-com-awesome-print" src="{{ site.baseurl }}/assets/customizando-saidas-com-awesome-print.jpg" alt="customizando-saidas-com-awesome-print"/></a>
+
+<p>Aqui, defino 2 espaços para identação e mudo a cor de strings para vermelho. Outras opções de customização podem ser vistas <a href="https://github.com/michaeldv/awesome_print#usage" rel="external nofollow" target="_blank">aqui</a>.</p>
+
+<h2>Integração com IRB</h2>
+
+<p>Para não ter que ficar importando a gem toda hora quando acessar o IRB ao abrir o terminal, você pode definir ela como formatador padrão, basta criar um arquivo chamado <code>.irbrc</code> no diretório home (<code>~/</code>) e adicionar o conteúdo:</p>
+
+{% highlight bash %}
+require "awesome_print"
+AwesomePrint.irb!
+{% endhighlight %}
+
+<p>Recarregue o IRB e pronto! Toda vez que você usar o <code>p</code> terá uma saída incrivelmente bonita ;).</p>
+
+<a href="{{ site.baseurl }}/assets/gem-awesome-print-integrada-ao-irb.jpg"><img class="alignnone size-full wp-image-1131" title="gem-awesome-print-integrada-ao-irb" src="{{ site.baseurl }}/assets/gem-awesome-print-integrada-ao-irb.jpg" alt="gem-awesome-print-integrada-ao-irb"/></a>
+
 <p>Essa foi a dica de hoje, o que acharam?</p>
-<p>At&eacute; mais.</p>
+
+<p>Até mais.</p>

@@ -39,46 +39,75 @@ comments:
   content: "Ol&aacute;\r\n\r\nMuito bom o post! Tamb&eacute;m sentia falta deste recurso!
     Valeu!"
 ---
-<p>Fala pessoal, beleza? Cad&ecirc; a galera que utiliza o <strong>Sublime Text<&#47;strong> ai?!</p>
-<p>Faz pouco tempo que migrei do Aptana Studio para o Sublime Text 2 e tenho que admitir que ele &eacute; um &oacute;timo editor, muito r&aacute;pido, simples e &uacute;til.</p>
-<p>Nessa minha migra&ccedil;&atilde;o eu s&oacute; senti falta de tr&ecirc;s features que acho muito importante, s&atilde;o elas:</p>
-<p>1- Comandos b&aacute;sicos como copiar, recortar e colar no menu de contexto da sidebar (nesse ponto temos o plugin <a href="https:&#47;&#47;github.com&#47;titoBouzout&#47;SideBarEnhancements" target="_blank">SideBarEnhancements<&#47;a> que adiciona essas e outras features, mas at&eacute; a data desse post ele n&atilde;o funcionava no Windows)</p>
-<p><a id="more"></a><a id="more-804"></a>2- Outline, quem j&aacute; usou Eclipse ou derivados sabe o que &eacute;, ele lista todas as classes e m&eacute;todos do arquivo que est&aacute; aberto onde podemos navegar apenas clicando no link (alguns podem falar que o Sublime Text tem a pesquisa com <code>@<&#47;code> atrav&eacute;s do <code>Ctrl+P<&#47;code>, mas pra mim n&atilde;o &eacute; a mesma coisa)</p>
-<p>3- Menu de troca r&aacute;pida de arquivos abertos. Esse &eacute; aquele menu que aparece quando seguramos <code>Ctrl<&#47;code> e navegamos com <code>Tab<&#47;code> no Notepad++ e Visual Studio, no Aptana esse n&atilde;o &eacute; o atalho padr&atilde;o, mas eu configurava assim. Veja a imagem abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;menu-de-troca-rapida-de-arquivo-aptana.jpg"><img class="alignnone size-full wp-image-805" title="menu-de-troca-rapida-de-arquivo-aptana" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;menu-de-troca-rapida-de-arquivo-aptana.jpg" alt="menu-de-troca-rapida-de-arquivo-aptana" width="250" height="185" &#47;><&#47;a></p>
-<p>Tentando sanar essa &uacute;ltima necessidade, eu pesquisei na internet por algum plugin e cheguei a <a href="http:&#47;&#47;sublimetext.userecho.com&#47;topic&#47;80593-ctrl-tab-open-tab-list-while-holding-ctrl&#47;" target="_blank">esse t&oacute;pico<&#47;a> onde tem um link para esse <a href="https:&#47;&#47;gist.github.com&#47;1399879#gistcomment-595839" target="_blank">gist<&#47;a> que resolve o problema. Ap&oacute;s aprender onde colocar o arquivo e adicionar duas importa&ccedil;&otilde;es que estavam faltando eu deixei funcionando, ainda n&atilde;o &eacute; como queria, mas &eacute; uma solu&ccedil;&atilde;o alternativa..</p>
-<h2>Instalando o Plugin<&#47;h2><br />
-Primeiro passo que precisamos tomar &eacute; dizer ao Sublime Text quais ser&atilde;o as teclas de atalho da funcionalidade que desejamos. Como ele j&aacute; possui o atalho <code>Ctrl + Tab<&#47;code>, irei definir o atalho <code>Alt + E<&#47;code>, para isso, acesse o menu <code>Preferences -> Key Bindings - User<&#47;code> e adicione a defini&ccedil;&atilde;o abaixo:<br />
-[code]{<br />
-"keys": ["alt+e"],<br />
-"command": "switch_to_file"<br />
-}[&#47;code]<br />
-Aqui simplesmente dizemos que ao pressionarmos as teclas definidas em <code>keys<&#47;code> estaremos chamando o comando <code>switch_to_file<&#47;code>.</p>
-<p>Acesse o menu <code>Preferences -> Browse Packages..<&#47;code> para abrir a pasta que se encontram os pacotes do Sublime e crie um arquivo chamado <code>SwitchToFile.py<&#47;code> dentro da pasta <code>User<&#47;code> com o seguinte conte&uacute;do:<br />
-[code language="python" escaped="true"]import sublime_plugin, os<br />
-class SwitchToFileCommand(sublime_plugin.WindowCommand):<br />
-    def run(self):<br />
-        self.display_list = []<br />
-        self.views = []<br />
-        for view in self.window.views():<br />
-            path = view.file_name()<br />
-            if view.is_scratch():<br />
-                name = view.name()<br />
-                path = '(view id = %d)' % (view.id())<br />
-            elif not path:<br />
-                name = 'Untitled'<br />
-                path = '(view id = %d)' % (view.id())<br />
-            else:<br />
-                name = os.path.split(path)[1]<br />
-            self.display_list.append([name, path])<br />
-            self.views.append(view)</p>
-<p>        self.window.show_quick_panel(self.display_list, self.switch_to_view, False)</p>
-<p>    def switch_to_view(self, index):<br />
-        if index >= 0 and len(self.views) > index:<br />
-            self.window.focus_view(self.views[index])[&#47;code]</p>
-<div class="note">Note que temos uma classe chamada <code>SwitchToFileCommand<&#47;code> que &eacute; o mesmo nome que definimos em <code>command<&#47;code> concatenado com <code>Command<&#47;code> e em camel cased, isso &eacute; um padr&atilde;o do Sublime Text e deve ser seguido para qualquer plugin.<&#47;div></p>
-<p>&Eacute; s&oacute; isso! Agora se voc&ecirc; for no Sublime e apertar as teclas definidas como atalho voc&ecirc; ver&aacute; um menu com todos arquivos abertos com op&ccedil;&atilde;o para escolher e pesquisar entre eles.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2.jpg"><img class="alignnone size-full wp-image-808" title="menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2.jpg" alt="menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2" width="682" height="296" &#47;><&#47;a></p>
-<p>Se voc&ecirc; tamb&eacute;m sentiu falta dessa feature, n&atilde;o deixe de votar <a href="http:&#47;&#47;sublimetext.userecho.com&#47;topic&#47;80593-ctrl-tab-open-tab-list-while-holding-ctrl&#47;" target="_blank">aqui<&#47;a>, quem sabe n&atilde;o vemos ela na pr&oacute;xima vers&atilde;o.</p>
+<p>Fala pessoal, beleza? Cadê a galera que utiliza o Sublime Text ai?!</p>
+
+<p>Faz pouco tempo que migrei do Aptana Studio para o Sublime Text 2 e tenho que admitir que ele é um ótimo editor, muito rápido, simples e útil.</p>
+
+<p>Nessa minha migração eu só senti falta de três features que acho muito importante, são elas:</p>
+
+<p>1- Comandos básicos como copiar, recortar e colar no menu de contexto da sidebar (nesse ponto temos o plugin <a href="https://github.com/titoBouzout/SideBarEnhancements" target="_blank">SideBarEnhancements</a> que adiciona essas e outras features, mas até a data desse post ele não funcionava no Windows)</p>
+
+<p>2- Outline, quem já usou Eclipse ou derivados sabe o que é, ele lista todas as classes e métodos do arquivo que está aberto onde podemos navegar apenas clicando no link (alguns podem falar que o Sublime Text tem a pesquisa com <code>@</code> através do <code>Ctrl+P</code>, mas pra mim não é a mesma coisa)</p>
+
+<div class="note info">
+  Atualizado: isso pode ser resolvido usando CTags, veja <a href="{% post_url 2015-01-10-navegando-com-ctags-no-sublime-text %}" target="_blank">esse post</a>.
+</div>
+
+<p>3- Menu de troca rápida de arquivos abertos. Esse é aquele menu que aparece quando seguramos <code>Ctrl</code> e navegamos com <code>Tab</code> no Notepad++ e Visual Studio, no Aptana esse não é o atalho padrão, mas eu configurava assim. Veja a imagem abaixo:</p>
+
+<a href="{{ site.baseurl }}/assets/menu-de-troca-rapida-de-arquivo-aptana.jpg"><img class="alignnone size-full wp-image-805" title="menu-de-troca-rapida-de-arquivo-aptana" src="{{ site.baseurl }}/assets/menu-de-troca-rapida-de-arquivo-aptana.jpg" alt="menu-de-troca-rapida-de-arquivo-aptana"/></a>
+
+<p>Tentando sanar essa última necessidade, eu pesquisei na internet por algum plugin e cheguei a <a href="http://sublimetext.userecho.com/topic/80593-ctrl-tab-open-tab-list-while-holding-ctrl/" target="_blank">esse tópico</a> onde tem um link para esse <a href="https://gist.github.com/1399879#gistcomment-595839" target="_blank">gist</a> que resolve o problema. Após aprender onde colocar o arquivo e adicionar duas importações que estavam faltando eu deixei funcionando, ainda não é como queria, mas é uma solução alternativa..</p>
+
+<h2>Instalando o Plugin</h2>
+
+<p>Primeiro passo que precisamos tomar é dizer ao Sublime Text quais serão as teclas de atalho da funcionalidade que desejamos. Como ele já possui o atalho <code>Ctrl + Tab</code>, irei definir o atalho <code>Alt + E</code>, para isso, acesse o menu <code>Preferences -> Key Bindings - User</code> e adicione a definição abaixo:</p>
+
+{% highlight json %}
+{
+  "keys": ["alt+e"],
+  "command": "switch_to_file"
+}
+{% endhighlight %}
+
+<p>Aqui simplesmente dizemos que ao pressionarmos as teclas definidas em <code>keys</code> estaremos chamando o comando <code>switch_to_file</code>.</p>
+
+<p>Acesse o menu <code>Preferences -> Browse Packages..</code> para abrir a pasta que se encontram os pacotes do Sublime e crie um arquivo chamado <code>SwitchToFile.py</code> dentro da pasta <code>User</code> com o seguinte conteúdo:</p>
+
+{% highlight python %}
+import sublime_plugin, os
+class SwitchToFileCommand(sublime_plugin.WindowCommand):
+    def run(self):
+        self.display_list = []
+        self.views = []
+        for view in self.window.views():
+            path = view.file_name()
+            if view.is_scratch():
+                name = view.name()
+                path = '(view id = %d)' % (view.id())
+            elif not path:
+                name = 'Untitled'
+                path = '(view id = %d)' % (view.id())
+            else:
+                name = os.path.split(path)[1]
+            self.display_list.append([name, path])
+            self.views.append(view)
+
+        self.window.show_quick_panel(self.display_list, self.switch_to_view, False)
+
+    def switch_to_view(self, index):
+        if index >= 0 and len(self.views) > index:
+            self.window.focus_view(self.views[index])
+{% endhighlight %}
+
+<div class="note">Note que temos uma classe chamada <code>SwitchToFileCommand</code> que é o mesmo nome que definimos em <code>command</code> concatenado com <code>Command</code> e em camel cased, isso é um padrão do Sublime Text e deve ser seguido para qualquer plugin.</div>
+
+<p>É só isso! Agora se você for no Sublime e apertar as teclas definidas como atalho você verá um menu com todos arquivos abertos com opção para escolher e pesquisar entre eles.</p>
+
+<a href="{{ site.baseurl }}/assets/menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2.jpg"><img class="alignnone size-full wp-image-808" title="menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2" src="{{ site.baseurl }}/assets/menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2.jpg" alt="menu-de-troca-rapida-de-arquivos-aberto-sublime-text-2"/></a>
+
+<p>Se você também sentiu falta dessa feature, não deixe de votar <a href="http://sublimetext.userecho.com/topic/80593-ctrl-tab-open-tab-list-while-holding-ctrl/" target="_blank">aqui</a>, quem sabe não vemos ela na próxima versão.</p>
+
 <p>O que acharam da dica?</p>
-<p>At&eacute; mais.</p>
+
+<p>Até mais.</p>

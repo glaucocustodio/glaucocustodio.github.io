@@ -23,12 +23,24 @@ categories:
 tags: []
 comments: []
 ---
-<p>Dica r&aacute;pida de <strong>PHP<&#47;strong> hoje pessoal..</p>
-<p>Imagina que temos um array como esse:<br />
-[code language="php"]<?php $arrayComValoresNulos = array('um', 'dois', '', NULL, false, array()); ?>[&#47;code]<br />
-<a id="more"></a><a id="more-1147"></a>Veja que temos uma <strong>string vazia<&#47;strong>, um valor <strong>nulo<&#47;strong>, um <strong>falso<&#47;strong> e um <strong>array vazio<&#47;strong>.</p>
-<p>Como voc&ecirc; faria para remover esses valores do array? Faria um <code>for&#47;foreach<&#47;code> com <code>if<&#47;code>? Bah..</p>
-<p>Veja como remover de forma r&aacute;pida e pragm&aacute;tica:<br />
-[code language="php"]<?php $arrayLimpo = array_filter($arrayComValoresNulos); ?>[&#47;code]<br />
-Exibindo o novo array teremos o desejado: <code>Array ([0] => um [1] => dois)<&#47;code>.</p>
-<p>At&eacute; mais.</p>
+<p>Dica rápida de PHP hoje pessoal..</p>
+
+<p>Imagina que temos um array como esse:</p>
+
+{% highlight php %}
+<?php $arrayComValoresNulos = array('um', 'dois', '', NULL, false, array()); ?>
+{% endhighlight %}
+
+<p>Veja que temos uma string vazia, um valor nulo, um falso e um array vazio.</p>
+
+<p>Como você faria para remover esses valores do array? Faria um <code>for/foreach</code> com <code>if</code>? Bah..</p>
+
+<p>Veja como remover de forma rápida e pragmática:</p>
+
+{% highlight php %}
+<?php $arrayLimpo = array_filter($arrayComValoresNulos); ?>
+{% endhighlight %}
+
+<p>Exibindo o novo array teremos o desejado: <code>Array ([0] =&gt; um [1] =&gt; dois)</code>.</p>
+
+<p>Até mais.</p>

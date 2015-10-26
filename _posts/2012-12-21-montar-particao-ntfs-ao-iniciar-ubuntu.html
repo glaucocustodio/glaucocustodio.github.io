@@ -65,14 +65,30 @@ comments:
     vezes n&atilde;o ajudam em nada."
 ---
 <p>Fala pessoal, beleza?</p>
-<p>Estou aqui para falar de Linux hoje. Em meu computador tenho uma <strong>parti&ccedil;&atilde;o NTFS<&#47;strong> e sempre quando vou acessar algum arquivo pelo <strong>Ubuntu<&#47;strong> 12.04 preciso esperar o sistema montar ela. A pesquisa do dash tamb&eacute;m n&atilde;o funciona pois o sistema n&atilde;o reconhece as parti&ccedil;&otilde;es ainda n&atilde;o montadas.</p>
-<p><a id="more"></a><a id="more-905"></a>Para resolver isso, tudo que precisamos fazer &eacute; executar um comando ao iniciar do Ubuntu que fa&ccedil;a a montagem automaticamente para n&oacute;s.</p>
-<p>Adicione o comando abaixo na inicializa&ccedil;&atilde;o (<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;19&#47;definir-brilho-automaticamente-ao-iniciar-ubuntu-12-04-lts#run-command-when-system-starts" target="_blank">clique aqui<&#47;a> caso n&atilde;o saiba) trocando o <code>sda2<&#47;code> pela parti&ccedil;&atilde;o a ser montada:<br />
-[code language="bash"]udisks --mount &#47;dev&#47;sda2[&#47;code]<br />
-Lembrando que o c&oacute;digo acima deve ser colocado no campo <code>Command<&#47;code>, feito isso salve e pronto!</p>
-<p>Se voc&ecirc; conhece apenas o r&oacute;tulo da parti&ccedil;&atilde;o, como <code>ARQUIVOS<&#47;code> ou <code>Disco C<&#47;code> por exemplo, rode o comando abaixo no terminal:<br />
-[code language="bash"]sudo blkid[&#47;code]<br />
-Ele ir&aacute; exibir uma sa&iacute;da como essa onde facilmente podemos ver no canto esquerdo a parti&ccedil;&atilde;o que desejamos.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;ver-unidades-de-disco-no-ubuntu.jpg"><img class="alignnone  wp-image-908" title="ver-unidades-de-disco-no-ubuntu" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;12&#47;ver-unidades-de-disco-no-ubuntu.jpg" alt="ver-unidades-de-disco-no-ubuntu" width="736"&#47;><&#47;a></p>
+
+<p>Estou aqui para falar de Linux hoje. Em meu computador tenho uma partição NTFS e sempre quando vou acessar algum arquivo pelo Ubuntu 12.04 preciso esperar o sistema montar ela. A pesquisa do dash também não funciona pois o sistema não reconhece as partições ainda não montadas.</p>
+
+<p>Para resolver isso, tudo que precisamos fazer é executar um comando ao iniciar do Ubuntu que faça a montagem automaticamente para nós.</p>
+
+<p>Adicione o comando abaixo na inicialização (<a href="{% post_url 2012-09-19-definir-brilho-automaticamente-ao-iniciar-ubuntu-12-04-lts %}#run-command-when-system-starts" target="_blank">clique aqui</a> caso não saiba) trocando o <code>sda2</code> pela partição a ser montada:</p>
+
+{% highlight bash %}
+udisks --mount /dev/sda2
+{% endhighlight %}
+
+<p>Lembrando que o código acima deve ser colocado no campo <code>Command</code>, feito isso salve e pronto!</p>
+
+<p>Se você conhece apenas o rótulo da partição, como <code>ARQUIVOS</code> ou <code>Disco C</code> por exemplo, rode o comando abaixo no terminal:</p>
+
+{% highlight bash %}
+sudo blkid
+{% endhighlight %}
+
+<p>Ele irá exibir uma saída como essa onde facilmente podemos ver no canto esquerdo a partição que desejamos.</p>
+
+<a href="{{ site.baseurl }}/assets/ver-unidades-de-disco-no-ubuntu.jpg"><img class="alignnone  wp-image-908" title="ver-unidades-de-disco-no-ubuntu" src="{{ site.baseurl }}/assets/ver-unidades-de-disco-no-ubuntu.jpg" alt="ver-unidades-de-disco-no-ubuntu"/></a>
+
 <p>O que acharam da dica?</p>
-<p>At&eacute; mais!</p>
+
+<p>Até mais!</p>
+
