@@ -1,0 +1,59 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Capturing Haml Blocks'
+author:
+  display_name: Glauco Custódio
+author_url: http://glaucocustodio.com
+date: '2015-11-06 11:10:16 -0300'
+date_gmt: '2015-11-06 11:10:16 -0300'
+categories:
+- Ruby
+tags:
+- haml
+comments: []
+---
+
+<p>Let's suppose you have some code like that in a view:</p>
+
+{% highlight haml %}
+= @user.editable_field_for 'birth_date', field_class: 'datepicker' do |value|
+  = value.try(:strftime, '%d/%m/%Y')
+{% endhighlight %}
+
+<code>editable_field_for</code> is a method inside a decorator and you need to evaluate the given block.
+
+<p>How would you write this method? That was my first try:</p>
+
+{% highlight ruby %}
+def editable_field_for field_name, options = {}, &block
+  capture_haml do
+    haml_tag :span, class: 'inline-editable' do
+      haml_concat block.call(self.send(field_name))
+    end
+  end
+end
+{% endhighlight %}
+
+<p>Call the block passing field's value as argument, seems obvious? But it does not work.</p>
+
+<p>After some hard time I found the solution:</p>
+
+{% highlight ruby linenos %}
+def editable_field_for field_name, options = {}, &block
+  capture_haml do
+    haml_tag :span, class: 'inline-editable' do
+      haml_concat capture_haml(field_value, &block)
+    end
+  end
+end
+{% endhighlight %}
+
+<p>We need to capture the block (line 4) using <code>capture_haml</code> to get it as string, then, we concatenate into the buffer.</p>
+
+<p>In this example I am passing <code>field_value</code> as argument to the block (and receiving it as <code>value</code> in the view), but you can remove it if you don't need.</p>
+
+<p>Note we are using <code>capture_haml</code> in two different ways, with and without a block. Before this issue, I just knew the first one, as explained in <a href="{% post_url 2013-11-18-usando-helpers-do-haml %}" target="_blank" rel="external nofollow">this post</a> (in portuguese only).</p>
+
+<p>That is it.</p>

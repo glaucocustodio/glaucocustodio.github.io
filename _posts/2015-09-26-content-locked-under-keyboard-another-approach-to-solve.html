@@ -51,11 +51,11 @@ class UncoveredContentViewController: UIViewController {
     var aRect = self.view.frame;
     aRect.size.height = aRect.size.height - kbSize!.height - CGFloat(20);
 
-    if activeField != nil {
-      if (!CGRectContainsPoint(aRect, activeField!.frame.origin)) {
-        changedY = true
+    if activeField != nil && !CGRectContainsPoint(aRect, activeField!.frame.origin) {
+      if (!changedY) {
         self.view.frame.origin.y -= keyboardHeight
       }
+      changedY = true
     }
   }
   
