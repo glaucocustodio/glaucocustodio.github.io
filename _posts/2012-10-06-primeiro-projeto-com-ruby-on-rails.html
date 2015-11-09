@@ -154,58 +154,106 @@ comments:
     experiencia, j[a viu algo parecido?\r\nGrande abraco!\r\nObrigado desde ja!"
 ---
 <p>Fala galera, beleza?</p>
-<p>Hoje estou aqui para ensinar como criar nosso <strong>primeiro projeto<&#47;strong> com o framework <strong>Ruby on Rails<&#47;strong>. Pra quem n&atilde;o sabe o que &eacute; Ruby on Rails pode conhecer um pouco mais <a title="Porque Usar um Framework?" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework#ruby-on-rails-ref" target="_blank">aqui<&#47;a>.</p>
-<p>Se voc&ecirc; j&aacute; conhece mas n&atilde;o tem instalado em sua m&aacute;quina, veja <a title="Instalando e Configurando Ambiente Ruby on Rails no Linux (Ubuntu)" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;23&#47;instalando-e-configurando-ambiente-ruby-on-rails-no-linux&#47;" target="_blank">esse post<&#47;a> onde explico como preparar um ambiente Rails no Linux. Se voc&ecirc; usa Windows, instale uma m&aacute;quina virtual ou crie dual boot pois Rails roda melhor em sistemas unix-like (Unix, Linux, OS X).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;10&#47;06&#47;primeiro-projeto-com-ruby-on-rails&#47;"><img class="alignnone size-full wp-image-588" title="primeiro-projeto-com-ruby-on-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;primeiro-projeto-com-ruby-on-rails.jpg" alt="primeiro-projeto-com-ruby-on-rails" width="580" height="240" &#47;><&#47;a></p>
-<h2><a id="more"></a><a id="more-554"></a>Iniciando projeto<&#47;h2><br />
-Primeiro de tudo vamos criar um projeto Rails, para isso abra o terminal, acesse a pasta onde ficar&aacute; o projeto e digite o comando <code>rails new nome-do-projeto -d=mysql<&#47;code> (substitua "nome-do-projeto" pelo nome que voc&ecirc; deseja dar).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-projeto-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-556" title="criando-projeto-ruby-on-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-projeto-ruby-on-rails.jpg" alt="criando-projeto-ruby-on-rails" width="739" height="484" &#47;><&#47;a></p>
-<div class="note">O argumento <code>-d=mysql<&#47;code> informa que o projeto usar&aacute; banco de dados MySQL inv&eacute;s do SQLite que &eacute; padr&atilde;o.<&#47;div></p>
-<p>O Rails ir&aacute; criar uma pasta com o nome do projeto (nesse caso <code>first-project<&#47;code>) dentro do diret&oacute;rio atual (<code>pwd<&#47;code>). Vamos acessar a pasta e iniciar o servidor para testar a aplica&ccedil;&atilde;o. Use o comando <code>rails s<&#47;code> ou <code>rails server<&#47;code> para iniciar o servidor.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;acessando-projeto-rails-e-iniciando-servidor.jpg"><img class="alignnone size-full wp-image-558" title="acessando-projeto-rails-e-iniciando-servidor" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;acessando-projeto-rails-e-iniciando-servidor.jpg" alt="acessando-projeto-rails-e-iniciando-servidor" width="746" height="475" &#47;><&#47;a></p>
-<p>Observe que ao tentar inicar o servidor obtemos uma mensagem de erro dizendo que n&atilde;o foi poss&iacute;vel encontrar um "manipulador" de Javascript. Esse erro ocorre nessa vers&atilde;o do Rails (3.2.8), para resolver, precisamos acessar o arquivo <code>Gemfile<&#47;code> que est&aacute; dentro da pasta do projeto e adicionar a gema <code>therubyracer<&#47;code> atrav&eacute;s do comando  <code>gem therubyracer<&#47;code> (linha 24), veja como ficar&aacute;.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;adicionando-gem-therubyracer-no-arquvio-gem.jpg"><img class="alignnone size-full wp-image-577" title="adicionando-gem-therubyracer-no-arquvio-gem" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;adicionando-gem-therubyracer-no-arquvio-gem.jpg" alt="adicionando-gem-therubyracer-no-arquvio-gem" width="720" height="548" &#47;><&#47;a></p>
-<div class="note">Gems s&atilde;o como bibliotecas em nossos projetos, elas s&atilde;o c&oacute;digos Ruby que podemos portar, muito efeciente. Veja mais em <a title="http:&#47;&#47;rubygems.org&#47;" rel="external nofollow" href="http:&#47;&#47;rubygems.org&#47;" target="_blank">http:&#47;&#47;rubygems.org&#47;<&#47;a>.<&#47;div></p>
-<p>O arquivo <code>Gemfile<&#47;code> diz ao Rails quais gems iremos usar, mas depois de definirmos precisamos baixar elas para nossa m&aacute;quina, para isso execute o comando <code>bundle install<&#47;code> na pasta do projeto. Agora inicie o servidor (<code>rails s<&#47;code>) e veja que n&atilde;o teremos mais o erro, voc&ecirc; dever&aacute; ver o <code>WEBrick<&#47;code> (servidor padr&atilde;o do Rails) rodando como abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;rodando-servidor-rails.jpg"><img class="alignnone size-full wp-image-560" title="rodando-servidor-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;rodando-servidor-rails.jpg" alt="rodando-servidor-rails" width="751" height="210" &#47;><&#47;a></p>
-<div class="note">Pressione <code>Ctrl+C<&#47;code> para desligar o servidor.<&#47;div></p>
-<h2>Configurando banco de dados<&#47;h2><br />
-Dissemos ao Rails que usaremos banco de dados MySQL, mas precisamos dizer ainda qual a base de dados (<code>database<&#47;code>), usu&aacute;rio (<code>username<&#47;code>) e senha (<code>password<&#47;code>). Abra o arquivo <code>config&#47;database.yml<&#47;code> e nas configura&ccedil;&otilde;es de desenvolvimento defina os dados necess&aacute;rios.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;configurando-banco-de-dados-no-database-yml.jpg"><img class="alignnone size-full wp-image-561" title="configurando-banco-de-dados-no-database-yml" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;configurando-banco-de-dados-no-database-yml.jpg" alt="configurando-banco-de-dados-no-database-yml" width="394" height="634" &#47;><&#47;a></p>
-<div class="note">Observe que temos configura&ccedil;&otilde;es de banco de dados para tr&ecirc;s ambientes: desenvolvimento, teste e produ&ccedil;&atilde;o. Por enquanto trabalharemos apenas com desenvolvimento (<code>development<&#47;code>).<&#47;div></p>
-<p>Precisamos criar o banco no MySQL ainda, para isso execute o comando <code>rake db:create<&#47;code> no terminal.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-banco-de-dados-com-comando-rake-db-create.jpg"><img class="alignnone size-full wp-image-564" title="criando-banco-de-dados-com-comando-rake-db-create" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-banco-de-dados-com-comando-rake-db-create.jpg" alt="criando-banco-de-dados-com-comando-rake-db-create" width="746" &#47;><&#47;a></p>
-<p>Com isso j&aacute; temos nosso projeto no ponto para come&ccedil;armos a desenvolver, agora inicie o servidor novamente, abra o navegador e acesse <code>http:&#47;&#47;0.0.0.0:3000&#47;<&#47;code> para ver a tela de boas vindas do Rails.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tela-de-boas-vindas-do-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-565" title="tela-de-boas-vindas-do-ruby-on-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tela-de-boas-vindas-do-ruby-on-rails.jpg" alt="tela-de-boas-vindas-do-ruby-on-rails" width="1042" height="610" &#47;><&#47;a></p>
-<div class="note">Essa &eacute; a tela padr&atilde;o de boas vindas que se encontra em <code>public&#47;index.html<&#47;code>.<&#47;div></p>
-<p>Pare o servidor (<code>Ctrl+C<&#47;code>) e exclua essa p&aacute;gina (<code>rm public&#47;index.html<&#47;code>) pois n&atilde;o precisaremos mais dela (ela s&oacute; serve para dizer que o Rails est&aacute; rodando ok).</p>
-<h2>Definindo rota raiz<&#47;h2><br />
-Vamos dizer ao Rails qual &eacute; a nossa rota raiz, abra o arquivo <code>config&#47;routes.rb<&#47;code> e descomente (remova o <code>#<&#47;code> da frente) a linha <code>root :to => 'welcome#index'<&#47;code> e substitua <code>welcome<&#47;code> por <code>home<&#47;code> ficando assim.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;arquivo-de-rotas-do-rails.jpg"><img class="alignnone size-full wp-image-568" title="arquivo-de-rotas-do-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;arquivo-de-rotas-do-rails.jpg" alt="arquivo-de-rotas-do-rails" width="782" height="626" &#47;><&#47;a></p>
-<p>Agora toda vez que acessarmos a url raiz de nosso site (<code>http:&#47;&#47;localhost:3000<&#47;code>) seremos mapeados para o controller <code>home<&#47;code> e action <code>index<&#47;code>.</p>
-<h2>Ol&aacute; mundo<&#47;h2><br />
-Se acessarmos nosso projeto pelo navegador agora teremos problemas pois o Rails n&atilde;o ir&aacute; encontrar nosso controller e action definidos no <code>routes.rb<&#47;code>, vamos criar eles. Digite <code>rails g controller home index<&#47;code> no terminal.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;gerando-controller-rails.jpg"><img class="alignnone size-full wp-image-570" title="gerando-controller-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;gerando-controller-rails.jpg" alt="gerando-controller-rails" width="755" height="372" &#47;><&#47;a></p>
-<div class="note">Esse <code>rails g<&#47;code> vem de <code>rails generate<&#47;code>, podemos usar ele para criar controllers, models, views etc.. Para saber mais digite <code>rails g --help<&#47;code>.<&#47;div></p>
-<p>Se voc&ecirc; olhar na pasta <code>app&#47;controllers&#47;<&#47;code> e <code>app&#47;views&#47;home&#47;<&#47;code> ver&aacute; que temos nosso controller e view criados em seus respectivos locais.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;controller-e-view-rails.jpg"><img class="alignnone size-full wp-image-571" title="controller-e-view-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;controller-e-view-rails.jpg" alt="controller-e-view-rails" width="297" height="748" &#47;><&#47;a></p>
-<p>Para finalizar, vamos criar uma vari&aacute;vel de inst&acirc;ncia na action do controller e exibir na view, abra o <code>app&#47;controllers&#47;home_controller.rb<&#47;code> e adicione o comando <code>@welcome = 'sejam bem vindos'<&#47;code> dentro da action <code>index<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;definindo-variavel-no-controller-rails.jpg"><img class="alignnone size-full wp-image-573" title="definindo-variavel-no-controller-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;definindo-variavel-no-controller-rails.jpg" alt="definindo-variavel-no-controller-rails" width="913" height="162" &#47;><&#47;a></p>
-<p>Toda vari&aacute;vel de inst&acirc;ncia come&ccedil;a com <code>@<&#47;code> no Ruby e elas sempre s&atilde;o enviadas para a view no Rails, portanto se criarmos qualquer vari&aacute;vel com <code>@<&#47;code> no controller ela estar&aacute; dispon&iacute;vel na view.</p>
-<p>Abra a view <code>app&#47;views&#47;home&#47;index.html.erb<&#47;code> e vamos exibir o valor definido no controller junto com uma mensagem de ol&aacute;, veja.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;exibindo-variavel-na-view-rails.jpg"><img class="alignnone size-full wp-image-574" title="exibindo-variavel-na-view-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;exibindo-variavel-na-view-rails.jpg" alt="exibindo-variavel-na-view-rails" width="750" height="93" &#47;><&#47;a></p>
-<div class="note"><code><%=<&#47;code> inicia a tag do Ruby e j&aacute; exibe o que estiver na frente (como se fosse <code><?php echo<&#47;code> do PHP). Para c&oacute;digo que n&atilde;o precisa de output usa-se apenas <code><%<&#47;code>.<&#47;div></p>
-<p>Feito isso inicie o servidor e acesse o projeto no navegador em <code>http:&#47;&#47;localhost:3000<&#47;code> e j&aacute; veremos nosso <code>ol&aacute; mundo<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;ola-mundo-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-575" title="ola-mundo-ruby-on-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;ola-mundo-ruby-on-rails.jpg" alt="ola-mundo-ruby-on-rails" width="772" height="193" &#47;><&#47;a></p>
-<h2>Conclus&atilde;o<&#47;h2><br />
-Por enquanto &eacute; s&oacute; pessoal, hoje aprendemos:</p>
+
+<p>Hoje estou aqui para ensinar como criar nosso primeiro projeto com o framework Ruby on Rails. Pra quem não sabe o que é Ruby on Rails pode conhecer um pouco mais <a title="Porque Usar um Framework?" href="{% post_url 2012-07-31-porque-usar-um-framework %}#ruby-on-rails-ref" target="_blank">aqui</a>.</p>
+
+<p>Se você já conhece mas não tem instalado em sua máquina, veja <a title="Instalando e Configurando Ambiente Ruby on Rails no Linux (Ubuntu)" href="{% post_url 2012-08-23-instalando-e-configurando-ambiente-ruby-on-rails-no-linux %}" target="_blank">esse post</a> onde explico como preparar um ambiente Rails no Linux. Se você usa Windows, instale uma máquina virtual ou crie dual boot pois Rails roda melhor em sistemas unix-like (Unix, Linux, OS X).</p>
+
+<a href="{{ site.baseurl }}/assets/primeiro-projeto-com-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-588" title="primeiro-projeto-com-ruby-on-rails" src="{{ site.baseurl }}/assets/primeiro-projeto-com-ruby-on-rails.jpg" alt="primeiro-projeto-com-ruby-on-rails"/></a>
+
+<h2>Iniciando projeto</h2>
+
+<p>Primeiro de tudo vamos criar um projeto Rails, para isso abra o terminal, acesse a pasta onde ficará o projeto e digite o comando <code>rails new nome-do-projeto -d=mysql</code> (substitua "nome-do-projeto" pelo nome que você deseja dar).</p>
+
+<p><a href="{{ site.baseurl }}/assets/criando-projeto-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-556" title="criando-projeto-ruby-on-rails" src="{{ site.baseurl }}/assets/criando-projeto-ruby-on-rails.jpg" alt="criando-projeto-ruby-on-rails"/></a></p>
+
+<div class="note">O argumento <code>-d=mysql</code> informa que o projeto usará banco de dados MySQL invés do SQLite que é padrão.</div>
+
+<p>O Rails irá criar uma pasta com o nome do projeto (nesse caso <code>first-project</code>) dentro do diretório atual (<code>pwd</code>). Vamos acessar a pasta e iniciar o servidor para testar a aplicação. Use o comando <code>rails s</code> ou <code>rails server</code> para iniciar o servidor.</p>
+
+<a href="{{ site.baseurl }}/assets/acessando-projeto-rails-e-iniciando-servidor.jpg"><img class="alignnone size-full wp-image-558" title="acessando-projeto-rails-e-iniciando-servidor" src="{{ site.baseurl }}/assets/acessando-projeto-rails-e-iniciando-servidor.jpg" alt="acessando-projeto-rails-e-iniciando-servidor"/></a>
+
+<p>Observe que ao tentar inicar o servidor obtemos uma mensagem de erro dizendo que não foi possível encontrar um "manipulador" de JavaScript. Esse erro ocorre nessa versão do Rails (3.2.8), para resolver, precisamos acessar o arquivo <code>Gemfile</code> que está dentro da pasta do projeto e adicionar a gema <code>therubyracer</code> através do comando  <code>gem therubyracer</code> (linha 24), veja como ficará.</p>
+
+<p><a href="{{ site.baseurl }}/assets/adicionando-gem-therubyracer-no-arquvio-gem.jpg"><img class="alignnone size-full wp-image-577" title="adicionando-gem-therubyracer-no-arquvio-gem" src="{{ site.baseurl }}/assets/adicionando-gem-therubyracer-no-arquvio-gem.jpg" alt="adicionando-gem-therubyracer-no-arquvio-gem"/></a></p>
+
+<div class="note">Gems são como bibliotecas em nossos projetos, elas são códigos Ruby que podemos portar, muito efeciente. Veja mais em <a title="http://rubygems.org/" rel="external nofollow" href="http://rubygems.org/" target="_blank">http://rubygems.org/</a>.</div>
+
+<p>O arquivo <code>Gemfile</code> diz ao Rails quais gems iremos usar, mas depois de definirmos precisamos baixar elas para nossa máquina, para isso execute o comando <code>bundle install</code> na pasta do projeto. Agora inicie o servidor (<code>rails s</code>) e veja que não teremos mais o erro, você deverá ver o <code>WEBrick</code> (servidor padrão do Rails) rodando como abaixo.</p>
+
+<p><a href="{{ site.baseurl }}/assets/rodando-servidor-rails.jpg"><img class="alignnone size-full wp-image-560" title="rodando-servidor-rails" src="{{ site.baseurl }}/assets/rodando-servidor-rails.jpg" alt="rodando-servidor-rails"/></a></p>
+
+<div class="note">Pressione <code>Ctrl+C</code> para desligar o servidor.</div>
+
+<h2>Configurando banco de dados</h2>
+
+<p>Dissemos ao Rails que usaremos banco de dados MySQL, mas precisamos dizer ainda qual a base de dados (<code>database</code>), usuário (<code>username</code>) e senha (<code>password</code>). Abra o arquivo <code>config/database.yml</code> e nas configurações de desenvolvimento defina os dados necessários.</p>
+
+<p><a href="{{ site.baseurl }}/assets/configurando-banco-de-dados-no-database-yml.jpg"><img class="alignnone size-full wp-image-561" title="configurando-banco-de-dados-no-database-yml" src="{{ site.baseurl }}/assets/configurando-banco-de-dados-no-database-yml.jpg" alt="configurando-banco-de-dados-no-database-yml" width="394" height="634" /></a></p>
+
+<div class="note">Observe que temos configurações de banco de dados para três ambientes: desenvolvimento, teste e produção. Por enquanto trabalharemos apenas com desenvolvimento (<code>development</code>).</div>
+
+<p>Precisamos criar o banco no MySQL ainda, para isso execute o comando <code>rake db:create</code> no terminal.</p>
+
+<a href="{{ site.baseurl }}/assets/criando-banco-de-dados-com-comando-rake-db-create.jpg"><img class="alignnone size-full wp-image-564" title="criando-banco-de-dados-com-comando-rake-db-create" src="{{ site.baseurl }}/assets/criando-banco-de-dados-com-comando-rake-db-create.jpg" alt="criando-banco-de-dados-com-comando-rake-db-create" /></a>
+
+<p>Com isso já temos nosso projeto no ponto para começarmos a desenvolver, agora inicie o servidor novamente, abra o navegador e acesse <code>http://0.0.0.0:3000/</code> para ver a tela de boas vindas do Rails.</p>
+
+<p><a href="{{ site.baseurl }}/assets/tela-de-boas-vindas-do-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-565" title="tela-de-boas-vindas-do-ruby-on-rails" src="{{ site.baseurl }}/assets/tela-de-boas-vindas-do-ruby-on-rails.jpg" alt="tela-de-boas-vindas-do-ruby-on-rails" /></a></p>
+
+<div class="note">Essa é a tela padrão de boas vindas que se encontra em <code>public/index.html</code>.</div>
+
+<p>Pare o servidor (<code>Ctrl+C</code>) e exclua essa página (<code>rm public/index.html</code>) pois não precisaremos mais dela (ela só serve para dizer que o Rails está rodando ok).</p>
+
+<h2>Definindo rota raiz</h2>
+
+<p>Vamos dizer ao Rails qual é a nossa rota raiz, abra o arquivo <code>config/routes.rb</code> e descomente (remova o <code>#</code> da frente) a linha <code>root :to =&gt; 'welcome#index'</code> e substitua <code>welcome</code> por <code>home</code> ficando assim.</p>
+
+<a href="{{ site.baseurl }}/assets/arquivo-de-rotas-do-rails.jpg"><img class="alignnone size-full wp-image-568" title="arquivo-de-rotas-do-rails" src="{{ site.baseurl }}/assets/arquivo-de-rotas-do-rails.jpg" alt="arquivo-de-rotas-do-rails" /></a>
+
+<p>Agora toda vez que acessarmos a url raiz de nosso site (<code>http://localhost:3000</code>) seremos mapeados para o controller <code>home</code> e action <code>index</code>.</p>
+
+<h2>Olá mundo</h2>
+
+<p>Se acessarmos nosso projeto pelo navegador agora teremos problemas pois o Rails não irá encontrar nosso controller e action definidos no <code>routes.rb</code>, vamos criar eles. Digite <code>rails g controller home index</code> no terminal.</p>
+
+<p><a href="{{ site.baseurl }}/assets/gerando-controller-rails.jpg"><img class="alignnone size-full wp-image-570" title="gerando-controller-rails" src="{{ site.baseurl }}/assets/gerando-controller-rails.jpg" alt="gerando-controller-rails"/></a></p>
+
+<div class="note">Esse <code>rails g</code> vem de <code>rails generate</code>, podemos usar ele para criar controllers, models, views etc.. Para saber mais digite <code>rails g --help</code>.</div>
+
+<p>Se você olhar na pasta <code>app/controllers/</code> e <code>app/views/home/</code> verá que temos nosso controller e view criados em seus respectivos locais.</p>
+
+<a href="{{ site.baseurl }}/assets/controller-e-view-rails.jpg"><img class="alignnone size-full wp-image-571" title="controller-e-view-rails" src="{{ site.baseurl }}/assets/controller-e-view-rails.jpg" alt="controller-e-view-rails" /></a>
+
+<p>Para finalizar, vamos criar uma variável de instância na action do controller e exibir na view, abra o <code>app/controllers/home_controller.rb</code> e adicione o comando <code>@welcome = 'sejam bem vindos'</code> dentro da action <code>index</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/definindo-variavel-no-controller-rails.jpg"><img class="alignnone size-full wp-image-573" title="definindo-variavel-no-controller-rails" src="{{ site.baseurl }}/assets/definindo-variavel-no-controller-rails.jpg" alt="definindo-variavel-no-controller-rails" /></a>
+
+<p>Toda variável de instância começa com <code>@</code> no Ruby e elas sempre são enviadas para a view no Rails, portanto se criarmos qualquer variável com <code>@</code> no controller ela estará disponível na view.</p>
+
+<p>Abra a view <code>app/views/home/index.html.erb</code> e vamos exibir o valor definido no controller junto com uma mensagem de olá, veja.</p>
+
+<p><a href="{{ site.baseurl }}/assets/exibindo-variavel-na-view-rails.jpg"><img class="alignnone size-full wp-image-574" title="exibindo-variavel-na-view-rails" src="{{ site.baseurl }}/assets/exibindo-variavel-na-view-rails.jpg" alt="exibindo-variavel-na-view-rails" /></a></p>
+
+<div class="note"><code>&lt;%=</code> inicia a tag do Ruby e já exibe o que estiver na frente (como se fosse <code>&lt;?php echo</code> do PHP). Para código que não precisa de output usa-se apenas <code>&lt;%</code>.</div>
+
+<p>Feito isso inicie o servidor e acesse o projeto no navegador em <code>http://localhost:3000</code> e já veremos nosso <code>olá mundo</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/ola-mundo-ruby-on-rails.jpg"><img class="alignnone size-full wp-image-575" title="ola-mundo-ruby-on-rails" src="{{ site.baseurl }}/assets/ola-mundo-ruby-on-rails.jpg" alt="ola-mundo-ruby-on-rails" /></a>
+
+<h2>Conclusão</h2>
+
+<p>Por enquanto é só pessoal, hoje aprendemos:</p>
+
 <ul>
-<li>criar um projeto Rails<&#47;li>
-<li>conceito de gems<&#47;li>
-<li>definir rota raiz<&#47;li>
-<li>gerar controller atrav&eacute;s do <code>rails g<&#47;code><&#47;li>
-<li>vari&aacute;veis de inst&acirc;ncia<&#47;li>
-<li>exibir conte&uacute;do nas views<&#47;li><br />
-<&#47;ul><br />
-Em breve teremos mais conte&uacute;do de Rails.. O que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais.</p>
+  <li>criar um projeto Rails</li>
+  <li>conceito de gems</li>
+  <li>definir rota raiz</li>
+  <li>gerar controller através do <code>rails g</code></li>
+  <li>variáveis de instância</li>
+  <li>exibir conteúdo nas views</li>
+</ul>
+
+<p>Em breve teremos mais conteúdo de Rails.. O que vocês acharam?</p>
+
+<p>Até mais.</p>

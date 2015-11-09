@@ -123,20 +123,39 @@ comments:
     Valew"
 ---
 <p>E ai galera, tudo certo?</p>
-<p>Hoje estou aqui para dar uma dica r&aacute;pida de <strong>MySQL<&#47;strong>. As vezes precisamos atualizar um registro caso ele j&aacute; exista na tabela ou inserir um novo caso n&atilde;o exista, irei mostrar como fazer isso utilizando a cl&aacute;usula <code>ON DUPLICATE KEY UPDATE<&#47;code>.</p>
-<p>Segundo a <a title="http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html" href="http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;5.0&#47;en&#47;insert-on-duplicate.html" rel="nofollow external" target="_blank">documenta&ccedil;&atilde;o oficial do MySQL<&#47;a>, ela serve para verificar se um &iacute;ndice &uacute;nico (unique index) ou uma chave prim&aacute;ria (primary key) est&atilde;o sendo duplicadas com uma nova inser&ccedil;&atilde;o, caso esteja ent&atilde;o ela atualiza o registro inv&eacute;s de inserir. Vamos para pr&aacute;tica..</p>
-<p><a id="more"></a><a id="more-659"></a>Vamos supor que voc&ecirc; tenha a seguinte tabela <code>customers<&#47;code> com os dados abaixo<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-a-ser-atualizada-com-on-duplicate-key-update.png"><img class="alignnone size-full wp-image-660" title="tabela-a-ser-atualizada-com-on-duplicate-key-update" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-a-ser-atualizada-com-on-duplicate-key-update.png" alt="" width="144" height="90" &#47;><&#47;a></p>
-<p>Queremos atualizar o nome do registro de <code>id = 2<&#47;code>, mas vamos imaginar um cen&aacute;rio em que n&atilde;o sabemos se esse registro existe ou n&atilde;o na tabela, ent&atilde;o executamos:<br />
-[code language="sql"]INSERT INTO customers (id, name) VALUES (2, 'Ant&ocirc;nio Silva') ON DUPLICATE KEY UPDATE name = 'Ant&ocirc;nio Silva';[&#47;code]<br />
-Resultado:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-customers-atualizada.png"><img class="alignnone size-full wp-image-661" title="tabela-customers-atualizada" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;tabela-customers-atualizada.png" alt="" width="186" height="90" &#47;><&#47;a></p>
-<p>Se o campo <code>id<&#47;code> for um &iacute;ndice &uacute;nico ou chave prim&aacute;ria e for igual a 2 (que &eacute; o valor definido em <code>VALUES<&#47;code>), ent&atilde;o o registro ser&aacute; atualizado com <code>UPDATE name = 'Ant&ocirc;nio Silva'<&#47;code>, caso n&atilde;o exista um registro com <code>id = 2<&#47;code>, ent&atilde;o ser&aacute; inserido um novo com <code>INSERT INTO customers (id, name) VALUES (2, 'Ant&ocirc;nio Silva')<&#47;code>.</p>
-<p>Vamos ver agora a inser&ccedil;&atilde;o caso n&atilde;o exista o registro, executando o comando:<br />
-[code language="sql"]INSERT INTO customers (id, name) VALUES (5, 'Andr&eacute; Marcos') ON DUPLICATE KEY UPDATE name = 'Andr&eacute; Marcos';[&#47;code]<br />
-Resultado:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;inserindo-registros-na-tabela-customers.png"><img class="alignnone size-full wp-image-662" title="inserindo-registros-na-tabela-customers" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;inserindo-registros-na-tabela-customers.png" alt="" width="186" height="108" &#47;><&#47;a></p>
-<p>Como n&atilde;o existe nenhum registro de valor &uacute;nico igual a 5, ent&atilde;o cria-se um novo registro.</p>
-<div class="alert">A documenta&ccedil;&atilde;o oficial do MySQL recomenda evitar o uso da cl&aacute;usula "<strong>ON DUPLICATE KEY UPDATE<&#47;strong>" em tabelas que tenham v&aacute;rios &iacute;ndices &uacute;nicos.<&#47;div></p>
-<p>Bem simples n&eacute;? Espero que tenham gostado.</p>
-<p>At&eacute; mais.</p>
+
+<p>Hoje estou aqui para dar uma dica rápida de MySQL. As vezes precisamos atualizar um registro caso ele já exista na tabela ou inserir um novo caso não exista, irei mostrar como fazer isso utilizando a cláusula <code>ON DUPLICATE KEY UPDATE</code>.</p>
+
+<p>Segundo a <a title="http://dev.mysql.com/doc/refman/5.0/en/insert-on-duplicate.html" href="http://dev.mysql.com/doc/refman/5.0/en/insert-on-duplicate.html" rel="nofollow external" target="_blank">documentação oficial do MySQL</a>, ela serve para verificar se um índice único (unique index) ou uma chave primária (primary key) estão sendo duplicadas com uma nova inserção, caso esteja então ela atualiza o registro invés de inserir.</p>
+
+<p>Vamos supor que você tenha a seguinte tabela <code>customers</code> com os dados abaixo:</p>
+
+<a href="{{ site.baseurl }}/assets/tabela-a-ser-atualizada-com-on-duplicate-key-update.png"><img class="alignnone size-full wp-image-660" title="tabela-a-ser-atualizada-com-on-duplicate-key-update" src="{{ site.baseurl }}/assets/tabela-a-ser-atualizada-com-on-duplicate-key-update.png"/></a>
+
+<p>Queremos atualizar o nome do registro de <code>id = 2</code>, mas vamos imaginar um cenário em que não sabemos se esse registro existe ou não na tabela, então executamos:</p>
+
+{% highlight sql %}
+INSERT INTO customers (id, name) VALUES (2, 'Antônio Silva') ON DUPLICATE KEY UPDATE name = 'Antônio Silva';
+{% endhighlight %}
+
+<p>Resultado:</p>
+<p><a href="{{ site.baseurl }}/assets/tabela-customers-atualizada.png"><img class="alignnone size-full wp-image-661" title="tabela-customers-atualizada" src="{{ site.baseurl }}/assets/tabela-customers-atualizada.png"/></a></p>
+
+Se o campo <code>id</code> for um índice único ou chave primária e for igual a 2 (que é o valor definido em <code>VALUES</code>), então o registro será atualizado com <code>UPDATE name = 'Antônio Silva'</code>, caso não exista um registro com <code>id = 2</code>, então será inserido um novo com <code>INSERT INTO customers (id, name) VALUES (2, 'Antônio Silva')</code>.
+
+<p>Vamos ver agora a inserção caso não exista o registro, executando o comando:</p>
+
+{% highlight sql %}
+INSERT INTO customers (id, name) VALUES (5, 'André Marcos') ON DUPLICATE KEY UPDATE name = 'André Marcos';
+{% endhighlight %}
+
+<p>Resultado:</p>
+<a href="{{ site.baseurl }}/assets/inserindo-registros-na-tabela-customers.png"><img class="alignnone size-full wp-image-662" title="inserindo-registros-na-tabela-customers" src="{{ site.baseurl }}/assets/inserindo-registros-na-tabela-customers.png"/></a>
+
+<p>Como não existe nenhum registro de valor único igual a 5, então cria-se um novo registro.</p>
+
+<div class="alert">A documentação oficial do MySQL recomenda evitar o uso da cláusula "<strong>ON DUPLICATE KEY UPDATE</strong>" em tabelas que tenham vários índices únicos.</div>
+
+<p>Bem simples né? Espero que tenham gostado.</p>
+
+<p>Até mais.</p>

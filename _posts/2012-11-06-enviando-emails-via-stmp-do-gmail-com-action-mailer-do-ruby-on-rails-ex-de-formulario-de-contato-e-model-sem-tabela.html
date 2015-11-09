@@ -141,136 +141,217 @@ comments:
     adicionado apenas no ambiente de desenvolvimento\r\n    config.action_mailer.raise_delivery_errors
     = true\r\n\r\n\r\nFiz algo errado? obrigado pela ajuda!"
 ---
-<p>Fala galera, beleza? Hoje venho mostrar como enviar emails via <strong>SMTP (Gmail)<&#47;strong> com <strong>Ruby on Rails (3.2.8)<&#47;strong> atrav&eacute;s do <strong>Action Mailer<&#47;strong> e para isso estarei criando um formul&aacute;rio de contato com model (para desfrutarmos das valida&ccedil;&otilde;es e outros recursos) sem tabela (<strong>tableless model<&#47;strong>) como exemplo.</p>
-<h2>Gerando o Formul&aacute;rio com Scaffold<&#47;h2><br />
-Formul&aacute;rios de contato s&atilde;o constitu&iacute;dos por campos que quando preenchidos s&atilde;o enviados para uma url e executam algo certo? Ent&atilde;o para agilizar irei gerar um scaffold com os dados que preciso e depois removerei os c&oacute;digos desnecess&aacute;rios.<br />
-[code language="bash"]rails g scaffold Contact name:string email:string subject:string message:text[&#47;code]</p>
-<h2><a id="more"></a><a id="more-692"></a>Model sem Tabela (tableless model)<&#47;h2><br />
-Olhe para o model <code>Contact<&#47;code> que acabamos de criar e ele deve estar como abaixo:</p>
-<p>[code language="ruby"]class Contact < ActiveRecord::Base<br />
-  attr_accessible :email, :message, :name, :subject<br />
-end[&#47;code]</p>
-<p>Observe que ele herda da classe <code>ActiveRecord<&#47;code>, mas como n&atilde;o iremos usar tabela, vamos fazer algumas mudan&ccedil;as..</p>
+
+<p>Fala galera, beleza? Hoje venho mostrar como enviar emails via SMTP (Gmail) com Ruby on Rails (3.2.8) através do Action Mailer e para isso estarei criando um formulário de contato com model (para desfrutarmos das validações e outros recursos) sem tabela (tableless model) como exemplo.</p>
+
+<h2>Gerando o Formulário com Scaffold</h2>
+
+<p>Formulários de contato são constituídos por campos que quando preenchidos são enviados para uma url e executam algo certo? </p>
+
+<p>Então para agilizar irei gerar um scaffold com os dados que preciso e depois removerei os códigos desnecessários.</p>
+
+{% highlight bash %}
+rails g scaffold Contact name:string email:string subject:string message:text
+{% endhighlight %}
+
+<h2>Model sem Tabela (tableless model)</h2>
+
+<p>Olhe para o model <code>Contact</code> que acabamos de criar e ele deve estar como abaixo:</p>
+
+{% highlight ruby %}
+class Contact < ActiveRecord::Base
+  attr_accessible :email, :message, :name, :subject
+end
+{% endhighlight %}
+
+<p>Observe que ele herda da classe <code>ActiveRecord</code>, mas como não iremos usar tabela, vamos fazer algumas mudanças..</p>
 <ol>
-<li>Primeiro vamos retirar a heran&ccedil;a do <code>ActiveRecord<&#47;code> pois n&atilde;o usaremos nenhum recurso de banco de dados<&#47;li>
-<li>Vamos incluir e extender algumas classes necess&aacute;rias<&#47;li>
-<li>Criar dois m&eacute;todos necess&aacute;rios para a utiliza&ccedil;&atilde;o do model sem tabela<&#47;li>
-<li>Definir m&eacute;todos acessores<&#47;li><br />
-<&#47;ol><br />
-Feito as mudan&ccedil;as, nosso model deve se parecer com esse:</p>
-<p>[code language="ruby"]class Contact<br />
-  include ActiveModel::Validations<br />
-  include ActiveModel::Conversion<br />
-  extend ActiveModel::Naming</p>
-<p>  attr_accessor :name, :subject, :message, :email</p>
-<p>  def initialize(attributes = {})<br />
-    attributes.each do |name, value|<br />
-      send("#{name}=", value)<br />
-    end<br />
-  end</p>
-<p>  def persisted?<br />
-    false<br />
-  end<br />
-end[&#47;code]</p>
-<h2>Removendo o Desnecess&aacute;rio<&#47;h2><br />
-Como n&atilde;o iremos precisar das funcionalidades de atualiza&ccedil;&atilde;o (edi&ccedil;&atilde;o), visualiza&ccedil;&atilde;o, listagem e exclus&atilde;o vamos remover elas. Exclua as views <code>index<&#47;code>, <code>edit<&#47;code> e <code>show<&#47;code> da pasta <code>views&#47;contacts<&#47;code>, remova as respectivas actions do <code>contacts_controller.rb<&#47;code> e mais algumas coisas que n&atilde;o ser&atilde;o necess&aacute;rias. Nosso controller fica assim por enquanto:</p>
-<p>[code language="ruby"]class ContactsController < ApplicationController<br />
-  def new<br />
-    @contact = Contact.new<br />
-  end</p>
-<p>  def create<br />
-    @contact = Contact.new(params[:contact])</p>
-<p>    if @contact.valid?<br />
-      redirect_to :action => 'new'<br />
-      return<br />
-    end</p>
-<p>    render :action => 'new'<br />
-  end<br />
-end[&#47;code]</p>
-<p>Repare que uma das altera&ccedil;&otilde;es que fizemos foi trocar o <code>.save<&#47;code> para <code>.valid?<&#47;code> da action <code>create<&#47;code>, isso serve para validar com o model antes de enviarmos o email com dados do contato.</p>
-<h2>Criando um Mailer<&#47;h2><br />
-Vamos criar um mailer que ser&aacute; repons&aacute;vel por determinar o template e alterar algumas op&ccedil;&otilde;es. Execute o comando abaixo no terminal na pasta do projeto:</p>
-<p>[code language="bash"]rails generate mailer ContactMailer[&#47;code]</p>
-<p>Dentro da pasta <code>app&#47;mailers<&#47;code> foi criado um arquivo chamado <code>contact_mailer.rb<&#47;code>, usaremos ele para definir algumas op&ccedil;&otilde;es do envio.</p>
-<p>Vamos criar um m&eacute;todo chamado <code>contact_message<&#47;code> que enviar&aacute; as mensagens de contato:</p>
-<p>[code language="ruby"]class ContactMailer < ActionMailer::Base<br />
-  default :from => 'email_remetente@gmail.com'</p>
-<p>  def contact_message(contact)<br />
-    @contact = contact<br />
-    mail(:to => 'destinatario@provedor.com', :subject => 'Mensagem de Contato')<br />
-  end<br />
-end[&#47;code]</p>
-<p>Aqui definimos o remetente, destinat&aacute;rio e assunto da mensagem al&eacute;m de passarmos os dados de contato para a view.</p>
-<h2>Criando as Views do Mailer<&#47;h2></p>
-<p>Crie um arquivo chamado <code>contact_message.html.erb<&#47;code> e outro <code>contact_message.text.erb<&#47;code> em <code>app&#47;views&#47;contact_mailer&#47;<&#47;code> para termos as views HTML e texto respectivamente para nosso mailer, esses arquivos conter&atilde;o a mensagem propriamente. Minha view HTML ficou assim:</p>
-<p>[code language="ruby"]<br />
-<h1>Mensagem de contato<&#47;h1></p>
-<h2>Data de envio: <%= Time.now.strftime("%d&#47;%m&#47;%Y %H:%M") %><&#47;h2></p>
-<p><strong>Visitante: <&#47;strong><%= @contact['name'] %><&#47;p></p>
-<p><strong>Email: <&#47;strong><%= @contact['email'] %><&#47;p></p>
-<p><% if @contact['subject'].present? %></p>
-<p><strong>Assunto: <&#47;strong><%= @contact['subject'] %><&#47;p><br />
-<% end %></p>
-<p><strong>Mensagem:<&#47;strong><&#47;p></p>
-<p><%= @contact['message'] %><&#47;p>[&#47;code]</p>
-<div class="note">Assim como em views normais voc&ecirc; pode usar vari&aacute;veis de inst&acirc;ncias que estiverem definidas no m&eacute;todo da classe mailer.<&#47;div></p>
-<h2>Definindo Configura&ccedil;&otilde;es SMTP<&#47;h2><br />
-Para enviarmos as mensagens via SMTP, precisamos informar os dados que ser&atilde;o utilizados, para isso abra o arquivo de configura&ccedil;&atilde;o da aplica&ccedil;&atilde;o (<code>application.rb<&#47;code>) e defina as configura&ccedil;&otilde;es do <strong>Gmail<&#47;strong> como abaixo (preenchendo com os dados do remetente):</p>
-<p>[code language="ruby"]config.action_mailer.delivery_method = :smtp<br />
-config.action_mailer.smtp_settings = {<br />
-  :address              => "smtp.gmail.com",<br />
-  :port                 => 587,<br />
-  :domain               => 'gmail.com',<br />
-  :user_name            => 'usuario_remetente',<br />
-  :password             => 'senha123',<br />
-  :authentication       => 'plain',<br />
-  :enable_starttls_auto => true<br />
-}<br />
-# Para debug apenas, &eacute; melhor que a linha abaixo seja adicionado apenas no ambiente de desenvolvimento<br />
-config.action_mailer.raise_delivery_errors = true[&#47;code]</p>
-<div class="note">Se voc&ecirc; quiser pode adicionar uma configura&ccedil;&atilde;o de SMTP para cada ambiente, basta adicionar nos arquivos respectivos dentro da pasta <code>config&#47;environmentes<&#47;code>, no caso acima defino uma para todos.<&#47;div></p>
-<h2>Enviando Emails<&#47;h2><br />
-Agora s&oacute; precisamos adicionar a chamada do m&eacute;todo respons&aacute;vel por enviar emails em nosso controller, veja como fica:</p>
-<p>[code language="ruby" linenos="1" hl_lines="10"]class ContactsController < ApplicationController<br />
-  def new<br />
-    @contact = Contact.new<br />
-  end</p>
-<p>  def create<br />
-    @contact = Contact.new(params[:contact])</p>
-<p>    if @contact.valid?<br />
-      ContactMailer.contact_message(params[:contact]).deliver<br />
-      flash[:notice] = 'Mensagem enviado com sucesso'<br />
-      redirect_to :action => 'new'<br />
-      return<br />
-    end</p>
-<p>    render :action => 'mew'<br />
-  end<br />
-end[&#47;code]</p>
-<p>O envio j&aacute; est&aacute; funcionando, fa&ccedil;a um teste!</p>
-<h2>Adicionando Valida&ccedil;&otilde;es<&#47;h2><br />
-Vamos adicionar algumas valida&ccedil;&otilde;es no formul&aacute;rio, para isso abro o model <code>Contact<&#47;code> e adiciono algumas linhas, ficando como abaixo:</p>
-<p>[code language="ruby"]class Contact<br />
-  include ActiveModel::Validations<br />
-  include ActiveModel::Conversion<br />
-  extend ActiveModel::Naming</p>
-<p>  attr_accessor :name, :subject, :message, :email</p>
-<p>  validates :name,<br />
-            :length => {:in => 2..50}</p>
-<p>  validates :email,<br />
-            :format => { :with => &#47;^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$&#47;i }  </p>
-<p>  validates :message,<br />
-            :length => {:in => 10..750}</p>
-<p>  def initialize(attributes = {})<br />
-    attributes.each do |name, value|<br />
-      send("#{name}=", value)<br />
-    end<br />
-  end</p>
-<p>  def persisted?<br />
-    false<br />
-  end<br />
-end[&#47;code]</p>
-<p>Agora se algu&eacute;m tentar submeter o formul&aacute;rio vazio n&atilde;o conseguir&aacute;..</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;11&#47;submetendo-formul&aacute;rio-de-contato.png"><img class="alignnone size-full wp-image-701" title="submetendo-formul&aacute;rio-de-contato" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;11&#47;submetendo-formul&aacute;rio-de-contato.png" alt="" width="480" height="647" &#47;><&#47;a></p>
-<p>Pronto, temos nosso formul&aacute;rio de contato com valida&ccedil;&atilde;o e envio de emails por SMTP funcionando.</p>
-<p>Por hoje &eacute; s&oacute; pessoal, o que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais.</p>
+  <li>Primeiro vamos retirar a herança do <code>ActiveRecord</code> pois não usaremos nenhum recurso de banco de dados</li>
+  <li>Vamos incluir e extender algumas classes necessárias</li>
+  <li>Criar dois métodos necessários para a utilização do model sem tabela</li>
+  <li>Definir métodos acessores</li>
+</ol>
+
+<p>Feito as mudanças, nosso model deve se parecer com esse:</p>
+
+{% highlight ruby %}
+class Contact
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
+  attr_accessor :name, :subject, :message, :email
+
+  def initialize(attributes = {})
+    attributes.each do |name, value|
+      send("#{name}=", value)
+    end
+  end
+
+  def persisted?
+    false
+  end
+end
+{% endhighlight %}
+
+<h2>Removendo o Desnecessário</h2>
+
+<p>Como não iremos precisar das funcionalidades de atualização (edição), visualização, listagem e exclusão vamos remover elas. Exclua as views <code>index</code>, <code>edit</code> e <code>show</code> da pasta <code>views/contacts</code>, remova as respectivas actions do <code>contacts_controller.rb</code> e mais algumas coisas que não serão necessárias. Nosso controller fica assim por enquanto:</p>
+
+{% highlight ruby %}
+class ContactsController < ApplicationController
+  def new
+    @contact = Contact.new
+  end
+
+  def create
+    @contact = Contact.new(params[:contact])
+
+    if @contact.valid?
+      redirect_to :action => 'new'
+      return  
+    end
+
+    render :action => 'new'
+  end
+end
+{% endhighlight %}
+
+<p>Repare que uma das alterações que fizemos foi trocar o <code>.save</code> para <code>.valid?</code> da action <code>create</code>, isso serve para validar com o model antes de enviarmos o email com dados do contato.</p>
+
+<h2>Criando um Mailer</h2>
+
+<p>Vamos criar um mailer que será reponsável por determinar o template e alterar algumas opções. Execute o comando abaixo no terminal na pasta do projeto:</p>
+
+{% highlight bash %}
+rails generate mailer ContactMailer
+{% endhighlight %}
+
+<p>Dentro da pasta <code>app/mailers</code> foi criado um arquivo chamado <code>contact_mailer.rb</code>, usaremos ele para definir algumas opções do envio.</p>
+
+<p>Vamos criar um método chamado <code>contact_message</code> que enviará as mensagens de contato:</p>
+
+{% highlight ruby %}
+class ContactMailer < ActionMailer::Base
+  default :from => 'email_remetente@gmail.com'
+
+  def contact_message(contact)
+    @contact = contact
+    mail(:to => 'destinatario@provedor.com', :subject => 'Mensagem de Contato')
+  end
+end
+{% endhighlight %}
+
+<p>Aqui definimos o remetente, destinatário e assunto da mensagem além de passarmos os dados de contato para a view.</p>
+
+<h2>Criando as Views do Mailer</h2>
+
+<p>Crie um arquivo chamado <code>contact_message.html.erb</code> e outro <code>contact_message.text.erb</code> em <code>app/views/contact_mailer/</code> para termos as views HTML e texto respectivamente para nosso mailer, esses arquivos conterão a mensagem propriamente. Minha view HTML ficou assim:</p>
+
+{% highlight erb %}
+<h1>Mensagem de contato</h1>
+<h2>Data de envio: <%= Time.now.strftime("%d/%m/%Y %H:%M") %></h2>
+
+<p><strong>Visitante: </strong><%= @contact['name'] %></p>
+
+<p><strong>Email: </strong><%= @contact['email'] %></p>
+
+<% if @contact['subject'].present? %>
+  <p><strong>Assunto: </strong><%= @contact['subject'] %></p>
+<% end %>
+
+<p><strong>Mensagem:</strong></p>
+<p><%= @contact['message'] %></p>
+{% endhighlight %}
+
+<div class="note">Assim como em views normais você pode usar variáveis de instâncias que estiverem definidas no método da classe mailer.</div>
+
+<h2>Definindo Configurações SMTP</h2>
+
+<p>Para enviarmos as mensagens via SMTP, precisamos informar os dados que serão utilizados, para isso abra o arquivo de configuração da aplicação (<code>application.rb</code>) e defina as configurações do Gmail como abaixo (preenchendo com os dados do remetente):</p>
+
+{% highlight ruby %}
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => 'gmail.com',
+  :user_name            => 'usuario_remetente',
+  :password             => 'senha123',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true 
+}
+# Para debug apenas, é melhor que a linha abaixo seja adicionado apenas no ambiente de desenvolvimento
+config.action_mailer.raise_delivery_errors = true
+{% endhighlight %}
+
+<div class="note">Se você quiser pode adicionar uma configuração de SMTP para cada ambiente, basta adicionar nos arquivos respectivos dentro da pasta <code>config/environmentes</code>, no caso acima defino uma para todos.</div>
+
+<h2>Enviando Emails</h2>
+<p>Agora só precisamos adicionar a chamada do método responsável por enviar emails (linha 10) em nosso controller, veja como fica:</p>
+
+{% highlight ruby linenos %}
+class ContactsController < ApplicationController
+  def new
+    @contact = Contact.new
+  end
+
+  def create
+    @contact = Contact.new(params[:contact])
+
+    if @contact.valid?
+      ContactMailer.contact_message(params[:contact]).deliver
+      flash[:notice] = 'Mensagem enviado com sucesso'
+      redirect_to :action => 'new'
+      return  
+    end
+
+    render :action => 'mew'
+  end
+end
+{% endhighlight %}
+
+<p>O envio já está funcionando, faça um teste!</p>
+
+<h2>Adicionando Validações</h2>
+
+<p>Vamos adicionar algumas validações no formulário, para isso abro o model <code>Contact</code> e adiciono algumas linhas, ficando como abaixo:</p>
+
+{% highlight ruby %}
+class Contact 
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
+  attr_accessor :name, :subject, :message, :email
+
+  validates :name,
+            :length => {:in => 2..50}
+
+  validates :email,
+            :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }  
+
+  validates :message,
+            :length => {:in => 10..750}
+
+  def initialize(attributes = {})
+    attributes.each do |name, value|
+      send("#{name}=", value)
+    end
+  end
+
+  def persisted?
+    false
+  end
+end
+{% endhighlight %}
+
+<p>Agora se alguém tentar submeter o formulário vazio não conseguirá..</p>
+
+<a href="{{ site.baseurl }}/assets/submetendo-formulário-de-contato.png"><img class="alignnone size-full wp-image-701" title="submetendo-formulário-de-contato" src="{{ site.baseurl }}/assets/submetendo-formulário-de-contato.png"/></a>
+
+<p>Pronto, temos nosso formulário de contato com validação e envio de emails por SMTP funcionando.</p>
+
+<p>Por hoje é só pessoal, o que vocês acharam?</p>
+
+<p>Até mais.</p>

@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: Replace M&uacute;ltiplo de String com Javascript
+title: Replace M&uacute;ltiplo de String com JavaScript
 author:
   display_name: Glauco Custódio
   login: glauco-custodio
@@ -42,77 +42,110 @@ comments:
     \r\n\r\nObrigado por compartilhar"
 ---
 <p>Fala pessoal, tudo bom?</p>
-<p>Hoje estou aqui para falar sobre <strong>Javascript<&#47;strong>, irei compartilhar com voc&ecirc;s formas de se fazer <strong>replace<&#47;strong> com string, express&atilde;o regular e vari&aacute;veis.</p>
-<p>Vamos supor que voc&ecirc; tenha o HTML abaixo e precise fazer alguns replaces (substitui&ccedil;&otilde;es) com Javascript. <span style="text-decoration: underline;">Todas<&#47;span> as classes <code>tag-p-1<&#47;code> devem ser trocadas por <code>tag-p-2<&#47;code> e <span style="text-decoration: underline;">todos<&#47;span> os atributos names dos inputs devem ser trocados por <code>data[2]<&#47;code>..</p>
-<p><a id="more"></a><a id="more-590"></a>[code language="html" linenos="1"]<body</p>
-<div class="container">
-<p class="tag-p-1"><&#47;p></p>
-<p class="tag-p-1"><&#47;p></p>
-<p class="tag-p-1"><&#47;p></p>
-<p><input name="data[1][name]" &#47;><br />
-<input name="data[1][name]" &#47;><br />
-<input name="data[1][name]" &#47;><br />
-<&#47;div><br />
-<&#47;body><br />
-[&#47;code]</p>
-<p>Se voc&ecirc; tentar usar o m&eacute;todo <code>replace<&#47;code> do Javascript como abaixo n&atilde;o obter&aacute; sucesso, pois ele trocar&aacute; apenas a primeira ocorr&ecirc;ncia de cada um..</p>
-<p>[code language="javascript" linenos="1" hl_lines="6 7"]<br />
-$(function(){<br />
-&#47;&#47; Get HTML content<br />
-var content = $('.container').html();</p>
-<p>&#47;&#47; Replace strings<br />
-content = content.replace('tag-p-1', 'tag-p-2');<br />
-content = content.replace('[1]', '[2]');</p>
-<p>&#47;&#47; Upgrade content<br />
-$('.container').html(content);<br />
-});<br />
-[&#47;code]</p>
-<p>Veja o resultado:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;replace-com-javascript.jpg"><img class="alignnone size-full wp-image-594" title="replace-com-javascript" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;replace-com-javascript.jpg" alt="replace-com-javascript" width="374" height="219" &#47;><&#47;a></p>
-<p>Precisamos usar o m&eacute;todo <code>replace<&#47;code> com express&atilde;o regular e o modificador <code>g<&#47;code> para conseguirmos substituir todas inst&acirc;ncias que desejamos. Poderiamos fazer da seguinte forma:</p>
-<p>[code language="javascript" linenos="1" hl_lines="6 7"]<br />
-$(function(){<br />
-&#47;&#47; Get HTML content<br />
-var content = $('.container').html();</p>
-<p>&#47;&#47; Replace strings<br />
-content = content.replace(&#47;tag-p-1&#47;g, 'tag-p-2');<br />
-content = content.replace(&#47;[1]&#47;g, '[2]');</p>
-<p>&#47;&#47; Upgrade content<br />
-$('.container').html(content);<br />
-});<br />
-[&#47;code]</p>
-<p>Resultado:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;replace-com-expressao-regular-javascript.jpg"><img class="alignnone size-full wp-image-596" title="replace-com-expressao-regular-javascript" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;replace-com-expressao-regular-javascript.jpg" alt="replace-com-expressao-regular-javascript" width="320" height="214" &#47;><&#47;a></p>
-<div class="note">Modificador <code>g<&#47;code> vem de <code>global<&#47;code>, <a title="http:&#47;&#47;www.w3schools.com&#47;jsref&#47;jsref_obj_regexp.asp" href="http:&#47;&#47;www.w3schools.com&#47;jsref&#47;jsref_obj_regexp.asp" rel="nofollow external">clique aqui<&#47;a> para ver outros.<&#47;div></p>
-<p>Mas observe os 3 &uacute;ltimos, eles acabaram ficando com dois colchetes de abertura e fechamento pois eles s&atilde;o elementos de express&atilde;o regular, temos que escapar eles adicionando <code>\<&#47;code> antes. Veja:</p>
-<p>[code language="javascript" linenos="1" hl_lines="7"]<br />
-$(function(){<br />
-&#47;&#47; Get HTML content<br />
-var content = $('.container').html();</p>
-<p>&#47;&#47; Replace strings<br />
-content = content.replace(&#47;tag-p-1&#47;g, 'tag-p-2');<br />
-content = content.replace(&#47;\[1\]&#47;g, '[2]');</p>
-<p>&#47;&#47; Upgrade content<br />
-$('.container').html(content);<br />
-});<br />
-[&#47;code]</p>
-<p>Resultado:<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;escapando-caracteres-em-expressao-regular.jpg"><img class="alignnone size-full wp-image-597" title="escapando-caracteres-em-expressao-regular" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;escapando-caracteres-em-expressao-regular.jpg" alt="escapando-caracteres-em-expressao-regular" width="312" height="214" &#47;><&#47;a></p>
-<p>Agora sim, fizemos o replace de todas ocorr&ecirc;ncias de maneira certa..</p>
-<h2>Vari&aacute;veis no padr&atilde;o da express&atilde;o regular<&#47;h2><br />
-Mas e se precisarmos usar o padr&atilde;o vindo do valor de alguma vari&aacute;vel concatenado com uma string? Se voc&ecirc; tentar como abaixo n&atilde;o ir&aacute; funcionar.</p>
-<p>[code language="javascript" linenos="1"]<br />
-var my_var = 1;<br />
-content = content.replace('['+ my_var + ']'&#47;g, '[2]');<br />
-[&#47;code]</p>
-<p>Passei por essa situa&ccedil;&atilde;o hoje e para resolver tive que criar um objeto de express&atilde;o regular e passar para o m&eacute;todo <code>replace<&#47;code> como abaixo:</p>
-<p>[code language="javascript" linenos="1" hl_lines="3 4"]<br />
-var my_var = 1;<br />
-&#47;&#47; Create a regular expression object<br />
-var regObj = new RegExp('\\\['+ my_var + '\\\]', 'g');<br />
-content = content.replace(regObj, '[2]');<br />
-[&#47;code]</p>
-<div class="note">Observe que precisamos usar duas <code>\<&#47;code>.<&#47;div></p>
-<p>Se voc&ecirc; testar ver&aacute; que funcionar&aacute; perfeitamente..</p>
-<p>O que voc&ecirc; achou?</p>
-<p>At&eacute; mais.</p>
+
+<p>Hoje estou aqui para falar sobre JavaScript, irei compartilhar com vocês formas de se fazer replace com string, expressão regular e variáveis.</p>
+
+<p>Vamos supor que você tenha o HTML abaixo e precise fazer alguns replaces (substituições) com JavaScript. Todas as classes <code>tag-p-1</code> devem ser trocadas por <code>tag-p-2</code> e todos os atributos names dos inputs devem ser trocados por <code>data[2]</code>..</p>
+
+{% highlight html %}
+<body>
+  <div class="container">
+    <p class="tag-p-1"></p>
+    <p class="tag-p-1"></p>
+    <p class="tag-p-1"></p>
+
+    <input name="data[1][name]" />
+    <input name="data[1][name]" />
+    <input name="data[1][name]" />
+  </div>
+</body>
+{% endhighlight %}
+
+<p>Se você tentar usar o método <code>replace</code> do JavaScript como abaixo não obterá sucesso, pois ele trocará apenas a primeira ocorrência de cada um..</p>
+
+{% highlight javascript %}
+$(function(){
+  // Get HTML content
+  var content = $('.container').html();
+
+  // Replace strings
+  content = content.replace('tag-p-1', 'tag-p-2');
+  content = content.replace('[1]', '[2]');
+
+  // Upgrade content
+  $('.container').html(content);
+});
+{% endhighlight %}
+
+<p>Veja o resultado:</p>
+
+<a href="{{ site.baseurl }}/assets/replace-com-javascript.jpg"><img class="alignnone size-full wp-image-594" title="replace-com-javascript" src="{{ site.baseurl }}/assets/replace-com-javascript.jpg" alt="replace-com-javascript"/></a>
+
+<p>Precisamos usar o método <code>replace</code> com expressão regular e o modificador <code>g</code> para conseguirmos substituir todas instâncias que desejamos. Poderiamos fazer da seguinte forma:</p>
+
+{% highlight javascript %}
+  $(function(){
+  // Get HTML content
+  var content = $('.container').html();
+
+  // Replace strings
+  content = content.replace(/tag-p-1/g, 'tag-p-2');
+  content = content.replace(/[1]/g, '[2]');
+
+  // Upgrade content
+  $('.container').html(content);
+});
+{% endhighlight %}
+
+<p>Resultado:</p>
+
+<p><a href="{{ site.baseurl }}/assets/replace-com-expressao-regular-javascript.jpg"><img class="alignnone size-full wp-image-596" title="replace-com-expressao-regular-javascript" src="{{ site.baseurl }}/assets/replace-com-expressao-regular-javascript.jpg" alt="replace-com-expressao-regular-javascript"/></a></p>
+
+<div class="note">Modificador <code>g</code> vem de <code>global</code>, <a title="http://www.w3schools.com/jsref/jsref_obj_regexp.asp" href="http://www.w3schools.com/jsref/jsref_obj_regexp.asp" target="_blank" rel="nofollow external">clique aqui</a> para ver outros.</div>
+
+<p>Mas observe os 3 últimos, eles acabaram ficando com dois colchetes de abertura e fechamento pois eles são elementos de expressão regular, temos que escapar eles adicionando <code>\</code> antes. Veja:</p>
+
+{% highlight javascript %}
+$(function(){
+  // Get HTML content
+  var content = $('.container').html();
+
+  // Replace strings
+  content = content.replace(/tag-p-1/g, 'tag-p-2');
+  content = content.replace(/\[1\]/g, '[2]');
+
+  // Upgrade content
+  $('.container').html(content);
+});
+{% endhighlight %}
+
+<p>Resultado:</p>
+<a href="{{ site.baseurl }}/assets/escapando-caracteres-em-expressao-regular.jpg"><img class="alignnone size-full wp-image-597" title="escapando-caracteres-em-expressao-regular" src="{{ site.baseurl }}/assets/escapando-caracteres-em-expressao-regular.jpg" alt="escapando-caracteres-em-expressao-regular"/></a>
+
+<p>Agora sim, fizemos o replace de todas ocorrências de maneira certa..</p>
+
+<h2>Variáveis no padrão da expressão regular</h2>
+
+<p>Mas e se precisarmos usar o padrão vindo do valor de alguma variável concatenado com uma string? Se você tentar como abaixo não irá funcionar.</p>
+
+{% highlight javascript %}
+var my_var = 1;
+content = content.replace('['+ my_var + ']'/g, '[2]');
+{% endhighlight %}
+
+<p>Passei por essa situação hoje e para resolver tive que criar um objeto de expressão regular e passar para o método <code>replace</code> como abaixo:</p>
+
+{% highlight javascript %}
+var my_var = 1;
+// Create a regular expression object
+var regObj = new RegExp('\\['+ my_var + '\\]', 'g');
+content = content.replace(regObj, '[2]');
+{% endhighlight %}
+
+<div class="note">Observe que precisamos usar duas <code>\</code>.</div>
+
+<p>Se você testar verá que funcionará perfeitamente..</p>
+
+<p>O que você achou?</p>
+
+<p>Até mais.</p>

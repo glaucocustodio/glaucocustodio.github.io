@@ -107,131 +107,190 @@ comments:
     eu poderia fazer?"
 ---
 <p>Fala pessoal, beleza?</p>
-<p>Hoje estou aqui para mostrar como fazer upload e valida&ccedil;&atilde;o de imagens e arquivos no <strong>Ruby on Rails<&#47;strong> (vers&atilde;o 3.2.8) com a gem <strong>Paperclip<&#47;strong>.</p>
-<p>Irei utilizar o projeto que criei no tutorial onde ensino <a title="Primeiro Projeto com Ruby on Rails" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;10&#47;06&#47;primeiro-projeto-com-ruby-on-rails&#47;" target="_blank">como iniciar com Rails<&#47;a>, ele s&oacute; tem uma conex&atilde;o com o banco de dados MySQL e a rota raiz definida.</p>
-<p><a id="more"></a><a id="more-620"></a></p>
-<h2>&Iacute;ndice<&#47;h2></p>
+
+<p>Hoje estou aqui para mostrar como fazer upload e validação de imagens e arquivos no Ruby on Rails (versão 3.2.8) com a gem Paperclip.</p>
+
+<p>Irei utilizar o projeto que criei no tutorial onde ensino <a title="Primeiro Projeto com Ruby on Rails" href="{% post_url 2012-10-06-primeiro-projeto-com-ruby-on-rails %}" target="_blank">como iniciar com Rails</a>, ele só tem uma conexão com o banco de dados MySQL e a rota raiz definida.</p>
+
+<h2>Índice</h2>
 <ul>
-<li><a href="#generating-CRUD">Gerando CRUD<&#47;a><&#47;li>
-<li><a href="#installing-paperclip-gem">Instalando e configurando a gem Paperclip<&#47;a><&#47;li>
-<li><a href="#using-paperclip">Usando a gem Paperclip<&#47;a><&#47;li>
-<li><a href="#setting-upload-path">Personalizando caminho de upload<&#47;a><&#47;li>
-<li>
-          <a href="#adding-validations">Adicionando valida&ccedil;&otilde;es<&#47;a>
+  <li><a href="#generating-CRUD">Gerando CRUD</a></li>
+  <li><a href="#installing-paperclip-gem">Instalando e configurando a gem Paperclip</a></li>
+  <li><a href="#using-paperclip">Usando a gem Paperclip</a></li>
+  <li><a href="#setting-upload-path">Personalizando caminho de upload</a></li>
+  <li>
+          <a href="#adding-validations">Adicionando validações</a><ul>
+      <li><a href="#required-presence">Presença obrigatória</a></li>
+      <li><a href="#file-type">Tipo de arquivo</a></li>
+      <li><a href="#file-size">Tamanho de arquivo</a></li>
+      <li><a href="#image-dimensions">Dimensões de imagem</a></li>
+          </ul>
+        </li>
+</ul>
+
+<h2>Escopo</h2>
+
+<p>Vamos supor que temos um cadastro de carros para fazer que deve conter os seguintes campos:</p>
 <ul>
-<li><a href="#required-presence">Presen&ccedil;a obrigat&oacute;ria<&#47;a><&#47;li>
-<li><a href="#file-type">Tipo de arquivo<&#47;a><&#47;li>
-<li><a href="#file-size">Tamanho de arquivo<&#47;a><&#47;li>
-<li><a href="#image-dimensions">Dimens&otilde;es de imagem<&#47;a><&#47;li><br />
-          <&#47;ul><br />
-        <&#47;li><br />
-<&#47;ul></p>
-<h2>Escopo<&#47;h2><br />
-Vamos supor que temos um cadastro de carros para fazer que deve conter os seguintes campos:</p>
-<ul>
-<li>nome: string<&#47;li>
-<li>descri&ccedil;&atilde;o: text<&#47;li>
-<li>imagem: string<&#47;li><br />
-<&#47;ul></p>
-<h2 id="generating-CRUD">Gerando um CRUD de registros<&#47;h2><br />
-Para come&ccedil;ar vamos gerar as p&aacute;ginas respons&aacute;veis por fazer cadastro, edi&ccedil;&atilde;o, exclus&atilde;o e exibi&ccedil;&atilde;o de nossos registros. Para isso, abra o terminal na pasta do projeto e digite o comando <code>rails g scaffold Car name:string description:text image:string<&#47;code> para gerar os arquivos e depois <code>rake db:migrate<&#47;code> para criar a tabela de carros.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-scaffold-com-gerador-rails.jpg"><img class="alignnone size-full wp-image-623" title="criando-scaffold-com-gerador-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;criando-scaffold-com-gerador-rails.jpg" alt="criando-scaffold-com-gerador-rails" width="600" height="381" &#47;><&#47;a></p>
-<p>Se iniciarmos o servidor (<code>rails s<&#47;code>) e acessarmos o projeto na url <code>http:&#47;&#47;0.0.0.0:3000&#47;cars<&#47;code> teremos a tela onde podemos manipular nossos registros.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;controle-de-registros-gerado-com-rails.jpg"><img class="alignnone size-full wp-image-624" title="controle-de-registros-gerado-com-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;controle-de-registros-gerado-com-rails.jpg" alt="controle-de-registros-gerado-com-rails" width="555" height="212" &#47;><&#47;a></p>
-<h2 id="installing-paperclip-gem">Instalando e configurando a gem Paperclip<&#47;h2><br />
-Agora que temos nosso CRUD funcionando vamos implantar o upload da imagem dos carros.</p>
-<p>Vamos dizer ao Rails para usar a gem Paperclip, abra o arquivo <code>Gemfile<&#47;code> na pasta do projeto e adicione <code>gem "paperclip", "~> 3.0"<&#47;code>. Feito isso, rode o comando <code>bundle install<&#47;code> no terminal para obtermos a gem e suas depend&ecirc;ncias.</p>
-<p>O Paperclip usa a biblioteca <code>ImageMagick<&#47;code> para manipular imagens, devemos garantir que ela esteja instalada e com acesso, para isso rode <code>which convert<&#47;code> no terminal, copie o resultado (voc&ecirc; obter&aacute; algo como <code>&#47;usr&#47;bin&#47;convert<&#47;code>, desconsidere a parte do <code>convert<&#47;code>) e adicione a seguinte linha no arquivo de configura&ccedil;&atilde;o de ambiente:</p>
-<p>[code language="ruby"]<br />
-Paperclip.options[:command_path] = "&#47;usr&#47;bin&#47;"<br />
-[&#47;code]</p>
-<p>No caso do ambiente de desenvolvimento, adicionamos ela no arquivo <code>config&#47;environments&#47;development.rb<&#47;code>.</p>
-<h2 id="using-paperclip">Usando a gem Paperclip<&#47;h2><br />
-J&aacute; temos a gem instalada, agora vamos abrir o model de carros (<code>app&#47;models&#47;car.rb<&#47;code>) e dizer que iremos fazer upload de arquivos no campo <code>image<&#47;code> atrav&eacute;s da linha abaixo:</p>
-<p>[code language="ruby" escaped="true"]<br />
-has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "120x90#" }<br />
-[&#47;code]</p>
-<p>Observer a chave <code>styles<&#47;code>, ela serve para definir os tamanhos de miniaturas que desejamos criar, nesse caso estou criando duas, uma com tamanho de 300x300 (medium) e outra com tamanho de 120x90 (thumb). O <code>#<&#47;code> na frente diz para cortar a imagem centralizada, mantendo assim a dimens&atilde;o solicitada e <code>><&#47;code> diz que a imagem s&oacute; deve ser redimensionada se ela for maior do que a medida. Veja mais <a href="https:&#47;&#47;github.com&#47;thoughtbot&#47;paperclip&#47;wiki&#47;Thumbnail-Generation" target="_blank">aqui<&#47;a>.</p>
-<p>Precisamos alterar o campo de imagem no formul&aacute;rio que est&aacute; como input text para input file, abra o partial do formul&aacute;rio (<code>app&#47;views&#47;cars&#47;_form.html.erb<&#47;code>) e deixe como abaixo.</p>
-<p>[code language="erb"]</p>
+  <li>nome: string</li>
+  <li>descrição: text</li>
+  <li>imagem: string</li>
+</ul>
+
+<h2 id="generating-CRUD">Gerando um CRUD de registros</h2>
+
+<p>Para começar vamos gerar as páginas responsáveis por fazer cadastro, edição, exclusão e exibição de nossos registros. Para isso, abra o terminal na pasta do projeto e digite o comando <code>rails g scaffold Car name:string description:text image:string</code> para gerar os arquivos e depois <code>rake db:migrate</code> para criar a tabela de carros:</p>
+
+<a href="{{ site.baseurl }}/assets/criando-scaffold-com-gerador-rails.jpg"><img class="alignnone size-full wp-image-623" title="criando-scaffold-com-gerador-rails" src="{{ site.baseurl }}/assets/criando-scaffold-com-gerador-rails.jpg" alt="criando-scaffold-com-gerador-rails"/></a>
+
+<p>Se iniciarmos o servidor (<code>rails s</code>) e acessarmos o projeto na url <code>http://0.0.0.0:3000/cars</code> teremos a tela onde podemos manipular nossos registros.</p>
+
+<a href="{{ site.baseurl }}/assets/controle-de-registros-gerado-com-rails.jpg"><img class="alignnone size-full wp-image-624" title="controle-de-registros-gerado-com-rails" src="{{ site.baseurl }}/assets/controle-de-registros-gerado-com-rails.jpg" alt="controle-de-registros-gerado-com-rails"/></a>
+
+<h2 id="installing-paperclip-gem">Instalando e configurando a gem Paperclip</h2>
+
+<p>Agora que temos nosso CRUD funcionando vamos implantar o upload da imagem dos carros.</p>
+
+<p>Vamos dizer ao Rails para usar a gem Paperclip, abra o arquivo <code>Gemfile</code> na pasta do projeto e adicione <code>gem "paperclip", "~> 3.0"</code>. Feito isso, rode o comando <code>bundle install</code> no terminal para obtermos a gem e suas dependências.</p>
+
+<p>O Paperclip usa a biblioteca <code>ImageMagick</code> para manipular imagens, devemos garantir que ela esteja instalada e com acesso, para isso rode <code>which convert</code> no terminal, copie o resultado (você obterá algo como <code>/usr/bin/convert</code>, desconsidere a parte do <code>convert</code>) e adicione a seguinte linha no arquivo de configuração de ambiente:</p>
+
+{% highlight ruby %}
+Paperclip.options[:command_path] = "/usr/bin/"
+{% endhighlight %}
+
+<p>No caso do ambiente de desenvolvimento, adicionamos ela no arquivo <code>config/environments/development.rb</code>.</p>
+
+<h2 id="using-paperclip">Usando a gem Paperclip</h2>
+
+<p>Já temos a gem instalada, agora vamos abrir o model de carros (<code>app/models/car.rb</code>) e dizer que iremos fazer upload de arquivos no campo <code>image</code> através da linha abaixo:</p>
+
+{% highlight ruby %}
+has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "120x90#" }
+{% endhighlight %}
+
+<p>Observer a chave <code>styles</code>, ela serve para definir os tamanhos de miniaturas que desejamos criar, nesse caso estou criando duas, uma com tamanho de 300x300 (medium) e outra com tamanho de 120x90 (thumb). O <code>#</code> na frente diz para cortar a imagem centralizada, mantendo assim a dimensão solicitada e <code>&gt;</code> diz que a imagem só deve ser redimensionada se ela for maior do que a medida. Veja mais <a href="https://github.com/thoughtbot/paperclip/wiki/Thumbnail-Generation" target="_blank">aqui</a>.</p>
+
+<p>Precisamos alterar o campo de imagem no formulário que está como input text para input file, abra o partial do formulário (<code>app/views/cars/_form.html.erb</code>) e deixe como abaixo.</p>
+
+{% highlight erb %}
 <div class="field">
-<%= f.label :image %><br &#47;><br />
-<%= f.file_field :image %><br />
-<&#47;div><br />
-[&#47;code]</p>
-<p>N&atilde;o podemos esquecer de ativar o <code>multipart&#47;form-data<&#47;code> no formul&aacute;rio, para isso adicione <code>:html => { :multipart => true }<&#47;code> na tag de cria&ccedil;&atilde;o do form, veja:</p>
-<p>[code language="erb"]<br />
-<%= form_for(@car, :html => { :multipart => true }) do |f| %><br />
-[&#47;code]</p>
-<p>Tamb&eacute;m temos que alterar o nome do campo no banco de dados de <code>image<&#47;code> para <code>image_file_name<&#47;code> pois esse &eacute; o padr&atilde;o do Paperclip para armazenar o nome&#47;caminho da imagem.</p>
-<p>Fa&ccedil;a um teste e veja que o upload j&aacute; est&aacute; funcionando..</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;listagem-de-registros-com-imagem.jpg"><img class="alignnone size-full wp-image-625" title="listagem-de-registros-com-imagem" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;listagem-de-registros-com-imagem.jpg" alt="listagem-de-registros-com-imagem" width="600" height="160" &#47;><&#47;a></p>
-<p>S&oacute; que algo est&aacute; errado ai, n&atilde;o queremos exibir o caminho da imagem, e sim ela, para isso abra o arquivo de listagem de carros (<code>app&#47;views&#47;cars&#47;index.html.erb<&#47;code>) e substitua a linha:</p>
-<p>[code language="erb"]</p>
-<td><%= car.image %><&#47;td><br />
-[&#47;code]</p>
+<%= f.label :image %><br />
+<%= f.file_field :image %>
+</div>
+{% endhighlight %}
+
+<p>Não podemos esquecer de ativar o <code>multipart/form-data</code> no formulário, para isso adicione <code>:html => { :multipart => true }</code> na tag de criação do form, veja:</p>
+
+{% highlight erb %}
+<%= form_for(@car, :html => { :multipart => true }) do |f| %>
+{% endhighlight %}
+
+<p>Também temos que alterar o nome do campo no banco de dados de <code>image</code> para <code>image_file_name</code> pois esse é o padrão do Paperclip para armazenar o nome/caminho da imagem.</p>
+
+<p>Faça um teste e veja que o upload já está funcionando..</p>
+
+<a href="{{ site.baseurl }}/assets/listagem-de-registros-com-imagem.jpg"><img class="alignnone size-full wp-image-625" title="listagem-de-registros-com-imagem" src="{{ site.baseurl }}/assets/listagem-de-registros-com-imagem.jpg" alt="listagem-de-registros-com-imagem"/></a>
+
+<p>Só que algo está errado ai, não queremos exibir o caminho da imagem, e sim ela, para isso abra o arquivo de listagem de carros (<code>app/views/cars/index.html.erb</code>) e substitua a linha:</p>
+
+{% highlight erb %}
+<td><%= car.image %></td>
+{% endhighlight %}
+
 <p>por</p>
-<p>[code language="erb"]</p>
-<td><%= image_tag(car.image.url(:thumb)) %><&#47;td><br />
-[&#47;code]</p>
-<p>Agora estamos chamando o helper <code>image_tag<&#47;code> passando como par&acirc;metro a url da imagem pequena (<code>thumb<&#47;code>).</p>
-<div class="note">Para exibir a de tamanho m&eacute;dio usariamos <code>:medium<&#47;code> ou :<code>original<&#47;code> para exibir a imagem no tamanho original.<&#47;div></p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;listagem-de-registros-com-imagem-exibindo-miniaturas.jpg"><img class="alignnone size-full wp-image-626" title="listagem-de-registros-com-imagem-exibindo-miniaturas" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;10&#47;listagem-de-registros-com-imagem-exibindo-miniaturas.jpg" alt="listagem-de-registros-com-imagem-exibindo-miniaturas" width="420" height="350" &#47;><&#47;a></p>
-<h2 id="setting-upload-path">Personalizando caminho de upload<&#47;h2><br />
-Se voc&ecirc; quer escolher onde as imagens ser&atilde;o salvas &eacute; poss&iacute;vel atrav&eacute;s das chaves <code>path<&#47;code> e <code>url<&#47;code>, veja:</p>
-<p>[code language="ruby"]<br />
-has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "120x90#" },<br />
-                  :path => ':rails_root&#47;public&#47;images&#47;cars&#47;:id-:basename-:style.:extension',<br />
-                  :url => '&#47;images&#47;cars&#47;:id-:basename-:style.:extension'<br />
-[&#47;code]</p>
-<p>Aqui digo para salvar as imagens de carros na pasta <code>public&#47;images&#47;cars<&#47;code> e defino a url para o mesmo caminho.</p>
-<h2 id="adding-validations">Adicionando valida&ccedil;&otilde;es<&#47;h2><br />
-Com certeza n&atilde;o podemos deixar de fora as valida&ccedil;&otilde;es, vamos ver algumas..</p>
-<h3 id="required-presence">Presen&ccedil;a obrigat&oacute;ria<&#47;h3></p>
-<p>Adicione a chamada para o m&eacute;todo <code>validates_attachment<&#47;code> passando o campo a ser validado e definindo a presen&ccedil;a obrigat&oacute;ria.</p>
-<p>[code language="ruby"]<br />
-validates_attachment :image,<br />
-                     :presence => true<br />
-[&#47;code]</p>
-<h3 id="file-type">Tipo de arquivo (content type)<&#47;h3></p>
+
+{% highlight erb %}
+<td><%= image_tag(car.image.url(:thumb)) %></td>
+{% endhighlight %}
+
+<p>Agora estamos chamando o helper <code>image_tag</code> passando como parâmetro a url da imagem pequena (<code>thumb</code>).</p>
+
+<div class="note">Para exibir a de tamanho médio usariamos <code>:medium</code> ou :<code>original</code> para exibir a imagem no tamanho original.</div>
+
+<a href="{{ site.baseurl }}/assets/listagem-de-registros-com-imagem-exibindo-miniaturas.jpg"><img class="alignnone size-full wp-image-626" title="listagem-de-registros-com-imagem-exibindo-miniaturas" src="{{ site.baseurl }}/assets/listagem-de-registros-com-imagem-exibindo-miniaturas.jpg" alt="listagem-de-registros-com-imagem-exibindo-miniaturas"/></a>
+
+<h2 id="setting-upload-path">Personalizando caminho de upload</h2>
+
+<p>Se você quer escolher onde as imagens serão salvas é possível através das chaves <code>path</code> e <code>url</code>, veja:</p>
+
+{% highlight ruby %}
+has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "120x90#" },
+                  :path => ':rails_root/public/images/cars/:id-:basename-:style.:extension',
+                  :url => '/images/cars/:id-:basename-:style.:extension'
+{% endhighlight %}
+
+<p>Aqui digo para salvar as imagens de carros na pasta <code>public/images/cars</code> e defino a url para o mesmo caminho.</p>
+
+<h2 id="adding-validations">Adicionando validações</h2>
+
+<p>Com certeza não podemos deixar de fora as validações, vamos ver algumas..</p>
+
+<h3 id="required-presence">Presença obrigatória</h3>
+
+<p>Adicione a chamada para o método <code>validates_attachment</code> passando o campo a ser validado e definindo a presença obrigatória.</p>
+
+{% highlight ruby %}
+validates_attachment :image,
+                     :presence => true
+{% endhighlight %}
+
+<h3 id="file-type">Tipo de arquivo (content type)</h3>
+
 <p>Usando um array de content type:</p>
-<p>[code language="ruby"]<br />
-validates_attachment :image,<br />
-                     :content_type => { :content_type => ['image&#47;jpg', 'image&#47;png'] }<br />
-[&#47;code]</p>
-<p>Ou por express&atilde;o regular, permitindo qualquer tipo de imagem:</p>
-<p>[code language="ruby"]<br />
-validates_attachment :image,<br />
-                     :presence => true,<br />
-                     :content_type => { :content_type => &#47;image&#47; }<br />
-[&#47;code]</p>
-<p>Para fazer essa valida&ccedil;&atilde;o precisamos adicionar <code>attr_accessor :image_content_type<&#47;code> em nosso model para que o atributo consiga ser lido e escrito (get e set).</p>
-<h3 id="file-size">Tamanho de arquivo (file size)<&#47;h3></p>
-<p>[code language="ruby"]<br />
-validates_attachment :image,<br />
-                     :presence => true,<br />
-                     :size => { :in => 0..10.kilobytes }<br />
-[&#47;code]</p>
+
+{% highlight ruby %}
+validates_attachment :image,
+                     :content_type => { :content_type => ['image/jpg', 'image/png'] }
+{% endhighlight %}
+
+<p>Ou por expressão regular, permitindo qualquer tipo de imagem:</p>
+
+{% highlight ruby %}
+validates_attachment :image,
+                     :presence => true,
+                     :content_type => { :content_type => /image/ }
+{% endhighlight %}
+
+<p>Para fazer essa validação precisamos adicionar <code>attr_accessor :image_content_type</code> em nosso model para que o atributo consiga ser lido e escrito (get e set).</p>
+
+<h3 id="file-size">Tamanho de arquivo (file size)</h3>
+
+{% highlight ruby %}
+validates_attachment :image,
+                     :presence => true,
+                     :size => { :in => 0..10.kilobytes }
+{% endhighlight %}
+
 <p>ou</p>
-<p>[code language="ruby"]<br />
-validates_attachment :image,<br />
-                     :presence => true,<br />
-                     :size => { :in => 0..3.megabytes }<br />
-[&#47;code]</p>
-<p>Assim como o de cima, precisamos adicionar <code>attr_accessor :image_file_size<&#47;code> em nosso model.</p>
-<h3 id="image-dimensions">Dimens&otilde;es de imagens<&#47;h3></p>
-<p>Uma valida&ccedil;&atilde;o que sem d&uacute;vida &eacute; muito importante tamb&eacute;m &eacute; a de dimens&otilde;es de imagem, com ela podemos definir um tamanho m&iacute;nimo da figura a ser feito upload.</p>
-<p>[code language="ruby"]<br />
-validate :file_dimensions, :unless => 'errors.any?'</p>
-<p>def file_dimensions<br />
-  if image.size<br />
-    dimensions = Paperclip::Geometry.from_file(image.queued_for_write[:original].path)<br />
-    if dimensions.width < 120 || dimensions.height < 90<br />
-      errors.add(:image,'deve ter no minimo 120px de largura por 90px de altura')<br />
-    end<br />
-   end<br />
-end<br />
-[&#47;code]</p>
-<p>Bem simples n&eacute;, criamos um m&eacute;todo que verifica se tem imagem pra subir, pega as dimens&otilde;es da imagem original e faz a verifica&ccedil;&atilde;o. Substitua <code>120<&#47;code> e <code>90<&#47;code> pela largura e altura m&iacute;nima que voc&ecirc; deseja respectivamente.</p>
-<p>Por hoje &eacute; s&oacute; pessoal, o que voc&ecirc;s acharam?</p>
-<p>Abra&ccedil;os.</p>
+
+{% highlight ruby %}
+validates_attachment :image,
+                     :presence => true,
+                     :size => { :in => 0..3.megabytes }
+{% endhighlight %}
+
+<p>Assim como o de cima, precisamos adicionar <code>attr_accessor :image_file_size</code> em nosso model.</p>
+
+<h3 id="image-dimensions">Dimensões de imagens</h3>
+
+<p>Uma validação que sem dúvida é muito importante também é a de dimensões de imagem, com ela podemos definir um tamanho mínimo da figura a ser feito upload.</p>
+
+{% highlight ruby %}
+validate :file_dimensions, :unless => 'errors.any?'
+
+def file_dimensions
+  if image.size
+    dimensions = Paperclip::Geometry.from_file(image.queued_for_write[:original].path)
+    if dimensions.width < 120 || dimensions.height < 90
+      errors.add(:image,'deve ter no minimo 120px de largura por 90px de altura')
+    end
+   end
+end
+{% endhighlight %}
+
+<p>Bem simples né, criamos um método que verifica se tem imagem pra subir, pega as dimensões da imagem original e faz a verificação. Substitua <code>120</code> e <code>90</code> pela largura e altura mínima que você deseja respectivamente.</p>
+
+<p>Por hoje é só pessoal, o que vocês acharam?</p>
+
+<p>Abraços.</p>
