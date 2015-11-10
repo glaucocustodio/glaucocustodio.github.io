@@ -264,72 +264,109 @@ comments:
     isso?\r\nGrande abra&ccedil;o."
 ---
 <p>Fala pessoal, beleza?</p>
-<p>Hoje estou aqui para falar de um assunto que pode n&atilde;o ser muito conhecido por alguns, que &eacute; a <strong>compacta&ccedil;&atilde;o gzip&#47;deflate<&#47;strong>.</p>
-<p>Essa t&eacute;cnica, nada mais &eacute; do que a compacta&ccedil;&atilde;o dos arquivos solicitados pelo navegador (browser) antes deles serem enviados pelo servidor.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;22&#47;otimizando-performance-com-compactacao-gzip-deflate&#47;"><img class="alignnone  wp-image-490" title="gzip-deflate-compression" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;gzip-deflate-compression.jpg" alt="gzip-deflate-compression" width="580" height="240" &#47;><&#47;a></p>
-<h2><a id="more"></a><a id="more-479"></a>Fluxo de Requisi&ccedil;&atilde;o e Resposta HTTP<&#47;h2><br />
-Primeiro vou come&ccedil;ar explicando como funciona quando fazemos uma requisi&ccedil;&atilde;o sem utilizar essa compacta&ccedil;&atilde;o, veja a imagem abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP.gif"><img class="alignnone size-full wp-image-482" title="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP.gif" alt="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP" width="550" height="250" &#47;><&#47;a></p>
-<p>Vamos supor que temos um arquivo CSS em nosso site (http:&#47;&#47;site.com.br), atrav&eacute;s do HTML abaixo:</p>
-<p>[code language="html"]
-<link rel="stylesheet" href="estilo.css" type="text&#47;css"&#47;>[&#47;code]</p>
+
+<p>Hoje estou aqui para falar de um assunto que pode não ser muito conhecido por alguns, que é a compactação gzip/deflate.</p>
+
+<p>Essa técnica, nada mais é do que a compactação dos arquivos solicitados pelo navegador (browser) antes deles serem enviados pelo servidor.</p>
+
+<a href="{{ site.baseurl }}/assets/gzip-deflate-compression.jpg"><img class="alignnone  wp-image-490" title="gzip-deflate-compression" src="{{ site.baseurl }}/assets/gzip-deflate-compression.jpg" alt="gzip-deflate-compression"/></a>
+
+<h2>Fluxo de Requisição e Resposta HTTP</h2>
+
+<p>Primeiro vou começar explicando como funciona quando fazemos uma requisição sem utilizar essa compactação, veja a imagem abaixo.</p>
+
+<a href="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP.gif"><img class="alignnone size-full wp-image-482" title="fluxo-de-requisição-e-resposta-HTTP" src="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP.gif" alt="fluxo-de-requisição-e-resposta-HTTP"/></a>
+
+<p>Vamos supor que temos um arquivo CSS em nosso site, através do HTML abaixo:</p>
+
+{% highlight html %}
+<link rel="stylesheet" href="estilo.css" type="text/css"/>
+{% endhighlight %}
+
 <ol>
-<li>navegador solicita o arquivo <code>estilo.css<&#47;code> ao servidor<&#47;li>
-<li>servidor encontra o arquivo e l&ecirc;<&#47;li>
-<li>servidor retorna o arquivo com c&oacute;digo 200 (OK)<&#47;li>
-<li>navegador exibe o resultado da p&aacute;gina aplicada com o estilo CSS<&#47;li><br />
-<&#47;ol></p>
-<h2>Otimizando<&#47;h2><br />
-Acima temos o fluxo de uma requisi&ccedil;&atilde;o HTTP, funciona muito bem, mas podemos otimizar usando compacta&ccedil;&atilde;o, veja.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao.gif"><img class="alignnone size-full wp-image-484" title="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao.gif" alt="fluxo-de-requisi&ccedil;&atilde;o-e-resposta-HTTP-com-compactacao" width="560" height="250" &#47;><&#47;a></p>
+  <li>navegador solicita o arquivo <code>estilo.css</code> ao servidor</li>
+  <li>servidor encontra o arquivo e lê</li>
+  <li>servidor retorna o arquivo com código 200 (OK)</li>
+  <li>navegador exibe o resultado da página aplicada com o estilo CSS</li>
+</ol>
+
+<h2>Otimizando</h2>
+
+<p>Acima temos o fluxo de uma requisição HTTP, funciona muito bem, mas podemos otimizar usando compactação, veja.</p>
+
+<a href="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP-com-compactacao.gif"><img class="alignnone size-full wp-image-484" title="fluxo-de-requisição-e-resposta-HTTP-com-compactacao" src="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP-com-compactacao.gif" alt="fluxo-de-requisição-e-resposta-HTTP-com-compactacao"/></a>
+
 <ol>
-<li>navegador solicita o arquivo <code>estilo.css<&#47;code> dizendo que aceita compacta&ccedil;&atilde;o gzip<&#47;li>
-<li>servidor encontra o arquivo e <span style="text-decoration: underline;">compacta<&#47;span> (aqui est&aacute; a "m&aacute;gica")<&#47;li>
-<li>servidor responde com o arquivo compactado<&#47;li>
-<li>navegador descompacta, e exibe a p&aacute;gina com estilo aplicado<&#47;li><br />
-<&#47;ol><br />
-Bem simples n&eacute;? Agora inv&eacute;s de fazermos download de um arquivo de 70KB, baixamos apenas 5KB pois usamos a compress&atilde;o. &Eacute; uma economia incr&iacute;vel..</p>
-<h2>Ativando compress&atilde;o no Apache<&#47;h2><br />
-Como j&aacute; sabemos o que &eacute; a compacta&ccedil;&atilde;o e seu benef&iacute;cio, vamos colocar em pr&aacute;tica ativando ela no servidor web Apache.</p>
-<p>O Apache tem duas formas de compress&atilde;o, <code>mod_deflate<&#47;code> e <code>mod_gzip<&#47;code> (ambos s&atilde;o m&oacute;dulos), irei usar <code>mod_deflate<&#47;code> por ser mais simples e mais utilizado, mas fica a seu crit&eacute;rio. Para isso precisamos ativar o m&oacute;dulo, caso voc&ecirc; esteja no Ubuntu, execute o comando <code>sudo a2enmod deflate<&#47;code> e pronto, se voc&ecirc; usa Windows com WAMP, basta iniciar o gerenciador do <code>WAMP -> Apache -> M&oacute;dulos -> mod_deflate<&#47;code>, pronto! N&atilde;o esque&ccedil;a de reiniciar o Apache ap&oacute;s a ativa&ccedil;&atilde;o..</p>
-<p>Vou usar meu site (<a title="http:&#47;&#47;glaucocustodio.com" href="http:&#47;&#47;glaucocustodio.com" target="_blank">http:&#47;&#47;glaucocustodio.com<&#47;a>) como exemplo pr&aacute;tico para ativar a compacta&ccedil;&atilde;o. Abaixo temos uma imagem que mostra uma requisi&ccedil;&atilde;o ao arquivo <code>jquery.js<&#47;code> sendo feita sem compacta&ccedil;&atilde;o gzip&#47;deflate, temos que fazer download de 91.7KB.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o.gif"><img class="alignnone size-full wp-image-488" title="analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o.gif" alt="analise-de-requisi&ccedil;&atilde;o-sem-compacta&ccedil;&atilde;o" width="862" height="411" &#47;><&#47;a></p>
-<p>Como j&aacute; sei que no servidor de meu site o <code>mod_deflate<&#47;code> j&aacute; est&aacute; ativo, adiciono o c&oacute;digo abaixo no arquivo <code>.htaccess<&#47;code> na raiz do meu site para ativar a compacta&ccedil;&atilde;o.</p>
-<p>[code language="apache"]<br />
-<IfModule mod_deflate.c><br />
-# Insert filter<br />
-AddOutputFilterByType DEFLATE text&#47;plain<br />
-AddOutputFilterByType DEFLATE text&#47;xml<br />
-AddOutputFilterByType DEFLATE application&#47;xhtml+xml<br />
-AddOutputFilterByType DEFLATE text&#47;css<br />
-AddOutputFilterByType DEFLATE application&#47;xml<br />
-AddOutputFilterByType DEFLATE image&#47;svg+xml<br />
-AddOutputFilterByType DEFLATE application&#47;rss+xml<br />
-AddOutputFilterByType DEFLATE application&#47;atom_xml<br />
-AddOutputFilterByType DEFLATE application&#47;x-javascript<br />
-AddOutputFilterByType DEFLATE application&#47;javascript<br />
-AddOutputFilterByType DEFLATE application&#47;x-httpd-php<br />
-AddOutputFilterByType DEFLATE application&#47;x-httpd-fastphp<br />
-AddOutputFilterByType DEFLATE application&#47;x-httpd-eruby<br />
-AddOutputFilterByType DEFLATE text&#47;html</p>
-<p>SetOutputFilter DEFLATE</p>
-<p># Netscape 4.x has some problems...<br />
-BrowserMatch ^Mozilla&#47;4 gzip-only-text&#47;html</p>
-<p># Netscape 4.06-4.08 have some more problems<br />
-BrowserMatch ^Mozilla&#47;4\.0[678] no-gzip</p>
-<p># MSIE masquerades as Netscape, but it is fine<br />
-# BrowserMatch \bMSIE !no-gzip !gzip-only-text&#47;html</p>
-<p># NOTE: Due to a bug in mod_setenvif up to Apache 2.0.48<br />
-# the above regex won't work. You can use the following<br />
-# workaround to get the desired effect:<br />
-BrowserMatch \bMSI[E] !no-gzip !gzip-only-text&#47;html</p>
-<p># Don't compress images<br />
-SetEnvIfNoCase Request_URI \<br />
-\.(?:gif|jpe?g|png)$ no-gzip dont-vary<br />
-<&#47;IfModule><br />
-[&#47;code]</p>
-<p>Esse c&oacute;digo verifica se o m&oacute;dulo deflate est&aacute; ativo (<code>IfModule<&#47;code>), define compacta&ccedil;&atilde;o deflate por tipos atrav&eacute;s das linhas <code>AddOutputFilterByType..<&#47;code>, garante que navegadores antigos (como Netscape 1.0) n&atilde;o ter&atilde;o compacta&ccedil;&atilde;o (pois n&atilde;o suportam a descompress&atilde;o) e evita que imagens sejam comprimidas pois a maioria delas j&aacute; s&atilde;o e n&atilde;o tem necessidade (assim como v&iacute;deos e arquivos de &aacute;udios).</p>
-<p>Ap&oacute;s subir o arquivo no servidor e analisar as requisi&ccedil;&otilde;es, veja o que temos.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o.gif"><img class="alignnone size-full wp-image-487" title="analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o.gif" alt="analise-de-requisi&ccedil;&atilde;o-com-compacta&ccedil;&atilde;o" width="873" height="415" &#47;><&#47;a></p>
-<div class="note">N&atilde;o esque&ccedil;a de limpar o cache do navegador para ver o resultado.<&#47;div></p>
-<p>Observe a linha <code>Content-Encoding<&#47;code> e veja que a compacta&ccedil;&atilde;o <code>deflate&#47;gzip<&#47;code> est&aacute; ativa agora e o mais impressionante &eacute; o tamanho do arquivo baixado, apenas 32.4KB, ou seja, reduzimos 2&#47;3 do peso do arquivo apenas com essa t&eacute;cnica..</p>
-<p>Espero que tenha ajudado e sido claro nesse tutorial.. O que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais!</p>
+  <li>navegador solicita o arquivo <code>estilo.css</code> dizendo que aceita compactação gzip</li>
+  <li>servidor encontra o arquivo e compacta (aqui está a "mágica")</li>
+  <li>servidor responde com o arquivo compactado</li>
+  <li>navegador descompacta, e exibe a página com estilo aplicado</li>
+</ol>
+
+<p>Bem simples né? Agora invés de fazermos download de um arquivo de 70KB, baixamos apenas 5KB pois usamos a compressão. É uma economia incrível..</p>
+
+<h2>Ativando compressão no Apache</h2>
+
+<p>Como já sabemos o que é a compactação e seu benefício, vamos colocar em prática ativando ela no servidor web Apache.</p>
+
+<p>O Apache tem duas formas de compressão, <code>mod_deflate</code> e <code>mod_gzip</code> (ambos são módulos), irei usar <code>mod_deflate</code> por ser mais simples e mais utilizado, mas fica a seu critério. Para isso precisamos ativar o módulo, caso você esteja no Ubuntu, execute o comando <code>sudo a2enmod deflate</code> e pronto, se você usa Windows com WAMP, basta iniciar o gerenciador do <code>WAMP -&gt; Apache -&gt; Módulos -&gt; mod_deflate</code>, pronto! Não esqueça de reiniciar o Apache após a ativação..</p>
+
+<p>Vou usar meu site (<a title="http://glaucocustodio.com" href="http://glaucocustodio.com" target="_blank">http://glaucocustodio.com</a>) como exemplo prático para ativar a compactação. Abaixo temos uma imagem que mostra uma requisição ao arquivo <code>jquery.js</code> sendo feita sem compactação gzip/deflate, temos que fazer download de 91.7KB.</p>
+
+<a href="{{ site.baseurl }}/assets/analise-de-requisição-sem-compactação.gif"><img class="alignnone size-full wp-image-488" title="analise-de-requisição-sem-compactação" src="{{ site.baseurl }}/assets/analise-de-requisição-sem-compactação.gif" alt="analise-de-requisição-sem-compactação"/></a>
+
+<p>Como já sei que no servidor de meu site o <code>mod_deflate</code> já está ativo, adiciono o código abaixo no arquivo <code>.htaccess</code> na raiz do meu site para ativar a compactação.</p>
+
+{% highlight apache %}
+<IfModule mod_deflate.c>
+# Insert filter
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE image/svg+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/atom_xml
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-httpd-php
+AddOutputFilterByType DEFLATE application/x-httpd-fastphp
+AddOutputFilterByType DEFLATE application/x-httpd-eruby
+AddOutputFilterByType DEFLATE text/html
+
+SetOutputFilter DEFLATE
+
+# Netscape 4.x has some problems...
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+# Netscape 4.06-4.08 have some more problems
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+# MSIE masquerades as Netscape, but it is fine
+# BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+# NOTE: Due to a bug in mod_setenvif up to Apache 2.0.48
+# the above regex won't work. You can use the following
+# workaround to get the desired effect:
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+
+# Don't compress images
+SetEnvIfNoCase Request_URI \
+\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+</IfModule>
+{% endhighlight %}
+
+<p>Esse código verifica se o módulo deflate está ativo (<code>IfModule</code>), define compactação deflate por tipos através das linhas <code>AddOutputFilterByType..</code>, garante que navegadores antigos (como Netscape 1.0) não terão compactação (pois não suportam a descompressão) e evita que imagens sejam comprimidas, pois a maioria delas já são e não tem necessidade (assim como vídeos e arquivos de áudios).</p>
+
+<p>Após subir o arquivo no servidor e analisar as requisições, veja o que temos.</p>
+
+<p><a href="{{ site.baseurl }}/assets/analise-de-requisição-com-compactação.gif"><img class="alignnone size-full wp-image-487" title="analise-de-requisição-com-compactação" src="{{ site.baseurl }}/assets/analise-de-requisição-com-compactação.gif" alt="analise-de-requisição-com-compactação"/></a></p>
+
+<div class="note">Não esqueça de limpar o cache do navegador para ver o resultado.</div>
+
+<p>Observe a linha <code>Content-Encoding</code> e veja que a compactação <code>deflate/gzip</code> está ativa agora e o mais impressionante é o tamanho do arquivo baixado, apenas 32.4KB, ou seja, reduzimos 2/3 do peso do arquivo apenas com essa técnica..</p>
+
+<p>Espero que tenha ajudado e sido claro nesse tutorial.. O que vocês acharam?</p>
+
+<p>Até mais!</p>

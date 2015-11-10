@@ -266,24 +266,49 @@ comments:
     no meu Dell... Valew Glauco..."
 ---
 <p>Fala pessoal, tudo bom?</p>
-<p>Comecei a usar <strong>Ubuntu<&#47;strong> h&aacute; pouco tempo atr&aacute;s e estou me adaptando com o sistema. De vez em quando preciso procurar por algumas solu&ccedil;&otilde;es para coisas simples e s&oacute; encontro resultado em ingl&ecirc;s, para ajudar o pessoal que est&aacute; come&ccedil;ando, irei postar algumas dicas. Vamos para primeira..</p>
-<p>Uso notebook e sempre quando inicio uma sess&atilde;o no Ubuntu 12.04 LTS preciso diminuir o brilho do monitor pois estou acostumado a trabalhar com brilho baixo. Essa &eacute; uma tarefa chata pois toda vez tenho que diminuir porque o Ubuntu n&atilde;o salva essa configura&ccedil;&atilde;o.</p>
-<p><a id="more"></a><a id="more-453"></a>Procurei na internet por como salvar configura&ccedil;&otilde;es de brilho e encontrei uma solu&ccedil;&atilde;o alternativa, que &eacute; fazer um script Python e rodar toda vez que o sistema iniciar para diminuir o brilho, isso tem resolvido..</p>
-<h2>Criando o Script<&#47;h2><br />
-Primeiro crie o arquivo respons&aacute;vel por diminuir o brilho executando esse comando <code>gksudo gedit &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code> no terminal.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;criar-script-para-ajuste-de-brilho.png"><img class="alignnone size-full wp-image-454" title="criar-script-para-ajuste-de-brilho" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;criar-script-para-ajuste-de-brilho.png" alt="" width="765" &#47;><&#47;a></p>
-<p>Ap&oacute;s isso ele ir&aacute; abrir o editor de texto, copie e cole o c&oacute;digo abaixo e salve. Onde est&aacute; <code>25<&#47;code> voc&ecirc; substitui pela porcentagem de brilho que deseja.<br />
-[code language="python"]#!&#47;usr&#47;bin&#47;python<br />
-import dbus<br />
-bus = dbus.SessionBus()<br />
-proxy = bus.get_object('org.gnome.SettingsDaemon',<br />
-'&#47;org&#47;gnome&#47;SettingsDaemon&#47;Power')<br />
-iface = dbus.Interface(proxy, dbus_interface='org.gnome.SettingsDaemon.Power.Screen')<br />
-iface.SetPercentage(25)[&#47;code]<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;ajuste-de-brilho.png"><img class="alignnone size-full wp-image-455" title="ajuste-de-brilho" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;ajuste-de-brilho.png" alt="" width="747" height="304" &#47;><&#47;a></p>
-<p>Execute o comando <code>sudo chmod 755 &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code>  para dar permiss&atilde;o para o arquivo.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;permissao-para-script.jpg"><img class="alignnone size-full wp-image-469" title="permissao-para-script" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;permissao-para-script.jpg" alt="" width="753" &#47;><&#47;a></p>
-<h2 id="run-command-when-system-starts">Adicionando Comandos para Iniciar com o Sistema<&#47;h2><br />
-Agora s&oacute; falta adicionar o script na inicializa&ccedil;&atilde;o do sistema, para isso, aperte a tecla <code>super<&#47;code> (tecla com bandeira do Windows), digite <code>start<&#47;code> e cline no &iacute;cone <code>Startup Applications<&#47;code>.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionar-comando-na-inicializa&ccedil;&atilde;o.jpg"><img class="alignnone size-full wp-image-458" title="adicionar-comando-na-inicializa&ccedil;&atilde;o" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionar-comando-na-inicializa&ccedil;&atilde;o.jpg" alt="" width="768" height="466" &#47;><&#47;a></p>
-<p>Na janela que abrir, clique em <code>Add<&#47;code> (ou <code>Adicionar<&#47;code> se estiver em portugu&ecirc;s), digite o nome da tarefa e o caminho do arquivo &agrave; ser executado, que em nosso caso &eacute; <code>gksudo gedit &#47;usr&#47;local&#47;bin&#47;brightness_changer.py<&#47;code> e pronto, agora o brilho sempre estar&aacute; como configurado.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionando-caminho-do-comando.jpg"><img class="alignnone size-full wp-image-459" title="adicionando-caminho-do-comando" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;adicionando-caminho-do-comando.jpg" alt="" width="618" height="492" &#47;><&#47;a></p>
-<p>O que voc&ecirc;s acharam da dica?</p>
-<p>At&eacute; mais.</p>
+
+<p>Comecei a usar Ubuntu há pouco tempo atrás e estou me adaptando com o sistema. De vez em quando preciso procurar por algumas soluções para coisas simples e só encontro resultado em inglês, para ajudar o pessoal que está começando, irei postar algumas dicas. Vamos para primeira..</p>
+
+<p>Uso notebook e sempre quando inicio uma sessão no Ubuntu 12.04 LTS preciso diminuir o brilho do monitor pois estou acostumado a trabalhar com brilho baixo.</p>
+
+<p>Essa é uma tarefa chata pois toda vez tenho que diminuir porque o Ubuntu não salva essa configuração.</p>
+
+<p>Procurei na internet por como salvar configurações de brilho e encontrei uma solução alternativa, que é fazer um script Python e rodar toda vez que o sistema iniciar para diminuir o brilho, isso tem resolvido..</p>
+
+<h2>Criando o Script</h2>
+
+<p>Primeiro crie o arquivo responsável por diminuir o brilho executando esse comando <code>gksudo gedit /usr/local/bin/brightness_changer.py</code> no terminal.</p>
+
+<a href="{{ site.baseurl }}/assets/criar-script-para-ajuste-de-brilho.png"><img class="alignnone size-full wp-image-454" title="criar-script-para-ajuste-de-brilho" src="{{ site.baseurl }}/assets/criar-script-para-ajuste-de-brilho.png"/></a>
+
+<p>Após isso ele irá abrir o editor de texto, copie e cole o código abaixo e salve. Onde está <code>25</code> você substitui pela porcentagem de brilho que deseja.</p>
+
+{% highlight python %}
+#!/usr/bin/python
+import dbus
+bus = dbus.SessionBus()
+proxy = bus.get_object('org.gnome.SettingsDaemon',
+'/org/gnome/SettingsDaemon/Power')
+iface = dbus.Interface(proxy, dbus_interface='org.gnome.SettingsDaemon.Power.Screen')
+iface.SetPercentage(25)
+{% endhighlight %}
+
+<p><a href="{{ site.baseurl }}/assets/ajuste-de-brilho.png"><img class="alignnone size-full wp-image-455" title="ajuste-de-brilho" src="{{ site.baseurl }}/assets/ajuste-de-brilho.png" alt=""/></a></p>
+
+<p>Execute o comando <code>sudo chmod 755 /usr/local/bin/brightness_changer.py</code> para dar permissão para o arquivo.</p>
+
+<p><a href="{{ site.baseurl }}/assets/permissao-para-script.jpg"><img class="alignnone size-full wp-image-469" title="permissao-para-script" src="{{ site.baseurl }}/assets/permissao-para-script.jpg" alt=""/></a></p>
+
+<h2 id="run-command-when-system-starts">Adicionando Comandos para Iniciar com o Sistema</h2>
+
+<p>Agora só falta adicionar o script na inicialização do sistema, para isso, aperte a tecla <code>super</code> (tecla com bandeira do Windows), digite <code>start</code> e cline no ícone <code>Startup Applications</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/adicionar-comando-na-inicialização.jpg"><img class="alignnone size-full wp-image-458" title="adicionar-comando-na-inicialização" src="{{ site.baseurl }}/assets/adicionar-comando-na-inicialização.jpg"/></a>
+
+<p>Na janela que abrir, clique em <code>Add</code> (ou <code>Adicionar</code> se estiver em português), digite o nome da tarefa e o caminho do arquivo à ser executado, que em nosso caso é <code>gksudo gedit /usr/local/bin/brightness_changer.py</code> e pronto, agora o brilho sempre estará como configurado.</p>
+
+<a href="{{ site.baseurl }}/assets/adicionando-caminho-do-comando.jpg"><img class="alignnone size-full wp-image-459" title="adicionando-caminho-do-comando" src="{{ site.baseurl }}/assets/adicionando-caminho-do-comando.jpg"/></a>
+
+<p>O que vocês acharam da dica?</p>
+
+<p>Até mais.</p>

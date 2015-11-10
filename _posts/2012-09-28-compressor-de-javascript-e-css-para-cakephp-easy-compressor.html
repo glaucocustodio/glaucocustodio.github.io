@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: Compressor de Javascript e CSS para CakePHP (EasyCompressor)
+title: Compressor de JavaScript e CSS para CakePHP (EasyCompressor)
 author:
   display_name: Glauco Custódio
   login: glauco-custodio
@@ -77,52 +77,91 @@ comments:
     qualquer forma, parab&eacute;ns pelo post!"
 ---
 <p>Fala pessoal, beleza?</p>
-<p>Tem algu&eacute;m ai precisando de um <strong>compressor<&#47;strong> simples de Javascript e CSS pra <strong>CakePHP<&#47;strong>? Se sim, ent&atilde;o aqui &eacute; o lugar certo..</p>
-<p>Esses dias eu precisei de um compressor&#47;minificador para usar em um projeto em Cake mas n&atilde;o gostei das op&ccedil;&otilde;es dispon&iacute;veis, ent&atilde;o decidi fazer o meu, o <a title="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin" rel="external nofollow" target="_blank">EasyCompressor<&#47;a>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;28&#47;compressor-de-javascript-e-css-para-cakephp-easycompressor&#47;"><img class="alignnone  wp-image-537" title="easy-compressor-cakephp-js-and-css-compressor" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;easy-compressor-cakephp-js-and-css-compressor.gif" alt="EasyCompressor - CakePHP Js and CSS Compressor" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-503"></a>O pessoal da comunidade usa bastante o <a title="https:&#47;&#47;github.com&#47;markstory&#47;asset_compress" href="https:&#47;&#47;github.com&#47;markstory&#47;asset_compress" target="_blank">AssetCompress<&#47;a> feito pelo Mark Story, mas eu precisava de algo mais simples, sem contar de que n&atilde;o gosto de ter que usar um arquivo de configura&ccedil;&atilde;o para especificar os Js e CSS que desejo comprimir ou ter que refatorar todo meu projeto alterando o m&eacute;todo de inclus&atilde;o.</p>
-<p>Nesse post irei mostrar como instalar e usar o EasyCompressor em sua aplica&ccedil;&atilde;o, mas primeiro, vamos conhecer um pouco mais ele.</p>
-<h2>Recursos<&#47;h2></p>
+
+<p>Tem alguém ai precisando de um compressor simples de JavaScript e CSS pra CakePHP? Se sim, então aqui é o lugar certo..</p>
+
+<p>Esses dias eu precisei de um compressor/minificador para usar em um projeto em Cake mas não gostei das opções disponíveis, então decidi fazer o meu, o <a title="https://github.com/glaucocustodio/easy-compressor-plugin" href="https://github.com/glaucocustodio/easy-compressor-plugin" rel="external nofollow" target="_blank">EasyCompressor</a>.</p>
+
+<a href="{{ site.baseurl }}/assets/easy-compressor-cakephp-js-and-css-compressor.gif"><img class="alignnone  wp-image-537" title="easy-compressor-cakephp-js-and-css-compressor" src="{{ site.baseurl }}/assets/easy-compressor-cakephp-js-and-css-compressor.gif" alt="EasyCompressor - CakePHP Js and CSS Compressor"/></a>
+
+<p>O pessoal da comunidade usa bastante o <a title="https://github.com/markstory/asset_compress" href="https://github.com/markstory/asset_compress" target="_blank">AssetCompress</a> feito pelo Mark Story, mas eu precisava de algo mais simples, sem contar de que não gosto de ter que usar um arquivo de configuração para especificar os Js e CSS que desejo comprimir ou ter que refatorar todo meu projeto alterando o método de inclusão.</p>
+
+<p>Nesse post irei mostrar como instalar e usar o EasyCompressor em sua aplicação, mas primeiro, vamos conhecer um pouco mais ele.</p>
+
+<h2>Recursos</h2>
+
 <ul>
-<li style="text-align: left;">F&aacute;cil de implementar e usar<&#47;li>
-<li style="text-align: left;">Obt&eacute;m arquivos CSS e Javascript diretamente dos blocos padr&atilde;o do CakePHP (n&atilde;o precisa refatorar nada)<&#47;li>
-<li style="text-align: left;">Define cache<&#47;li>
-<li style="text-align: left;">Evita cache em arquivos alterados<&#47;li>
-<li style="text-align: left;">Sem configura&ccedil;&atilde;o<&#47;li><br />
-<&#47;ul></p>
-<h2>Requisitos<&#47;h2></p>
+  <li style="text-align: left;">Fácil de implementar e usar</li>
+  <li style="text-align: left;">Obtém arquivos CSS e JavaScript diretamente dos blocos padrão do CakePHP (não precisa refatorar nada)</li>
+  <li style="text-align: left;">Define cache</li>
+  <li style="text-align: left;">Evita cache em arquivos alterados</li>
+  <li style="text-align: left;">Sem configuração</li>
+</ul>
+
+<h2>Requisitos</h2>
+
 <ul>
-<li>CakePHP 2.1 ou acima<&#47;li><br />
-<&#47;ul></p>
-<h2>Funcionamento<&#47;h2><br />
-EasyCompressor gera um arquivo minificado para os scripts e estilos do layout e outro para os scripts&#47;estilos de cada view. Vamos supor que voc&ecirc; tenha 4 arquivos CSS inlcusos no layout de sua aplica&ccedil;&atilde;o e 2 arquivos CSS espec&iacute;ficos da view da p&aacute;gina inicial do site, quando ativo, o compressor ir&aacute; gerar um arquivo minificado contendo o conte&uacute;do dos 4 arquivos CSS do layout e outro contendo o conte&uacute;do dos 2 arquivos da view. Isso foi feito para o arquivo minificado do layout ser mantido em cache sem ter que fazer download em cada view carregada, mas se quiser, voc&ecirc; pode usar apenas um arquivo de estilo&#47;script.</p>
-<p>Na tag HTML gerada, &eacute; adicionado uma query string com um hash md5 da soma da data de modifica&ccedil;&atilde;o de cada arquivo incluso, isso for&ccedil;ar&aacute; o download de uma nova vers&atilde;o quando alguma altera&ccedil;&atilde;o tiver sido feita em um dos arquivos.</p>
-<p>Atualmente o EasyCompressor usa as bibliotecas JsMin e CSSMin para compress&atilde;o de Javascript e CSS respectivamente e n&atilde;o possui suporte para CoffeeScript, LESS e Sass pois um dos seus objetivos &eacute; ser simples e enxuto.</p>
-<h2>Instala&ccedil;&atilde;o e uso<&#47;h2><br />
-1- Baixe ou clone o plugin no <a target="_blank" rel="external nofollow" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;easy-compressor-plugin">github<&#47;a>, crie uma pasta com nome <code>EasyCompressor<&#47;code> dentro de <code>app&#47;Plugin&#47;<&#47;code> e cole os arquivos do compressor <br&#47;><img class="alignnone size-full wp-image-509" style="color: #333333; font-size: 15.555556297302246px; font-style: normal; line-height: 26.666667938232422px;" title="instalando-easy-compressor-plugin" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;instalando-easy-compressor-plugin.jpg" alt="instalando-easy-compressor-plugin" width="459" height="758" &#47;></p>
-<p>2- Fa&ccedil;a download das &uacute;ltimas vers&otilde;es das bibliotecas <a target="_blank" rel="external nofollow" href="https:&#47;&#47;github.com&#47;rgrove&#47;jsmin-php&#47;blob&#47;master&#47;jsmin.php">JsMin<&#47;a> e <a href="http:&#47;&#47;code.google.com&#47;p&#47;cssmin&#47;downloads&#47;list" target="_blank" rel="external nofollow">CSSMin<&#47;a> e coloque dentro de <code>app&#47;Vendor&#47;jsmin&#47;<&#47;code> e <code>app&#47;Vendor&#47;cssmin&#47;<&#47;code> respectivamente</p>
-<p>3- Adicione <code>CakePlugin::load(array('EasyCompressor' => array('routes' => true)));<&#47;code> no arquivo <code>app&#47;Config&#47;bootstrap.php<&#47;code> para carregar o plugin</p>
-<p>4- Adicione <code>EasyCompressor.EasyCompressor<&#47;code> no array de helpers usados em <code>app&#47;Controller&#47;AppController<&#47;code></p>
-<p>5- Inclua no layout os m&eacute;todos respons&aacute;veis por obter os arquivos Js e CSS, veja abaixo</p>
-<p>Para incluir arquivos em todas as p&aacute;ginas do site voc&ecirc; pode usar:<br />
-[code language="php"]<?php<br />
-&#47;&#47; Adiciona arquivos no bloco 'layout_script'<br />
-$this->Html->script(array('jquery.js', 'modernizr.js'), array('inline' => false, 'block' => 'layout_script'));<br />
-&#47;&#47; Exibe<br />
-echo $this->EasyCompressor->getLayoutScript();<br />
-?>[&#47;code]<br />
-O c&oacute;digo acima ir&aacute; gerar um arquivo minificado com os dois arquivos, podemos usar ele para fazer uma &uacute;nica requisi&ccedil;&atilde;o para arquivos que n&atilde;o mudam no site inteiro (scripts do layout). Tamb&eacute;m podemos gerar um outro arquivo minificado contendo somente os scripts da view que est&aacute; sendo carregada, veja abaixo.<br />
-[code language="php"]<?php<br />
-&#47;&#47; Adiciona arquivos no bloco padr&atilde;o 'script'<br />
-$this->Html->script(array('carousel.js'), array('inline' => false));<br />
-&#47;&#47; Exibe<br />
-echo $this->EasyCompressor->getViewScript();<br />
-?><br />
-[&#47;code]<br />
-Com isso mantemos no cache os arquivos do layout e da view, s&oacute; tendo que fazer download novamente ao acessar uma view ainda n&atilde;o visitada ou quando houver alguma altera&ccedil;&atilde;o.</p>
-<div class="note">O exemplo acima vale para CSS tamb&eacute;m, basta substituir <code>getLayoutScript<&#47;code> por <code>getLayoutCSS<&#47;code> e <code>getViewScript<&#47;code> por <code>getViewCSS<&#47;code> nas chamadas dos m&eacute;todos.<&#47;div><br />
-6- Agora basta setar o n&iacute;vel de debug para 0 em <code>app&#47;Config&#47;core.php<&#47;code> <span style="text-decoration: underline;">ou<&#47;span> caso queira testar em ambiente de desenvolvimento tamb&eacute;m &eacute; poss&iacute;vel ativar o compressor adicionando <code>Configure::write('EasyCompressor.enabled', true);<&#47;code> no mesmo arquivo.</p>
-<p>Feito isso, voc&ecirc; obter&aacute; as tags como na imagem.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;tag-html-gerada-pelo-compressor-cakephp.jpg"><img class="alignnone size-full wp-image-519" title="tag-html-gerada-pelo-compressor-cakephp" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;tag-html-gerada-pelo-compressor-cakephp.jpg" alt="tag-html-gerada-pelo-compressor-cakephp" width="1267" height="78" &#47;><&#47;a></p>
-<div class="note">Se o compressor estiver desabilitado ele ir&aacute; gerar as tags de todos arquivos como se estivesse sendo exibido da forma padr&atilde;o do Cake (<code>echo $this->Html->fetch('script');<&#47;code>).<&#47;div><br />
-Bem simples n&eacute;? Como o pr&oacute;prio nome diz, &eacute; f&aacute;cil de usar.. Deixe sua opini&atilde;o nos coment&aacute;rios.</p>
-<p>At&eacute; mais pessoal.</p>
+  <li>CakePHP 2.1 ou acima</li>
+</ul>
+
+<h2>Funcionamento</h2>
+
+<p>EasyCompressor gera um arquivo minificado para os scripts e estilos do layout e outro para os scripts/estilos de cada view. Vamos supor que você tenha 4 arquivos CSS inlcusos no layout de sua aplicação e 2 arquivos CSS específicos da view da página inicial do site, quando ativo, o compressor irá gerar um arquivo minificado contendo o conteúdo dos 4 arquivos CSS do layout e outro contendo o conteúdo dos 2 arquivos da view. Isso foi feito para o arquivo minificado do layout ser mantido em cache sem ter que fazer download em cada view carregada, mas se quiser, você pode usar apenas um arquivo de estilo/script.</p>
+
+<p>Na tag HTML gerada, é adicionado uma query string com um hash md5 da soma da data de modificação de cada arquivo incluso, isso forçará o download de uma nova versão quando alguma alteração tiver sido feita em um dos arquivos.</p>
+
+<p>Atualmente o EasyCompressor usa as bibliotecas JsMin e CSSMin para compressão de JavaScript e CSS respectivamente e não possui suporte para CoffeeScript, LESS e Sass pois um dos seus objetivos é ser simples e enxuto.</p>
+
+<h2>Instalação e uso</h2>
+
+<p>1- Baixe ou clone o plugin no <a target="_blank" rel="external nofollow" href="https://github.com/glaucocustodio/easy-compressor-plugin">github</a>, crie uma pasta com nome <code>EasyCompressor</code> dentro de <code>app/Plugin/</code> e cole os arquivos do compressor </p>
+
+<p><a href="{{ site.baseurl }}/assets/instalando-easy-compressor-plugin.jpg">
+  <img class="alignnone size-full wp-image-509" style="color: #333333; font-size: 15.555556297302246px; font-style: normal; line-height: 26.666667938232422px;" title="instalando-easy-compressor-plugin" src="{{ site.baseurl }}/assets/instalando-easy-compressor-plugin.jpg" alt="instalando-easy-compressor-plugin"/>
+</a></p>
+
+<p>2- Faça download das últimas versões das bibliotecas <a target="_blank" rel="external nofollow" href="https://github.com/rgrove/jsmin-php/blob/master/jsmin.php">JsMin</a> e <a href="http://code.google.com/p/cssmin/downloads/list" target="_blank" rel="external nofollow">CSSMin</a> e coloque dentro de <code>app/Vendor/jsmin/</code> e <code>app/Vendor/cssmin/</code> respectivamente</p>
+
+<p>3- Adicione <code>CakePlugin::load(array('EasyCompressor' =&gt; array('routes' =&gt; true)));</code> no arquivo <code>app/Config/bootstrap.php</code> para carregar o plugin</p>
+
+<p>4- Adicione <code>EasyCompressor.EasyCompressor</code> no array de helpers usados em <code>app/Controller/AppController</code></p>
+
+<p>5- Inclua no layout os métodos responsáveis por obter os arquivos Js e CSS, veja abaixo</p>
+
+<p>Para incluir arquivos em todas as páginas do site você pode usar:</p>
+
+{% highlight php %}
+<?php 
+// Adiciona arquivos no bloco 'layout_script'
+$this->Html->script(array('jquery.js', 'modernizr.js'), array('inline' => false, 'block' => 'layout_script'));
+// Exibe
+echo $this->EasyCompressor->getLayoutScript();
+?>
+{% endhighlight %}
+
+<p>O código acima irá gerar um arquivo minificado com os dois arquivos, podemos usar ele para fazer uma única requisição para arquivos que não mudam no site inteiro (scripts do layout). Também podemos gerar um outro arquivo minificado contendo somente os scripts da view que está sendo carregada, veja abaixo.</p>
+
+{% highlight php %}
+<?php
+// Adiciona arquivos no bloco padrão 'script'
+$this->Html->script(array('carousel.js'), array('inline' => false));
+// Exibe
+echo $this->EasyCompressor->getViewScript();
+?>
+{% endhighlight %}
+
+<p>Com isso mantemos no cache os arquivos do layout e da view, só tendo que fazer download novamente ao acessar uma view ainda não visitada ou quando houver alguma alteração.</p>
+
+<div class="note">O exemplo acima vale para CSS também, basta substituir <code>getLayoutScript</code> por <code>getLayoutCSS</code> e <code>getViewScript</code> por <code>getViewCSS</code> nas chamadas dos métodos.</div>
+
+<p>6- Agora basta setar o nível de debug para 0 em <code>app/Config/core.php</code> ou caso queira testar em ambiente de desenvolvimento também é possível ativar o compressor adicionando <code>Configure::write('EasyCompressor.enabled', true);</code> no mesmo arquivo.</p>
+
+<p>Feito isso, você obterá as tags como na imagem:</p>
+
+<p><a href="{{ site.baseurl }}/assets/tag-html-gerada-pelo-compressor-cakephp.jpg"><img class="alignnone size-full wp-image-519" title="tag-html-gerada-pelo-compressor-cakephp" src="{{ site.baseurl }}/assets/tag-html-gerada-pelo-compressor-cakephp.jpg" alt="tag-html-gerada-pelo-compressor-cakephp"/></a></p>
+
+<div class="note">Se o compressor estiver desabilitado ele irá gerar as tags de todos arquivos como se estivesse sendo exibido da forma padrão do Cake (<code>echo $this-&gt;Html-&gt;fetch('script');</code>).</div>
+
+<p>Bem simples né? Como o próprio nome diz, é fácil de usar.. Deixe sua opinião nos comentários.</p>
+
+<p>Até mais pessoal.</p>

@@ -429,111 +429,173 @@ comments:
   content: "Muito bom meu amigo!\r\n\r\nComo foi dito em um dos coment&aacute;rios:
     Este &eacute; o melhor tutorial que encontrei!"
 ---
-<p>Fala pessoal, beleza? Voc&ecirc;s trabalham com algum <strong>framework<&#47;strong>? Conhecem o <strong>CakePHP<&#47;strong>?</p>
-<p>Caso n&atilde;o saibam o que &eacute; um framework e as vantagens de seu uso sugiro que vejam <a title="Porque usar um framework?" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework&#47;" target="_blank">esse post<&#47;a>.</p>
-<p>Hoje irei demonstrar como iniciar uma aplica&ccedil;&atilde;o com o CakePHP no Windows e dar os primeiros passos com essa ferramenta.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;09&#47;01&#47;iniciando-com-framework-cakephp"><img class="alignnone size-full wp-image-440" title="Iniciando com o Framework CakePHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;iniciando-com-framework-cakephp.png" alt="Iniciando com o Framework CakePHP" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-285"></a></p>
-<p>CakePHP &eacute; um framework web completo de c&oacute;digo aberto (voc&ecirc; pode contribuir se quiser!) escrito em PHP (como o nome diz) que foi iniciado em 2005.</p>
-<p>Ele trabalha seguindo o padr&atilde;o MVC (veja mais detalhes sobre MVC <a title="Desenvolvimento em Camadas com MVC" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;09&#47;desenvolvimento-em-camadas-com-mvc&#47;" target="_blank">aqui<&#47;a>) e &eacute; voltado para o desenvolvimento r&aacute;pido. Possui uma excelente documenta&ccedil;&atilde;o e uma comunidade muito ativa.</p>
-<h2>Download e Instala&ccedil;&atilde;o<&#47;h2></p>
-<p>Para come&ccedil;ar nossa primeira aplica&ccedil;&atilde;o, precisamos acessar o site oficial (<a title="http:&#47;&#47;cakephp.org&#47;" href="http:&#47;&#47;cakephp.org&#47;" target="_blank">http:&#47;&#47;cakephp.org&#47;<&#47;a>) do CakePHP e clicar no link "Download" &agrave; direita para baixar a &uacute;ltima vers&atilde;o est&aacute;vel (no meu caso &eacute; a 2.2.1).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;baixando-cakephp.jpg"><img class="alignnone size-full wp-image-290" title="Baixando CakePHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;baixando-cakephp.jpg" alt="Baixando CakePHP" width="600" height="234" &#47;><&#47;a></p>
-<p>Ap&oacute;s o download, copie o arquivo compactado baixado, cole na pasta do servidor onde PHP pode ser rodado (<code>C:\wamp\www\<&#47;code> caso esteja usando Wamp Server), extraia e renomei para "first-project". Feito isso voc&ecirc; dever&aacute; ver a seguinte estrutura:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;iniciando-com-cakephp.jpg"><img class="alignnone size-full wp-image-292" title="Iniciando com CakePHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;iniciando-com-cakephp.jpg" alt="Iniciando com CakePHP" width="600" height="422" &#47;><&#47;a></p>
-<p>- app: essa pasta &eacute; onde voc&ecirc; ir&aacute; trabalhar, nela ser&atilde;o armazenadas toda a l&oacute;gica, imagens, arquivos de estilos (CSS) e comportamentos (Javascript) do site.</p>
-<p>- lib: pasta que cont&eacute;m o n&uacute;cleo (conhecido como "core") do CakePHP, nela est&atilde;o armazenadas as principais classes e componentes do framework. Nenhum arquivo deve ser alterado aqui pois caso voc&ecirc; atualize a vers&atilde;o do Cake todas altera&ccedil;&otilde;es ser&atilde;o perdidas.</p>
-<p>- plugins: diret&oacute;rio respons&aacute;vel por armazenar plugins (mini aplica&ccedil;&otilde;es do CakePHP) de terceiros.</p>
-<p>- vendors: pasta respons&aacute;vel por armazenar bibliotecas e classes externas para serem utilizadas no projeto, como por exemplo uma classe para redimensionamento de imagens.</p>
-<p>- .htaccess: arquivo de configura&ccedil;&atilde;o do servidor Apache respons&aacute;vel por fazer reescrita de urls (usando <code>mod_rewrite<&#47;code> do Apache que deve estar ativo). Ele encaminha todas requisi&ccedil;&otilde;es feitas nesse diret&oacute;rio para <code>app&#47;webroot&#47;<&#47;code>. Se voc&ecirc; acessar <code>http:&#47;&#47;localhost&#47;first-project&#47;some_file.php<&#47;code> no navegador por exemplo, o Cake ir&aacute; procurar o arquivo <code>some_file.php<&#47;code> dentro da pasta <code>app&#47;webroot&#47;<&#47;code> inv&eacute;s de <code>app&#47;<&#47;code>.</p>
-<p>- index.php: arquivo respons&aacute;vel por definir algumas constantes que s&atilde;o usadas pelo framework.</p>
-<p>Agora que j&aacute; conhecemos os elementos principais da estrutura do Cake podemos acessar nosso projeto pela primeira vez e ver o que temos, para isso digite no browser o endere&ccedil;o de desenvolvimento (geralmente <code>http:&#47;&#47;localhost<&#47;code>) e clique na pasta do projeto.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;rodando-primeiro-projeto-cakephp.jpg"><img class="alignnone size-full wp-image-295" title="Rodando primeiro projeto no CakePHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;rodando-primeiro-projeto-cakephp.jpg" alt="Rodando primeiro projeto no CakePHP" width="800" height="336" &#47;><&#47;a></p>
-<p>Essa &eacute; a tela inicial onde o CakePHP faz algumas verifica&ccedil;&otilde;es.. Observe as mensagens em vermelho, elas est&atilde;o dizendo que devemos alterar o valor da <code>Security.salt<&#47;code> e da <code>Security.cipherSeed<&#47;code> localizadas no arquivo de configura&ccedil;&atilde;o <code>core.php<&#47;code>. Vamos fazer o que ele est&aacute; pedindo, acesse a pasta <code>app&#47;Config&#47;<&#47;code> com seu editor favorito e veja o que temos.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;arquivos-de-configura&ccedil;&atilde;o-cakephp.png"><img class="alignnone size-full wp-image-297" title="Arquivos de configura&ccedil;&atilde;o do CakePHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;arquivos-de-configura&ccedil;&atilde;o-cakephp.png" alt="Arquivos de configura&ccedil;&atilde;o do CakePHP" width="395" height="523" &#47;><&#47;a></p>
-<p>Os arquivos que mais nos interessam por enquanto s&atilde;o:</p>
-<p>- core.php: arquivo respons&aacute;vel por armazenar principais configura&ccedil;&otilde;es do projeto como: n&iacute;vel de debug, cache, logs, sess&otilde;es etc. Abra o arquivo e substitua o valor atual da <code>Security.salt<&#47;code> e <code>Security.cipherSeed<&#47;code> para qualquer string rand&ocirc;mica (aperte qualquer letra e n&uacute;mero), esses campos servem para serem inclu&iacute;dos nas criptografias geradas pelo Cake, deixando mais dif&iacute;cil a decodifica&ccedil;&atilde;o (+1 para seguran&ccedil;a aqui).</p>
-<p>- database.php.default: arquivo respons&aacute;vel por armazenar as configura&ccedil;&otilde;es de acesso ao banco de dados. Aproveitando que estamos aqui, crie um banco de dados no MySQL ou outro que quiser (o CakePHP atualmente suporta MySQL, PostgreSQL, SQLite e SQL Server), abra o arquivo <code>database.php.default<&#47;code>, digite o endere&ccedil;o do banco em <code>host<&#47;code>, usu&aacute;rio em <code>login<&#47;code>, senha em <code>password<&#47;code>, nome do banco em <code>database<&#47;code> e o qual fonte de dados voc&ecirc; usar&aacute; em <code>datasource<&#47;code> (voc&ecirc; encontra uma lista desse &uacute;ltimo no pr&oacute;prio arquivo), salve e renomei o arquivo para <code>database.php<&#47;code> para ativar a conex&atilde;o com banco de dados.</p>
-<p>- email.php.default: arquivo respons&aacute;vel por armazenar configura&ccedil;&otilde;es para envio de emails atrav&eacute;s da classe <code>CakeEmail<&#47;code>.</p>
-<p>- routes.php: arquivo respons&aacute;vel por definir as rotas de nossa aplica&ccedil;&atilde;o.</p>
-<p>Ap&oacute;s fazermos as primeiras configura&ccedil;&otilde;es j&aacute; temos o CakePHP pronto para uso como na imagem abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;cakephp-configurado-com-sucesso.png"><img class="alignnone size-full wp-image-352" title="cakephp-configurado-com-sucesso" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;cakephp-configurado-com-sucesso.png" alt="" width="800" height="489" &#47;><&#47;a></p>
-<h2>Rotas, Requisi&ccedil;&otilde;es e Layouts<&#47;h2></p>
-<p>O Cake j&aacute; vem com algumas configura&ccedil;&otilde;es para funcionar, mas geralmente n&atilde;o usamos ao desenvolver nossos projetos, ent&atilde;o devemos fazer nossas pr&oacute;prias.</p>
-<h3>Layouts<&#47;h3></p>
-<p>Para come&ccedil;ar, temos o layout. Mas o que &eacute; layout no Cake? Layout nada mais &eacute; do que o HTML da sua aplica&ccedil;&atilde;o que n&atilde;o muda entre todas as p&aacute;ginas, nele definimos normalmente o cabe&ccedil;alho, menu principal, rodap&eacute; e aplicamos as folhas de estilos (CSS) e arquivos Javascript usados em todo o site. A fun&ccedil;&atilde;o do layout &eacute; facilitar a manuten&ccedil;&atilde;o, permitindo que tenhamos apenas um arquivo de estrutura b&aacute;sico para manter.</p>
-<p>Vamos criar nosso primeiro layout, para isso, acesse a pasta <code>app&#47;View&#47;Layouts<&#47;code>, abra o arquivo <code>default.ctp<&#47;code>, remova o conte&uacute;do dele e copie o abaixo.</p>
-<p>[code language="html+php" linenos="1" hl_lines="9 15 19"]<br />
-<!doctype html><br />
-<html lang="pt-BR"><br />
-<head><br />
-  <meta charset="utf-8"&#47;><br />
-  <title><br />
-    Primeira Aplica&ccedil;&atilde;o com CakePHP<br />
-  <&#47;title><br />
-  <?php<br />
-    echo $this->fetch('css');<br />
-  ?><br />
-<&#47;head><br />
-<body></p>
-<div id="container">
-<div id="content">
-      <?php echo $this->fetch('content'); ?><br />
-    <&#47;div><br />
-  <&#47;div><br />
-  <?php<br />
-   echo $this->fetch('script');<br />
-  ?><br />
-<&#47;body><br />
-<&#47;html><br />
-[&#47;code]</p>
-<p>Observe as linhas destacadas, temos algo importante aqui. A linha 9 diz para o Cake onde os arquivos CSS devem ser inclusos, a linha 15 diz onde ser&aacute; inclu&iacute;do o conte&uacute;do que muda de cada p&aacute;gina (content) e a 19 diz onde os arquivos Javascript ficar&atilde;o. Em um layout, devemos ter pelo menos a chamada para o bloco content (linha 15).</p>
-<p>Acesse <code>app&#47;View&#47;<&#47;code> e exclua a pasta <code>Pages<&#47;code> e v&aacute; at&eacute; <code>app&#47;Controller&#47;<&#47;code> e exclua o arquivo <code>PagesController.php<&#47;code>. Se voc&ecirc; acessar o site agora dever&aacute; ver uma mensagem de erro, calma que j&aacute; iremos acertar..</p>
-<h3>Rotas e Requisi&ccedil;&otilde;es<&#47;h3></p>
-<p>O Cake j&aacute; vem com um conjunto de rotas configuradas que funcionam muito bem. Primeiro voc&ecirc; define o controller que deseja acessar, depois a action e em seguida passa os par&acirc;metros se tiver. Veja um exemplo:</p>
-<p>http:&#47;&#47;meusite.com&#47;produtos&#47;todos</p>
-<p>Se nenhum rota criada por n&oacute;s estiver definida, nosso framework ir&aacute; procurar por um controller chamado <code>ProdutosController<&#47;code> na pasta <code>app&#47;Controller&#47;<&#47;code> e dentro desse controlador ele ir&aacute; procurar uma action (que nada mais &eacute; do que um m&eacute;todo) com o nome de <code>todos<&#47;code>, como abaixo.</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-class ProdutosController extends AppController{<br />
-  function todos(){</p>
-<p>  }<br />
-}<br />
-?><br />
-[&#47;code]</p>
-<p>Observe que nosso controller possui o nome dele concatenado com o sufixo <code>Controller<&#47;code> e herda (extends) do controlador <code>AppController<&#47;code>, essa &eacute; uma conven&ccedil;&atilde;o do Cake e devemos sempre criar um controlador seguindo ela. Se voc&ecirc; criar o arquivo acima e acessar o endere&ccedil;o dele ver&aacute; que teremos uma mensagem de erro dizendo <code>Missing View<&#47;code>, isso nos diz que temos que criar uma view com o mesmo nome da action definida no controller. Nesse caso crie um arquivo chamado <code>todos.ctp<&#47;code> (cake template - ctp) dentro da pasta <code>app&#47;View&#47;Produtos&#47;<&#47;code> e ver&aacute; que o erro sumir&aacute;. Todas as views do controlador <code>produtos<&#47;code> devem ficar nessa pasta tendo o mesmo nome da action com a extens&atilde;o <code>ctp<&#47;code>.</p>
-<p>Se tivermos um controller chamado <code>Categorias<&#47;code> como abaixo por exemplo, o Cake ir&aacute; procurar as views <code>listagem.ctp<&#47;code>, <code>cadastro.ctp<&#47;code> e <code>index.ctp<&#47;code> dentro da pasta <code>app&#47;View&#47;Categorias&#47;<&#47;code> quando acessarmos os respectivos endere&ccedil;os <code>http:&#47;&#47;meusite.com&#47;categorias&#47;listagem<&#47;code>, <code>http:&#47;&#47;meusite.com&#47;categorias&#47;cadastro<&#47;code>, <code>http:&#47;&#47;meusite.com&#47;categorias<&#47;code>. Detalhe, quando n&atilde;o definimos uma action como no caso da &uacute;ltima url, o Cake ir&aacute; entender que &eacute; para chamar a <code>index<&#47;code>, fa&ccedil;a o teste!</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-class CategoriasController extends AppController{<br />
-  function listagem(){</p>
-<p>  }</p>
-<p>  function cadastro(){</p>
-<p>  }</p>
-<p>  function index(){</p>
-<p>  }<br />
-}<br />
-?><br />
-[&#47;code]</p>
-<p>Agora vamos definir algumas rotas, abra o arquivo <code>routes.php<&#47;code> na pasta <code>app&#47;Config&#47;<&#47;code> e observe que temos duas rotas definidas.</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-Router::connect('&#47;', array('controller' => 'pages', 'action' => 'display', 'home'));</p>
-<p>Router::connect('&#47;pages&#47;*', array('controller' => 'pages', 'action' => 'display'));<br />
-?><br />
-[&#47;code]</p>
+<p>Fala pessoal, beleza? Vocês trabalham com algum framework? Conhecem o CakePHP?</p>
+
+<p>Caso não saibam o que é um framework e as vantagens de seu uso sugiro que vejam <a title="Porque usar um framework?" href="{% post_url 2012-07-31-porque-usar-um-framework %}" target="_blank">esse post</a>.</p>
+
+<p>Hoje irei demonstrar como iniciar uma aplicação com o CakePHP no Windows e dar os primeiros passos com essa ferramenta.</p>
+
+<a href="{{ site.baseurl }}/assets/iniciando-com-framework-cakephp.png"><img class="alignnone size-full wp-image-440" title="Iniciando com o Framework CakePHP" src="{{ site.baseurl }}/assets/iniciando-com-framework-cakephp.png" alt="Iniciando com o Framework CakePHP"/></a>
+
+<p>CakePHP é um framework web completo de código aberto (você pode contribuir se quiser!) escrito em PHP (como o nome diz) que foi iniciado em 2005.</p>
+
+<p>Ele trabalha seguindo o padrão MVC (veja mais detalhes sobre MVC <a title="Desenvolvimento em Camadas com MVC" href="{% post_url 2012-08-09-desenvolvimento-em-camadas-com-mvc %}" target="_blank">aqui</a>) e é voltado para o desenvolvimento rápido. Possui uma excelente documentação e uma comunidade muito ativa.</p>
+
+<h2>Download e Instalação</h2>
+
+<p>Para começar nossa primeira aplicação, precisamos acessar o site oficial (<a title="http://cakephp.org/" href="http://cakephp.org/" target="_blank">http://cakephp.org/</a>) do CakePHP e clicar no link "Download" à direita para baixar a última versão estável (no meu caso é a 2.2.1).</p>
+
+<a href="{{ site.baseurl }}/assets/baixando-cakephp.jpg"><img class="alignnone size-full wp-image-290" title="Baixando CakePHP" src="{{ site.baseurl }}/assets/baixando-cakephp.jpg" alt="Baixando CakePHP"/></a>
+
+<p>Após o download, copie o arquivo compactado baixado, cole na pasta do servidor onde o PHP pode ser rodado (<code>C:\wamp\www\</code> caso esteja usando Wamp Server), extraia e renomei para "first-project". Feito isso você deverá ver a seguinte estrutura:</p>
+
+<p><a href="{{ site.baseurl }}/assets/iniciando-com-cakephp.jpg"><img class="alignnone size-full wp-image-292" title="Iniciando com CakePHP" src="{{ site.baseurl }}/assets/iniciando-com-cakephp.jpg" alt="Iniciando com CakePHP"/></a></p>
+
+<p>- app: essa pasta é onde você irá trabalhar, nela serão armazenadas toda a lógica, imagens, arquivos de estilos (CSS) e comportamentos (JavaScript) do site.</p>
+
+<p>- lib: pasta que contém o núcleo (conhecido como "core") do CakePHP, nela estão armazenadas as principais classes e componentes do framework. Nenhum arquivo deve ser alterado aqui pois caso você atualize a versão do Cake todas alterações serão perdidas.</p>
+
+<p>- plugins: diretório responsável por armazenar plugins (mini aplicações do CakePHP) de terceiros.</p>
+
+<p>- vendors: pasta responsável por armazenar bibliotecas e classes externas para serem utilizadas no projeto, como por exemplo uma classe para redimensionamento de imagens.</p>
+
+<p>- .htaccess: arquivo de configuração do servidor Apache responsável por fazer reescrita de urls (usando <code>mod_rewrite</code> do Apache que deve estar ativo). Ele encaminha todas requisições feitas nesse diretório para <code>app/webroot/</code>. Se você acessar <code>http://localhost/first-project/some_file.php</code> no navegador por exemplo, o Cake irá procurar o arquivo <code>some_file.php</code> dentro da pasta <code>app/webroot/</code> invés de <code>app/</code>.</p>
+
+<p>- index.php: arquivo responsável por definir algumas constantes que são usadas pelo framework.</p>
+
+<p>Agora que já conhecemos os elementos principais da estrutura do Cake podemos acessar nosso projeto pela primeira vez e ver o que temos, para isso digite no browser o endereço de desenvolvimento (geralmente <code>http://localhost</code>) e clique na pasta do projeto.</p>
+
+<a href="{{ site.baseurl }}/assets/rodando-primeiro-projeto-cakephp.jpg"><img class="alignnone size-full wp-image-295" title="Rodando primeiro projeto no CakePHP" src="{{ site.baseurl }}/assets/rodando-primeiro-projeto-cakephp.jpg" alt="Rodando primeiro projeto no CakePHP"/></a>
+
+<p>Essa é a tela inicial onde o CakePHP faz algumas verificações.. Observe as mensagens em vermelho, elas estão dizendo que devemos alterar o valor da <code>Security.salt</code> e da <code>Security.cipherSeed</code> localizadas no arquivo de configuração <code>core.php</code>. Vamos fazer o que ele está pedindo, acesse a pasta <code>app/Config/</code> com seu editor favorito e veja o que temos.</p>
+
+<a href="{{ site.baseurl }}/assets/arquivos-de-configuração-cakephp.png"><img class="alignnone size-full wp-image-297" title="Arquivos de configuração do CakePHP" src="{{ site.baseurl }}/assets/arquivos-de-configuração-cakephp.png" alt="Arquivos de configuração do CakePHP"/></a>
+
+<p>Os arquivos que mais nos interessam por enquanto são:</p>
+
+<p>- core.php: arquivo responsável por armazenar principais configurações do projeto como: nível de debug, cache, logs, sessões etc. Abra o arquivo e substitua o valor atual da <code>Security.salt</code> e <code>Security.cipherSeed</code> para qualquer string randômica (aperte qualquer letra e número), esses campos servem para serem incluídos nas criptografias geradas pelo Cake, deixando mais difícil a decodificação.</p>
+
+<p>- database.php.default: arquivo responsável por armazenar as configurações de acesso ao banco de dados. Aproveitando que estamos aqui, crie um banco de dados no MySQL ou outro que quiser (o CakePHP atualmente suporta MySQL, PostgreSQL, SQLite e SQL Server), abra o arquivo <code>database.php.default</code>, digite o endereço do banco em <code>host</code>, usuário em <code>login</code>, senha em <code>password</code>, nome do banco em <code>database</code> e o qual fonte de dados você usará em <code>datasource</code> (você encontra uma lista desse último no próprio arquivo), salve e renomei o arquivo para <code>database.php</code> para ativar a conexão com banco de dados.</p>
+
+<p>- email.php.default: arquivo responsável por armazenar configurações para envio de emails através da classe <code>CakeEmail</code>.</p>
+
+<p>- routes.php: arquivo responsável por definir as rotas de nossa aplicação.</p>
+
+<p>Após fazermos as primeiras configurações já temos o CakePHP pronto para uso como na imagem abaixo.</p>
+
+<a href="{{ site.baseurl }}/assets/cakephp-configurado-com-sucesso.png"><img class="alignnone size-full wp-image-352" title="cakephp-configurado-com-sucesso" src="{{ site.baseurl }}/assets/cakephp-configurado-com-sucesso.png" /></a>
+
+<h2>Rotas, Requisições e Layouts</h2>
+
+<p>O Cake já vem com algumas configurações para funcionar, mas geralmente não usamos ao desenvolver nossos projetos, então devemos fazer nossas próprias.</p>
+
+<h3>Layouts</h3>
+
+<p>Para começar, temos o layout. Mas o que é layout no Cake? Layout nada mais é do que o HTML da sua aplicação que não muda entre todas as páginas, nele definimos normalmente o cabeçalho, menu principal, rodapé e aplicamos as folhas de estilos (CSS) e arquivos JavaScript usados em todo o site. A função do layout é facilitar a manutenção, permitindo que tenhamos apenas um arquivo de estrutura básico para manter.</p>
+
+<p>Vamos criar nosso primeiro layout, para isso, acesse a pasta <code>app/View/Layouts</code>, abra o arquivo <code>default.ctp</code>, remova o conteúdo dele e copie o abaixo.</p>
+
+{% highlight html+php linenos %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <title>
+    Primeira Aplicação com CakePHP
+  </title>
+  <?php
+    echo $this->fetch('css');
+  ?>
+</head>
+<body>
+  <div id="container">
+    <div id="content">
+      <?php echo $this->fetch('content'); ?>
+    </div>
+  </div>
+  <?php
+   echo $this->fetch('script');
+  ?>
+</body>
+</html>
+{% endhighlight %}
+
+<p>A linha 9 diz para o Cake onde os arquivos CSS devem ser inclusos, a linha 15 diz onde será incluído o conteúdo que muda de cada página (content) e a 19 diz onde os arquivos JavaScript ficarão. Em um layout, devemos ter pelo menos a chamada para o bloco content (linha 15).</p>
+
+<p>Acesse <code>app/View/</code> e exclua a pasta <code>Pages</code> e vá até <code>app/Controller/</code> e exclua o arquivo <code>PagesController.php</code>. Se você acessar o site agora deverá ver uma mensagem de erro, calma que já iremos acertar..</p>
+
+<h3>Rotas e Requisições</h3>
+
+<p>O Cake já vem com um conjunto de rotas configuradas que funcionam muito bem. Primeiro você define o controller que deseja acessar, depois a action e em seguida passa os parâmetros se tiver. Veja um exemplo:</p>
+
+http://meusite.com/produtos/todos
+
+<p>Se nenhum rota criada por nós estiver definida, nosso framework irá procurar por um controller chamado <code>ProdutosController</code> na pasta <code>app/Controller/</code> e dentro desse controlador ele irá procurar uma action (que nada mais é do que um método) com o nome de <code>todos</code>, como abaixo.</p>
+
+{% highlight php %}
+<?php
+class ProdutosController extends AppController{
+  function todos(){
+ 
+  }
+}
+?>
+{% endhighlight %}
+
+<p>Observe que nosso controller possui o nome dele concatenado com o sufixo <code>Controller</code> e herda (extends) do controlador <code>AppController</code>, essa é uma convenção do Cake e devemos sempre criar um controlador seguindo ela. Se você criar o arquivo acima e acessar o endereço dele verá que teremos uma mensagem de erro dizendo <code>Missing View</code>, isso nos diz que temos que criar uma view com o mesmo nome da action definida no controller. Nesse caso crie um arquivo chamado <code>todos.ctp</code> (cake template - ctp) dentro da pasta <code>app/View/Produtos/</code> e verá que o erro sumirá. Todas as views do controlador <code>produtos</code> devem ficar nessa pasta tendo o mesmo nome da action com a extensão <code>ctp</code>.</p>
+
+<p>Se tivermos um controller chamado <code>Categorias</code> como abaixo por exemplo, o Cake irá procurar as views <code>listagem.ctp</code>, <code>cadastro.ctp</code> e <code>index.ctp</code> dentro da pasta <code>app/View/Categorias/</code> quando acessarmos os respectivos endereços <code>http://meusite.com/categorias/listagem</code>, <code>http://meusite.com/categorias/cadastro</code> e <code>http://meusite.com/categorias</code>. Detalhe, quando não definimos uma action como no caso da última url, o Cake irá entender que é para chamar a <code>index</code>, faça o teste!</p>
+
+{% highlight php %}
+<?php
+class CategoriasController extends AppController{
+  function listagem(){
+ 
+  }
+ 
+  function cadastro(){
+ 
+  }
+ 
+  function index(){
+ 
+  }
+}
+?>
+{% endhighlight %}
+
+<p>Agora vamos definir algumas rotas, abra o arquivo <code>routes.php</code> na pasta <code>app/Config/</code> e observe que temos duas rotas definidas.</p>
+
+{% highlight php %}
+<?php
+Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+
+Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+?>
+{% endhighlight %}
+
 <p>Remova essas linhas e deixe apenas a linha abaixo:</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-Router::connect('&#47;', array('controller' => 'home', 'action' => 'index'));<br />
-?><br />
-[&#47;code]</p>
-<p>Aqui n&oacute;s definimos a rota raiz do site, caso acessemos <code>http:&#47;&#47;meusite.com<&#47;code>, o Cake chamar&aacute; a action <code>index<&#47;code> do controller <code>Home<&#47;code>. Como ainda n&atilde;o criamos ele, vamos fazer agora, crie um arquivo com nome <code>HomeController.php<&#47;code> dentro da pasta <code>app&#47;Controller&#47;<&#47;code>, defina nossa action <code>index<&#47;code> e crie a pasta <code>Home<&#47;code> dentro de <code>app&#47;View&#47;<&#47;code> e nela crie nossa view <code>index.ctp<&#47;code>, veja a rela&ccedil;&atilde;o abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;conve&ccedil;&otilde;es-do-cakephp.png"><img class="alignnone size-full wp-image-411" title="conve&ccedil;&otilde;es-do-cakephp" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;09&#47;conve&ccedil;&otilde;es-do-cakephp.png" alt="" width="670" height="593" &#47;><&#47;a></p>
-<p>Agora abra o arquivo <code>app&#47;View&#47;Home&#47;index.ctp<&#47;code>, digite <code>Ol&aacute; mundo<&#47;code>, rode no navegador e veja nossa primeira aplica&ccedil;&atilde;o no Cake funcionando.</p>
-<p>Lembra desse c&oacute;digo <code><?php echo $this->fetch('content'); ?><&#47;code> que temos dentro do layout? Ent&atilde;o, todo o conte&uacute;do das views ser&atilde;o apresentados no lugar onde ele est&aacute; definido. Se voc&ecirc; olhar o c&oacute;digo fonte da raiz do site ver&aacute; que nosso <code>Ol&aacute; mundo<&#47;code> est&aacute; onde pedimos para ele estar, ou seja, dentro da div com id <code>content<&#47;code>.</p>
-<h2>Concluindo..<&#47;h2></p>
-<p>Hoje vimos como instalar, fazer as primeiras configura&ccedil;&otilde;es e rodar nossa aplica&ccedil;&atilde;o com CakePHP. Espero ter sido claro e objetivo na explica&ccedil;&atilde;o.</p>
+
+{% highlight php %}
+<?php
+Router::connect('/', array('controller' => 'home', 'action' => 'index'));
+?>
+{% endhighlight %}
+
+<p>Aqui nós definimos a rota raiz do site, caso acessemos <code>http://meusite.com</code>, o Cake chamará a action <code>index</code> do controller <code>Home</code>. Como ainda não criamos ele, vamos fazer agora, crie um arquivo com nome <code>HomeController.php</code> dentro da pasta <code>app/Controller/</code>, defina nossa action <code>index</code> e crie a pasta <code>Home</code> dentro de <code>app/View/</code> e nela crie nossa view <code>index.ctp</code>, veja a relação abaixo.</p>
+
+<a href="{{ site.baseurl }}/assets/conveções-do-cakephp.png"><img class="alignnone size-full wp-image-411" title="conveções-do-cakephp" src="{{ site.baseurl }}/assets/conveções-do-cakephp.png"/></a>
+
+<p>Agora abra o arquivo <code>app/View/Home/index.ctp</code>, digite <code>Olá mundo</code>, rode no navegador e veja nossa primeira aplicação no Cake funcionando.</p>
+
+<p>Lembra desse código <code>&lt;?php echo $this-&gt;fetch('content'); ?&gt;</code> que temos dentro do layout? Então, todo o conteúdo das views será apresentado no lugar onde ele está definido. Se você olhar o código fonte da raiz do site verá que nosso <code>Olá mundo</code> está onde pedimos para ele estar, ou seja, dentro da div com id <code>content</code>.</p>
+
+<h2>Concluindo..</h2>
+
+<p>Hoje vimos como instalar, fazer as primeiras configurações e rodar nossa aplicação com CakePHP. Espero ter sido claro e objetivo na explicação.</p>
+
 <p>Em breve postarei mais tutoriais sobre essa ferramenta, aguardem!</p>
-<p>Ah, n&atilde;o esque&ccedil;a de dar sua opini&atilde;o nos coment&aacute;rios para eu ter um feedback, ok?</p>
-<p>Abra&ccedil;os!</p>
+
+<p>Ah, não esqueça de dar sua opinião nos comentários para eu ter um feedback, ok?</p>
+
+<p>Abraços!</p>
