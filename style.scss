@@ -76,11 +76,11 @@ p, div, li {
 }
 
 a {
-  color: $blue;
+  color: #357c8f;
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
-    color: $blue;
+    color: #539eb3;
   }
 }
 
@@ -306,6 +306,27 @@ footer {
   background: #fafbd8 url("assets/alert-icon.png") no-repeat scroll 7px 10px;
   border: 1px solid #e2e488;
   color: #6e7019;
+}
+.month-year{
+  font-size: 1.3em;
+  margin: 0 0 10px 0;
+  // background: #e4e4e4 none repeat scroll 0 0;
+  // font-family: "Open Sans",sans-serif;
+  // font-weight: bold;
+  // padding: 2px 6px;
+}
+.post-title a {
+  color: #444444;
+  font-weight: normal;
+  text-decoration: underline;
+  font-size: 1.2em;
+}
+.post-title {
+  margin: 0;
+}
+.post-categories {
+  margin: 0 0 20px 0;
+  font-size: 0.9em;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

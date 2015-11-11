@@ -97,131 +97,169 @@ comments:
   date_gmt: '2015-07-06 21:26:40 -0300'
   content: Legau
 ---
-<p>Fala pessoal, beleza? Voc&ecirc;s j&aacute; precisaram incluir um v&iacute;deo do <strong>YouTube<&#47;strong> de forma din&acirc;mica em algum site? Sim? Ent&atilde;o esse post &eacute; para voc&ecirc;s.</p>
-<p>Hoje irei explicar como fazer um cadastro de v&iacute;deos do YouTube com PHP de forma simples e r&aacute;pida.. Vamos ao tutorial!</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;11&#47;cadastro-de-videos-do-youtube-com-php&#47;"><img class="alignnone  wp-image-274" title="Cadastro de V&iacute;deo do YouTube com PHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;saving-youtube-videos-with-php.jpg" alt="" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-270"></a>Primeiro vamos criar a tabela <code>videos<&#47;code> respons&aacute;vel por armazenar os dados, segue o SQL abaixo.</p>
-<p>[code language="sql" linenos="1"]<br />
-CREATE TABLE `videos` (<br />
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,<br />
-  `title` varchar(255) DEFAULT NULL,<br />
-  `video_id` varchar(20) DEFAULT NULL,<br />
-  PRIMARY KEY (`id`)<br />
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;<br />
-[&#47;code]</p>
-<p>Feito isso, vamos criar um formul&aacute;rio para cadastro dos v&iacute;deos, ele ir&aacute; conter os campos <code>title<&#47;code> e <code>url<&#47;code> onde ser&atilde;o preenchidos o t&iacute;tulo e o endere&ccedil;o do v&iacute;deo no YouTube respectivamente.</p>
-<p>[code language="html" linenos="1"]</p>
+<p>Fala pessoal, beleza? Vocês já precisaram incluir um vídeo do YouTube de forma dinâmica em algum site? Sim? Então esse post é para vocês.</p>
+
+<p>Hoje irei explicar como fazer um cadastro de vídeos do YouTube com PHP de forma simples e rápida.. Vamos ao tutorial!</p>
+
+<a href="{{ site.baseurl }}/assets/saving-youtube-videos-with-php.jpg"><img class="alignnone  wp-image-274" title="Cadastro de Vídeo do YouTube com PHP" src="{{ site.baseurl }}/assets/saving-youtube-videos-with-php.jpg"/></a>
+
+<p>Primeiro vamos criar a tabela <code>videos</code> responsável por armazenar os dados:</p>
+
+{% highlight sql %}
+CREATE TABLE `videos` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `video_id` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+{% endhighlight %}
+
+<p>Feito isso, vamos criar um formulário para cadastro dos vídeos, ele irá conter os campos <code>title</code> e <code>url</code> onde serão preenchidos o título e o endereço do vídeo no YouTube respectivamente.</p>
+
+{% highlight html %}
 <form method="post" action="save.php">
-     <label for="title">T&iacute;tulo:<&#47;label><br />
-     <input type="text" name="title" id="title" size="40" maxlength="40"&#47;></p>
-<p>     <label for="url">Endere&ccedil;o:<&#47;label><br />
-     <input type="text" name="url" id="url" size="60"&#47;></p>
-<p>     <input type="submit" value="Cadastrar" &#47;><br />
-<&#47;form><br />
-[&#47;code]</p>
-<div class="note">Observe que definimos o tipo de envio do formul&aacute;rio para <code>post<&#47;code> pois n&atilde;o queremos passar os dados pela url.<&#47;div></p>
-<p>Agora vamos fazer a p&aacute;gina <code>save.php<&#47;code> que conter&aacute; o c&oacute;digo respons&aacute;vel por salvar os v&iacute;deos no banco de dados.</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-&#47;&#47; Inclui arquivo de conex&atilde;o com banco de dados<br />
-include_once 'database.php';</p>
-<p>&#47;&#47; Verifica se o formul&aacute;rio foi submetido e se &eacute; uma requis&atilde;o do tipo POST<br />
-if($_SERVER['REQUEST_METHOD'] == 'POST'){<br />
-    &#47;&#47; Armazena os dados enviados em uma vari&aacute;vel<br />
-    $post = $_POST;</p>
-<p>    &#47;&#47; Verifica se o t&iacute;tulo (m&iacute;nimo 5 caracteres) e o endere&ccedil;o foram preenchidos<br />
-    if(isset($post['title']) && $post['title'] && strlen($post['title']) >= 5 && isset($post['url']) && $post['url']){<br />
-        &#47;&#47; Filtra o t&iacute;tulo (remove tags HTML)<br />
-        $title = filter_var($post['title']);</p>
-<p>        &#47;&#47; Analisa o endere&ccedil;o do v&iacute;deo (parse)<br />
-        $subString = parse_url($post['url']);</p>
-<p>        &#47;&#47; Verifica se tem o &iacute;ndice 'query' no array obtido pelo parse acima<br />
-        if(isset($subString['query']) && $subString['query']){<br />
-            &#47;&#47; Analisa a string de 'query' para encontrar o id do v&iacute;deo<br />
-            parse_str($subString['query'], $output);</p>
-<p>            &#47;&#47; Se tiver a vari&aacute;vel 'v' na url e tiver um id setado, ent&atilde;o cadastra o v&iacute;deo<br />
-            if(isset($output['v']) && $output['v']){</p>
-<p>                &#47;&#47; Prepara uma senten&ccedil;a para ser executada<br />
-                $statement = $pdo->prepare('INSERT INTO videos (title, video_id) VALUES (:title, :video_id)');<br />
-                &#47;&#47; Preenche os par&acirc;metros com os dados a serem salvos<br />
-                $statement->bindParam(':title', $title);<br />
-                $statement->bindParam(':video_id',   $output['v']);</p>
-<p>                &#47;&#47; Cadastra o v&iacute;deo no banco de dados<br />
-                if($statement->execute()){<br />
-                    &#47;&#47; Definimos a mensagem de sucesso<br />
-                    $_SESSION['message'] = 'V&iacute;deo cadastrado com sucesso';<br />
-                }else{<br />
-                    &#47;&#47; Definimos a mensagem de erro<br />
-                    $_SESSION['message'] = 'Falha ao cadastrar v&iacute;deo';<br />
-                } </p>
-<p>            }else{<br />
-                $_SESSION['message'] = 'Endere&ccedil;o do v&iacute;deo inv&aacute;lido';<br />
-            }<br />
-        }else{<br />
-            $_SESSION['message'] = 'Endere&ccedil;o do v&iacute;deo inv&aacute;lido';<br />
-        }</p>
-<p>    }else{<br />
-        $_SESSION['message'] = 'Preencha todos os campos (t&iacute;tulo deve ter no m&iacute;nimo 5 caracteres)';<br />
-    }<br />
-}<br />
-&#47;&#47; Redireciona para a p&aacute;gina inicial<br />
-header('Location: index.php');<br />
-?><br />
-[&#47;code]</p>
-<p>Primeiro inclu&iacute;mos o arquivo <code>database.php<&#47;code> respons&aacute;vel por fazer a conex&atilde;o com o banco de dados via PDO (<a title="Usando PDO do PHP" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;04&#47;usando-pdo-do-php&#47;" target="_blank">clique aqui<&#47;a> para saber mais sobre PDO), depois verificamos se o formul&aacute;rio foi submetido e se os campos est&atilde;o v&aacute;lidos. Por fim, salvamos o v&iacute;deo no banco, mas espera ai, na verdade salvamos apenas o id dele..</p>
-<p>Observe que se pegarmos qualquer url de v&iacute;deo do YouTube iremos ver que ela possui um par&acirc;metro <code>v<&#47;code> com um c&oacute;digo, esse c&oacute;digo &eacute; o id do v&iacute;deo. Ex: http:&#47;&#47;www.youtube.com&#47;watch?v=yMLzB1fsSTc, id &eacute; <code>yMLzB1fsSTc<&#47;code>.</p>
-<p>Como j&aacute; conhecemos o resto da url e n&atilde;o precisamos dela, ent&atilde;o salvamos s&oacute; o id do v&iacute;deo, isso tamb&eacute;m nos permite criarmos uma miniatura do v&iacute;deo na listagem.</p>
-<p>Agora que j&aacute; temos o cadastro pronto, vamos para listagem dos v&iacute;deos cadastrados.</p>
-<p>[code language="html+php" linenos="1" hl_lines="10"]</p>
-<ul id="video-list">
-        <?php foreach($pdo->query('SELECT * FROM videos ORDER BY id DESC') as $c): ?></p>
-<li>
-<p>
-                    <strong><br />
-                        <?php echo $c['title']; ?><br />
-                    <&#47;strong><br />
-                <&#47;p><br />
-                <a title="<?php echo $c['title'] ?>" href="http:&#47;&#47;www.youtube.com&#47;embed&#47;<?php echo $c['video_id'] ?>?rel=0&amp;wmode=transparent"><br />
-                    <img src="http:&#47;&#47;i1.ytimg.com&#47;vi&#47;<?php echo $c['video_id'] ?>&#47;default.jpg" alt="<?php echo $c['title']; ?>" &#47;><br />
-                <&#47;a></p>
-<p>                <a onclick="return confirm('Deseja mesmo excluir esse v&iacute;deo?')" href="delete.php?id=<?php echo base64_encode($c['id']); ?>">Excluir<&#47;a><br />
-            <&#47;li><br />
-        <?php endforeach; ?><br />
-<&#47;ul><br />
-[&#47;code]</p>
-<div class="note">Inclu&iacute;mos a miniatura do v&iacute;deo (tag img) dentro de um link pois usamos o atributo href desse para exibir o v&iacute;deo em uma lightbox quando clicamos sobre a imagem (caso tenha d&uacute;vida recomendo que baixe o c&oacute;digo completo e veja funcionando).<&#47;div></p>
-<p>Veja a linha 10, o YouTube nos fornece um endere&ccedil;o para capturarmos uma imagem de um trecho do v&iacute;deo, para isso precisamos passar apenas o id do v&iacute;deo em uma url como essa http:&#47;&#47;i1.ytimg.com&#47;vi&#47;<span style="text-decoration: underline;">yMLzB1fsSTc<&#47;span>&#47;default.jpg (id destacado) e teremos a miniatura em imagem.</p>
-<p>O c&oacute;digo acima tamb&eacute;m possui um link para excluir o v&iacute;deo, ele simplesmente nos manda para a p&aacute;gina <code>delete.php<&#47;code> passando o id do registro como par&acirc;metro. Segue abaixo o c&oacute;digo respons&aacute;vel por excluir v&iacute;deos.</p>
-<p>[code language="php" linenos="1"]<br />
-<?php<br />
-&#47;&#47; Inclui o arquivo de conex&atilde;o com banco de dados<br />
-include_once 'database.php';</p>
-<p>&#47;&#47; Verifica se &eacute; uma requis&atilde;o do tipo GET<br />
-if($_SERVER['REQUEST_METHOD'] == 'GET'){<br />
-    $get = $_GET;</p>
-<p>    &#47;* Verifica se veio o id do registro pela url e se tem um valor definido<br />
-     * Obs: fun&ccedil;&atilde;o base64_decode decodifica uma string, &eacute; o inverso de base64_encode usada por seguran&ccedil;a<br />
-     *&#47;<br />
-    if(isset($get['id']) && base64_decode($get['id'])){<br />
-        &#47;&#47; Executa query respons&aacute;vel por remover o registro<br />
-        $delete = $pdo->exec('DELETE FROM videos WHERE id = '. base64_decode($get['id']));</p>
-<p>        &#47;&#47; Verifica se o registro foi removido com sucesso<br />
-        if($delete){<br />
-            &#47;&#47; Definimos a mensagem de sucesso<br />
-            $_SESSION['message'] = 'V&iacute;deo excluido com sucesso';<br />
-        }else{<br />
-            &#47;&#47; Definimos a mensagem de erro<br />
-            $_SESSION['message'] = 'Falha ao excluir v&iacute;deo';<br />
-        }<br />
-    }else{<br />
-        &#47;&#47; Definimos a mensagem de erro<br />
-        $_SESSION['message'] = 'Falha ao excluir v&iacute;deo';<br />
-    }<br />
-}</p>
-<p>&#47;&#47; Redirecionamos para a p&aacute;gina inicial<br />
-header('Location: index.php');<br />
-?><br />
-[&#47;code]</p>
-<p>&Eacute; s&oacute; isso! Agora j&aacute; temos um cadastro de v&iacute;deos do YouTube.. Voc&ecirc;s podem conferir o c&oacute;digo desse exemplo completo em meu <a title="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Cadastro%20de%20videos%20do%20YouTube" rel="external nofollow" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Cadastro%20de%20videos%20do%20YouTube" target="_blank">GitHub<&#47;a>.</p>
-<p>O que voc&ecirc;s acharam, simples n&atilde;o?</p>
-<p>At&eacute; mais.</p>
+  <label for="title">Título:</label>
+  <input type="text" name="title" id="title" size="40" maxlength="40"/>
+
+  <label for="url">Endereço:</label>
+  <input type="text" name="url" id="url" size="60"/>
+
+  <input type="submit" value="Cadastrar" />
+</form>
+{% endhighlight %}
+
+<div class="note">Observe que definimos o tipo de envio do formulário para <code>post</code> pois não queremos passar os dados pela url.</div>
+
+<p>Agora vamos fazer a página <code>save.php</code> que conterá o código responsável por salvar os vídeos no banco de dados.</p>
+
+{% highlight php %}
+<?php
+// Inclui arquivo de conexão com banco de dados
+include_once 'database.php';
+
+// Verifica se o formulário foi submetido e se é uma requisão do tipo POST
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  // Armazena os dados enviados em uma variável
+  $post = $_POST;
+  
+  // Verifica se o título (mínimo 5 caracteres) e o endereço foram preenchidos
+  if(isset($post['title']) && $post['title'] && strlen($post['title']) >= 5 && isset($post['url']) && $post['url']){
+    // Filtra o título (remove tags HTML)
+    $title = filter_var($post['title']);
+    
+    // Analisa o endereço do vídeo (parse)
+    $subString = parse_url($post['url']);
+    
+    // Verifica se tem o índice 'query' no array obtido pelo parse acima
+    if(isset($subString['query']) && $subString['query']){
+        // Analisa a string de 'query' para encontrar o id do vídeo
+        parse_str($subString['query'], $output);
+          
+        // Se tiver a variável 'v' na url e tiver um id setado, então cadastra o vídeo
+        if(isset($output['v']) && $output['v']){
+            
+          // Prepara uma sentença para ser executada
+          $statement = $pdo->prepare('INSERT INTO videos (title, video_id) VALUES (:title, :video_id)');
+          // Preenche os parâmetros com os dados a serem salvos
+          $statement->bindParam(':title', $title);
+          $statement->bindParam(':video_id',   $output['v']);
+          
+          // Cadastra o vídeo no banco de dados
+          if($statement->execute()){
+            // Definimos a mensagem de sucesso
+            $_SESSION['message'] = 'Vídeo cadastrado com sucesso';
+          }else{
+            // Definimos a mensagem de erro
+            $_SESSION['message'] = 'Falha ao cadastrar vídeo';
+          } 
+
+        }else{
+          $_SESSION['message'] = 'Endereço do vídeo inválido';
+        }
+    }else{
+      $_SESSION['message'] = 'Endereço do vídeo inválido';
+    }
+  }else{
+    $_SESSION['message'] = 'Preencha todos os campos (título deve ter no mínimo 5 caracteres)';
+  }
+}
+// Redireciona para a página inicial
+header('Location: index.php');
+?>
+{% endhighlight %}
+
+<p>Primeiro incluímos o arquivo <code>database.php</code> responsável por fazer a conexão com o banco de dados via PDO (<a title="Usando PDO do PHP" href="{% post_url 2012-08-04-usando-pdo-do-php %}" target="_blank">clique aqui</a> para saber mais sobre PDO), depois verificamos se o formulário foi submetido e se os campos estão válidos. Por fim, salvamos o vídeo no banco, mas espera ai, na verdade salvamos apenas o id dele..</p>
+
+<p>Observe que se pegarmos qualquer url de vídeo do YouTube iremos ver que ela possui um parâmetro <code>v</code> com um código, esse código é o id do vídeo. Ex: <code>http://www.youtube.com/watch?v=yMLzB1fsSTc</code>, id é <code>yMLzB1fsSTc</code>.</p>
+
+<p>Como já conhecemos o resto da url e não precisamos dela, então salvamos só o id do vídeo, isso também nos permite criarmos uma miniatura do vídeo na listagem.</p>
+
+<p>Agora que já temos o cadastro pronto, vamos para listagem dos vídeos cadastrados.</p>
+
+{% highlight html+php linenos %}
+<ul id="video-list">        
+  <?php foreach($pdo->query('SELECT * FROM videos ORDER BY id DESC') as $c): ?>
+    <li>
+      <p>
+        <strong>
+          <?php echo $c['title']; ?>
+        </strong>
+      </p>
+      <a title="<?php echo $c['title'] ?>" href="http://www.youtube.com/embed/<?php echo $c['video_id'] ?>?rel=0&amp;wmode=transparent">
+        <img src="http://i1.ytimg.com/vi/<?php echo $c['video_id'] ?>/default.jpg" alt="<?php echo $c['title']; ?>" />
+      </a>
+
+      <a onclick="return confirm('Deseja mesmo excluir esse vídeo?')" href="delete.php?id=<?php echo base64_encode($c['id']); ?>">
+        Excluir
+      </a>
+    </li>
+  <?php endforeach; ?>
+</ul>
+{% endhighlight %}
+
+<div class="note">Incluímos a miniatura do vídeo (tag img) dentro de um link pois usamos o atributo href desse para exibir o vídeo em uma lightbox quando clicamos sobre a imagem (caso tenha dúvida recomendo que baixe o código completo e veja funcionando).</div>
+
+<p>Veja a linha 10, o YouTube nos fornece um endereço para capturarmos uma imagem de um trecho do vídeo, para isso precisamos passar apenas o id do vídeo em uma url como essa <code>http://i1.ytimg.com/vi/yMLzB1fsSTc/default.jpg</code> (id <code>yMLzB1fsSTc</code>) e teremos a miniatura em imagem.</p>
+
+<p>O código acima também possui um link para excluir o vídeo, ele simplesmente nos manda para a página <code>delete.php</code> passando o id do registro como parâmetro:</p>
+
+{% highlight php %}
+<?php
+// Inclui o arquivo de conexão com banco de dados
+include_once 'database.php';
+
+// Verifica se é uma requisão do tipo GET
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+  $get = $_GET;
+
+  /* Verifica se veio o id do registro pela url e se tem um valor definido
+   * Obs: função base64_decode decodifica uma string, é o inverso de base64_encode usada por segurança
+   */
+  if(isset($get['id']) && base64_decode($get['id'])){
+    // Executa query responsável por remover o registro
+    $delete = $pdo->exec('DELETE FROM videos WHERE id = '. base64_decode($get['id']));
+
+    // Verifica se o registro foi removido com sucesso
+    if($delete){
+      // Definimos a mensagem de sucesso
+      $_SESSION['message'] = 'Vídeo excluido com sucesso';
+    }else{
+      // Definimos a mensagem de erro
+      $_SESSION['message'] = 'Falha ao excluir vídeo';
+    }
+  }else{
+    // Definimos a mensagem de erro
+    $_SESSION['message'] = 'Falha ao excluir vídeo';
+  }
+}
+
+// Redirecionamos para a página inicial
+header('Location: index.php');
+?>
+{% endhighlight %}
+
+<p>É só isso! Agora já temos um cadastro de vídeos do YouTube.. Vocês podem conferir o código desse exemplo completo em meu <a title="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Cadastro%20de%20videos%20do%20YouTube" rel="external nofollow" href="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Cadastro%20de%20videos%20do%20YouTube" target="_blank">GitHub</a>.</p>
+
+<p>O que vocês acharam, simples não?</p>
+
+<p>Até mais.</p>

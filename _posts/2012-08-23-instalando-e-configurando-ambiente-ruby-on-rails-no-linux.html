@@ -249,71 +249,146 @@ comments:
   date_gmt: '2015-06-16 19:43:41 -0300'
   content: Parab&eacute;ns! Me ajudou muito...
 ---
-<p>Fala pessoal, beleza? Algu&eacute;m utiliza <strong>Ruby on Rails<&#47;strong> ai? Sabe o que &eacute;? Se voc&ecirc; n&atilde;o sabe o que &eacute; n&atilde;o deixe de ver <a title="Porque usar um framework?" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework#ruby-on-rails-ref" target="_blank">esse post<&#47;a> onde explico um pouco sobre essa incr&iacute;vel ferramenta.</p>
-<p>Nesse post irei explicar como instalar e configurar um ambiente de desenvolvimento Ruby on Rails em Linux, em meu caso estou usando a distribui&ccedil;&atilde;o Ubuntu 12.04 LTS.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;23&#47;instalando-e-configurando-ambiente-ruby-on-rails-no-linux&#47;"><img class="alignnone size-full wp-image-335" title="instalando-ruby-on-rails-no-linux" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-ruby-on-rails-no-linux.jpg" alt="" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-299"></a></p>
-<div class="alert"><strong>Importante (atualizado 13&#47;07&#47;2013):<&#47;strong> esse tutorial demonstra a instala&ccedil;&atilde;o do Ruby 1.9.3, recentemente saiu a vers&atilde;o 2.0.0 da linguagem. &Eacute; recomend&aacute;vel o uso dessa nova vers&atilde;o com o tamb&eacute;m rec&eacute;m lan&ccedil;ado Rails 4. Ap&oacute;s seguir os passos abaixo, leia <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2013&#47;07&#47;02&#47;instalando-ruby-2-e-criando-rvmrc-para-um-projeto-com-rvm&#47;" target="_blank">esse post onde explico como atualizar.<&#47;a><&#47;div></p>
-<h2>&Iacute;ndice<&#47;h2></p>
+<p>Fala pessoal, beleza? Alguém utiliza Ruby on Rails ai? Sabe o que é? Se você não sabe o que é não deixe de ver <a title="Porque usar um framework?" href="{% post_url 2012-07-31-porque-usar-um-framework %}#ruby-on-rails-ref" target="_blank">esse post</a> onde explico um pouco sobre essa incrível ferramenta.</p>
+
+<p>Nesse post irei explicar como instalar e configurar um ambiente de desenvolvimento Ruby on Rails em Linux, em meu caso estou usando a distribuição Ubuntu 12.04 LTS.</p>
+
+<a href="{{ site.baseurl }}/assets/instalando-ruby-on-rails-no-linux.jpg"><img class="alignnone size-full wp-image-335" title="instalando-ruby-on-rails-no-linux" src="{{ site.baseurl }}/assets/instalando-ruby-on-rails-no-linux.jpg"/></a>
+
+<div class="alert">
+  <strong>Importante (atualizado 13/07/2013):</strong> esse tutorial demonstra a instalação do Ruby 1.9.3, recentemente saiu a versão 2.0.0 da linguagem. É recomendável o uso dessa nova versão com o também recém lançado Rails 4. 
+
+  Após seguir os passos abaixo, leia <a href="{% post_url 2013-07-02-instalando-ruby-2-e-criando-rvmrc-para-um-projeto-com-rvm %}" target="_blank">esse post onde explico como atualizar.</a>  
+</div>
+
+<h2>Índice</h2>
+
 <ul style="list-style-type: square;">
-<li><a href="#atualizando-lista-de-pacotes">Atualizando lista de pacotes<&#47;a><&#47;li>
-<li><a href="#gerenciador-de-versoes-ruby">Gerenciador de Vers&otilde;es Ruby<&#47;a><&#47;li>
-<li><a href="#instalando-o-ruby">Instalando o Ruby<&#47;a><&#47;li>
-<li><a href="#instalando-ruby-on-rails">Instalando Ruby on Rails<&#47;a><&#47;li>
-<li><a href="#instalando-mysql">Instalando MySQL<&#47;a><&#47;li>
-<li><a href="#instalando-postgresql">Instalando PostgreSQL<&#47;a>
+  <li><a href="#atualizando-lista-de-pacotes">Atualizando lista de pacotes</a></li>
+  <li><a href="#gerenciador-de-versoes-ruby">Gerenciador de Versões Ruby</a></li>
+  <li><a href="#instalando-o-ruby">Instalando o Ruby</a></li>
+  <li><a href="#instalando-ruby-on-rails">Instalando Ruby on Rails</a></li>
+  <li><a href="#instalando-mysql">Instalando MySQL</a></li>
+  <li><a href="#instalando-postgresql">Instalando PostgreSQL</a>
 <ul>
-<li><a href="#instalando-pgadmin3">Instalando PgAdmin 3<&#47;a><&#47;li><br />
-<&#47;ul><br />
-<&#47;li></p>
-<li><a href="#instalando-aptana-studio">Instalando Aptana Studio<&#47;a><&#47;li><br />
-<&#47;ul></p>
-<h2 id="atualizando-lista-de-pacotes">Atualizando lista de pacotes<&#47;h2><br />
-Ap&oacute;s estar com nosso sistema instalado, vamos atualizar a lista de pacotes, para isso execute no terminal o seguinte comando:<br />
-[code language="bash"]sudo apt-get update[&#47;code]</p>
-<h2 id="gerenciador-de-versoes-ruby"> Gerenciador de Vers&otilde;es do Ruby<&#47;h2><br />
-Primeiro de tudo, precisamos instalar a chave p&uacute;blica do autor do RVM (Ruby Version Manager):<br />
-[code language="bash"]gpg --keyserver hkp:&#47;&#47;keys.gnupg.net --recv-keys D39DC0E3[&#47;code]</p>
-<div>Vamos instalar o RVM para caso precisarmos ter outras vers&otilde;es do Ruby instalado na m&aacute;quina conseguirmos facilmente, rode o comando <code>curl -L https:&#47;&#47;get.rvm.io | bash -s stable<&#47;code> como abaixo.<&#47;div><br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-rvm.jpg"><img class="alignnone size-full wp-image-321" title="Instalando RVM" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-rvm.jpg" alt="Instalando RVM" width="742" &#47;><&#47;a></p>
-<div class="note">Voc&ecirc; precisa ter a biblioteca cURL instalada para executar o comando acima, caso n&atilde;o tenha, basta rodar o comando: <code>sudo apt-get install curl<&#47;code>.<&#47;div></p>
-<p style="display: none;">Se tudo ocorreu bem agora voc&ecirc; deve ter o RVM instalado, vamos adicionar ele ao shell, execute o comando abaixo.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;adicionando-rvm-no-shell.jpg"><img class="alignnone size-full wp-image-322" title="Adicionando RVM no shell" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;adicionando-rvm-no-shell.jpg" alt="Adicionando RVM no shell" width="750" height="85" &#47;><&#47;a><&#47;p><br />
-Se tudo ocorreu bem agora voc&ecirc; deve ter o RVM instalado, vamos adicionar ele ao shell, para isso adicione o c&oacute;digo abaixo no arquivo <code>.bashrc<&#47;code> ou <code>.bash_profile<&#47;code> na home do usu&aacute;rio:<br />
-[code language="bash"]PATH=$PATH:$HOME&#47;.rvm&#47;bin # Add RVM to PATH for scripting<br />
-[[ -s "&#47;usr&#47;local&#47;rvm&#47;scripts&#47;rvm" ]] &amp;&amp; source "&#47;usr&#47;local&#47;rvm&#47;scripts&#47;rvm"<br />
-[[ -s "$HOME&#47;.rvm&#47;scripts&#47;rvm" ]] &amp;&amp; source "$HOME&#47;.rvm&#47;scripts&#47;rvm"[&#47;code]<br />
-O c&oacute;digo acima serve para toda vez que abrirmos o terminal podermos executar comandos do RVM apenas usando <code>rvm<&#47;code>.</p>
-<div class="alert">Caso algum comando com <code>rvm<&#47;code> n&atilde;o funcione daqui pra frente, voc&ecirc; deve acessar as prefer&ecirc;ncias (<code>Edit -> Profile Preferences<&#47;code>) do terminal e marcar a op&ccedil;&atilde;o para executar comandos com login.<&#47;div><br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;rodando-comando-com-login-no-shell.jpg"><img class="alignnone size-full wp-image-323" title="rodando-comando-com-login-no-shell" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;rodando-comando-com-login-no-shell.jpg" alt="" width="883" height="519" &#47;><&#47;a></p>
-<h2 id="instalando-o-ruby">Instalando o Ruby<&#47;h2><br />
-Agora temos que instalar a vers&atilde;o do Ruby que desejamos usar, antes, vamos ver as vers&otilde;es dispon&iacute;veis usando o comando <code>rvm list known<&#47;code>. <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;vendo-versoes-do-ruby.jpg"><img class="alignnone size-full wp-image-325" title="vendo-versoes-do-ruby" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;vendo-versoes-do-ruby.jpg" alt="" width="752" &#47;><&#47;a></p>
-<p>O Ruby possui v&aacute;rios interpretadores (JRuby, Rubinius, MacRuby entre outras) mas n&oacute;s vamos instalar a mais comum, que &eacute; a MRI (Matz's Ruby Interpreter), a vers&atilde;o implementada pelo criador da linguagem Ruby, o japon&ecirc;s Yukihiro Matsumoto ("Matz").</p>
-<p>Antes de instalarmos o Ruby, vamos instalar algumas depend&ecirc;ncias necess&aacute;rias, para isso execute o comando <code>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config<&#47;code>. <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-dependencias-do-ruby.jpg"><img class="alignnone size-full wp-image-326" title="instalando-dependencias-do-ruby" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-dependencias-do-ruby.jpg" alt="" width="741" height="481" &#47;><&#47;a></p>
-<div class="note">Observe que estamos instalando o sistema de versionamento Git tamb&eacute;m atrav&eacute;s do pacote <code>git-core<&#47;code>.<&#47;div><br />
-Vamos ao Ruby agora, rode o comando <code>rvm install 1.9.3<&#47;code> tamb&eacute;m para instalarmos a &uacute;ltima vers&atilde;o do Ruby MRI (como vista pelo comando <code>rvm list known<&#47;code> acima).<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-ruby.jpg"><img class="alignnone size-full wp-image-327" title="instalando-ruby" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-ruby.jpg" alt="" width="741" &#47;><&#47;a></p>
-<div>Como o RVM suporta v&aacute;rias vers&otilde;es do Ruby (pra isso que ele foi criado), devemos escolher uma vers&atilde;o padr&atilde;o que usaremos, para isso, execute o comando <code>rvm use 1.9.3 --default<&#47;code> ap&oacute;s a instala&ccedil;&atilde;o do Ruby 1.9.3.<&#47;div><br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;definingo-ruby-padrao-e-vendo-a-versao.jpg"><img class="alignnone size-full wp-image-328" title="definingo-ruby-padrao-e-vendo-a-versao" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;definingo-ruby-padrao-e-vendo-a-versao.jpg" alt="" width="735" &#47;><&#47;a></p>
-<p>J&aacute; temos o Ruby instalado, podemos executar o comando <code>ruby -v<&#47;code> no terminal para verificarmos a vers&atilde;o, veja acima.</p>
-<p>O Ruby tamb&eacute;m possui um IRB (shell interativo ruby em portugu&ecirc;s) onde podemos executar c&oacute;digo diretamente, para acessar, basta digitar <code>irb<&#47;code> no terminal. Abaixo mostro como fazer um simples soma.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;irb.jpg"><img class="alignnone size-full wp-image-329" title="irb" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;irb.jpg" alt="" width="748" &#47;><&#47;a></p>
-<div class="note">Digite <code>quit<&#47;code> para sair do IRB<&#47;div></p>
-<h2 id="instalando-ruby-on-rails">Instalando Ruby on Rails<&#47;h2><br />
-Agora vamos &agrave; instala&ccedil;&atilde;o do Ruby on Rails (finalmente), execute o comando <code>gem install rails<&#47;code>. <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-rails.jpg"><img class="alignnone size-full wp-image-330" title="instalando-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-rails.jpg" alt="" width="742"  &#47;><&#47;a></p>
-<p>Aguarde um tempo e j&aacute; teremos o Rails instalado, ap&oacute;s o t&eacute;rmino, rode o comando <code>rails -v<&#47;code> para verificar a vers&atilde;o.<br />
-<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;vendo-versao-do-rails.jpg"><img class="alignnone size-full wp-image-331" title="vendo-versao-do-rails" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;vendo-versao-do-rails.jpg" alt="" width="742"  &#47;><&#47;a></p>
-<h2 id="instalando-mysql">Instalando MySQL<&#47;h2><br />
-J&aacute; temos o Ruby e o Ruby on Rails instalados, se voc&ecirc; quiser j&aacute; pode iniciar um projeto Rails usando o banco de dados SQLite, mas como eu quero usar MySQL, irei instal&aacute;-lo atrav&eacute;s do comando <code>sudo apt-get install mysql-server<&#47;code>, veja abaixo. <a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-mysql.jpg"><img class="alignnone size-full wp-image-332" title="instalando-mysql" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;instalando-mysql.jpg" alt="" width="741"  &#47;><&#47;a></p>
-<div class="note">Voc&ecirc; precisar&aacute; instalar a biblioteca <code>libmysqlclient-dev<&#47;code> tamb&eacute;m via <code>sudo apt-get install libmysqlclient-dev<&#47;code><&#47;div></p>
-<p>Durante a instala&ccedil;&atilde;o do MySQL ele ir&aacute; pedir a senha do usu&aacute;rio root, esse usu&aacute;rio &eacute; o administrador, &eacute; recomendado definir uma, caso n&atilde;o queira, basta apertar enter para deixar vazia.</p>
-<h2 id="instalando-postgresql">Instalando PostgreSQL<&#47;h2><br />
-Caso voc&ecirc; precise do PostgreSQL, ent&atilde;o vamos ao passo-a-passo.</p>
-<p>Primeiro verifique qual a &uacute;ltima vers&atilde;o dispon&iacute;vel no reposit&oacute;rio do Ubuntu, rode <code>apt-cache search postgresql<&#47;code> e na letra <code>p<&#47;code> veremos o &uacute;ltimo release. Agora instale o PostgreSQL atrav&eacute;s de <code>sudo apt-get install postgresql-9.1<&#47;code> (substitua 9.1 pela vers&atilde;o desejada) e depois <u>instale uma biblioteca necess&aacute;ria<&#47;u> para trabalhar com Ruby: <code>sudo apt-get install libpq-dev<&#47;code>.</p>
-<p>Agora precisamos alterar a senha, para isso rode <code>sudo -u postgres psql template1<&#47;code> no terminal, ent&atilde;o ir&aacute; aparecer <code>template1=#<&#47;code> na tela, digite <code>\password postgres<&#47;code> e ent&atilde;o digite e confirme a nova senha e aperte <code>Ctrl+d<&#47;code> para sair. Agora reinicie o servi&ccedil;o usando <code>sudo &#47;etc&#47;init.d&#47;postgresql restart<&#47;code>.</p>
-<h3 id="instalando-pgadmin3">Instalando PgAdmin3<&#47;h3><br />
-Se voc&ecirc; deseja ter uma interface mais amig&aacute;vel para trabalhar com o banco pode instalar o PgAdmin3, apenas execute <code>sudo apt-get install pgadmin3<&#47;code> e pronto!</p>
-<h2 id="instalando-aptana-studio">Instalando Aptana Studio<&#47;h2></p>
-<div class="note"><strong>Atualizado 13&#47;07&#47;2013:<&#47;strong> faz algum tempo que migrei do Aptana Studio para o <a href="http:&#47;&#47;www.sublimetext.com&#47;" rel="external nofollow" target="_blank">Sublime Text<&#47;a>, recomendo!<&#47;div><br />
-Com o banco de dados instalado, agora estamos quase acabando, s&oacute; falta instalar a IDE (ambiente de desenvolvimento integrado em portugu&ecirc;s), eu particularmente gosto do Aptana Studio que &eacute; baseado no Eclipse, acho muito vers&aacute;til, uso ele para trabalhar com PHP, Python, Ruby, Javascript, HTML e CSS. Caso queira instalar ele, basta fazer o download no site oficial <a title="http:&#47;&#47;www.aptana.com&#47;products&#47;studio3&#47;download" href="http:&#47;&#47;www.aptana.com&#47;products&#47;studio3&#47;download" target="_blank">aqui<&#47;a>.</p>
-<p>Ap&oacute;s o download, extraia o arquivo na pasta preferida, por&eacute;m ele ainda n&atilde;o ir&aacute; funcionar porque como &eacute; feito em Java, precisamos instalar a m&aacute;quina virtual Java (JRE), para isso, basta executar o comando <code>sudo apt-get install openjdk-6-jre<&#47;code> no terminal e pronto, basta clicar no &iacute;cone <code>AptanaStudio3<&#47;code> e teremos nosso ambiente de desenvolvimento.<a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;aptana.jpg"><img class="alignnone size-full wp-image-333" title="aptana-studio-3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;aptana.jpg" alt="aptana-studio-3" width="1051" height="290" &#47;><&#47;a></p>
-<p>&Eacute; isso ai pessoal, o que voc&ecirc;s acharam? Muito dif&iacute;cil?</p>
-<p>Abra&ccedil;os.</p>
+  <li><a href="#instalando-pgadmin3">Instalando PgAdmin 3</a></li>
+</ul>
+</li>
+  <li><a href="#instalando-aptana-studio">Instalando Aptana Studio</a></li>
+</ul>
+
+<h2 id="atualizando-lista-de-pacotes">Atualizando lista de pacotes</h2>
+
+<p>Após estar com nosso sistema instalado, vamos atualizar a lista de pacotes, para isso execute no terminal o seguinte comando:</p>
+
+{% highlight bash %}
+sudo apt-get update
+{% endhighlight %}
+
+<h2 id="gerenciador-de-versoes-ruby"> Gerenciador de Versões do Ruby</h2>
+
+<p>Primeiro de tudo, precisamos instalar a chave pública do autor do RVM (Ruby Version Manager):</p>
+
+{% highlight bash %}
+gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+{% endhighlight %}
+
+<p>Vamos instalar o RVM para caso precisarmos ter outras versões do Ruby instalado na máquina conseguirmos facilmente, rode o comando <code>curl -L https://get.rvm.io | bash -s stable</code> como abaixo.</p>
+
+<a href="{{ site.baseurl }}/assets/instalando-rvm.jpg"><img class="alignnone size-full wp-image-321" title="Instalando RVM" src="{{ site.baseurl }}/assets/instalando-rvm.jpg" alt="Instalando RVM"/></a>
+
+<div class="note">Você precisa ter a biblioteca cURL instalada para executar o comando acima, caso não tenha, basta rodar o comando: <code>sudo apt-get install curl</code>.</div>
+
+<p style="display: none;">Se tudo ocorreu bem agora você deve ter o RVM instalado, vamos adicionar ele ao shell, execute o comando abaixo.
+
+<a href="{{ site.baseurl }}/assets/adicionando-rvm-no-shell.jpg"><img class="alignnone size-full wp-image-322" title="Adicionando RVM no shell" src="{{ site.baseurl }}/assets/adicionando-rvm-no-shell.jpg" alt="Adicionando RVM no shell"/></a></p>
+
+<p>Se tudo ocorreu bem agora você deve ter o RVM instalado, vamos adicionar ele ao shell, para isso adicione o código abaixo no arquivo <code>.bashrc</code> ou <code>.bash_profile</code> na home do usuário:</p>
+
+{% highlight bash %}
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+{% endhighlight %}
+
+<p>O código acima serve para toda vez que abrirmos o terminal podermos executar comandos do RVM apenas usando <code>rvm</code>.</p>
+
+<div class="alert">Caso algum comando com <code>rvm</code> não funcione daqui pra frente, você deve acessar as preferências (<code>Edit -> Profile Preferences</code>) do terminal e marcar a opção para executar comandos com login.</div>
+
+<a href="{{ site.baseurl }}/assets/rodando-comando-com-login-no-shell.jpg"><img class="alignnone size-full wp-image-323" title="rodando-comando-com-login-no-shell" src="{{ site.baseurl }}/assets/rodando-comando-com-login-no-shell.jpg"/></a>
+
+<h2 id="instalando-o-ruby">Instalando o Ruby</h2>
+
+<p>Agora temos que instalar a versão do Ruby que desejamos usar, antes, vamos ver as versões disponíveis usando o comando <code>rvm list known</code>. </p>
+
+<a href="{{ site.baseurl }}/assets/vendo-versoes-do-ruby.jpg"><img class="alignnone size-full wp-image-325" title="vendo-versoes-do-ruby" src="{{ site.baseurl }}/assets/vendo-versoes-do-ruby.jpg"/></a>
+
+<p>O Ruby possui vários interpretadores (JRuby, Rubinius, MacRuby entre outras) mas nós vamos instalar a mais comum, que é a MRI (Matz's Ruby Interpreter), a versão implementada pelo criador da linguagem Ruby, o japonês Yukihiro Matsumoto ("Matz").</p>
+
+<p>Antes de instalarmos o Ruby, vamos instalar algumas dependências necessárias, para isso execute o comando <code>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config</code>. </p>
+
+<a href="{{ site.baseurl }}/assets/instalando-dependencias-do-ruby.jpg"><img class="alignnone size-full wp-image-326" title="instalando-dependencias-do-ruby" src="{{ site.baseurl }}/assets/instalando-dependencias-do-ruby.jpg"/></a>
+
+<div class="note">Observe que estamos instalando o sistema de versionamento Git também através do pacote <code>git-core</code>.</div>
+
+<p>Vamos ao Ruby agora, rode o comando <code>rvm install 1.9.3</code> também para instalarmos a última versão do Ruby MRI (como vista pelo comando <code>rvm list known</code> acima). </p>
+
+<p><a href="{{ site.baseurl }}/assets/instalando-ruby.jpg"><img class="alignnone size-full wp-image-327" title="instalando-ruby" src="{{ site.baseurl }}/assets/instalando-ruby.jpg"/></a></p>
+
+<div>Como o RVM suporta várias versões do Ruby (pra isso que ele foi criado), devemos escolher uma versão padrão que usaremos, para isso, execute o comando <code>rvm use 1.9.3 --default</code> após a instalação do Ruby 1.9.3.</div>
+
+<p><a href="{{ site.baseurl }}/assets/definingo-ruby-padrao-e-vendo-a-versao.jpg"><img class="alignnone size-full wp-image-328" title="definingo-ruby-padrao-e-vendo-a-versao" src="{{ site.baseurl }}/assets/definingo-ruby-padrao-e-vendo-a-versao.jpg"/></a></p>
+
+<p>Já temos o Ruby instalado, podemos executar o comando <code>ruby -v</code> no terminal para verificarmos a versão, veja acima.</p>
+
+O Ruby também possui um IRB (shell interativo ruby em português) onde podemos executar código diretamente, para acessar, basta digitar <code>irb</code> no terminal. Abaixo mostro como fazer um simples soma.
+
+<p><a href="{{ site.baseurl }}/assets/irb.jpg"><img class="alignnone size-full wp-image-329" title="irb" src="{{ site.baseurl }}/assets/irb.jpg"/></a></p>
+
+<div class="note">Digite <code>quit</code> para sair do IRB</div>
+
+<h2 id="instalando-ruby-on-rails">Instalando Ruby on Rails</h2>
+
+<p>Agora vamos à instalação do Ruby on Rails (finalmente), execute o comando <code>gem install rails</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/instalando-rails.jpg"><img class="alignnone size-full wp-image-330" title="instalando-rails" src="{{ site.baseurl }}/assets/instalando-rails.jpg"/></a>
+
+<p>Aguarde um tempo e já teremos o Rails instalado, após o término, rode o comando <code>rails -v</code> para verificar a versão.</p>
+
+<a href="{{ site.baseurl }}/assets/vendo-versao-do-rails.jpg"><img class="alignnone size-full wp-image-331" title="vendo-versao-do-rails" src="{{ site.baseurl }}/assets/vendo-versao-do-rails.jpg"/></a>
+
+<h2 id="instalando-mysql">Instalando MySQL</h2>
+
+<p>Já temos o Ruby e o Ruby on Rails instalados, se você quiser já pode iniciar um projeto Rails usando o banco de dados SQLite, mas como eu quero usar MySQL, irei instalá-lo através do comando <code>sudo apt-get install mysql-server</code>, veja abaixo. </p>
+
+<a href="{{ site.baseurl }}/assets/instalando-mysql.jpg"><img class="alignnone size-full wp-image-332" title="instalando-mysql" src="{{ site.baseurl }}/assets/instalando-mysql.jpg"/></a>
+
+<div class="note">Você precisará instalar a biblioteca <code>libmysqlclient-dev</code> também via <code>sudo apt-get install libmysqlclient-dev</code></div>
+
+<p>Durante a instalação do MySQL ele irá pedir a senha do usuário root, esse usuário é o administrador, é recomendado definir uma, caso não queira, basta apertar enter para deixar vazia.</p>
+
+<h2 id="instalando-postgresql">Instalando PostgreSQL</h2>
+
+<p>Caso você precise do PostgreSQL, então vamos ao passo-a-passo.</p>
+
+<p>Primeiro verifique qual a última versão disponível no repositório do Ubuntu, rode <code>apt-cache search postgresql</code> e na letra <code>p</code> veremos o último release. Agora instale o PostgreSQL através de <code>sudo apt-get install postgresql-9.1</code> (substitua 9.1 pela versão desejada) e depois instale uma biblioteca necessária para trabalhar com Ruby: <code>sudo apt-get install libpq-dev</code>.</p>
+
+<p>Agora precisamos alterar a senha, para isso rode <code>sudo -u postgres psql template1</code> no terminal, então irá aparecer <code>template1=#</code> na tela, digite <code>\password postgres</code> e então digite e confirme a nova senha e aperte <code>Ctrl+d</code> para sair. Agora reinicie o serviço usando <code>sudo /etc/init.d/postgresql restart</code>.</p>
+
+<h3 id="instalando-pgadmin3">Instalando PgAdmin3</h3>
+
+<p>Se você deseja ter uma interface mais amigável para trabalhar com o banco pode instalar o PgAdmin3, apenas execute <code>sudo apt-get install pgadmin3</code> e pronto!</p>
+
+<h2 id="instalando-aptana-studio">Instalando Aptana Studio</h2>
+
+<div class="note"><strong>Atualizado 13/07/2013:</strong> faz algum tempo que migrei do Aptana Studio para o <a href="http://www.sublimetext.com/" rel="external nofollow" target="_blank">Sublime Text</a>, recomendo!</div>
+
+<p>Com o banco de dados instalado, agora estamos quase acabando, só falta instalar a IDE (ambiente de desenvolvimento integrado em português), eu particularmente gosto do Aptana Studio que é baseado no Eclipse, acho muito versátil, uso ele para trabalhar com PHP, Python, Ruby, JavaScript, HTML e CSS. Caso queira instalar ele, basta fazer o download no site oficial <a title="http://www.aptana.com/products/studio3/download" href="http://www.aptana.com/products/studio3/download" target="_blank">aqui</a>.</p>
+
+<p>Após o download, extraia o arquivo na pasta preferida, porém ele ainda não irá funcionar porque como é feito em Java, precisamos instalar a máquina virtual Java (JRE), para isso, basta executar o comando <code>sudo apt-get install openjdk-6-jre</code> no terminal e pronto, basta clicar no ícone <code>AptanaStudio3</code> e teremos nosso ambiente de desenvolvimento.</p>
+
+<a href="{{ site.baseurl }}/assets/aptana.jpg"><img class="alignnone size-full wp-image-333" title="aptana-studio-3" src="{{ site.baseurl }}/assets/aptana.jpg" alt="aptana-studio-3"/></a>
+
+<p>É isso ai pessoal, o que vocês acharam? Muito difícil?</p>
+
+<p>Abraços.</p>

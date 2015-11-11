@@ -235,82 +235,125 @@ comments:
     <acronym title=\"\"> <b> <blockquote cite=\"\"> <cite> <code> <del datetime=\"\">
     <em> <i> <q cite=\"\"> <strike> <strong>"
 ---
-<p>Fala galera, beleza? Voc&ecirc;s j&aacute; viram <strong>sistema de autentica&ccedil;&atilde;o pelo Facebook<&#47;strong> em algum site? Sabe o que &eacute;?</p>
-<p>Nesse post irei explicar como incluir login com Facebook (autentica&ccedil;&atilde;o OAuth) em seu site usando PHP (portanto, server side). &Eacute; bem f&aacute;cil, vamos ao tutorial.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;07&#47;login-com-facebook-em-php-oauth&#47;"><img class="alignnone  wp-image-235" title="Login com Facebook em PHP" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-auth.jpg" alt="Login com Facebook em PHP" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-192"></a>Primeira coisa que precisamos &eacute; criar uma App no Facebook Developers, para isso, voc&ecirc; deve ter um cadastro no Facebook (isso &eacute; f&aacute;cil rs). Acesse o link <a title="http:&#47;&#47;developers.facebook.com" href="http:&#47;&#47;developers.facebook.com" target="_blank">http:&#47;&#47;developers.facebook.com<&#47;a>, clique em "Entrar" e digite seu email e senha do Facebook. Se ele pedir a senha novamente, digite mais uma vez, &eacute; por seguran&ccedil;a.</p>
-<p>Ap&oacute;s o login, estaremos na p&aacute;gina inicial do Facebook Developers, agora podemos criar nossa App. Clique em "Create New App", digite o nome da sua aplica&ccedil;&atilde;o em "App Name" (eu colocaria algo como "Meu site - login") e clique em "Continue". Digite o c&oacute;digo mostrado na imagem (<a title="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;CAPTCHA" href="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;CAPTCHA" target="_blank">CAPTCHA<&#47;a>) e pronto, sua app estar&aacute; criada e voc&ecirc; ser&aacute; redirecionado para p&aacute;gina de configura&ccedil;&atilde;o dela.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-app.png"><img class="alignnone size-full wp-image-214" title="Criar App no Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb-app.png" alt="Criar App no Facebook" width="636" height="199" &#47;><&#47;a></p>
-<div class="alert">O Facebook pode pedir para confirmar sua conta solicitando um n&uacute;mero de celular no qual ele enviar&aacute; um c&oacute;digo que deve ser digitado para continuar. Caso voc&ecirc; tenha criado sua conta no Facebook a menos de 48 horas voc&ecirc; pode ter problemas nessa etapa, mas, &eacute; s&oacute; esperar esse prazo e tudo deve ocorrer normal (informa&ccedil;&atilde;o n&atilde;o oficial, encontrei em f&oacute;runs quando tive esse problema).<&#47;div></p>
-<p>Estando tudo certo, agora voc&ecirc; deve selecionar como sua aplica&ccedil;&atilde;o se integrar&aacute; com o Facebook, para isso, bastar marcar "Website with Facebook login", digitar o endere&ccedil;o do seu site que o Facebook ir&aacute; redirecionar ap&oacute;s fazer o login no campo "Site URL" e clicar em "Save Changes".</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb2.png"><img class="alignnone  wp-image-221" title="Configurando app no Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb2.png" alt="Configurando app no Facebook" width="972" height="532" &#47;><&#47;a></p>
-<p>O campo "Site URL" deve ser preenchido com um dom&iacute;nio v&aacute;lido (algo como http:&#47;&#47;glaucocustodio.com), portanto voc&ecirc; n&atilde;o pode inserir endere&ccedil;os como "http:&#47;&#47;localhost" ou "127.0.0.1" (endere&ccedil;os referentes &agrave; m&aacute;quina local). Mas como irei fazer isso se preciso testar em desenvolvimento (em sua m&aacute;quina e n&atilde;o no servidor de hospedagem) primeiro antes de subir em produ&ccedil;&atilde;o (online)? Essa &eacute; a pergunta que voc&ecirc; pode estar se fazendo agora. Para resolver isso, voc&ecirc; ter&aacute; que criar um redirecionamento em seu arquivo hosts (em caso de Windows). Abra um editor de texto como o bloco de notas como administrador, v&aacute; no menu <code>Arquivo -> Abrir<&#47;code>, acesse esse endere&ccedil;o <code>C:\Windows\System32\drivers\etc<&#47;code> e clique para abrir o arquivo <code>hosts<&#47;code>, feito isso, adicione <code>127.0.0.1 meusitedev.com.br<&#47;code> (sem aspas) na &uacute;ltima linha e salve o arquivo. Agora abra o navegador e digite o endere&ccedil;o digitado acima (meusitedev.com.br) na barra de endere&ccedil;os e voc&ecirc; dever&aacute; ver o conte&uacute;do da pasta <code>www<&#47;code> do Apache, basta clicar na pasta do seu projeto e pronto, agora voc&ecirc; pode desenvolver usando uma url como "http:&#47;&#47;meusitedev.com.br" inv&eacute;s de "http:&#47;&#47;localhost&#47;meusite". Caso isso n&atilde;o funcione, procure por "hosts Windows" e "Virtual hosts Apache" no Google que voc&ecirc; obter&aacute; ajuda f&aacute;cil.</p>
-<p>Ap&oacute;s configurarmos nossa app no Facebook, j&aacute; podemos come&ccedil;ar a codificar.. Primeira coisa que devemos fazer &eacute; adicionar um link para o endere&ccedil;o de autentica&ccedil;&atilde;o do Facebook.</p>
-<p>[code language="html"]<br />
-<a href="https:&#47;&#47;www.facebook.com&#47;dialog&#47;oauth?client_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES">Entrar com Facebook<&#47;a><br />
-[&#47;code]</p>
-<p>Substitua <code>YOUR_APP_ID<&#47;code> pelo id da sua aplica&ccedil;&atilde;o e <code>YOUR_REDIRECT_URI<&#47;code> pelo endere&ccedil;o digitado no campo "Site URL" (aquele que deve ser um dom&iacute;nio v&aacute;lido). Ambos dados s&atilde;o encontrados na p&aacute;gina de configura&ccedil;&atilde;o de sua aplica&ccedil;&atilde;o no Facebook Developers.</p>
-<p>O par&acirc;metro <code>scope<&#47;code> do link acima, diz para o Facebook quais s&atilde;o as permiss&otilde;es adicionais que seu site precisa para acessar dados dos usu&aacute;rios. Por padr&atilde;o, o Facebook disponibiliza id, nome, sexo e localidade (locale) dos usu&aacute;rios, se voc&ecirc; precisar de mais dados, como por exemplo o email (que tamb&eacute;m iremos precisar), voc&ecirc; deve informar nesse par&acirc;metro <code>scope<&#47;code> separado por v&iacute;rgulas (ex: <code>scope=email, user_website<&#47;code>). Ent&atilde;o substitua <code>COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES<&#47;code> pelas permiss&otilde;es que voc&ecirc; precisar&aacute; ou remova <code>scope<&#47;code> e seu valor caso n&atilde;o precise de permiss&otilde;es adicionais.</p>
-<p>Voc&ecirc; deve ficar com um link como abaixo ap&oacute;s as respectivas substitui&ccedil;&otilde;es.</p>
-<p>[code language="html+php"]<br />
-<a href="https:&#47;&#47;www.facebook.com&#47;dialog&#47;oauth?client_id=104463303035318&scope=email&redirect_uri=<?php echo urlencode('http:&#47;&#47;projetos.com&#47;glauco-blog-tutorials&#47;Login%20com%20Facebook&#47;') ?>">Entrar com Facebook<&#47;a><br />
-[&#47;code]</p>
-<p>Se voc&ecirc; clicar nele, ser&aacute; redirecionado para uma tela onde o Facebook solicita permiss&atilde;o para os itens definidos na vari&aacute;vel <code>scope<&#47;code> acima e&#47;ou apenas &agrave;s informa&ccedil;&otilde;es b&aacute;sicas.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb.png"><img class="alignnone size-full wp-image-196" title="Login com Facebook" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;fb.png" alt="Login com Facebook" width="671" height="303" &#47;><&#47;a></p>
-<p>Clique em "Go to App" para conceder acesso e continuar. Feito isso, voc&ecirc; ver&aacute; que foi redirecionado para a url informada no campo "Site URL" e que agora ela possui uma vari&aacute;vel chamada <code>code<&#47;code> na url. Nessa mesma p&aacute;gina, iremos incluir o c&oacute;digo PHP abaixo (no come&ccedil;o da p&aacute;gina) para conseguirmos o token de acesso (acess token) e depois obtermos os dados do usu&aacute;rio.</p>
-<p>[code language="php" linenos="1"]<br />
-<?php</p>
-<p>&#47;&#47; Verifica o tipo de requisi&ccedil;&atilde;o e se tem a vari&aacute;vel 'code' na url<br />
-if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['code'])){<br />
-  &#47;&#47; Informe o id da app<br />
-  $appId = '104463303035318';<br />
-  &#47;&#47; Senha da app<br />
-  $appSecret = 'sua_app_secret';<br />
-  &#47;&#47; Url informada no campo "Site URL"<br />
-  $redirectUri = urlencode('http:&#47;&#47;projetos.com&#47;glauco-blog-tutorials&#47;Login%20com%20Facebook&#47;');<br />
-  &#47;&#47; Obt&eacute;m o c&oacute;digo da query string<br />
-  $code = $_GET['code'];</p>
-<p>  &#47;&#47; Monta a url para obter o token de acesso<br />
-  $token_url = "https:&#47;&#47;graph.facebook.com&#47;oauth&#47;access_token?"<br />
-  . "client_id=" . $appId . "&redirect_uri=" . $redirectUri<br />
-  . "&client_secret=" . $appSecret . "&code=" . $code;</p>
-<p>  &#47;&#47; Requisita token de acesso<br />
-  $response = @file_get_contents($token_url);</p>
-<p>  if($response){<br />
-    $params = null;<br />
-    parse_str($response, $params);</p>
-<p>    &#47;&#47; Se veio o token de acesso<br />
-    if(isset($params['access_token']) && $params['access_token']){<br />
-      $graph_url = "https:&#47;&#47;graph.facebook.com&#47;me?access_token="<br />
-      . $params['access_token'];</p>
-<p>      &#47;&#47; Obt&eacute;m dados atrav&eacute;s do token de acesso<br />
-      $user = json_decode(file_get_contents($graph_url));</p>
-<p>      &#47;&#47; Se obteve os dados necess&aacute;rios<br />
-      if(isset($user->email) && $user->email){</p>
-<p>        &#47;*<br />
-        * Autentica&ccedil;&atilde;o feita com sucesso.<br />
-        * Loga usu&aacute;rio na sess&atilde;o. Substitua as linhas abaixo pelo seu c&oacute;digo de registro de usu&aacute;rios logados<br />
-        *&#47;<br />
-        $_SESSION['user_data']['email'] = $user->email;<br />
-        $_SESSION['user_data']['name'] = $user->name;</p>
-<p>        &#47;*<br />
-        * Aqui voc&ecirc; pode adicionar um c&oacute;digo que cadastra o email do usu&aacute;rio no banco de dados<br />
-        * A cada requisi&ccedil;&atilde;o feita em p&aacute;ginas de &aacute;rea restrita voc&ecirc; verifica se o email<br />
-        * que est&aacute; na sess&atilde;o &eacute; um email cadastrado no banco<br />
-        *&#47;<br />
-      }</p>
-<p>    }else{<br />
-      $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';<br />
-    }</p>
-<p>  }else{<br />
-    $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';<br />
-  }</p>
-<p>}else if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['error'])){<br />
-  $_SESSION['fb_login_error'] = 'Permiss&atilde;o n&atilde;o concedida';<br />
-}<br />
-?><br />
-[&#47;code]</p>
-<div class="note">Para executar o c&oacute;digo acima voc&ecirc; precisar&aacute; ter a extens&atilde;o <code>openssl<&#47;code> do PHP instalada.<&#47;div></p>
-<p>Pronto! Agora voc&ecirc; j&aacute; tem seu sistema de login e senha com autentica&ccedil;&atilde;o pelo Facebook. Voc&ecirc; pode conferir o c&oacute;digo completo desse exemplo em meu <a title="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Login%20com%20Facebook" rel="external nofollow" href="https:&#47;&#47;github.com&#47;glaucocustodio&#47;glauco-blog-tutorials&#47;tree&#47;master&#47;Login%20com%20Facebook" target="_blank">GitHub<&#47;a>.</p>
-<p>O que voc&ecirc; achou? Gostou?</p>
-<p>At&eacute; mais.</p>
+<p>Fala galera, beleza? Vocês já viram sistema de autenticação pelo Facebook em algum site? Sabe o que é?</p>
+
+<p>Nesse post irei explicar como incluir login com Facebook (autenticação OAuth) em seu site usando PHP (portanto, server side). É bem fácil, vamos ao tutorial.</p>
+
+<a href="{{ site.baseurl }}/assets/facebook-oauth-login.jpg"><img class="alignnone  wp-image-235" title="Login com Facebook em PHP" src="{{ site.baseurl }}/assets/facebook-oauth-login.jpg" alt="Login com Facebook em PHP" /></a>
+
+<p>Primeira coisa que precisamos é criar uma App no Facebook Developers, para isso, você deve ter um cadastro no Facebook (isso é fácil rs). Acesse o link <a title="http://developers.facebook.com" href="http://developers.facebook.com" target="_blank">http://developers.facebook.com</a>, clique em "Entrar" e digite seu email e senha do Facebook. Se ele pedir a senha novamente, digite mais uma vez, é por segurança.</p>
+
+<p>Após o login, estaremos na página inicial do Facebook Developers, agora podemos criar nossa App. Clique em "Create New App", digite o nome da sua aplicação em "App Name" (eu colocaria algo como "Meu site - login") e clique em "Continue". Digite o código mostrado na imagem e pronto, sua app estará criada e você será redirecionado para página de configuração dela.</p>
+
+<p><a href="{{ site.baseurl }}/assets/facebook-criar-nova-app.png"><img class="alignnone size-full wp-image-214" title="Criar App no Facebook" src="{{ site.baseurl }}/assets/facebook-criar-nova-app.png" alt="Criar App no Facebook"/></a></p>
+
+<div class="alert">O Facebook pode pedir para confirmar sua conta solicitando um número de celular no qual ele enviará um código que deve ser digitado para continuar. Caso você tenha criado sua conta no Facebook a menos de 48 horas você pode ter problemas nessa etapa, mas, é só esperar esse prazo e tudo deve ocorrer normal (informação não oficial, encontrei em fóruns quando tive esse problema).</div>
+
+<p>Estando tudo certo, agora você deve selecionar como sua aplicação se integrará com o Facebook, para isso, bastar marcar "Website with Facebook login", digitar o endereço do seu site que o Facebook irá redirecionar após fazer o login no campo "Site URL" e clicar em "Save Changes".</p>
+
+<p><a href="http://blog.glaucocustodio.com/wp-content/uploads/2012/08/fb2.png"><img class="alignnone  wp-image-221" title="Configurando app no Facebook" src="http://blog.glaucocustodio.com/wp-content/uploads/2012/08/fb2.png" alt="Configurando app no Facebook"/></a></p>
+
+<p>O campo "Site URL" deve ser preenchido com um domínio válido (algo como http://glaucocustodio.com), portanto você não pode inserir endereços como "http://localhost" ou "127.0.0.1" (endereços referentes à máquina local).</p>
+
+<p>Mas como irei fazer isso se preciso testar em desenvolvimento (em sua máquina e não no servidor de hospedagem) primeiro antes de subir em produção (online)?</p>
+
+<p>Essa é a pergunta que você pode estar se fazendo agora. Para resolver isso, você terá que criar um redirecionamento em seu arquivo hosts (em caso de Windows).</p>
+
+<p>Abra um editor de texto como o bloco de notas como administrador, vá no menu <code>Arquivo -&gt; Abrir</code>, acesse esse endereço <code>C:\Windows\System32\drivers\etc</code> e clique para abrir o arquivo <code>hosts</code>, feito isso, adicione <code>127.0.0.1 meusitedev.com.br</code> (sem aspas) na última linha e salve o arquivo.</p>
+
+<p>Agora abra o navegador e digite o endereço digitado acima (meusitedev.com.br) na barra de endereços e você deverá ver o conteúdo da pasta <code>www</code> do Apache, basta clicar na pasta do seu projeto e pronto, agora você pode desenvolver usando uma url como "http://meusitedev.com.br" invés de "http://localhost/meusite". Caso isso não funcione, procure por "hosts Windows" e "Virtual hosts Apache" no Google que você obterá ajuda fácil.</p>
+
+<p>Após configurarmos nossa app no Facebook, já podemos começar a codificar.. Primeira coisa que devemos fazer é adicionar um link para o endereço de autenticação do Facebook:</p>
+
+{% highlight html %}
+<a href="https://www.facebook.com/dialog/oauth?client_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES">Entrar com Facebook</a>
+{% endhighlight %}
+
+<p>Substitua <code>YOUR_APP_ID</code> pelo id da sua aplicação e <code>YOUR_REDIRECT_URI</code> pelo endereço digitado no campo "Site URL" (aquele que deve ser um domínio válido). Ambos dados são encontrados na página de configuração de sua aplicação no Facebook Developers.</p>
+
+<p>O parâmetro <code>scope</code> do link acima, diz para o Facebook quais são as permissões adicionais que seu site precisa para acessar dados dos usuários. Por padrão, o Facebook disponibiliza id, nome, sexo e localidade (locale) dos usuários, se você precisar de mais dados, como por exemplo o email (que também iremos precisar), você deve informar nesse parâmetro <code>scope</code> separado por vírgulas (ex: <code>scope=email, user_website</code>). Então substitua <code>COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES</code> pelas permissões que você precisará ou remova <code>scope</code> e seu valor caso não precise de permissões adicionais.</p>
+
+<p>Você deve ficar com um link como abaixo após as respectivas substituições.</p>
+
+{% highlight html+php %}
+<a href="https://www.facebook.com/dialog/oauth?client_id=104463303035318&scope=email&redirect_uri=<?php echo urlencode('http://projetos.com/glauco-blog-tutorials/Login%20com%20Facebook/') ?>">Entrar com Facebook</a>
+{% endhighlight %}
+
+<p>Se você clicar nele, será redirecionado para uma tela onde o Facebook solicita permissão para os itens definidos na variável <code>scope</code> acima e/ou apenas às informações básicas.</p>
+
+<p><a href="{{ site.baseurl }}/assets/facebook-app.png"><img class="alignnone size-full wp-image-196" title="Login com Facebook" src="{{ site.baseurl }}/assets/facebook-app.png" alt="Login com Facebook" /></a></p>
+
+<p>Clique em "Go to App" para conceder acesso e continuar. Feito isso, você verá que foi redirecionado para a url informada no campo "Site URL" e que agora ela possui uma variável chamada <code>code</code> na url. Nessa mesma página, iremos incluir o código PHP abaixo (no começo da página) para conseguirmos o token de acesso (acess token) e depois obtermos os dados do usuário.</p>
+
+{% highlight php %}
+<?php
+
+// Verifica o tipo de requisição e se tem a variável 'code' na url
+if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['code'])){
+  // Informe o id da app
+  $appId = '104463303035318';
+  // Senha da app
+  $appSecret = 'sua_app_secret';
+  // Url informada no campo "Site URL"
+  $redirectUri = urlencode('http://projetos.com/glauco-blog-tutorials/Login%20com%20Facebook/');
+  // Obtém o código da query string
+  $code = $_GET['code'];
+  
+  // Monta a url para obter o token de acesso
+  $token_url = "https://graph.facebook.com/oauth/access_token?"
+  . "client_id=" . $appId . "&redirect_uri=" . $redirectUri
+  . "&client_secret=" . $appSecret . "&code=" . $code;
+  
+  // Requisita token de acesso
+  $response = @file_get_contents($token_url);
+  
+  if($response){
+    $params = null;
+    parse_str($response, $params);
+    
+    // Se veio o token de acesso
+    if(isset($params['access_token']) && $params['access_token']){
+      $graph_url = "https://graph.facebook.com/me?access_token="
+      . $params['access_token'];
+      
+      // Obtém dados através do token de acesso
+      $user = json_decode(file_get_contents($graph_url));
+      
+      // Se obteve os dados necessários
+      if(isset($user->email) && $user->email){
+        
+        /*
+        * Autenticação feita com sucesso. 
+        * Loga usuário na sessão. Substitua as linhas abaixo pelo seu código de registro de usuários logados
+        */
+        $_SESSION['user_data']['email'] = $user->email;
+        $_SESSION['user_data']['name'] = $user->name;
+        
+        /*
+        * Aqui você pode adicionar um código que cadastra o email do usuário no banco de dados
+        * A cada requisição feita em páginas de área restrita você verifica se o email
+        * que está na sessão é um email cadastrado no banco
+        */
+      }
+      
+    }else{
+      $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';
+    }
+
+  }else{
+    $_SESSION['fb_login_error'] = 'Falha ao logar no Facebook';
+  }
+  
+}else if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['error'])){
+  $_SESSION['fb_login_error'] = 'Permissão não concedida';
+}
+?>
+{% endhighlight %}
+
+<div class="note">Para executar o código acima você precisará ter a extensão <code>openssl</code> do PHP instalada.</div>
+
+<p>Pronto! Agora você já tem seu sistema de login e senha com autenticação pelo Facebook. Você pode conferir o código completo desse exemplo em meu <a title="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Login%20com%20Facebook" rel="external nofollow" href="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Login%20com%20Facebook" target="_blank">GitHub</a>.</p>
+
+<p>O que você achou? Gostou?</p>
+
+<p>Até mais.</p>

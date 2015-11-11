@@ -17,9 +17,20 @@ layout: default
   {% for post in site.posts %}
     {% assign currentdate = post.date | date: "%B %Y" %}
     {% if currentdate != date %}
-      <h1>{{ currentdate }}</h1>
+      <h1 class="month-year">
+        <span>
+          {{ currentdate }}
+        </span>
+      </h1>
       {% assign date = currentdate %} 
     {% endif %}
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    <h2 class="post-title">
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </h2>
+    <p class="post-categories">
+      {% for c in post.categories %}
+        <a href="#">{{ c }}</a>{% if forloop.last == false %},{% endif %}
+      {% endfor %}
+    </p>
   {% endfor %}
 </div>

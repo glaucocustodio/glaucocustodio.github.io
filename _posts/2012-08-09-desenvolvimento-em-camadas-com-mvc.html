@@ -28,22 +28,40 @@ tags:
 - MVC
 comments: []
 ---
-<p>Fala galera, beleza? Voc&ecirc;s j&aacute; ouviram falar da sigla <strong>MVC<&#47;strong>? Sabem o que &eacute;?</p>
+<p>Fala galera, beleza? Vocês já ouviram falar da sigla MVC? Sabem o que é?</p>
+
 <p>Nesse post irei falar um pouco sobre desenvolvimento em camadas com MVC.</p>
-<p>MVC &eacute; a sigla para Model, View e Controller, que em portugu&ecirc;s significa Modelo, Visualiza&ccedil;&atilde;o e Controlador (mas costume a tratar com nomes em ingl&ecirc;s).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;09&#47;desenvolvimento-em-camadas-com-mvc&#47;"><img class="alignnone  wp-image-263" title="Desenvolvimento em camadas com MVC" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;mvc2.jpg" alt="Desenvolvimento em camadas com MVC" width="580" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-251"></a>Esse padr&atilde;o foi implementado pela primeira vez em 1978 por Trygve Reenskaug que trabalhava com a linguagem de programa&ccedil;&atilde;o Smalltalk.</p>
-<p>Segundo o pr&oacute;prio criador do padr&atilde;o, o MVC foi concebido como uma solu&ccedil;&atilde;o geral para problemas de usu&aacute;rios controlar um grande e complexo conjunto de dados.</p>
-<p>Hoje em dia, MVC vai al&eacute;m de controlar dados apenas, ele serve como uma base para uma programa&ccedil;&atilde;o mais pragm&aacute;tica e organizada.</p>
-<p>Esse padr&atilde;o supo&ecirc; a divis&atilde;o de sua aplica&ccedil;&atilde;o nas tr&ecirc;s camadas acimas, sendo:</p>
-<p>- <span style="text-decoration: underline;">Modelo<&#47;span>: respons&aacute;vel por cuidar da sua fonte de dados, n&atilde;o necessariamente um banco de dados, mas um feed por exemplo.</p>
-<p>- <span style="text-decoration: underline;">Controlador<&#47;span>: repons&aacute;vel por intermediar o modelo e a camada de visualiza&ccedil;&atilde;o, ele recebe os dados da visualiza&ccedil;&atilde;o e passa para o modelo e vice versa.</p>
-<p>- <span style="text-decoration: underline;">Visualiza&ccedil;&atilde;o<&#47;span>: respons&aacute;vel pela entrada e sa&iacute;da dos dados, deve-se evitar l&oacute;gica nessa camada, apenas rotinas necess&aacute;rias para exibi&ccedil;&atilde;o s&atilde;o recomendadas (como loops).</p>
-<p>Na pr&aacute;tica, ao ser iniciada a aplica&ccedil;&atilde;o, o controlador inicial &eacute; executado e carrega todas informa&ccedil;&otilde;es do modelo (geralmente vindas de um banco de dados) e envia para apresenta&ccedil;&atilde;o na camada de visualiza&ccedil;&atilde;o.</p>
-<p>Ao entrarmos com dados na camada de visualiza&ccedil;&atilde;o, estes s&atilde;o enviados para o controlador (onde as vezes &eacute; realizado algum processamento) e depois s&atilde;o passados para o modelo onde ser&atilde;o salvos e&#47;ou processados, depois disso, voltamos para camada do controlador dando in&iacute;cio ao ciclo novamente.</p>
-<p>Esse proceso padronizado facilita a manuten&ccedil;&atilde;o e reutiliza&ccedil;&atilde;o do c&oacute;digo, evitando assim a mistura da l&oacute;gica de neg&oacute;cio com apresenta&ccedil;&atilde;o.</p>
-<p>Tendo uma organiza&ccedil;&atilde;o bem definida, sempre sabemos onde cada parte do c&oacute;digo est&aacute;, isso ajuda at&eacute; no trabalho em equipe, pois podemos modularizar melhor o desenvolvimento, otimizando o tempo.</p>
-<p>Em um mundo onde cada vez mais metodologias &aacute;geis s&atilde;o aderidas, com certeza o MVC tem seu lugar reservado.</p>
-<p>E voc&ecirc;, j&aacute; usa esse padr&atilde;o?</p>
-<p>Se voc&ecirc; ainda n&atilde;o utiliza, recomendo que busque se aprofundar no assunto na pr&aacute;tica se aventurando com um framework (se voc&ecirc; n&atilde;o sabe o que &eacute; um framework e porque deve usar um, n&atilde;o deixe de ver <a title="Porque usar um framework?" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework&#47;" target="_blank">esse post<&#47;a>). Como exemplo para internet, podemos citar alguns como: Ruby on Rails, CakePHP, ASP .NET e Django.</p>
-<p>Espero que tenham gostado. At&eacute; mais.</p>
+
+<p>MVC é a sigla para Model, View e Controller, que em português significa Modelo, Visualização e Controlador.</p>
+
+<p><a href="{{ site.baseurl }}/assets/desenvolvimento-em-camadas-mvc.jpg"><img class="alignnone  wp-image-263" title="Desenvolvimento em camadas com MVC" src="{{ site.baseurl }}/assets/desenvolvimento-em-camadas-mvc.jpg" alt="Desenvolvimento em camadas com MVC"/></a></p>
+
+<p>Esse padrão foi implementado pela primeira vez em 1978 por Trygve Reenskaug que trabalhava com a linguagem de programação Smalltalk.</p>
+
+<p>Segundo o próprio criador do padrão, o MVC foi concebido como uma solução geral para problemas de usuários controlar um grande e complexo conjunto de dados.</p>
+
+<p>Hoje em dia, MVC vai além de controlar dados apenas, ele serve como uma base para uma programação mais pragmática e organizada.</p>
+
+<p>Esse padrão supoê a divisão de sua aplicação nas três camadas acimas, sendo:</p>
+
+<p>- Modelo: responsável por cuidar da sua fonte de dados, não necessariamente um banco de dados, mas um feed por exemplo.</p>
+
+<p>- Controlador: reponsável por intermediar o modelo e a camada de visualização, ele recebe os dados da visualização e passa para o modelo e vice versa.</p>
+
+<p>- Visualização: responsável pela entrada e saída dos dados, deve-se evitar lógica nessa camada, apenas rotinas necessárias para exibição são recomendadas (como loops).</p>
+
+<p>Na prática, ao ser iniciada a aplicação, o controlador inicial é executado e carrega todas informações do modelo (geralmente vindas de um banco de dados) e envia para apresentação na camada de visualização.</p>
+
+<p>Ao entrarmos com dados na camada de visualização, estes são enviados para o controlador (onde as vezes é realizado algum processamento) e depois são passados para o modelo onde serão salvos e/ou processados, depois disso, voltamos para camada do controlador dando início ao ciclo novamente.</p>
+
+<p>Esse proceso padronizado facilita a manutenção e reutilização do código, evitando assim a mistura da lógica de negócio com apresentação.</p>
+
+<p>Tendo uma organização bem definida, sempre sabemos onde cada parte do código está, isso ajuda até no trabalho em equipe, pois podemos modularizar melhor o desenvolvimento, otimizando o tempo.</p>
+
+<p>Em um mundo onde cada vez mais metodologias ágeis são aderidas, com certeza o MVC tem seu lugar reservado.</p>
+
+<p>E você, já usa esse padrão?</p>
+
+<p>Se você ainda não utiliza, recomendo que busque se aprofundar no assunto na prática se aventurando com um framework (se você não sabe o que é um framework e porque deve usar um, não deixe de ver <a title="Porque usar um framework?" href="{% post_url 2012-07-31-porque-usar-um-framework %}" target="_blank">esse post</a>). Como exemplo para internet, podemos citar alguns como: Ruby on Rails, CakePHP, ASP .NET e Django.</p>
+
+<p>Espero que tenham gostado. Até mais.</p>
