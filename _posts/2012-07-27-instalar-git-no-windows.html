@@ -53,33 +53,62 @@ comments:
   content: "Muito bom, o seu artigo n&atilde;o deu outra consegui instalar o Git com
     muita facilidade.\r\n\r\nAbra&ccedil;o."
 ---
-<p>Fala pessoal, nesse post irei falar um pouco sobre <strong>Git<&#47;strong> e como <strong>instalar no Windows 7<&#47;strong>.</p>
-<p>Antes de come&ccedil;armos, voc&ecirc; j&aacute; ouviu falar de Git? Sabe o que &eacute; e para que serve?</p>
-<p>Git nada mais &eacute; do que um sistema de versionamento, assim como o SVN e Mercurial. Ele serve para versionar (criar vers&otilde;es mesmo) de seus sites, programas ou qualquer arquivo interessante.</p>
-<p style="text-align: center;"><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;27&#47;instalar-git-no-windows&#47;"><img class="size-full wp-image-92 aligncenter" title="Instalar GIT no Windows" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;git-logo.png" alt="" width="188" height="97" &#47;><&#47;a><&#47;p><br />
-<a id="more"></a><a id="more-7"></a>Para saber mais, recomendo que assistam o v&iacute;deo feito pelo F&aacute;bio Akita que est&aacute; no <a title="http:&#47;&#47;www.akitaonrails.com&#47;2010&#47;08&#47;17&#47;screencast-comecando-com-git" rel="external nofollow" href="http:&#47;&#47;www.akitaonrails.com&#47;2010&#47;08&#47;17&#47;screencast-comecando-com-git" target="_blank">seu blog<&#47;a>.</p>
-<p>Vamos para instala&ccedil;&atilde;o no Windows agora.. Fa&ccedil;a download da &uacute;ltima vers&atilde;o do Git no site da <a title="http:&#47;&#47;code.google.com&#47;p&#47;msysgit&#47;downloads&#47;list" href="http:&#47;&#47;code.google.com&#47;p&#47;msysgit&#47;downloads&#47;list" target="_blank" rel="external nofollow">MSYSGIT<&#47;a>, no meu caso agora, a &uacute;ltima vers&atilde;o &eacute; a 1.7.11, ent&atilde;o clique no arquivo <code>Git-1.7.11-preview20120710.exe<&#47;code> para baixar.</p>
-<p>Ap&oacute;s o download, execute como administrador o arquivo e voc&ecirc; ver&aacute; essa tela:</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;11.png"><img class="alignnone  wp-image-10" title="1" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;11.png" alt="" &#47;><&#47;a></p>
-<p>Como de costume, clique em <code>Next<&#47;code> para continuar.</p>
-<p>Agora vem a tela da licensa, clique em <code>Next<&#47;code> para continuar.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;2.png"><img class="alignnone  wp-image-12" title="2" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;2.png" alt="" &#47;><&#47;a></p>
-<p>Caso queira alterar o caminho da instala&ccedil;&atilde;o, a hora &eacute; agora.. Depois de pronto, clique em <code>Next<&#47;code> para seguir.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;3.png"><img class="alignnone  wp-image-14" title="3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;3.png" alt="" &#47;><&#47;a></p>
-<p>Essa &eacute; a tela mais interessante, nela podemos definir se queremos atalhos, integra&ccedil;&atilde;o ao menu de contexto do Windows Explorer, associa&ccedil;&atilde;o de arquivos e uso de font TrueType. Eu recomendo marcar as op&ccedil;&otilde;es de integra&ccedil;&atilde;o no menu de contexto que veremos mais a frente o que &eacute; e tamb&eacute;m utilizar fontes TrueType para melhorar um pouco nosso prompt de comando.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;4.png"><img class="alignnone  wp-image-15" title="4" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;4.png" alt="" &#47;><&#47;a></p>
-<p>Aqui, o instalador nos oferece a oportunidade de mudar o nome da pasta no menu iniciar, recomendo deixar o padr&atilde;o para f&aacute;cil localiza&ccedil;&atilde;o no futuro.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;5.png"><img class="alignnone  wp-image-16" title="5" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;5.png" alt="" &#47;><&#47;a></p>
-<p>Nessa tela, podemos escolher as formas de integra&ccedil;&atilde;o do Git em nosso sitema, a primeira op&ccedil;&atilde;o possibilita acesso aos comando Git apenas no Git Bash (&eacute; o prompt de comando do Git), a segunda nos possibilita executar comando Git no Git Bash e no prompt de comando do Windows (o cmd.exe), j&aacute; a terceira &eacute; a jun&ccedil;&atilde;o das duas de cima s&oacute; que ele troca algumas fun&ccedil;&otilde;es do Windows como find.exe por outras do Unix.. Essa &uacute;ltima n&atilde;o &eacute; muito recomendada, a n&atilde;o ser que voc&ecirc; realmente entenda os riscos.</p>
-<p>Ap&oacute;s escolher, clique em <code>Next<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;6.png"><img class="alignnone  wp-image-17" title="6" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;6.png" alt="" &#47;><&#47;a></p>
-<p>Essa tela nos d&aacute; op&ccedil;&atilde;o para escolhermos o tipo de fim de linha. Na primeira op&ccedil;&atilde;o, o Git converter&aacute; arquivos com fim de linha do padr&atilde;o Unix para o padr&atilde;o Windows quando receber algum arquivo e converter&aacute; para o padr&atilde;o Unix quando comitar (enviar alteral&ccedil;&otilde;es). Na segunda op&ccedil;&atilde;o, o Git n&atilde;o far&aacute; nenhum convers&atilde;o quando receber algum arquivo e converter&aacute; o padr&atilde;o Windows para Unix quando comitar. J&aacute; a terceira op&ccedil;&atilde;o, o Git n&atilde;o far&aacute; nenhuma convers&atilde;o. Caso voc&ecirc; trabalhe apenas em ambiente Windows, ent&atilde;o pode deixar a &uacute;ltima op&ccedil;&atilde;o marcada. Como dica, sempre recomenda-se trabalhar no padr&atilde;o Unix, para isso, bastar alterar nas op&ccedil;&otilde;es de seu editor ou IDE favorito. Veja mais sobre fim de linha <a rel="external nofollow" target="_blank" title="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;Nova_linha" href="http:&#47;&#47;pt.wikipedia.org&#47;wiki&#47;Nova_linha">aqui<&#47;a>.</p>
-<p>Ap&oacute;s a escolha, clique em <code>Next<&#47;code> para continuar.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;7.png"><img class="alignnone  wp-image-18" title="7" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;7.png" alt="" &#47;><&#47;a></p>
-<p>Voc&ecirc; dever&aacute; aguardar a instala&ccedil;&atilde;o terminar e por fim, basta clicar em <code>Finish<&#47;code>.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;9.png"><img class="alignnone  wp-image-19" title="9" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;9.png" alt="" &#47;><&#47;a></p>
-<p>Agora que temos o Git instalado, podemos come&ccedil;ar a utilizar... Abra o Windows Explorer e clique com o bot&atilde;o direito em uma pasta qualquer. Se voc&ecirc; manteve as op&ccedil;&otilde;es marcadas como acima na instala&ccedil;&atilde;o, voc&ecirc; ver&aacute; que duas novas op&ccedil;&otilde;es foram inclu&iacute;das no menu de contexto (lembra, aquele que citei em cima), a primeira &eacute; <code>Git GUI Here<&#47;code> que adiciona uma interface para execu&ccedil;&atilde;o de comandos Git de forma "clic&aacute;vel", e a segunda (que &eacute; a que prefiro e recomendo) &eacute; a <code>Git Bash Here<&#47;code>, que abre um prompt de comandos exclusivo do Git, nele tamb&eacute;m podemos executar alguns comando de sistemas Unix-like (Unix, Linux, OS X) como <code>ls<&#47;code> para listar o conte&uacute;do do diret&oacute;rio atual.</p>
-<p>Pronto, agora voc&ecirc; j&aacute; tem seu ambiente Git instalado e j&aacute; pode come&ccedil;ar rodar alguns comandos, sugiro que procure por <code>git init<&#47;code>, <code>git status<&#47;code>, <code>git add<&#47;code>, <code>git commit<&#47;code> e <code>git log<&#47;code> na web para come&ccedil;ar versionar seu trabalho. Uma &oacute;tima refer&ecirc;ncia &eacute; essa <a href="http:&#47;&#47;git-scm.com&#47;book&#47;en&#47;Git-Basics" target="_blank" rel="external nofollow">http:&#47;&#47;git-scm.com&#47;book&#47;en&#47;Git-Basics<&#47;a> (em ingl&ecirc;s).</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;10.png"><img class="alignnone  wp-image-20" title="10" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;10.png" alt="" &#47;><&#47;a></p>
-<p>Espero que tenham gostado, para d&uacute;vidas e sugest&otilde;es, deixem um coment&aacute;rio.</p>
-<p>Abra&ccedil;os.</p>
+<p>Fala pessoal, nesse post irei falar um pouco sobre Git e como instalar no Windows 7.</p>
+
+<p>Antes de começarmos, você já ouviu falar de Git? Sabe o que é e para que serve?</p>
+
+<p>Git nada mais é do que um sistema de versionamento, assim como o SVN e Mercurial. Ele serve para versionar (criar versões mesmo) de seus sites, programas ou qualquer arquivo interessante.</p>
+
+<p style="text-align: center;"><a href="{{ site.baseurl }}/assets/git-logo.png"><img class="size-full wp-image-92 aligncenter" title="Instalar GIT no Windows" src="{{ site.baseurl }}/assets/git-logo.png"/></a></p>
+
+<p>Para saber mais, recomendo que assistam o vídeo feito pelo Fábio Akita que está no <a title="http://www.akitaonrails.com/2010/08/17/screencast-comecando-com-git" rel="external nofollow" href="http://www.akitaonrails.com/2010/08/17/screencast-comecando-com-git" target="_blank">seu blog</a>.</p>
+
+<p>Vamos para instalação no Windows agora.. Faça download da última versão do Git no site da <a title="http://code.google.com/p/msysgit/downloads/list" href="http://code.google.com/p/msysgit/downloads/list" target="_blank" rel="external nofollow">MSYSGIT</a>, no meu caso agora, a última versão é a 1.7.11, então clique no arquivo <code>Git-1.7.11-preview20120710.exe</code> para baixar.</p>
+
+<p>Após o download, execute como administrador o arquivo e você verá essa tela:</p>
+
+<a href="{{ site.baseurl }}/assets/instalando-git-no-windows.png"><img class="alignnone  wp-image-10" title="1" src="{{ site.baseurl }}/assets/instalando-git-no-windows.png"/></a>
+
+<p>Como de costume, clique em <code>Next</code> para continuar.</p>
+
+<p>Agora vem a tela da licensa, clique em <code>Next</code> para continuar.</p>
+
+<a href="{{ site.baseurl }}/assets/git-setup-license.png"><img class="alignnone  wp-image-12" title="2" src="{{ site.baseurl }}/assets/git-setup-license.png"/></a>
+
+<p>Caso queira alterar o caminho da instalação, a hora é agora.. Depois de pronto, clique em <code>Next</code> para seguir.</p>
+
+<a href="{{ site.baseurl }}/assets/git-destination.png"><img class="alignnone  wp-image-14" title="3" src="{{ site.baseurl }}/assets/git-destination.png"/></a>
+
+<p>Essa é a tela mais interessante, nela podemos definir se queremos atalhos, integração ao menu de contexto do Windows Explorer, associação de arquivos e uso de font TrueType. Eu recomendo marcar as opções de integração no menu de contexto que veremos mais a frente o que é e também utilizar fontes TrueType para melhorar um pouco nosso prompt de comando.</p>
+
+<a href="{{ site.baseurl }}/assets/git-components.png"><img class="alignnone  wp-image-15" title="4" src="{{ site.baseurl }}/assets/git-components.png"/></a>
+
+<p>Aqui, o instalador nos oferece a oportunidade de mudar o nome da pasta no menu iniciar, recomendo deixar o padrão para fácil localização no futuro.</p>
+
+<a href="{{ site.baseurl }}/assets/git-folder-start-menu.png"><img class="alignnone  wp-image-16" title="5" src="{{ site.baseurl }}/assets/git-folder-start-menu.png"/></a>
+
+<p>Nessa tela, podemos escolher as formas de integração do Git em nosso sitema, a primeira opção possibilita acesso aos comando Git apenas no Git Bash (é o prompt de comando do Git), a segunda nos possibilita executar comando Git no Git Bash e no prompt de comando do Windows (o cmd.exe), já a terceira é a junção das duas de cima só que ele troca algumas funções do Windows como find.exe por outras do Unix.. Essa última não é muito recomendada, a não ser que você realmente entenda os riscos.</p>
+
+<p>Após escolher, clique em <code>Next</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/add-git-to-path.png"><img class="alignnone  wp-image-17" title="6" src="{{ site.baseurl }}/assets/add-git-to-path.png"/></a>
+
+<p>Essa tela nos dá opção para escolhermos o tipo de fim de linha. Na primeira opção, o Git converterá arquivos com fim de linha do padrão Unix para o padrão Windows quando receber algum arquivo e converterá para o padrão Unix quando comitar (enviar alteralções). Na segunda opção, o Git não fará nenhum conversão quando receber algum arquivo e converterá o padrão Windows para Unix quando comitar. Já a terceira opção, o Git não fará nenhuma conversão. Caso você trabalhe apenas em ambiente Windows, então pode deixar a última opção marcada. Como dica, sempre recomenda-se trabalhar no padrão Unix, para isso, bastar alterar nas opções de seu editor ou IDE favorito. Veja mais sobre fim de linha <a rel="external nofollow" target="_blank" title="http://pt.wikipedia.org/wiki/Nova_linha" href="http://pt.wikipedia.org/wiki/Nova_linha">aqui</a>.</p>
+
+<p>Após a escolha, clique em <code>Next</code> para continuar.</p>
+
+<a href="{{ site.baseurl }}/assets/git-line-ending-options.png"><img class="alignnone  wp-image-18" title="7" src="{{ site.baseurl }}/assets/git-line-ending-options.png"/></a>
+
+<p>Você deverá aguardar a instalação terminar e por fim, basta clicar em <code>Finish</code>.</p>
+
+<a href="{{ site.baseurl }}/assets/git-setup-finish.png"><img class="alignnone  wp-image-19" title="9" src="{{ site.baseurl }}/assets/git-setup-finish.png"/></a>
+
+<p>Agora que temos o Git instalado, podemos começar a utilizar... Abra o Windows Explorer e clique com o botão direito em uma pasta qualquer. Se você manteve as opções marcadas como acima na instalação, você verá que duas novas opções foram incluídas no menu de contexto (lembra, aquele que citei em cima), a primeira é <code>Git GUI Here</code> que adiciona uma interface para execução de comandos Git de forma "clicável", e a segunda (que é a que prefiro e recomendo) é a <code>Git Bash Here</code>, que abre um prompt de comandos exclusivo do Git, nele também podemos executar alguns comando de sistemas Unix-like (Unix, Linux, OS X) como <code>ls</code> para listar o conteúdo do diretório atual.</p>
+
+<p>Pronto, agora você já tem seu ambiente Git instalado e já pode começar rodar alguns comandos, sugiro que procure por <code>git init</code>, <code>git status</code>, <code>git add</code>, <code>git commit</code> e <code>git log</code> na web para começar versionar seu trabalho. Uma ótima referência é essa <a href="http://git-scm.com/book/en/Git-Basics" target="_blank" rel="external nofollow">http://git-scm.com/book/en/Git-Basics</a> (em inglês).</p>
+
+<a href="{{ site.baseurl }}/assets/git-bash-windows.png"><img class="alignnone  wp-image-20" title="10" src="{{ site.baseurl }}/assets/git-bash-windows.png"/></a>
+
+<p>Espero que tenham gostado, para dúvidas e sugestões, deixem um comentário.</p>
+
+<p>Abraços.</p>

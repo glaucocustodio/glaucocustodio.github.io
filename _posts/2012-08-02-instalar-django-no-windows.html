@@ -122,44 +122,83 @@ comments:
     com o django e python
 ---
 <p>Fala galera! </p>
-<p>Voc&ecirc; j&aacute; experimentou o <strong>Django<&#47;strong>? Sabe o que &eacute;? Caso n&atilde;o saiba, n&atilde;o deixe de ver meu <a title="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework&#47;#django-ref" href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;31&#47;porque-usar-um-framework&#47;#django-ref" target="_blank">post anterior<&#47;a>, nele eu falei um pouco sobre essa incr&iacute;vel ferramenta.</p>
-<p>Nesse post, irei ensinar como instalar e preparar um ambiente de desenvolvimento Django (vers&atilde;o 1.4) no Windows 7.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;08&#47;02&#47;instalar-django-no-windows&#47;"><img class="alignnone  wp-image-151" title="Instalar Django no Windows" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;django-install.jpg" alt="Instalar Django no Windows" width="570" height="240" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-99"></a>
-<div class="note">Consideramos que voc&ecirc; j&aacute; tem o MySQL instalado, caso n&atilde;o tenha, clique <a title="Instalar MySQL no Windows" rel="external nofollow" href="http:&#47;&#47;www.sistemabasico.com.br&#47;2011&#47;06&#47;30&#47;instalando-o-mysql-5-5-8-no-windows-7&#47;" target="_blank">aqui<&#47;a> para ver como instalar.<&#47;div></p>
-<p>Sendo Django um framework escrito em Python, ele precisa de Python para rodar. Como Python n&atilde;o vem instalado no Windows, precisamos instal&aacute;-lo, para isso, acesse o <a title="http:&#47;&#47;www.python.org&#47;download&#47;" rel="external nofollow" href="http:&#47;&#47;www.python.org&#47;download&#47;" target="_blank">site oficial<&#47;a> da linguagem  e selecione o &uacute;ltimo release est&aacute;vel do Python 2.7 para download (no meu caso, estou baixando o Python 2.7.3).</p>
-<div class="alert">Django 1.4 s&oacute; roda nas vers&otilde;es do Python de 2.5 at&eacute; 2.7 (3.0 &eacute; incompat&iacute;vel).<&#47;div></p>
-<p>Ap&oacute;s o download, vamos &agrave; instala&ccedil;&atilde;o. Tendo direitos administrativos para instalar, d&ecirc; duplo clique no instalador e teremos essa tela, clique em <code>Next<&#47;code> para continuar.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1.png"><img class="alignnone size-full wp-image-104" title="Instala&ccedil;&atilde;o do Python 2.7.3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1.png" alt="Instala&ccedil;&atilde;o do Python 2.7.3" width="510" height="438" &#47;><&#47;a></p>
-<p>Caso n&atilde;o queira alterar o caminho de instala&ccedil;&atilde;o, clique em <code>Next<&#47;code> para continuar.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;2.png"><img class="alignnone size-full wp-image-105" title="Instala&ccedil;&atilde;o do Python 2.7.3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;2.png" alt="Instala&ccedil;&atilde;o do Python 2.7.3" width="505" height="434" &#47;><&#47;a></p>
-<p>Instalaremos completo como padr&atilde;o, ent&atilde;o apenas clique em <code>Next<&#47;code>. Ap&oacute;s isso, o processo de c&oacute;pia de arquivo come&ccedil;ara.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;3.png"><img class="alignnone size-full wp-image-106" title="Instala&ccedil;&atilde;o do Python 2.7.3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;3.png" alt="Instala&ccedil;&atilde;o do Python 2.7.3" width="509" height="438" &#47;><&#47;a></p>
-<p>Ap&oacute;s a finaliza&ccedil;&atilde;o do processo, clique em <code>Finish<&#47;code> para sair.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;4.png"><img class="alignnone size-full wp-image-107" title="Instala&ccedil;&atilde;o do Python 2.7.3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;4.png" alt="Instala&ccedil;&atilde;o do Python 2.7.3" width="509" height="438" &#47;><&#47;a></p>
-<p>Agora que j&aacute; instalamos o Python, precisamos adicionar alguns caminhos &agrave; vari&aacute;vel de ambiente <code>Path<&#47;code> do Windows, para isso, clique com o bot&atilde;o direito em <code>Computador -> Menu iniciar -> Propriedades -> Configura&ccedil;&otilde;es avan&ccedil;adas do sistema -> Vari&aacute;veis de Ambiente<&#47;code>. Em <code>vari&aacute;veis do sistema<&#47;code>, selecione <code>Path<&#47;code> e clique em <code>Editar<&#47;code>. Na janela que abrir, adicione <code>;C:\Python27\;C:\Python27\Scripts;<&#47;code> (sem as aspas) ap&oacute;s o final do conte&uacute;do do campo <code>Valor da vari&aacute;vel<&#47;code>. Feito isso, clique em <code>OK<&#47;code> para confirmar.</p>
-<div class="note">Note o <code>;<&#47;code> antes de <code>C:\Python27...<&#47;code>, s&oacute; adicione ele caso j&aacute; n&atilde;o tenha, ele serve para informar o fim de um caminho.<&#47;div></p>
-<div class="note"><code>C:\Python27<&#47;code> &eacute; o caminho de instala&ccedil;&atilde;o do Python, altere caso voc&ecirc; tenha selecionado outro.<&#47;div></p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;5.png"><img class="alignnone size-full wp-image-109" title="Adicionando caminhos &agrave; vari&aacute;vel de ambiente "Path"" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;5.png" alt="Adicionando caminhos &agrave; vari&aacute;vel de ambiente "Path"" width="427" height="521" &#47;><&#47;a></p>
-<p>Agora j&aacute; temos o Python instalado e configurado, para confirmar, abra o prompt de comando (<code>Windows + R<&#47;code>) e digite <code>python<&#47;code>. Se tudo estiver correto voc&ecirc; deve ver uma tela como abaixo, esse &eacute; o console Python, podemos usar para testar algum comando se precisar.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;6.png"><img class="alignnone size-full wp-image-110" title="Testando Python" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;6.png" alt="Testando Python" width="684" height="351" &#47;><&#47;a></p>
-<p>Vamos instalar o Django agora, para isso, acesse o site oficial (<a title="https:&#47;&#47;www.djangoproject.com&#47;" href="https:&#47;&#47;www.djangoproject.com&#47;" target="_blank">https:&#47;&#47;www.djangoproject.com&#47;<&#47;a>), clique em "Download" e selecione a vers&atilde;o que deseja instalar, em nosso caso a 1.4.1.</p>
-<p>Ap&oacute;s o download, extraia o arquivo e abra o prompt de comando novamente. Vamos navegar at&eacute; o local que foi extra&iacute;do atrav&eacute;s do comando <code>cd<&#47;code> como abaixo.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;7.png"><img class="alignnone size-full wp-image-111" title="Acessando a pasta do Django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;7.png" alt="Acessando a pasta do Django" width="687" height="352" &#47;><&#47;a></p>
-<p>Estando na pasta do Django, execute o comando <code>python setup.py install<&#47;code> e aguarde o t&eacute;rmino da instala&ccedil;&atilde;o.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;8.png"><img class="alignnone size-full wp-image-112" title="Instalando Django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;8.png" alt="Instalando Django" width="688" height="354" &#47;><&#47;a></p>
-<p>Se tudo ocorreu bem, j&aacute; temos o Django instalado, agora abra o prompt e vamos testar nosso primeiro comando..</p>
-<p>Digite <code>python<&#47;code> para abrir o console Python, depois <code>import django<&#47;code> para importar o Django e por fim execute <code>print django.get_version()<&#47;code> para imprimir a vers&atilde;o atual do Django instalada.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;9.png"><img class="alignnone size-full wp-image-113" title="Ver vers&atilde;o do Django" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;9.png" alt="Ver vers&atilde;o do Django" width="680" height="345" &#47;><&#47;a></p>
-<p>Agora j&aacute; temos o Python e o Django instalados, mas como futuramente iremos trabalhar com MySQL e Django aqui no blog, j&aacute; vamos instalar a interface de comunica&ccedil;&atilde;o entre os dois, para isso, acesse <a title="http:&#47;&#47;www.codegood.com&#47;downloads?dl_cat=2" rel="external nofollow" href="http:&#47;&#47;www.codegood.com&#47;downloads?dl_cat=2" target="_blank">esse link<&#47;a> e selecione o arquivo <code>MySQL-python-1.2.3.win32-py2.7.exe<&#47;code> para download.</p>
-<p>Ap&oacute;s o download, vamos a instala&ccedil;&atilde;o</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;10.png"><img class="alignnone size-full wp-image-137" title="Instala&ccedil;&atilde;o da interface Python-MySQL" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;10.png" alt="Instala&ccedil;&atilde;o da interface Python-MySQL" width="606" height="401" &#47;><&#47;a></p>
-<p>Apenas clique em <code>Next<&#47;code> at&eacute; o fim e concluiremos a instala&ccedil;&atilde;o com sucesso.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;111.png"><img class="alignnone size-full wp-image-139" title="Instala&ccedil;&atilde;o da interface Python-MySQL" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;111.png" alt="Instala&ccedil;&atilde;o da interface Python-MySQL" width="605" height="393" &#47;><&#47;a></p>
-<p>Por &uacute;ltimo, precisamos instalar a biblioteca de imagens do Python (Python Image Library - PIL) agora, para isso acesse <a title="http:&#47;&#47;www.pythonware.com&#47;products&#47;pil&#47;" rel="external nofollow" href="http:&#47;&#47;www.pythonware.com&#47;products&#47;pil&#47;" target="_blank">esse link<&#47;a> e selecione o arquivo <code>Python Imaging Library 1.1.7 for Python 2.7<&#47;code> para download. Ap&oacute;s baixar, vamos para instala&ccedil;&atilde;o.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;12.png"><img class="alignnone size-full wp-image-141" title="Instala&ccedil;&atilde;o da Python Image Library" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;12.png" alt="Instala&ccedil;&atilde;o da Python Image Library" width="607" height="396" &#47;><&#47;a></p>
-<p>Apenas clique em <code>Next<&#47;code> at&eacute; o fim e concluiremos a instala&ccedil;&atilde;o com sucesso.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;13.png"><img class="alignnone size-full wp-image-142" title="Instala&ccedil;&atilde;o da Python Image Library" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;13.png" alt="Instala&ccedil;&atilde;o da Python Image Library" width="603" height="397" &#47;><&#47;a></p>
-<p>Ufa, finalmente acabou.. Ap&oacute;s v&aacute;rias instala&ccedil;&otilde;es agora j&aacute; temos nosso ambiente preparado. Em outras postagens estarei mostrando um pouco desse poderoso framework.</p>
-<p>Espero que tenham gostado. O que voc&ecirc;s acharam?</p>
-<p>At&eacute; mais.</p>
+
+<p>Você já experimentou o Django? Sabe o que é? Caso não saiba, não deixe de ver meu <a href="{% post_url 2012-07-31-porque-usar-um-framework %}#django-ref" target="_blank">post anterior</a>, nele eu falei um pouco sobre essa incrível ferramenta.</p>
+
+<p>Nesse post, irei ensinar como instalar e preparar um ambiente de desenvolvimento Django (versão 1.4) no Windows 7.</p>
+
+<p><a href="{{ site.baseurl }}/assets/django-install.jpg"><img class="alignnone  wp-image-151" title="Instalar Django no Windows" src="{{ site.baseurl }}/assets/django-install.jpg" alt="Instalar Django no Windows"/></a></p>
+
+<div class="note">Consideramos que você já tem o MySQL instalado, caso não tenha, clique <a title="Instalar MySQL no Windows" rel="external nofollow" href="http://www.sistemabasico.com.br/2011/06/30/instalando-o-mysql-5-5-8-no-windows-7/" target="_blank">aqui</a> para ver como instalar.</div>
+
+<p>Sendo Django um framework escrito em Python, ele precisa de Python para rodar. Como Python não vem instalado no Windows, precisamos instalá-lo, para isso, acesse o <a title="http://www.python.org/download/" rel="external nofollow" href="http://www.python.org/download/" target="_blank">site oficial</a> da linguagem  e selecione o último release estável do Python 2.7 para download (no meu caso, estou baixando o Python 2.7.3).</p>
+
+<div class="alert">Django 1.4 só roda nas versões do Python de 2.5 até 2.7 (3.0 é incompatível).</div>
+
+<p>Após o download, vamos à instalação. Tendo direitos administrativos para instalar, dê duplo clique no instalador e teremos essa tela, clique em <code>Next</code> para continuar.</p>
+
+<a href="{{ site.baseurl }}/assets/python-for-windows.png"><img class="alignnone size-full wp-image-104" title="Instalação do Python 2.7.3" src="{{ site.baseurl }}/assets/python-for-windows.png" alt="Instalação do Python 2.7.3"/></a>
+
+<p>Caso não queira alterar o caminho de instalação, clique em <code>Next</code> para continuar.</p>
+
+<a href="{{ site.baseurl }}/assets/python-for-windows-destination.png"><img class="alignnone size-full wp-image-105" title="Instalação do Python 2.7.3" src="{{ site.baseurl }}/assets/python-for-windows-destination.png" alt="Instalação do Python 2.7.3"/></a>
+
+<p>Instalaremos completo como padrão, então apenas clique em <code>Next</code>. Após isso, o processo de cópia de arquivo começara.</p>
+
+<a href="{{ site.baseurl }}/assets/customize-python-for-windows.png"><img class="alignnone size-full wp-image-106" title="Instalação do Python 2.7.3" src="{{ site.baseurl }}/assets/customize-python-for-windows.png" alt="Instalação do Python 2.7.3"/></a>
+
+<p>Após a finalização do processo, clique em <code>Finish</code> para sair.</p>
+
+<a href="{{ site.baseurl }}/assets/python-for-windows-setup.png"><img class="alignnone size-full wp-image-107" title="Instalação do Python 2.7.3" src="{{ site.baseurl }}/assets/python-for-windows-setup.png" alt="Instalação do Python 2.7.3"/></a>
+
+<p>Agora que já instalamos o Python, precisamos adicionar alguns caminhos à variável de ambiente <code>Path</code> do Windows, para isso, clique com o botão direito em <code>Computador -> Menu iniciar -> Propriedades -> Configurações avançadas do sistema -> Variáveis de Ambiente</code>. Em <code>variáveis do sistema</code>, selecione <code>Path</code> e clique em <code>Editar</code>. Na janela que abrir, adicione <code>;C:\Python27\;C:\Python27\Scripts;</code> (sem as aspas) após o final do conteúdo do campo <code>Valor da variável</code>. Feito isso, clique em <code>OK</code> para confirmar.</p>
+
+<div class="note">Note o <code>;</code> antes de <code>C:\Python27...</code>, só adicione ele caso já não tenha, ele serve para informar o fim de um caminho.</div>
+
+<div class="note"><code>C:\Python27</code> é o caminho de instalação do Python, altere caso você tenha selecionado outro.</div>
+
+<a href="{{ site.baseurl }}/assets/variaveis-de-ambiente-windows.png"><img class="alignnone size-full wp-image-109" title="Adicionando caminhos à variável de ambiente &quot;Path&quot;" src="{{ site.baseurl }}/assets/variaveis-de-ambiente-windows.png" alt="Adicionando caminhos à variável de ambiente &quot;Path&quot;"/></a>
+
+<p>Agora já temos o Python instalado e configurado, para confirmar, abra o prompt de comando (<code>Windows + R</code>) e digite <code>python</code>. Se tudo estiver correto você deve ver uma tela como abaixo, esse é o console Python, podemos usar para testar algum comando se precisar.</p>
+
+<a href="{{ site.baseurl }}/assets/python-console.png"><img class="alignnone size-full wp-image-110" title="Testando Python" src="{{ site.baseurl }}/assets/python-console.png" alt="Testando Python"/></a>
+
+<p>Vamos instalar o Django agora, para isso, acesse o site oficial (<a title="https://www.djangoproject.com/" href="https://www.djangoproject.com/" target="_blank">https://www.djangoproject.com/</a>), clique em "Download" e selecione a versão que deseja instalar, em nosso caso a 1.4.1.</p>
+
+<p>Após o download, extraia o arquivo e abra o prompt de comando novamente. Vamos navegar até o local que foi extraído através do comando <code>cd</code> como abaixo.</p>
+
+<a href="{{ site.baseurl }}/assets/7.png"><img class="alignnone size-full wp-image-111" title="Acessando a pasta do Django" src="{{ site.baseurl }}/assets/7.png" alt="Acessando a pasta do Django"/></a>
+
+<p>Estando na pasta do Django, execute o comando <code>python setup.py install</code> e aguarde o término da instalação.</p>
+
+<a href="{{ site.baseurl }}/assets/instalando-django-no-windows.png"><img class="alignnone size-full wp-image-112" title="Instalando Django" src="{{ site.baseurl }}/assets/instalando-django-no-windows.png" alt="Instalando Django"/></a>
+
+<p>Se tudo ocorreu bem, já temos o Django instalado, agora abra o prompt e vamos testar nosso primeiro comando..</p>
+
+<p>Digite <code>python</code> para abrir o console Python, depois <code>import django</code> para importar o Django e por fim execute <code>print django.get_version()</code> para imprimir a versão atual do Django instalada.</p>
+
+<a href="{{ site.baseurl }}/assets/obtendo-versao-do-django.png"><img class="alignnone size-full wp-image-113" title="Ver versão do Django" src="{{ site.baseurl }}/assets/obtendo-versao-do-django.png" alt="Ver versão do Django"/></a>
+
+<p>Agora já temos o Python e o Django instalados, mas como futuramente iremos trabalhar com MySQL e Django aqui no blog, já vamos instalar a interface de comunicação entre os dois, para isso, acesse <a title="http://www.codegood.com/downloads?dl_cat=2" rel="external nofollow" href="http://www.codegood.com/downloads?dl_cat=2" target="_blank">esse link</a> e selecione o arquivo <code>MySQL-python-1.2.3.win32-py2.7.exe</code> para download.</p>
+
+<p>Após o download, vamos a instalação</p>
+
+<a href="{{ site.baseurl }}/assets/mysql-python-windows.png"><img class="alignnone size-full wp-image-137" title="Instalação da interface Python-MySQL" src="{{ site.baseurl }}/assets/mysql-python-windows.png" alt="Instalação da interface Python-MySQL"/></a>
+
+<p>Apenas clique em <code>Next</code> até o fim e concluiremos a instalação com sucesso.</p>
+
+<a href="{{ site.baseurl }}/assets/111.png"><img class="alignnone size-full wp-image-139" title="Instalação da interface Python-MySQL" src="{{ site.baseurl }}/assets/111.png" alt="Instalação da interface Python-MySQL"/></a>
+
+<p>Por último, precisamos instalar a biblioteca de imagens do Python (Python Image Library - PIL) agora, para isso acesse <a title="http://www.pythonware.com/products/pil/" rel="external nofollow" href="http://www.pythonware.com/products/pil/" target="_blank">esse link</a> e selecione o arquivo <code>Python Imaging Library 1.1.7 for Python 2.7</code> para download. Após baixar, vamos para instalação.</p>
+
+<a href="{{ site.baseurl }}/assets/python-imaging-library.png"><img class="alignnone size-full wp-image-141" title="Instalação da Python Image Library" src="{{ site.baseurl }}/assets/python-imaging-library.png" alt="Instalação da Python Image Library" /></a>
+
+<p>Apenas clique em <code>Next</code> até o fim e concluiremos a instalação com sucesso.</p>
+
+<a href="{{ site.baseurl }}/assets/13.png"><img class="alignnone size-full wp-image-142" title="Instalação da Python Image Library" src="{{ site.baseurl }}/assets/13.png" alt="Instalação da Python Image Library"/></a>
+
+<p>Ufa, finalmente acabou.. Após várias instalações agora já temos nosso ambiente preparado. Em outras postagens estarei mostrando um pouco desse poderoso framework.</p>
+
+<p>Espero que tenham gostado. O que vocês acharam?</p>
+
+<p>Até mais.</p>

@@ -1,7 +1,7 @@
 ---
 layout: post
 status: publish
-published: true
+published: false
 title: Testador de Express&atilde;o Regular &#47; Regex Online
 author:
   display_name: Glauco Custódio
@@ -49,23 +49,42 @@ comments:
   date_gmt: '2012-08-10 17:13:42 -0300'
   content: Eu tamb&eacute;m gosto de ER, acho fant&aacute;stico! Obrigado pela for&ccedil;a!
 ---
-<p>Fala pessoal, algu&eacute;m j&aacute; utilizou <strong>express&atilde;o regular<&#47;strong> ai? Voc&ecirc; j&aacute; passou por uma situa&ccedil;&atilde;o de ter que ficar alterando o padr&atilde;o da regex (regular expression em ingl&ecirc;s), salvar o arquivo, testar e n&atilde;o obter o resultado esperado? Se j&aacute; passou, bem vindo ao clube..</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;2012&#47;07&#47;28&#47;testador-online-de-expressao-regular-regex&#47;"><img class="alignnone  wp-image-33" title="Testador de Express&atilde;o Regular Online" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex_expressao_regular_php-610x250.jpg" alt="" width="610" height="250" &#47;><&#47;a></p>
-<p><a id="more"></a><a id="more-31"></a>Nesse post irei apresentar duas ferramentas online para testar express&atilde;o regular que facilitam minha vida e me fazem economizar um bom tempo.</p>
-<p>A primeira &eacute; a&nbsp;PHP Regular Expression Tester que pode ser acessada nesse link&nbsp;<a title="http:&#47;&#47;www.pagecolumn.com&#47;tool&#47;pregtest.htm" rel="external nofollow" href="http:&#47;&#47;www.pagecolumn.com&#47;tool&#47;pregtest.htm" target="_blank">http:&#47;&#47;www.pagecolumn.com&#47;tool&#47;pregtest.htm<&#47;a>, essa &eacute; uma excelente ferramenta voltada para desenvolvimento PHP (como o nome diz), nela temos alguns campos que falaremos um pouco mais abaixo:</p>
-<p>- "Preg Pattern": padr&atilde;o que queremos coincidir (&eacute; a regex em si);</p>
-<p>- "Preg Type": qual tipo de sintaxe iremos utilizar, POSIX ou PCRE - a <a title="http:&#47;&#47;www.php.net&#47;manual&#47;pt_BR&#47;function.ereg.php" rel="external nofollow" href="http:&#47;&#47;www.php.net&#47;manual&#47;pt_BR&#47;function.ereg.php" target="_blank">documenta&ccedil;&atilde;o oficial<&#47;a> do PHP recomenda o uso de sintaxe compat&iacute;vel com Perl, que &eacute; mais r&aacute;pida e vers&aacute;til, portanto mantenha PCRE selecionado;</p>
-<p>- "Function": qual fun&ccedil;&atilde;o desejamos utilizar. As mais utilizadas s&atilde;o:</p>
-<p>preg_match: retorna apenas a primeira coincid&ecirc;ncia da pesquisa;</p>
-<p>preg_match_all: pesquisa todas coincid&ecirc;ncias (como o "all" diz);</p>
-<p>preg_replace: pesquisa na string ou em um array com string e faz a troca (replace) pelo valor atribu&iacute;do do par&acirc;metro "replacement".</p>
-<p>- "Subject": por &uacute;ltimo e n&atilde;o menos importante &eacute; a string na qual o padr&atilde;o deve pesquisar coincid&ecirc;ncia.</p>
-<p>Como teste, vamos fazer uma pesquisa do valor do atributo "href" de um link em meio h&aacute; um texto qualquer (abaixo voc&ecirc; pode conferir em destaque o link que desejamos). Ap&oacute;s preencher os campos, clique em "Go" para iniciar o teste.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool2.png"><img class="alignnone size-full wp-image-42" title="regex-tool" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool2.png" alt="" width="593" height="289" &#47;><&#47;a></p>
-<p>Depois da pesquisa, podemos ver o resultado abaixo no campo "Output".. O interessante dessa ferramenta &eacute; que tamb&eacute;m obtemos o c&oacute;digo PHP.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool21.png"><img class="alignnone size-full wp-image-43" title="regex-tool2" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool21.png" alt="" width="549" height="352" &#47;><&#47;a></p>
-<p>E agora vamos a segunda ferramenta que tamb&eacute;m &eacute; um site, podemos acessar atrav&eacute;s do link&nbsp;<a title="http:&#47;&#47;regexpal.com&#47;" rel="external nofollow" href="http:&#47;&#47;regexpal.com&#47;" target="_blank">http:&#47;&#47;regexpal.com&#47;<&#47;a>. Essa &eacute; voltada para testar regex em Javascript, mas nada impede de usar como um testador em geral (eu mesmo utilizo muito).</p>
-<p>Para come&ccedil;ar utilizar, basta digitar o padr&atilde;o no primeiro campo e a string a ser pesquisada no segundo, caso retorne algum valor, veremos em destaque na cor amarela como na imagem. O bom dela &eacute; que conforme vamos digitando vamos obtendo o resultado.</p>
-<p><a href="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool3.png"><img class="alignnone size-full wp-image-44" title="regex-tool3" src="http:&#47;&#47;blog.glaucocustodio.com&#47;wp-content&#47;uploads&#47;2012&#47;07&#47;regex-tool3.png" alt="" width="725" height="153" &#47;><&#47;a></p>
-<p>&Eacute; isso ai galera, se gostou pode compartilhar&nbsp;nas redes sociais abaixo e qualquer d&uacute;vida ou sugest&atilde;o deixe seu coment&aacute;rio. At&eacute; a pr&oacute;xima.</p>
-<p>Abra&ccedil;os.</p>
+<p>Fala pessoal, alguém já utilizou expressão regular ai? Você já passou por uma situação de ter que ficar alterando o padrão da regex (regular expression em inglês), salvar o arquivo, testar e não obter o resultado esperado? Se já passou, bem vindo ao clube..</p>
+
+<a href="{{ site.baseurl }}/assets/regex_expressao_regular_php-610x250.jpg"><img class="alignnone  wp-image-33" title="Testador de Expressão Regular Online" src="{{ site.baseurl }}/assets/regex_expressao_regular_php-610x250.jpg"/></a>
+
+<p>Nesse post irei apresentar duas ferramentas online para testar expressão regular que facilitam minha vida e me fazem economizar um bom tempo.</p>
+
+<p>A primeira é a PHP Regular Expression Tester que pode ser acessada nesse link <a title="http://www.pagecolumn.com/tool/pregtest.htm" rel="external nofollow" href="http://www.pagecolumn.com/tool/pregtest.htm" target="_blank">http://www.pagecolumn.com/tool/pregtest.htm</a>, essa é uma excelente ferramenta voltada para desenvolvimento PHP (como o nome diz), nela temos alguns campos que falaremos um pouco mais abaixo:</p>
+
+<p>- "Preg Pattern": padrão que queremos coincidir (é a regex em si);</p>
+
+<p>- "Preg Type": qual tipo de sintaxe iremos utilizar, POSIX ou PCRE - a <a title="http://www.php.net/manual/pt_BR/function.ereg.php" rel="external nofollow" href="http://www.php.net/manual/pt_BR/function.ereg.php" target="_blank">documentação oficial</a> do PHP recomenda o uso de sintaxe compatível com Perl, que é mais rápida e versátil, portanto mantenha PCRE selecionado;</p>
+
+<p>- "Function": qual função desejamos utilizar. As mais utilizadas são:</p>
+
+<p>preg_match: retorna apenas a primeira coincidência da pesquisa;</p>
+
+<p>preg_match_all: pesquisa todas coincidências (como o "all" diz);</p>
+
+<p>preg_replace: pesquisa na string ou em um array com string e faz a troca (replace) pelo valor atribuído do parâmetro "replacement".</p>
+
+<p>- "Subject": por último e não menos importante é a string na qual o padrão deve pesquisar coincidência.</p>
+
+<p>Como teste, vamos fazer uma pesquisa do valor do atributo "href" de um link em meio há um texto qualquer (abaixo você pode conferir em destaque o link que desejamos). Após preencher os campos, clique em "Go" para iniciar o teste.</p>
+
+<a href="{{ site.baseurl }}/assets/regex-tool2.png"><img class="alignnone size-full wp-image-42" title="regex-tool" src="{{ site.baseurl }}/assets/regex-tool2.png"/></a>
+
+<p>Depois da pesquisa, podemos ver o resultado abaixo no campo "Output".. O interessante dessa ferramenta é que também obtemos o código PHP.</p>
+
+<a href="{{ site.baseurl }}/assets/regex-tool21.png"><img class="alignnone size-full wp-image-43" title="regex-tool2" src="{{ site.baseurl }}/assets/regex-tool21.png"/></a>
+
+<p>E agora vamos a segunda ferramenta que também é um site, podemos acessar através do link <a title="http://regexpal.com/" rel="external nofollow" href="http://regexpal.com/" target="_blank">http://regexpal.com/</a>. Essa é voltada para testar regex em JavaScript, mas nada impede de usar como um testador em geral (eu mesmo utilizo muito).</p>
+
+<p>Para começar utilizar, basta digitar o padrão no primeiro campo e a string a ser pesquisada no segundo, caso retorne algum valor, veremos em destaque na cor amarela como na imagem. O bom dela é que conforme vamos digitando vamos obtendo o resultado.</p>
+
+<a href="{{ site.baseurl }}/assets/regex-tool3.png"><img class="alignnone size-full wp-image-44" title="regex-tool3" src="{{ site.baseurl }}/assets/regex-tool3.png"/></a>
+
+<p>É isso ai galera, se gostou pode compartilhar nas redes sociais abaixo e qualquer dúvida ou sugestão deixe seu comentário. Até a próxima.</p>
+
+<p>Abraços.</p>
