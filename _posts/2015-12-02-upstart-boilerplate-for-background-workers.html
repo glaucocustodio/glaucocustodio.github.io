@@ -1,0 +1,87 @@
+---
+layout: post
+status: publish
+published: true
+title: 'Upstart Boilerplate for Background Workers'
+author:
+  display_name: Glauco Custódio
+author_url: http://glaucocustodio.com
+date: '2015-12-02 13:58:20 -0300'
+date_gmt: '2015-12-02 13:58:20 -0300'
+categories:
+- Servidor
+tags:
+- upstart
+comments: []
+---
+
+<p>I use <a href="https://github.com/ddollar/foreman" target="_blank" rel="external nofollow">foreman</a> to run background work process when developing.</p>
+
+<p>After writing the <code>Procfile</code>, we can export it to many process management through <code>foreman export</code> command.</p>
+
+<p>The generated files never worked well for me (when exporting to Upstart). Very likely because rbenv or RVM is not loaded. </p>
+
+<p>Here is the boilerplate I've used:</p>
+
+{% highlight bash %}
+# ironman.conf
+
+pre-start script
+
+bash << "EOF"
+  mkdir -p /var/log/ironman
+  chown -R deploy /var/log/ironman
+EOF
+
+end script
+
+start on runlevel [2345]
+
+stop on runlevel [016]
+{% endhighlight %}
+
+{% highlight bash %}
+# ironman-worker.conf
+
+start on starting ironman
+stop on stopping ironman
+{% endhighlight %}
+
+{% highlight bash %}
+# ironman-worker-1.conf
+
+start on starting ironman-worker
+stop on stopping ironman-worker
+respawn
+
+exec su - deploy -c \
+'cd /path/to/ironman; export RAILS_ENV=staging; export PORT=5100; bundle exec sidekiq >> /var/log/ironman/worker-1.log 2>&1'
+{% endhighlight %}
+
+<p>Note:</p>
+
+<ul>
+  <li>Replace <code>ironman</code> by the name of your application</li>
+  <li>Replace <code>deploy</code> by your server's user</li>
+  <li>Replace <code>/var/log/ironman/</code> by your log path</li>
+  <li>Replace <code>/path/to/ironman</code> by the path of your application</li>
+  <li>Replace <code>staging</code> (in <code>export RAILS_ENV=staging;</code>) by your application environment</li>
+  <li>Replace <code>bundle exec sidekiq</code> by the command you wanna run (<code>bundle exec rake resque:work QUEUE=communication,normal</code> for instance)</li>
+</ul>
+
+<p>Place these files in <code>/etc/init</code>, then you can use <code>sudo service ironman</code> to <code>start</code>, <code>stop</code> etc.</p>
+
+<div class="note">You can spawn more processes by creating new files, for instance: <code>ironman-clock.conf</code> and <code>ironman-clock-1.conf</code>.</div>
+
+<p>You will want to restart the workers after deploying new code (to reload application). But if your user isn't root, you have no permission to run <code>sudo service ironman restart</code>.</p>
+
+<p>To solve it, I grant permission to my application user. Run <code>sudo visudo</code> and add the following:</p>
+
+{% highlight bash %}
+# User privilege specification
+deploy  ALL=(root) NOPASSWD: /sbin/start ironman, /sbin/stop ironman
+{% endhighlight %}
+
+<div class="alert">Don't forget to replace <code>deploy</code> (server's user) and <code>ironman</code> here again.</div>
+
+<p>That is it, thanks.</p>
