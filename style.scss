@@ -350,3 +350,10 @@ footer {
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
+
+::selection {
+  background:#03b4d1;color:#fff;
+}
+::-moz-selection {
+ background:#03b4d1;color:#fff; 
+}
