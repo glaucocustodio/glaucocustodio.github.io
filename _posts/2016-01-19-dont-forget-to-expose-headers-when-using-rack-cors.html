@@ -1,0 +1,102 @@
+---
+layout: post
+status: publish
+published: true
+title: Don't Forget to Expose Headers When Using Rack CORS
+date: '2016-01-19 15:30:00 -0300'
+date_gmt: '2016-01-19 15:30:00 -0300'
+categories:
+- Ruby
+tags:
+- ruby
+- cors
+- rack-cors
+- etags
+comments: []
+---
+
+<p>This week I was building an api on Rails and I did implement a cache system based on ETags.</p>
+
+<p>You a have a client (mobile application in my case) which needs to fetch data from server. Most likely you only want to download the payload when something has changed since the last download.</p>
+
+<p>This is the perfect scenario for using ETags.</p>
+
+<p>You set a header (<code>ETag</code> specifically) with a key that identifies the content being returned. The client gets and saves the key. In the next request, the client sends it through <code>If-None-Match</code> header.</p>
+
+<p>If the coming key in <code>If-None-Match</code> is different from the one generated in current reponse's content, then server sends new data back to client, otherwise it returns a <code>304 Not Modified</code> status meaning that the content is unchanged.</p>
+
+<p>The aforementioned steps can be reproduced using <code>curl</code> (or any other library):</p>
+
+<p>Request:</p>
+{% highlight text %}
+curl -i http://localhost:3000/api/v1/customers
+{% endhighlight %}
+
+<p>Response (check the <code>ETag</code> header):</p>
+{% highlight text %}
+HTTP/1.1 200 OK
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+ETag: "e5ef2b0d51f78edeeba33c95c486ga28"
+Content-Type: application/json; charset=utf-8
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 59118bbb-5bd8-4d86-8537-1fdff40dfda0
+X-Runtime: 0.068550
+Transfer-Encoding: chunked
+
+[{"id":5,"name":"John"...
+{% endhighlight %}
+
+<p>Now, let's send to server the gotten <code>ETag</code>.</p>
+
+<p>Request:</p>
+{% highlight text %}
+curl -i -H "If-None-Match: e5ef2b0d51f78edeeba33c95c486ga28" http://localhost:3000/api/v1/customers
+{% endhighlight %}
+
+<p>Response:</p>
+{% highlight text %}
+HTTP/1.1 304 Not Modified
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+ETag: "e5ef2b0d51f78edeeba33c95c486ga28"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 4aed9148-6902-45d5-ba73-941644d22d39
+X-Runtime: 0.071959
+{% endhighlight %}
+
+<p>Ok, nothing new so far. What is the matter?</p>
+
+<p>You see that in the <code>curl</code>'s response we are getting the <code>ETag</code> header as expected.</p>
+
+<p>However, the mobile app I am building is hybrid, so, I need to access cross-origin resources. The <a href="https://github.com/cyu/rack-cors" rel="external nofollow" target="_blank">Rack CORS</a> gem help us in such task.</p>
+
+<p>After install the gem, you just need to set the config in any initializer, like below:</p>
+
+{% highlight ruby %}
+Rails.application.config.middleware.insert_before 0, "Rack::Cors" do
+  allow do
+    origins '*'
+    resource '*', headers: :any, methods: [:get, :post, :options, :patch, :delete]
+  end
+end
+{% endhighlight %}
+
+<p>The matter is, by default, Rack CORS does not expose any headers except <code>content-type</code> and <code>cache-control</code>.</p>
+
+<p>If your client needs to read another header (like <code>ETags</code> in this case), you need explicitly expose it:</p>
+
+{% highlight ruby %}
+Rails.application.config.middleware.insert_before 0, "Rack::Cors" do
+  allow do
+    origins '*'
+    resource '*', headers: :any, methods: [:get, :post, :options, :patch, :delete], expose: ['ETag']
+  end
+end
+{% endhighlight %}
+
+<p>Having it in mind, may save your time.</p>
+
+<p>See you.</p>
