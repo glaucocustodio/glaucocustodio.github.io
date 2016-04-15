@@ -1,0 +1,165 @@
+---
+layout: post
+status: publish
+published: true
+title: Why You Should Taste Grape
+date: '2016-04-09 11:43:00 -0300'
+date_gmt: '2016-04-09 11:43:00 -0300'
+categories:
+- Ruby
+tags:
+- ruby
+- grape
+- api
+comments: []
+---
+<p>Hi folks, let's talk about APIs today.</p>
+
+<p>I know that Rails 5 with <code>--api</code> mode is around the corner. But I need to say you how awesome is to build APIs with <a href="https://github.com/ruby-grape/grape" target="_blank" rel="external nofollow">Grape</a>. I will show you why.</p>
+
+<p>What are the main features we expect from a good API?</p>
+
+<ul>
+  <li>Parameter validation</li>
+  <li>Parameter coercion</li>
+  <li>Documentation</li>
+  <li>Serialization</li>
+  <li>Performance</li>
+  <li>Versioning</li>
+  <li>Authentication</li>
+  <li>Testing</li>
+</ul>
+
+<p>The first four items are the ones in which Grape really shines for me. I am going through one at a time.</p>
+
+<h2>Getting Started</h2>
+
+<p>For this tutorial, let's suppose we need to build an API to create and list customers.</p>
+
+{% highlight ruby %}
+require 'grape'
+
+module MyAwesomeApi
+  class Customer < Grape::API
+    format :json
+
+    resource :customers do
+      post "/" do
+        Customer.create(params)
+        status :ok
+      end
+
+      get ":id" do
+        { customer: Customer.find(params[:id]) }
+      end
+    end
+  end
+end
+{% endhighlight %}
+
+<p>Ok, this is our starting point. Anyone used to Rails can grasp this snippet.</p>
+
+<p>We have two routes, the first to create and the second to get customers.</p>
+
+<h2>Parameter validation</h2>
+
+<p>Something nice in Grape, is that we can declare and validate the expected params in every route.</p>
+
+<p>Validating parameters is as simple as telling Grape what we want. Given our base code above, we can simply add some validation by doing:</p>
+
+{% highlight ruby %}
+resource :customers do
+  params do
+    requires :first_name, type: String, regexp: /[A-z]+/
+    optional :last_name, type: String
+    requires :gender, values: %w(m f), default: "m"
+    requires :birthdate, type: Date, allow_blank: false
+  end
+  post "/" do
+    Customer.create(declared(params, include_missing: false))
+  end
+end
+{% endhighlight %}
+
+<!-- <p>As the name suggests, in <code>params</code> block we can define the expected params and its validations (<a href="https://github.com/ruby-grape/grape#parameter-validation-and-coercion">see more</a>).</p> -->
+
+<p><code>declared(params, include_missing: false)</code> returns only declared params which aren't missing (has some value).</p>
+
+<h2>Parameter coercion</h2>
+
+<p>Sometimes we need to treat some param before using it. Look how easy it is:</p>
+
+{% highlight ruby %}
+resource :customers do
+  params do
+    # ...
+    requires :occupation, coerce_with: ->(obj) { obj.strip }
+  end
+  post "/" do
+    Customer.create(declared(params, include_missing: false))
+  end
+end
+{% endhighlight %}
+
+<p>Here we strip the occupation param.</p>
+
+<h2>Documentation</h2>
+
+<p>A good API must be well documented.</p>
+
+{% highlight ruby %}
+resource :customers do
+  desc "Creates a new customer",
+       http_codes: {
+         201 => "Created successfully",
+         400 => "Invalid params",
+         401 => "Not authorized",
+       }
+  params do
+    # ...
+    requires :first_name, desc: "Customer's first name"
+  end
+  post "/" do
+    Customer.create(declared(params, include_missing: false))
+  end
+end
+{% endhighlight %}
+
+<p>Check <a href="https://github.com/ruby-grape/grape-swagger" rel="external nofollow" target="_blank">grape-swagger</a> to see what you can do with it.</p>
+
+<h2>Serialization</h2>
+
+<p>With <a href="https://github.com/ruby-grape/grape-entity" rel="external nofollow" target="_blank">grape-entity</a> we can organize our serialization code and keep it dry:</p>
+
+{% highlight ruby %}
+# entities/customer.rb
+module Entities
+  class Customer < Grape::Entity
+    expose :id
+    expose :first_name
+    expose :last_name
+    expose :avatar_url do |instance, _options|
+      instance.avatar.url
+    end
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+get ":id" do
+  customer = Customer.find(params[:id])
+  present customer, with: Entities::Customer
+end
+{% endhighlight %}
+
+<p>It will return only the specified attributes.</p>
+
+<h2>Ok, it seems nice, but..</h2>
+
+<p>I like Rails. Do I have to stop using it to use Grape?</p>
+
+<p>No! You can mount a Grape API <a href="https://github.com/ruby-grape/grape#rails" rel="external nofollow" target="_blank">inside your Rails application</a> (or Sinatra, Rack..).</p>
+
+<p>Read <a href="https://github.com/ruby-grape/grape" rel="external nofollow" target="_blank">Grape's readme</a> and give it a try.</p>
+
+<p>Enjoy yourself.</p>
