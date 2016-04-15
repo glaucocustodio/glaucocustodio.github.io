@@ -46,7 +46,7 @@ module MyAwesomeApi
     resource :customers do
       post "/" do
         Customer.create(params)
-        status :ok
+        status :created
       end
 
       get ":id" do
@@ -84,6 +84,8 @@ end
 <!-- <p>As the name suggests, in <code>params</code> block we can define the expected params and its validations (<a href="https://github.com/ruby-grape/grape#parameter-validation-and-coercion">see more</a>).</p> -->
 
 <p><code>declared(params, include_missing: false)</code> returns only declared params which aren't missing (has some value).</p>
+
+<p>If any validation fails, a 400 HTTP status code will be automatically returned containing the error(s).</p>
 
 <h2>Parameter coercion</h2>
 
