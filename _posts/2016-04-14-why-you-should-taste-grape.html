@@ -46,7 +46,6 @@ module MyAwesomeApi
     resource :customers do
       post "/" do
         Customer.create(params)
-        status :created
       end
 
       get ":id" do
