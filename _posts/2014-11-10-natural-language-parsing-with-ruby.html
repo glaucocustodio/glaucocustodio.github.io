@@ -77,9 +77,9 @@ module MyGrammar
 end
 {% endhighlight %}
 
-<p>The <code>text_value</code> method from each class inheriting from <code>Treetop::Runtime::SyntaxNode</code> represents the value to be returned when parsing some statement, so here, we say to return <code>></code> always that the parser find the snippet <code>greater than</code> (that is linked to the <code>GreaterThanOperator</code> in <code>treetop</code> file).</p>
+<p>The <code>text_value</code> method from each class inheriting from <code>Treetop::Runtime::SyntaxNode</code> represents the value to be returned when parsing some statement, so here, we say to return <code>></code> always that the parser finds the snippet <code>greater than</code> (that is linked to the <code>GreaterThanOperator</code> in <code>treetop</code> file).</p>
 
-<p>Once the class does not override the <code>text_value</code> method, it will return the same value contained into assertion, but, to get the return, we need to create the class, as we did with <code>Value</code> class.</p>
+<p>Once the class does not override the <code>text_value</code> method, it will return the same value contained into the assertion, but, to get the return, we need to create the class, as we did with <code>Value</code> class.</p>
 
 <p>Ok, now our system already knows how to deal with the statement, let's parse it:</p>
 
@@ -124,4 +124,6 @@ puts assertion
 
 <p>This is a simple example, but we can make use of more complex rules to parse any statement.</p>
 
-<p>You can check out the source code <a rel="external nofollow" target="_blank" href="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Natural%20Language%20Parsing%20with%20Ruby">here</a>. See you.</p>
+<p>You can check out the source code <a rel="external nofollow" target="_blank" href="https://github.com/glaucocustodio/glauco-blog-tutorials/tree/master/Natural%20Language%20Parsing%20with%20Ruby">here</a>.</p>
+
+<p>See you.</p>

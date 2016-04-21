@@ -28,7 +28,7 @@ comments:
 
 <p>Looking for articles about how to add SPDY support to Nginx, I just found ones showing the installation process from scratch. But, what if I already have a running server?</p>
 
-<p>To accept SPDY, Nginx needs to be compiled with the flag <code>--with-http_spdy_module</code>. But remember, our goal is pull it off with zero downtime.</p>
+<p>To accept SPDY, Nginx needs to be compiled with the flag <code>--with-http_spdy_module</code>. But remember, our goal is to pull it off with zero downtime.</p>
 
 <p>Suppose we have a Rails application running on Nginx and we wanna add support to SPDY protocol.</p>
 
@@ -66,7 +66,7 @@ rvmsudo passenger-install-nginx-module
 
 <p>To ensure our new binary has the flag, we access its path (<code>/opt/nginx/sbin</code>) and run <code>./nginx -V</code> to see all included modules.</p>
 
-<p>Now, we just need add the <code>spdy</code> keyword in our config files, like below:</p>
+<p>Now, we just need to add the <code>spdy</code> keyword in our config files, like below:</p>
 
 {% highlight nginx %}
 listen 443 ssl spdy;

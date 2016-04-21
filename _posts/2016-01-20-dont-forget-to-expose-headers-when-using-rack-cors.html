@@ -17,13 +17,13 @@ comments: []
 
 <p>This week I was building an api on Rails and I did implement a cache system based on ETags.</p>
 
-<p>You a have a client (mobile application in my case) which needs to fetch data from server. Most likely you only want to download the payload when something has changed since the last download.</p>
+<p>You have a client (mobile application in my case) which needs to fetch data from the server. Most likely you only want to download the payload when something has changed since the last download.</p>
 
 <p>This is the perfect scenario for using ETags.</p>
 
 <p>You set a header (<code>ETag</code> specifically) with a key that identifies the content being returned. The client gets and saves the key. In the next request, the client sends it through <code>If-None-Match</code> header.</p>
 
-<p>If the coming key in <code>If-None-Match</code> is different from the one generated in current reponse's content, then server sends new data back to client, otherwise it returns a <code>304 Not Modified</code> status meaning that the content is unchanged.</p>
+<p>If the coming key in <code>If-None-Match</code> is different from the one generated in current response's content, then the server sends new data back to client, otherwise, it returns a <code>304 Not Modified</code> status meaning that the content is unchanged.</p>
 
 <p>The aforementioned steps can be reproduced using <code>curl</code> (or any other library):</p>
 
@@ -48,7 +48,7 @@ Transfer-Encoding: chunked
 [{"id":5,"name":"John"...
 {% endhighlight %}
 
-<p>Now, let's send to server the gotten <code>ETag</code>.</p>
+<p>Now, let's send to the server the gotten <code>ETag</code>.</p>
 
 <p>Request:</p>
 {% highlight text %}
@@ -73,7 +73,7 @@ X-Runtime: 0.071959
 
 <p>However, the mobile app I am building is hybrid, so, I need to access cross-origin resources. The <a href="https://github.com/cyu/rack-cors" rel="external nofollow" target="_blank">Rack CORS</a> gem help us in such task.</p>
 
-<p>After install the gem, you just need to set the config in any initializer, like below:</p>
+<p>After installing the gem, you just need to set the config in any initializer, like below:</p>
 
 {% highlight ruby %}
 Rails.application.config.middleware.insert_before 0, "Rack::Cors" do
@@ -97,6 +97,6 @@ Rails.application.config.middleware.insert_before 0, "Rack::Cors" do
 end
 {% endhighlight %}
 
-<p>Having it in mind, may save your time.</p>
+<p>Having it in mind may save your time.</p>
 
 <p>See you.</p>
