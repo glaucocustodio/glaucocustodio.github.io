@@ -1,0 +1,63 @@
+---
+layout: post
+status: publish
+published: true
+title: "Rails 5: New upcase_first Method"
+date: '2016-05-19 21:00:45 -0300'
+date_gmt: '2016-05-19 21:00:45 -0300'
+categories:
+- Ruby
+tags:
+- ruby
+- rails
+- active support
+comments: []
+---
+<p>Have you ever needed to capitalize just the first letter of a <code>String</code> in Ruby/Rails?</p>
+
+<p>Very likely you tried something like that, no?!</p>
+
+{% highlight ruby %}
+"hello John".capitalize
+=> "Hello john"
+{% endhighlight %}
+
+<p>But the result is not the expected one..</p>
+
+<p>That's why <code>String#capitalize</code> converts the first character to uppercase and all others to lowercase.</p>
+
+<p>We can resolve it simply with <code>sub(/\S/, &:upcase)</code> or any other implementation:</p>
+
+{% highlight ruby %}
+"hello John".sub(/\S/, &:upcase)
+=> "Hello John"
+{% endhighlight %}
+
+<p>But it is a bit verbose. I wouldn't like to have to call such method whenever I need to capitalize just the first character..</p>
+
+<p>We can add a new method to the <code>String</code> class as well (and put it into a Rails initializer):</p>
+
+{% highlight ruby %}
+class String
+  def upcase_first
+    self.sub(/\S/, &:upcase)
+  end
+end
+
+"hello John".upcase_first
+=> "Hello John"
+{% endhighlight %}
+
+<p>But how it <a rel="external nofollow" target="_blank" href="http://stackoverflow.com/questions/2646709/capitalize-only-first-character-of-string-and-leave-others-alone-rails">seemed</a> to be a very common need, I <a rel="external nofollow" target="_blank" href="https://github.com/rails/rails/pull/23895">opened a PR</a> and it got merged into Rails.</p>
+
+<p>So, as of <a href="https://rubygems.org/gems/rails/versions/5.0.0.beta4" rel="external nofollow" target="_blank">Rails 5.0.0.beta4</a> you can use the new <code>String#upcase_first</code> method or in its <code>ActiveSupport</code> version <code>ActiveSupport::Inflector#upcase_first</code>:</p>
+
+{% highlight ruby %}
+"hello John".upcase_first
+=> "Hello John"
+
+ActiveSupport::Inflector.upcase_first("hello John")
+=> "Hello John"
+{% endhighlight %}
+
+<p>See you.</p>
