@@ -1,0 +1,79 @@
+---
+layout: post
+status: publish
+published: true
+title: "jQuery's End Method"
+date: '2016-09-08 21:19:25 -0300'
+date_gmt: '2016-09-08 21:19:25 -0300'
+categories:
+- JavaScript
+tags:
+- jquery
+comments: []
+---
+<p>This is a personal reminder, but I hope it may help you too.</p>
+
+<p>I know that nowadays jQuery is not as popular as it used to be.</p>
+
+<p>But sometimes I need to deal with it and I end up forgetting the <code>end()</code> method.</p>
+
+<p>It's pretty simple and very useful. Take a look at this example from <a href="https://api.jquery.com/end/" rel="external nofollow" target="_blank">jQuery's website</a>:</p>
+
+{% highlight html %}
+<ul class="first">
+  <li class="foo">list item 1</li>
+  <li>list item 2</li>
+  <li class="bar">list item 3</li>
+</ul>
+<ul class="second">
+  <li class="foo">list item 1</li>
+  <li>list item 2</li>
+  <li class="bar">list item 3</li>
+</ul>
+{% endhighlight %}
+
+<p>We need to apply two distinct colors for the items <code>.foo</code> and <code>.bar</code> from <code>ul.first</code>.</p>
+
+{% highlight javascript %}
+$("ul.first").find(".foo").css("background-color", "red")
+$("ul.first").find(".bar").css("background-color", "green")
+
+// or
+
+var selector = $("ul.first")
+selector.find(".foo").css("background-color", "red")
+selector.find(".bar").css("background-color", "green")
+{% endhighlight %}
+
+<p>Both the options above get the job done, but we can improve it with <code>end()</code>:</p>
+
+{% highlight javascript %}
+$("ul.first")
+  .find(".foo").css("background-color", "red")
+  .end()
+  .find(".bar").css("background-color", "green");
+{% endhighlight %}
+
+<p>Here we go down with <code>find</code>, apply the color to <code>.foo</code> and then return with <code>end</code> to the point where we were before (<code>ul.first</code>).</p>
+
+<p>Before you ask me, I tell you, the <code>end()</code> method just goes back one step at a time.</p>
+
+<p>In the following example we need to call it twice to return to our starting point:</p>
+
+{% highlight html %}
+<ul class="first">
+  <li class="foo">list item 1 <a class="another">xD</a></li>
+  <li>list item 2</li>
+  <li class="bar">list item 3</li>
+</ul>
+{% endhighlight %}
+
+{% highlight javascript %}
+$("ul.first")
+  .find(".foo").css("background-color", "red")
+  .find(".another").css( "background-color", "yellow" )
+  .end().end()
+  .find(".bar").css("background-color", "green");
+{% endhighlight %}
+
+<p>See you.</p>
