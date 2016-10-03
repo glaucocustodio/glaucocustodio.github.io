@@ -260,7 +260,7 @@ comments:
 
 <p>Primeiro vou começar explicando como funciona quando fazemos uma requisição sem utilizar essa compactação, veja a imagem abaixo.</p>
 
-<a href="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP.gif"><img class="alignnone size-full wp-image-482" title="fluxo-de-requisição-e-resposta-HTTP" src="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP.gif" alt="fluxo-de-requisição-e-resposta-HTTP"/></a>
+<a href="{{ site.baseurl }}/assets/fluxo-de-requisicao-e-resposta-HTTP.gif"><img class="alignnone size-full wp-image-482" title="fluxo-de-requisição-e-resposta-HTTP" src="{{ site.baseurl }}/assets/fluxo-de-requisicao-e-resposta-HTTP.gif" alt="fluxo-de-requisição-e-resposta-HTTP"/></a>
 
 <p>Vamos supor que temos um arquivo CSS em nosso site, através do HTML abaixo:</p>
 
@@ -279,7 +279,7 @@ comments:
 
 <p>Acima temos o fluxo de uma requisição HTTP, funciona muito bem, mas podemos otimizar usando compactação, veja.</p>
 
-<a href="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP-com-compactacao.gif"><img class="alignnone size-full wp-image-484" title="fluxo-de-requisição-e-resposta-HTTP-com-compactacao" src="{{ site.baseurl }}/assets/fluxo-de-requisição-e-resposta-HTTP-com-compactacao.gif" alt="fluxo-de-requisição-e-resposta-HTTP-com-compactacao"/></a>
+<a href="{{ site.baseurl }}/assets/fluxo-de-requisicao-e-resposta-HTTP-com-compactacao.gif"><img class="alignnone size-full wp-image-484" title="fluxo-de-requisição-e-resposta-HTTP-com-compactacao" src="{{ site.baseurl }}/assets/fluxo-de-requisicao-e-resposta-HTTP-com-compactacao.gif" alt="fluxo-de-requisição-e-resposta-HTTP-com-compactacao"/></a>
 
 <ol>
   <li>navegador solicita o arquivo <code>estilo.css</code> dizendo que aceita compactação gzip</li>
@@ -298,7 +298,7 @@ comments:
 
 <p>Vou usar meu site (<a title="http://glaucocustodio.com" href="http://glaucocustodio.com" target="_blank">http://glaucocustodio.com</a>) como exemplo prático para ativar a compactação. Abaixo temos uma imagem que mostra uma requisição ao arquivo <code>jquery.js</code> sendo feita sem compactação gzip/deflate, temos que fazer download de 91.7KB.</p>
 
-<a href="{{ site.baseurl }}/assets/analise-de-requisição-sem-compactação.gif"><img class="alignnone size-full wp-image-488" title="analise-de-requisição-sem-compactação" src="{{ site.baseurl }}/assets/analise-de-requisição-sem-compactação.gif" alt="analise-de-requisição-sem-compactação"/></a>
+<a href="{{ site.baseurl }}/assets/analise-de-requisicao-sem-compactacao.gif"><img class="alignnone size-full wp-image-488" title="analise-de-requisição-sem-compactação" src="{{ site.baseurl }}/assets/analise-de-requisicao-sem-compactacao.gif" alt="analise-de-requisição-sem-compactação"/></a>
 
 <p>Como já sei que no servidor de meu site o <code>mod_deflate</code> já está ativo, adiciono o código abaixo no arquivo <code>.htaccess</code> na raiz do meu site para ativar a compactação.</p>
 
@@ -346,7 +346,7 @@ SetEnvIfNoCase Request_URI \
 
 <p>Após subir o arquivo no servidor e analisar as requisições, veja o que temos.</p>
 
-<p><a href="{{ site.baseurl }}/assets/analise-de-requisição-com-compactação.gif"><img class="alignnone size-full wp-image-487" title="analise-de-requisição-com-compactação" src="{{ site.baseurl }}/assets/analise-de-requisição-com-compactação.gif" alt="analise-de-requisição-com-compactação"/></a></p>
+<p><a href="{{ site.baseurl }}/assets/analise-de-requisicao-com-compactacao.gif"><img class="alignnone size-full wp-image-487" title="analise-de-requisição-com-compactação" src="{{ site.baseurl }}/assets/analise-de-requisicao-com-compactacao.gif" alt="analise-de-requisição-com-compactação"/></a></p>
 
 <div class="note">Não esqueça de limpar o cache do navegador para ver o resultado.</div>
 
