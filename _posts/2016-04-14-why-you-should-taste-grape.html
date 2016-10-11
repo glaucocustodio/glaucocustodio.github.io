@@ -111,11 +111,11 @@ end
 {% highlight ruby %}
 resource :customers do
   desc "Creates a new customer",
-       http_codes: {
-         201 => "Created successfully",
-         400 => "Invalid params",
-         401 => "Not authorized",
-       }
+       http_codes: [
+         { code: 201, message: "Created successfully" },
+         { code: 400, message: "Invalid params" },
+         { code: 401, message: "Not authorized" }
+       ]
   params do
     # ...
     requires :first_name, desc: "Customer's first name"
@@ -126,7 +126,7 @@ resource :customers do
 end
 {% endhighlight %}
 
-<p>Check <a href="https://github.com/ruby-grape/grape-swagger" rel="external nofollow" target="_blank">grape-swagger</a> to see what you can do with it.</p>
+<p>We are able to document the response of each endpoint. Check <a href="https://github.com/ruby-grape/grape-swagger" rel="external nofollow" target="_blank">grape-swagger</a> to see what you can do with it.</p>
 
 <h2>Serialization</h2>
 
