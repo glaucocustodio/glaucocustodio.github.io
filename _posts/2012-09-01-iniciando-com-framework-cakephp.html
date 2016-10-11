@@ -451,7 +451,7 @@ comments:
 
 <p>Essa é a tela inicial onde o CakePHP faz algumas verificações.. Observe as mensagens em vermelho, elas estão dizendo que devemos alterar o valor da <code>Security.salt</code> e da <code>Security.cipherSeed</code> localizadas no arquivo de configuração <code>core.php</code>. Vamos fazer o que ele está pedindo, acesse a pasta <code>app/Config/</code> com seu editor favorito e veja o que temos.</p>
 
-<a href="{{ site.baseurl }}/assets/arquivos-de-configuração-cakephp.png"><img class="alignnone size-full wp-image-297" title="Arquivos de configuração do CakePHP" src="{{ site.baseurl }}/assets/arquivos-de-configuração-cakephp.png" alt="Arquivos de configuração do CakePHP"/></a>
+<a href="{{ site.baseurl }}/assets/arquivos-de-configuracao-cakephp.png"><img class="alignnone size-full wp-image-297" title="Arquivos de configuração do CakePHP" src="{{ site.baseurl }}/assets/arquivos-de-configuracao-cakephp.png" alt="Arquivos de configuração do CakePHP"/></a>
 
 <p>Os arquivos que mais nos interessam por enquanto são:</p>
 
@@ -518,7 +518,7 @@ http://meusite.com/produtos/todos
 <?php
 class ProdutosController extends AppController{
   function todos(){
- 
+
   }
 }
 ?>
@@ -532,15 +532,15 @@ class ProdutosController extends AppController{
 <?php
 class CategoriasController extends AppController{
   function listagem(){
- 
+
   }
- 
+
   function cadastro(){
- 
+
   }
- 
+
   function index(){
- 
+
   }
 }
 ?>
@@ -566,7 +566,7 @@ Router::connect('/', array('controller' => 'home', 'action' => 'index'));
 
 <p>Aqui nós definimos a rota raiz do site, caso acessemos <code>http://meusite.com</code>, o Cake chamará a action <code>index</code> do controller <code>Home</code>. Como ainda não criamos ele, vamos fazer agora, crie um arquivo com nome <code>HomeController.php</code> dentro da pasta <code>app/Controller/</code>, defina nossa action <code>index</code> e crie a pasta <code>Home</code> dentro de <code>app/View/</code> e nela crie nossa view <code>index.ctp</code>, veja a relação abaixo.</p>
 
-<a href="{{ site.baseurl }}/assets/conveções-do-cakephp.png"><img class="alignnone size-full wp-image-411" title="conveções-do-cakephp" src="{{ site.baseurl }}/assets/conveções-do-cakephp.png"/></a>
+<a href="{{ site.baseurl }}/assets/convecoes-do-cakephp.png"><img class="alignnone size-full wp-image-411" title="conveções-do-cakephp" src="{{ site.baseurl }}/assets/convecoes-do-cakephp.png"/></a>
 
 <p>Agora abra o arquivo <code>app/View/Home/index.ctp</code>, digite <code>Olá mundo</code>, rode no navegador e veja nossa primeira aplicação no Cake funcionando.</p>
 
