@@ -1,0 +1,102 @@
+---
+layout: post
+status: publish
+published: true
+title: "SOLID Ruby Code with Pub/Sub"
+date: '2017-04-11 13:51:26 -0200'
+categories:
+- Ruby
+tags:
+- solid
+- pubsub
+comments: []
+---
+
+<p>If you are a programmer, very likely you've heard of pub/sub.</p>
+
+<p>Today I am going to show you how this pattern can be useful when applied with one of the <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)" rel="external nofollow" target="_blank">SOLID</a> principles.</p>
+
+<p>Imagine we have a user approval feature. After approving a user, an email must be sent and a job be triggered.</p>
+
+{% highlight ruby %}
+class UserApprovalsController < ApplicationController
+  def create
+    # ..
+    UserApproval.new(user).call
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+class UserApproval
+  def initialize(user)
+    @user = user
+  end
+
+  def call
+    @user.approve!
+    send_email
+    trigger_job
+  end
+
+  private
+
+  def send_email
+    WelcomeMailer.notify(@user).deliver_later
+  end
+
+  def trigger_job
+    HardWork.perform_later(@user)
+  end
+end
+{% endhighlight %}
+
+<p>This code may seem ok, but the <code>UserApproval</code> class is doing so much and breaking the single responsibility principle (SRP), with time it can turn into a mess.</p>
+
+<p>Let's refactor it to use the pub/sub pattern (through the <a href="https://github.com/krisleech/wisper" rel="external nofollow" target="_blank">Wisper</a> gem):</p>
+
+{% highlight ruby %}
+class UserApprovalsController < ApplicationController
+  def create
+    # ..
+    user.approve!
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+class User < ActiveRecord::Base
+  include Wisper::Publisher
+
+  def approve!
+    update(status: :approved)
+    broadcast(:user_approved, self)
+  end
+end
+{% endhighlight %}
+
+<p>Here I removed the <code>UserApproval</code> class and I am calling the <code>approve!</code> method directly on controller.</p>
+
+<p>This method just updates the instance and broadcasts a message with a payload.</p>
+
+{% highlight ruby %}
+class NotifierListener
+  def user_approved(user)
+    WelcomeMailer.notify(user).deliver_later
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+class HardWorkListener
+  def user_approved(user)
+    HardWork.perform_later(user)
+  end
+end
+{% endhighlight %}
+
+<p>So, two distinct classes (subscribers) are responsible for doing just one thing each.</p>
+
+<p>Our code now has less complexity, it's easier to test and maintain.</p>
+
+<p>See you.</p>
