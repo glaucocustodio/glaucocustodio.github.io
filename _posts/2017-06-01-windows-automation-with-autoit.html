@@ -1,0 +1,189 @@
+---
+layout: post
+status: publish
+published: true
+title: "Windows Automation with AutoIt"
+date: '2017-06-01 14:44:50 -0200'
+categories:
+- Windows
+tags:
+- automation
+- scripting
+comments: []
+---
+
+<p>I know, this post is a bit odd comparing to what I am used to write.</p>
+
+<p>You (developer) are doing your job, when your boss turn to you and say:</p>
+
+<p>- "Hey, let's make a robot to automate the payment routine?!".</p>
+
+<p>- "Ok, what do you need?"</p>
+
+<p>- "It needs to access the bank website, sign in and schedule some payment transactions".</p>
+
+<p>- "Ok, let me try"</p>
+
+<p>Some could think in making use of Selenium to pull it off, but here are some caveats:</p>
+
+<ul>
+    <li>The financial pc runs Windows (the one used to run the robot)</li>
+    <li>The bank website uses a Java applet and requires a USB token to sign in</li>
+</ul>
+
+<p>Selenium didn't seem to be the best option for me.</p>
+
+<h2>The solution</h2>
+
+<p>I was fortunate enough to remember I was told about <a href="https://www.autoitscript.com" rel="_external nofollow" target="_blank">AutoIt</a> sometime ago, "a scripting language designed for automating the Windows GUI and general scripting".</p>
+
+<p>I had committed myself to play with it someday and this robot seemed a good opportunity.</p>
+
+<p>Most of the code I will show below was taken from internet and adapted for my needs.</p>
+
+<h3>Setup</h3>
+
+<p>Head to AutoIt website, click Downloads and download the version "AutoIt Full Installation".</p>
+
+<p>Open the SciTE editor and we are ready to develop. Hit F5 to run the program.</p>
+
+<h3>GUI</h3>
+
+<p>I created a simple GUI which contains an input text to enter the date to schedule the payments and a button responsible for calling the "goPay" function.</p>
+
+{% highlight cmake %}
+#include <AutoItConstants.au3>
+#include <GUIConstantsEx.au3>
+
+Opt("GUIOnEventMode", 1) ; Change to OnEvent mode
+
+Func KeepUI()
+   ; Create a GUI with various controls
+   Local $hGUI = GUICreate("Payments", 300, 120)
+
+   GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEButton")
+
+   ; Create the label
+   GUICtrlCreateLabel("Schedule payment for (ex: 29/10/2017):", 20, 20)
+   ; Create the input text
+   Global $transferDateInput = GUICtrlCreateInput("", 20, 38, 230, 20)
+
+   ; Create the button
+   Local $goBtn = GUICtrlCreateButton("Pay", 20, 70, 85, 25)
+   GUICtrlSetOnEvent($goBtn, "goPay")
+
+   ; Display the GUI
+   GUISetState(@SW_SHOW, $hGUI)
+
+   While 1
+    Sleep(100) ; Sleep to reduce CPU usage
+   WEnd
+
+   ; Delete the previous GUI and all controls.
+   GUIDelete($hGUI)
+EndFunc
+
+KeepUI()
+
+Func CLOSEButton()
+    Exit
+EndFunc
+
+Func goPay()
+EndFunc
+{% endhighlight %}
+
+<h3>Reading and validating the input</h3>
+
+<p>In the first lines of "goPay" I read and validate the input:</p>
+
+{% highlight cmake %}
+; Get the filled value
+Global $transferDate = GUICtrlRead($transferDateInput)
+
+If $transferDate == "" Then
+  MsgBox($MB_SYSTEMMODAL, "Warning", "Fill the payment date")
+  Return
+EndIf
+{% endhighlight %}
+
+<p>If the date is empty, I display a pop up and return.</p>
+
+<h3>Creating a browser instance</h3>
+
+<p>AutoIt has built-in support for the Internet Explorer browser, it's not the best, but does the job.</p>
+
+{% highlight cmake %}
+#include <IE.au3>
+
+; Create the IE instance
+Local $oIE = _IECreate("https://mybank.com/sign_in")
+; Maximize active window
+WinSetState("[ACTIVE]", "", @SW_MAXIMIZE)
+; Wait opening the site and loading the Java applet
+Sleep(5500)
+
+; Type the password and ENTER
+Send("1234567489{ENTER}")
+
+Sleep(5000)
+{% endhighlight %}
+
+<p>In my case, if the pc has the USB token connected, we don't need to type user/password, just the token password.</p>
+
+<p>Notice we use <code>{}</code> to type the "ENTER" key. You can see others commands <a href="https://www.autoitscript.com/autoit3/docs/appendix/SendKeys.htm" rel="_external nofollow" target="_blank">here</a>.</p>
+
+<h3>Reading and iterating over a CSV file</h3>
+
+<p>We need to read the payments destination from somewhere, a CSV file seems good:</p>
+
+{% highlight cmake %}
+#include <Array.au3>
+#include <File.au3>
+
+Global $CSVFILE = "C:\Users\User\Documents\list.csv"
+; The delimiter in the CSV file
+Global $DELIM = ";"
+Global $i, $arrContent, $arrLine, $res = 0
+
+$res = _FileReadToArray($CSVFILE, $arrContent)
+If $res = 1 Then
+  For $i = 1 To $arrContent[0]
+    $arrLine = StringSplit($arrContent[$i], $DELIM)
+    If IsArray($arrLine) And $arrLine[0]<>0 Then
+      ; Prints the array
+      _ArrayDisplay($arrLine)
+
+      ; Do something with the elements of the line
+
+      ; Display the bank branch
+      ; & @CRLF returns a \n
+      ConsoleWrite(StringFormat("bank branch %s", $arrLine[1]) & @CRLF)
+    Else
+      MsgBox(48, "", "Error splitting line!")
+    EndIf
+  Next
+Else
+  MsgBox(48, "", "Error opening file!")
+EndIf
+{% endhighlight %}
+
+<h3>Navigating through the links</h3>
+
+<p>All the links in the bank website I was accessing were handled by JavaScript code, so I had to navigate using mouse movements and clicks.</p>
+
+{% highlight cmake %}
+; Move mouse pointer to the coordinates X, Y
+MouseMove(650, 480)
+MouseClick($MOUSE_CLICK_LEFT)
+{% endhighlight %}
+
+<p>This is what we need to make the robot, don't forget to close the IE instance in the end:</p>
+
+{% highlight cmake %}
+_IEQuit($oIE)
+{% endhighlight %}
+
+<p>Using the <code>Aut2Exe</code> (comes in the full installation) we can export the script into a standalone .exe file that does not require runtime libraries.</p>
+
+<p>See you.</p>
