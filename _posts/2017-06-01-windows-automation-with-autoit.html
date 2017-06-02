@@ -138,6 +138,8 @@ Sleep(5000)
 <p>We need to read the payments destination from somewhere, a CSV file seems good:</p>
 
 {% highlight cmake %}
+#include <Array.au3>
+#include <File.au3>
 
 Global $CSVFILE = "C:\Users\User\Documents\list.csv"
 ; The delimiter in the CSV file
