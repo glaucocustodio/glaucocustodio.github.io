@@ -178,12 +178,16 @@ MouseMove(650, 480)
 MouseClick($MOUSE_CLICK_LEFT)
 {% endhighlight %}
 
-<p>This is what we need to make the robot, don't forget to close the IE instance in the end:</p>
+<p>These are the pieces we need to make the robot, the rest is a combination of mouse movements and keystrokes.</p>
+
+ <p>Don't forget to close the IE instance in the end:</p>
 
 {% highlight cmake %}
 _IEQuit($oIE)
 {% endhighlight %}
 
-<p>Using the <code>Aut2Exe</code> (comes in the full installation) we can export the script into a standalone .exe file that does not require runtime libraries.</p>
+<h2>Conclusion</h2>
 
-<p>See you.</p>
+<p>AutoIt is a good tool to have in your tool belt, once you are done with your script, you can export it into a standalone .exe file that does not require runtime libraries using the <code>Aut2Exe</code> (comes in the full installation).</p>
+
+<p>Enjoy yourself.</p>
