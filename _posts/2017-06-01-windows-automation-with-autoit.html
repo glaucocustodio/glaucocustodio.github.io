@@ -52,8 +52,6 @@ comments: []
 <p>I created a simple GUI which contains an input text to enter the date to schedule the payments and a button responsible for calling the "goPay" function.</p>
 
 {% highlight cmake %}
-#include <AutoItConstants.au3>
-#include <GUIConstantsEx.au3>
 
 Opt("GUIOnEventMode", 1) ; Change to OnEvent mode
 
@@ -114,7 +112,6 @@ EndIf
 <p>AutoIt has built-in support for the Internet Explorer browser, it's not the best, but does the job.</p>
 
 {% highlight cmake %}
-#include <IE.au3>
 
 ; Create the IE instance
 Local $oIE = _IECreate("https://mybank.com/sign_in")
@@ -138,8 +135,6 @@ Sleep(5000)
 <p>We need to read the payments destination from somewhere, a CSV file seems good:</p>
 
 {% highlight cmake %}
-#include <Array.au3>
-#include <File.au3>
 
 Global $CSVFILE = "C:\Users\User\Documents\list.csv"
 ; The delimiter in the CSV file
