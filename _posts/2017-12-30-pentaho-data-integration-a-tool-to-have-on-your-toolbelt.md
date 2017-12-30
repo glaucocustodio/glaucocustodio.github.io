@@ -42,7 +42,9 @@ Check <a href="https://wiki.pentaho.com/display/EAI/01.+Installing+Kettle" rel="
 
 <p>Imagine you have two applications with distinct databases: one PostgreSQL (A) and other SQL Server (B) with the following tables:</p>
 
-<img src="{{ site.baseurl }}/assets/two-tables.png"/>
+<a href="{{ site.baseurl }}/assets/two-tables.png">
+  <img src="{{ site.baseurl }}/assets/two-tables.png"/>
+</a>
 
 <p>How can we cross customers from the two databases using the email attribute?</p>
 
@@ -50,7 +52,9 @@ Check <a href="https://wiki.pentaho.com/display/EAI/01.+Installing+Kettle" rel="
 
 <p>Open PDI and create a new transformation (File -> New -> Transformation).</p>
 
-<img src="{{ site.baseurl }}/assets/pentaho-data-integration-transformation.png"/>
+<a href="{{ site.baseurl }}/assets/pentaho-data-integration-transformation.png">
+  <img src="{{ site.baseurl }}/assets/pentaho-data-integration-transformation.png"/>
+</a>
 
 <p>This is how a blank transformation looks like.</p>
 
@@ -60,21 +64,29 @@ Check <a href="https://wiki.pentaho.com/display/EAI/01.+Installing+Kettle" rel="
 
 <p>You will have to create a database connection first, just click New in front of Connection and enter the credentials.</p>
 
-<img src="{{ site.baseurl }}/assets/pdi-table-input.png"/>
+<a href="{{ site.baseurl }}/assets/pdi-table-input.png">
+  <img src="{{ site.baseurl }}/assets/pdi-table-input.png"/>
+</a>
 
 <div class="note">We need to order by email because this field will be used to join the tables.</div>
 
 <p>Drag another <code>Table input</code> for the SQL Server database and do the same.</p>
 
-<img src="{{ site.baseurl }}/assets/pdi-multiple-table-input.png"/>
+<a href="{{ site.baseurl }}/assets/pdi-multiple-table-input.png">
+  <img src="{{ site.baseurl }}/assets/pdi-multiple-table-input.png"/>
+</a>
 
 <p>Now we need to join them, under the <code>Joins</code> folder, drag the <code>Merge Join</code> and select the steps, join type and the keys to join (in our case, email).</p>
 
-<img src="{{ site.baseurl }}/assets/pdi-merge-join.png"/>
+<a href="{{ site.baseurl }}/assets/pdi-merge-join.png">
+  <img src="{{ site.baseurl }}/assets/pdi-merge-join.png"/>
+</a>
 
 <p>Once you are done, run the transformation (click the play button or Action -> Run). It will ask for a name, fill and save.</p>
 
-<img src="{{ site.baseurl }}/assets/pdi-execution-results.png"/>
+<a href="{{ site.baseurl }}/assets/pdi-execution-results.png">
+  <img src="{{ site.baseurl }}/assets/pdi-execution-results.png"/>
+</a>
 
 <p>In Execution Results you can see a bunch of details related to your run, in Preview data, we can check the merge was done as expected.</p>
 
