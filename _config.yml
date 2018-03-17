@@ -73,9 +73,9 @@ sass:
   style: :expanded # You might prefer to minify using :compressed
 
 # Use the following plug-ins
-gems:
+plugins:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
-  - jekyll-admin
+  # - jekyll-admin
 
 # Exclude these files from your production _site
 exclude:
