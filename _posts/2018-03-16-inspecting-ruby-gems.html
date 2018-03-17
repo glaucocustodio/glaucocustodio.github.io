@@ -1,0 +1,103 @@
+---
+layout: post
+status: publish
+published: true
+title: "Inspecting Ruby Gems"
+categories:
+- Ruby
+tags:
+- gems
+---
+
+<p>Have you ever needed inspecting a gem in your local machine?</p>
+
+<p>You need to figure out how a method works, to check the internal state or just out of curiosity.</p>
+
+<p>Today I am here to share two techniques I have been using.</p>
+
+<p>Suppose we are working in a Ruby project which <code>Gemfile</code> contains the following gem:</p>
+
+{% highlight ruby %}
+gem 'grape'
+{% endhighlight %}
+
+<h2>Getting a new copy of the gem</h2>
+
+<p>The first technique is to <code>git clone</code> the gem into your machine, change the branch/tag to the same version that is in <code>Gemfile.lock</code> and set the <code>path</code> option in your <code>gem</code> entry on <code>Gemfile</code>:</p>
+
+{% highlight shell %}
+$ pwd
+# /Users/myuser/projects
+{% endhighlight %}
+
+<p>Clone the gem you want to inspect:</p>
+
+{% highlight shell %}
+$ git clone https://github.com/ruby-grape/grape.git
+{% endhighlight %}
+
+<p>Change the branch/tag:</p>
+
+{% highlight shell %}
+$ cd grape
+$ git checkout v1.0.1
+{% endhighlight %}
+
+<p>Set the <code>path</code> in the <code>Gemfile</code>:</p>
+
+{% highlight ruby %}
+gem 'grape', path: "~/projects/grape"
+{% endhighlight %}
+
+<p>And run <code>bundle</code> to update the reference:</p>
+
+{% highlight shell %}
+$ bundle
+{% endhighlight %}
+
+<p>That is it. You can play with your new copy and do whatever you need now.</p>
+
+<p>Let's invoke a new <code>pry</code> session in the <code>requires</code> method for instance:</p>
+
+{% highlight ruby %}
+# ~/projects/grape/lib/grape/dsl/parameters.rb
+def requires(*attrs, &block)
+  binding.pry
+  # method implementation..
+end
+{% endhighlight %}
+
+<h2>Accessing the gem in its own path</h2>
+
+<p>The second technique is based on inspecting the gem in the path it is already installed in your machine.</p>
+
+<p>Get the path the gem is installed:</p>
+
+{% highlight shell %}
+$ bundle show grape
+# /Users/myuser/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/grape-1.0.2
+{% endhighlight %}
+
+<p>Navigate into:</p>
+
+{% highlight shell %}
+$ cd /Users/myuser/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/grape-1.0.2
+{% endhighlight %}
+
+<p>This will point to the version we already have in <code>Gemfile.lock</code>, so you don't need to worry about the version.</p>
+
+<p>Play with it:</p>
+
+{% highlight ruby %}
+# ~/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/grape-1.0.2/lib/grape/dsl/parameters.rb
+def requires(*attrs, &block)
+  binding.pry
+  # method implementation..
+end
+{% endhighlight %}
+
+<p>The only thing here, is that you need to be cautious, because, the code you change inside this path will be applied to any project using that same version.</p>
+
+<p>If you use any other technique, please, let us know in the comments below.</p>
+
+<p>See you.</p>
