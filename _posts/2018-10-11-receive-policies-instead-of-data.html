@@ -1,0 +1,103 @@
+---
+layout: post
+status: publish
+published: true
+title: "Receive Policies Instead of Data"
+categories:
+- Ruby
+tags:
+- confident ruby
+---
+
+<p>Hi folks, today I wanna share something that drew my attention while reading <a href="https://www.amazon.com/gp/product/B00ETE0D2S/ref=dbs_a_def_rwt_bibl_vppi_i0" rel="external nofollow" target="_blank">Confident Ruby</a>.</p>
+
+<p>Avdi presents the following method:</p>
+
+{% highlight ruby %}
+def delete_files(files, ignore_errors=false, log_errors=false)
+  files.each do |file|
+    begin
+      File.delete(file)
+    rescue => error
+      puts error.message if log_errors
+      raise unless ignore_errors
+    end
+  end
+end
+{% endhighlight %}
+
+<p>And its invocation:</p>
+
+{% highlight ruby %}
+require 'fileutils'
+FileUtils.touch 'does_exist'
+delete_files(['does_not_exist', 'does_exist'], true, true)
+{% endhighlight %}
+
+<p>This code is not good at all.</p>
+
+<ul>
+  <li>the method worries to much in handling edge cases (error, logs)</li>
+  <li>The <code>true, true</code> in calls to <code>delete_files</code> does not help. We have to refer to the method definition to remember what those flags mean.</li>
+  <li>What if we wanted to log using a special format? Or to somewhere other than STDOUT? There is no provision for customizing how errors are logged.</li>
+  <li>What do we do if we ever decide to handle permissions errors differently from <code>no such file or directory</code>? Add yet another flag?</li>
+</ul>
+
+<p>The book point us the fundamental problem: both <code>ignore_errors</code> and <code>log_errors</code> attempt to specify policies using data.</p>
+
+<p>Let's fix this by passing a block as argument:</p>
+
+{% highlight ruby %}
+def delete_files(files, &error_policy)
+  error_policy ||= ->(file, error) { raise error }
+
+  files.each do |file|
+    begin
+      File.delete(file)
+    rescue => error
+      error_policy.call(file, error)
+    end
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+delete_files(['does_not_exist', 'does_exist']) do |file, error|
+  puts error.message
+end
+{% endhighlight %}
+
+<p>Look how flexible it is now. We define a default behavior for error handling but also let it open for customization by calling a given block.</p>
+
+<p>What if we need more control over the behavior? Just pass more policies:</p>
+
+{% highlight ruby %}
+def delete_files(files, options={})
+  error_policy = options.fetch(:on_error) { ->(file, error) { raise error } }
+  symlink_policy = options.fetch(:on_symlink) { ->(file) { File.delete(file) } }
+
+  files.each do |file|
+    begin
+      if File.symlink?(file)
+        symlink_policy.call(file)
+      else
+        File.delete(file)
+      end
+    rescue => error
+      error_policy.call(file, error)
+    end
+  end
+end
+{% endhighlight %}
+
+{% highlight ruby %}
+delete_files(
+  ['file1', 'file2'],
+  on_error: ->(file, error) { warn error.message },
+  on_symlink: ->(file) { File.delete(File.realpath(file)) }
+)
+{% endhighlight %}
+
+<h2>Conclusion</h2>
+
+<p>Block and proc as argument help callers to specify policies, freeing us from hard-coded decisions which someone else could make.</p>
