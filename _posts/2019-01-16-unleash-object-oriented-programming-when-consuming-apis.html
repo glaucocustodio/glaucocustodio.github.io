@@ -1,0 +1,126 @@
+---
+layout: post
+status: publish
+published: true
+title: "Unleash Object-Oriented Programming When Consuming APIs"
+categories:
+- JavaScript
+---
+
+<p>Suppose we are building a Single Page Application and have the following classes (or models in a Angular app):</p>
+
+{% highlight typescript %}
+// user.ts
+import { Profile } from './profile';
+
+export class User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  profile: Profile;
+
+  fullName() {
+    return `${this.first_name} ${this.last_name}`
+  }
+}
+{% endhighlight %}
+
+{% highlight typescript %}
+// profile.ts
+export class Profile {
+  id: number;
+  score: number;
+
+  goodScore() {
+    return this.score > 100
+  }
+}
+{% endhighlight %}
+
+<p>Now, you gotta consume the user api, which returns the following json:</p>
+
+{% highlight typescript %}
+response = `{
+  "id": 1,
+  "first_name": "Elon",
+  "last_name": "Musk",
+  "profile": {
+    "id": 10,
+    "score": 200
+  }
+}`
+{% endhighlight %}
+
+<p>As soon as you parse your response json, you will get a literal object:</p>
+
+{% highlight typescript %}
+parsed_json = JSON.parse(response)
+parsed_json.constructor.name
+=> "Object"
+{% endhighlight %}
+
+<p>The problem is.. A literal object is not a class object, you will not be able to do things like:</p>
+
+{% highlight typescript %}
+user.fullName()
+user.profile.goodScore()
+{% endhighlight %}
+
+<p>We want to use the full power of object-orientation in JavaScript. How can we pull it off?</p>
+
+<h2>Enter class-transformer</h2>
+
+<p><a href="https://www.npmjs.com/package/class-transformer" target="_blank" rel="external nofollow">class-transformer</a> is a small npm package that does the heavy lifting for us.</p>
+
+{% highlight typescript %}
+import { plainToClass } from "class-transformer";
+
+user_instance = plainToClass(User, response)
+user_instance.constructor.name
+=> "User"
+{% endhighlight %}
+
+<p><code>plainToClass</code> converts a literal object into a class object.</p>
+
+<p>Now we are free to use our methods:</p>
+
+{% highlight typescript %}
+user_instance.fullName()
+=> "Elon Musk"
+{% endhighlight %}
+
+<p>But.. If we try to access a nested object like <code>profile</code>, it will not work:</p>
+
+{% highlight typescript %}
+user_instance.profile.goodScore()
+=> profile.goodScore is not a function
+{% endhighlight %}
+
+<p>That is because the library does not know which class must be used, so we need to manually define the type (line 9):</p>
+
+{% highlight typescript linenos %}
+// user.ts
+import { Profile } from './profile';
+import { Type } from "class-transformer";
+
+export class User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  @Type(() => Profile)
+  profile: Profile;
+
+  fullName() {
+    return `${this.first_name} ${this.last_name}`
+  }
+}
+{% endhighlight %}
+
+<p>Ok, now we are good to go:</p>
+
+{% highlight typescript %}
+user_instance.profile.goodScore()
+=> true
+{% endhighlight %}
+
+<p>This library has many more useful functions, I don't want to explain their whole README here, so, go check it out.</p>
