@@ -4,9 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Hi, my name is Glauco Custódio. I am a brazilian Software Engineer based near to Campinas-SP and founder/organizer of <a href="http://twitter.com/rupycampinas" target="_blank">RuPy Campinas</a>.
+Hi, my name is Glauco Custódio and I am a brazilian Software Engineer currently living in Lisbon, Portugal.
 
-I love to build things, get knowledge and contribute to open source community.
+I'm passionate about building great software, learning new things and contributing back to the community.
 
 <br>
 <br>
