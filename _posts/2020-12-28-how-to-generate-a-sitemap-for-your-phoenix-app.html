@@ -1,0 +1,120 @@
+---
+layout: post
+status: publish
+published: true
+title: "How to Generate a Sitemap for Your Phoenix App"
+categories:
+- Elixir
+---
+
+<p>You've got your app built with <a target="_blank" rel="external nofollow" href="https://www.phoenixframework.org/">Phoenix Framework</a> now you want to generate a sitemap for it.</p>
+
+<p>Googling one can find ways to <a target="_blank" rel="external nofollow" href="https://medium.com/@ricardoruwer/create-dynamic-sitemap-xml-in-elixir-and-phoenix-6167504e0e4b">generate a sitemap dynamically</a> by creating a route/controller just for that.</p>
+
+<p>However, in this post, I am gonna show you another approach: generating a sitemap via script and serving it statically.</p>
+
+<h2>Install sitemap</h2>
+
+<p>Add <a href="https://hex.pm/packages/sitemap" target="_blank" rel="external nofollow">sitemap</a> to your list of dependencies in <code>mix.exs</code>:</p>
+
+{% highlight elixir %}
+def deps do
+  [{:sitemap, "~> 1.1"}]
+end
+{% endhighlight %}
+
+<p>Ensure sitemap is started before your application:</p>
+
+{% highlight elixir %}
+def application do
+  [extra_applications: [:sitemap]]
+end
+{% endhighlight %}
+
+<p>Run <code>mix deps.get</code>.</p>
+
+<p>For further instructions check their <a href="https://github.com/ikeikeikeike/sitemap" target="_blank" rel="external nofollow">readme</a>.</p>
+
+<h2>Create the script</h2>
+
+Let's create the script responsible for generating the sitemap:
+
+{% highlight elixir %}
+# lib/your_app/sitemap.exs
+defmodule YourApp.Sitemap do
+  alias YourApp.{Repo, Product}
+  alias YourAppWeb.{Endpoint, Router.Helpers}
+
+  use Sitemap, compress: false,
+    host: "https://#{Application.get_env(:your_app, Endpoint)[:url][:host]}",
+    files_path: "priv/static/sitemaps/"
+
+  def generate do
+    create do
+      for product <- Repo.all(Product) do
+        add Helpers.product_path(Endpoint, :show, product.slug),
+          lastmod: product.updated_at, changefreq: "daily"
+      end
+
+      ping()
+    end
+  end
+end
+
+YourApp.Sitemap.generate
+{% endhighlight %}
+
+<p>I set <code>compress: false</code> so it's easier to check the outcome, you can change it if you want.</p>
+
+<p>Notice that I am iterating over all products from the database and generating a xml node for each one.</p>
+
+<h2>Set host in prod.exs</h2>
+
+<p>In order to have the proper host in <code>get_env</code> above, you need to set it in <code>prod.exs</code> like:</p>
+
+{% highlight elixir %}
+config :your_app, YourAppWeb.Endpoint,
+  url: [host: "yourapp.com", port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json"
+{% endhighlight %}
+
+<h2>Allow serving of sitemaps</h2>
+
+<p>In the script we have <code>files_path: "priv/static/sitemaps/"</code>, this means the sitemap will be generated inside this directory. We need to tell Phoenix to allow serving this folder in <code>lib/your_app_web/endpoint.ex</code>:</p>
+
+{% highlight elixir %}
+plug Plug.Static,
+  at: "/",
+  from: :your_app,
+  gzip: false,
+  only: ~w(css fonts images js favicon.ico robots.txt sitemaps)
+{% endhighlight %}
+
+<h2>Run the script</h2>
+
+<p>You can run the script with <code>mix run lib/your_app/sitemap.exs</code>, but if you want to run it on production, you must set <code>MIX_ENV=prod</code>. I like to create a make task for it:</p>
+
+{% highlight makefile %}
+# Makefile
+generate_sitemap:
+  MIX_ENV=prod mix run lib/your_app/sitemap.exs
+{% endhighlight %}
+
+<h2>Automate script run</h2>
+
+<p>If you are like me and use <a target="_blank" rel="external nofollow" href="https://github.com/dokku/dokku">dokku</a> for running and deploying your application, you can run the make task above every time you make a new deploy by having <code>app.json</code> like:</p>
+
+{% highlight json %}
+{
+  "scripts": {
+    "dokku": {
+      "predeploy": "make generate_sitemap",
+      "postdeploy": "mix ecto.migrate"
+    }
+  }
+}
+{% endhighlight %}
+
+<p>This way, we always generate the sitemap before deploying the newer version.</p>
+
+<p>That's all.</p>
