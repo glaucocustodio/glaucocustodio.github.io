@@ -1,0 +1,102 @@
+---
+layout: post
+status: publish
+published: true
+title: "Redirecting Uppercase URLs to Lowercase in a Dokku Powered App"
+categories:
+- DevOps
+---
+
+<p>By default, Dokku Nginx's config doesn't redirect uppercase urls to their lowercase version.</p>
+
+<p>SEO experts say it might not be good having the same page served by two distinct urls like: <code>youapp.com/foo</code> and <code>youapp.com/FOO</code>. Let's see how we can do that.</p>
+
+<h2>Override Nginx configuration</h2>
+
+<p>We need to override Nginx default configuration so we can change it.</p>
+
+<p>Check the version of Dokku running on your server:</p>
+
+{% highlight bash %}
+$ dokku --version
+dokku version 0.21.4
+{% endhighlight %}
+
+<p>Download Nginx default config on <code>https://raw.githubusercontent.com/dokku/dokku/v0.21.4/plugins/nginx-vhosts/templates/nginx.conf.sigil</code> (replace <code>0.21.4</code> by your version number) and put its content in a file <code>nginx.conf.sigil</code> in the root of your app.</p>
+
+<p>Add the following <code>location</code> directive inside the corresponding ssl <code>server</code> (before the main <code>location /</code>), commit and deploy:</p>
+
+{% highlight nginx %}
+server {
+  # ...
+  location ~ [A-Z] {
+    set_by_lua $request_uri_low "return ngx.arg[1]:lower()" $request_uri;
+    rewrite ^ https://$host$request_uri_low permanent;
+  }
+
+  location    / {
+    # ...
+  }
+}
+{% endhighlight %}
+
+<p>If you see the error below when deploying, it's because you don't have the lua module installed.</p>
+
+{% highlight bash %}
+remote: nginx: [emerg] unknown directive "set_by_lua" in /home/dokku/youapp/nginx.conf:30
+remote: nginx: configuration file /etc/nginx/nginx.conf test failed
+{% endhighlight %}
+
+<p>You can confirm by checking that <code>50-mod-http-lua.conf</code> is missing between enabled modules:
+
+{% highlight bash %}
+$ ls /etc/nginx/modules-enabled/
+50-mod-http-image-filter.conf  50-mod-http-xslt-filter.conf  50-mod-mail.conf  50-mod-stream.conf
+{% endhighlight %}
+
+<h2>Install nginx-extras</h2>
+
+<p>Let's install <code>nginx-extras</code> to have the lua module:</p>
+
+{% highlight bash %}
+$ sudo apt-get install nginx-extras
+{% endhighlight %}
+
+<p>Restart Nginx:</p>
+
+{% highlight bash %}
+$ service nginx restart
+{% endhighlight %}
+
+<p>Great, you can check everything is ok by testing the Nginx config now:</p>
+
+{% highlight bash %}
+$ nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+{% endhighlight %}
+
+<p>If you list the enabled modules again, there we have it:</p>
+
+{% highlight bash %}
+$ ls /etc/nginx/modules-enabled/
+10-mod-http-ndk.conf          50-mod-http-echo.conf        50-mod-http-headers-more-filter.conf  50-mod-http-subs-filter.conf     50-mod-mail.conf
+50-mod-http-auth-pam.conf     50-mod-http-fancyindex.conf  50-mod-http-image-filter.conf         50-mod-http-uploadprogress.conf  50-mod-nchan.conf
+50-mod-http-cache-purge.conf  50-mod-http-geoip.conf       50-mod-http-lua.conf                  50-mod-http-upstream-fair.conf   50-mod-stream.conf
+50-mod-http-dav-ext.conf      50-mod-http-geoip2.conf      50-mod-http-perl.conf                 50-mod-http-xslt-filter.conf
+{% endhighlight %}
+
+<p>Finally, it's always good making a request to confirm we are redirecting with <code>301 Moved Permanently</code>:</p>
+
+{% highlight bash %}
+$ curl https://youapp.com/FOO
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+{% endhighlight %}
+
+<p>That's all.</p>
