@@ -1,0 +1,61 @@
+---
+layout: post
+status: publish
+published: true
+title: "Rails 6.1 adds compact_blank"
+categories:
+- Ruby
+custom_canonical_href: "https://glaucocustodio.medium.com/rails-6-1-adds-compact-blank-b6f3ecdedd8d"
+---
+
+<p>Rails 6.1.0 adds <code>compact_blank</code> and <code>compact_blank!</code> to ActiveSupport which makes it easier for removing blank values from an Enumerable / ActionController::Parameters.</p>
+
+<h2>Before Rails 6.1</h2>
+
+<p>Removing blank values from an array:</p>
+
+{% highlight ruby %}
+[nil, 1, '', :foo].reject(&:blank?)
+# => [1, :foo]
+{% endhighlight %}
+
+<p>Removing blank values from a hash:</p>
+
+{% highlight ruby %}
+{ a: nil, b: '', c: [], d: 1 }.reject { |_, value| value.blank? }
+# => { d: 1 }
+{% endhighlight %}
+
+<h2>Rails 6.1</h2>
+
+<p>Removing blank values from an array:</p>
+
+{% highlight ruby %}
+[nil, 1, '', :foo].compact_blank
+# => [1, :foo]
+{% endhighlight %}
+
+<p>You can also use <code>compact_blank!</code> which mutates its receiver:</p>
+
+{% highlight ruby %}
+a = [1, "", nil, 2, " ", [], {}, false, true]
+a.compact_blank!
+# =>  [1, 2, true]
+{% endhighlight %}
+
+<p>Removing blank values from a hash:</p>
+
+{% highlight ruby %}
+{ a: nil, b: '', c: [], d: 1 }.compact_blank
+# => { d: 1 }
+{% endhighlight %}
+
+<p>Using <code>compact_blank!</code>:</p>
+
+{% highlight ruby %}
+h = { a: "", b: 1, c: nil, d: [], e: false, f: true }
+h.compact_blank!
+# => { b: 1, f: true }
+{% endhighlight %}
+
+<p>Check out the <a href="https://github.com/rails/rails/pull/36412" target="_blank" rel="external nofollow">pull request</a> to see the implementation.</p>

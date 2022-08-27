@@ -1,0 +1,77 @@
+---
+layout: post
+status: publish
+published: true
+title: "Top Best/Worst Performing Stocks with Python"
+categories:
+- Python
+custom_canonical_href: "https://glaucocustodio.medium.com/top-best-worst-performing-stocks-with-python-43814b984091"
+---
+<h2>Just 13 lines of code, I promise</h2>
+
+<p>First, we need to define the stocks we wanna watch:</p>
+
+{% highlight python %}
+tickers = ['voo', 'msft', 'googl', 'fb', 'tsla', 'aapl', 'nflx', 'twtr']
+{% endhighlight %}
+
+<p>Then let's use Python's <a href="https://pypi.org/project/ffn/" target="_blank" rel="external nofollow">ffn library</a> to get the closing prices of the last three trading sessions (three because we might be on a weekend):</p>
+
+{% highlight python %}
+start_date = datetime.date.today() - datetime.timedelta(days=3)
+prices = ffn.get(tickers, start=start_date)
+{% endhighlight %}
+
+<p>Once we have the prices, let's calculate the percentual change over the days, remove any <code>n/a</code> values and get the last price diff using <code>iloc[-1:]</code>:</p>
+
+{% highlight python %}
+final = prices.pct_change().dropna().iloc[-1:].T.reset_index()
+final.columns = ['ticker', 'pct']
+{% endhighlight %}
+
+<p>We also need to transpose the data frame and reset the index before advancing to the final step:</p>
+
+{% highlight python %}
+best = final.nlargest(5, 'pct')
+worst = final.nsmallest(5, 'pct')
+{% endhighlight %}
+
+<p>Here we get the top 5 best and worst performing stocks over the last trading session.</p>
+
+{% highlight python %}
+print(best)
+#   ticker       pct
+# 3     fb  0.041239
+# 6   nflx  0.014640
+# 2  googl  0.002780
+# 4   tsla  0.002618
+# 1   msft -0.001604
+
+print(worst)
+#   ticker       pct
+# 7   twtr -0.007344
+# 5   aapl -0.004480
+# 0    voo -0.001778
+# 1   msft -0.001604
+# 4   tsla  0.002618
+{% endhighlight %}
+
+<p>Putting all together now:</p>
+
+{% highlight python %}
+import ffn
+import datetime
+
+tickers = ['voo', 'msft', 'googl', 'fb', 'tsla', 'aapl', 'nflx', 'twtr']
+
+start_date = datetime.date.today() - datetime.timedelta(days=3)
+prices = ffn.get(tickers, start=start_date)
+
+final = prices.pct_change().dropna().iloc[-1:].T.reset_index()
+final.columns = ['ticker', 'pct']
+
+best = final.nlargest(5, 'pct')
+worst = final.nsmallest(5, 'pct')
+{% endhighlight %}
+
+<p>Hope you have liked :)</p>

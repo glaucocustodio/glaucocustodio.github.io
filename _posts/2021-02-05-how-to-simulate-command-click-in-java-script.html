@@ -1,0 +1,52 @@
+---
+layout: post
+status: publish
+published: true
+title: "How to Simulate Command+Click in JavaScript"
+categories:
+- JavaScript
+custom_canonical_href: "https://glaucocustodio.medium.com/how-to-simulate-command-click-in-javascript-dffc8f71d3ac"
+---
+
+<p>For some reason you are simulating links with JavaScript like:</p>
+
+{% highlight html %}
+<!-- index.html -->
+<div class="linkable" rel="/awesome">
+  ...
+</div>
+{% endhighlight %}
+
+{% highlight javascript %}
+// script.js
+$('.linkable').on('click', function(event){
+  const url = event.delegateTarget.getAttribute('rel')
+  window.location.href = url
+})
+{% endhighlight %}
+
+<p>But you want to open the link in another tab as you do when clicking on the link with ⌘ Command pressed.</p>
+
+<p>There you go:</p>
+
+{% highlight javascript %}
+// script.js
+$('.linkable').on('click', function(event){
+  const url = event.delegateTarget.getAttribute('rel')
+
+  if (event.metaKey) {
+    window.open(url)
+  } else {
+    window.location.href = url
+  }
+})
+{% endhighlight %}
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/metaKey" target="_blank" rel="external nofollow">metaKey</a> is Command key on macOS and Windows key on Windows.</p>
+
+
+<p>You might want to check its <a href="https://caniuse.com/mdn-api_mouseevent_metakey" target="_blank" rel="external nofollow">support</a> across browsers.</p>
+
+<h2>Bonus</h2>
+
+<p>There is also another property <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/ctrlKey" target="_blank" rel="external nofollow">ctrlKey</a> with the same behaviour but for Ctrl key on Windows and Control on macOS.</p>

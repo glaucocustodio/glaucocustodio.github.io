@@ -1,0 +1,37 @@
+---
+layout: post
+status: publish
+published: true
+title: "Beautiful Multiline Strings in Ruby"
+categories:
+- Ruby
+custom_canonical_href: "https://glaucocustodio.medium.com/beautiful-multiline-strings-in-ruby-20ca52487800"
+---
+
+<p>This is more of a personal reminder.</p>
+
+<p>You've got a string that needs to have multiple lines and/or have single/double quotes inside. A SQL query or a HTML snippet is a perfect example:</p>
+
+{% highlight sql %}
+select * from users where status = 'true'
+{% endhighlight %}
+
+<p>What would you use in Ruby to represent it?</p>
+
+<p>Off the top of my head I would use <code>%{}</code>. Yes, you can create a string like that in case you don't know <code>%{foo}.class #=> String</code>.</p>
+
+<p>The problem is that if you need syntax highlighting, it doesn't look nice on most of the editors (like Sublime Text, VS Code):</p>
+
+<img class="size-full wp-image-92 aligncenter" title="ugly sql" src="{{ site.baseurl }}/assets/ugly-sql.png"/>
+
+<h2>Solution</h2>
+
+<p>Use heredoc if you need to maintain the original indentation (note the double space preserved in the beginning of line 5):</p>
+
+<img class="size-full wp-image-92 aligncenter" title="ugly sql" src="{{ site.baseurl }}/assets/heredoc-sql-ruby.png"/>
+
+<p>Use squiggly heredoc (introduced in Ruby 2.3) if you want to remove the indentation:</p>
+
+<img class="size-full wp-image-92 aligncenter" title="ugly sql" src="{{ site.baseurl }}/assets/squiggly-heredoc-ruby.png"/>
+
+<p>Replace SQL by whatever language you want to represent (like for instance <code><<-HTML...HTML</code>) so your editor might know how to highlight it.</p>
