@@ -1,0 +1,24 @@
+---
+layout: post
+status: publish
+published: true
+title: "How to Install Multiple Versions of Python on Apple Silicon / M1"
+categories:
+- Python
+---
+
+<p>I struggled to build and install Python on M1. Only got this error <code>configure: error: Unexpected output of 'arch' on OSX</code>.</p>
+
+<p>I had Homebrew and <a href="https://asdf-vm.com/" target="_blank" rel="external nofollow">asdf</a> installed for arm64 (default Apple Silicon / M1 architecture).</p>
+
+<p>That's what worked for me: duplicate iTerm (Finder -> Applications -> Right click on iTerm -> Duplicate) and set it to run with Rosetta (Right click on the duplicated iTerm -> Get Info -> Mark "Open using Rosetta").</p>
+
+<p>Rename the duplicate to something like iTerm Rosetta and you will end up with iTerm and iTerm Rosetta.</p>
+
+<p>Open iTerm Rosetta and type <code>arch</code>, it must show <code>i386</code> on iTerm Rosetta and <code>arm64</code> on regular iTerm.</p>
+
+<p>Install Homebrew on <code>i386</code>. Open iTerm Rosetta and run <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>, then <code>which brew</code> to confirm, you must see <code>/usr/local/bin/brew</code>.</p>
+
+<div class="note">Homebrew for arm64 is installed on <code>/opt/homebrew/bin/brew</code> instead.</div>
+
+<p>Now install the desired version of Python using asdf, eg: <code>asdf install python 3.8.9</code>.</p>
