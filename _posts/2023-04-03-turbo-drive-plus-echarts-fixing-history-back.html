@@ -1,0 +1,55 @@
+---
+layout: post
+status: publish
+published: true
+title: "Turbo Drive + ECharts: Fixing History Back"
+categories:
+- JavaScript
+---
+
+<h2>Problem</h2>
+
+<p>You got a Rails app with <a target="_blank" rel="external nofollow" href="https://turbo.hotwired.dev/handbook/introduction">Turbo Drive</a> and some charts powered by <a target="_blank" rel="external nofollow" href="https://echarts.apache.org/en/index.html">ECharts</a>.</p>
+
+<p>It works fine until you navigate to another page and hit the back button.</p>
+
+<p>When navigating back in the browser history, somehow Turbo can't deal with the charts and displays an empty square instead of rendering them. Only a full page refresh can make them appear again.</p>
+
+<h2>The Lazy Solution</h2>
+
+<p>The simpler (but not so nice) solution is to disable Turbo Drive for all links on that particular page which contains the charts:</p>
+
+{% highlight html %}
+<head>
+  ...
+  <meta name="turbo-visit-control" content="reload">
+</head>
+{% endhighlight %}
+
+<p>But that would downgrade the user experience, so it's kinda meh.</p>
+
+<h2>A Better Solution</h2>
+
+<p>Turbo Drive <a target="_blank" rel="external nofollow" href="https://turbo.hotwired.dev/handbook/building#understanding-caching">caches</a> the current page before requesting the clicked link, so I thought, what if I dispose the charts before saving the cache?</p>
+
+<p>That worked.</p>
+
+<p>We can use the <code>turbo:before-cache</code> <a target="_blank" rel="external nofollow" href="https://turbo.hotwired.dev/reference/events">callback</a> to remove all chart instances upon navigation:</p>
+
+{% highlight javascript %}
+let allChartIntances = []
+
+document.addEventListener('turbo:before-cache', function() {
+  allChartIntances.forEach(chartInstance => chartInstance.dispose())
+})
+
+document.addEventListener('turbo:load', function() {
+  let fooChart = echarts.init(fooContainer);
+  allChartIntances.push(fooChart)
+
+  let barChart = echarts.init(barContainer);
+  allChartIntances.push(barChart)
+})
+{% endhighlight %}
+
+<p>In the example above two charts are created and stored in the <code>allChartInstances</code> array when the page first load. Before caching the page they are properly removed and when navigating back they will be re-created on <code>turbo:load</code>.</p>
