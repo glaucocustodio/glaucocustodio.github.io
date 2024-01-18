@@ -1,0 +1,189 @@
+---
+layout: post
+status: publish
+published: true
+title: "Migrating From Dokku to Kamal: Provisioning with Terraform"
+categories:
+- DevOps
+- Terraform
+---
+
+<p>I have a
+  <code>2 GB Memory, 1 vCPU, 50 GB Disk</code> VPS on Digital Ocean which cost me 12 USD per month. Comparing the prices
+  with <a href="https://www.hetzner.com/" target="_blank" rel="external nofollow">Hetzner</a> I noticed I could have 3x
+  <code>4 GB, 2 vCPU Arm64, 40 GB Disk</code> for 13.53 EUR per month. That's a lot more power for almost the same
+  price.
+</p>
+
+<p>The droplet is running a Rails application with <a href="https://dokku.com/" target="_blank" rel="external nofollow">Dokku</a>. I really enjoyed my time with Dokku, it makes our lives so
+  much easier when setting up a VPS from scratch. The major downside of Dokku is the lack of support to multi-host
+  though.</p>
+
+<p>After the introduction of <a href="https://www.youtube.com/watch?v=yWSpjKErnco" target="_blank" rel="external nofollow">Kamal</a> I thought in giving it a try, but this time using Hetzner instead of Digital Ocean.
+</p>
+
+<h2>Provisioning Resources on Hetzner with Terraform</h2>
+
+<p>Since I would be creating new servers on Hetzner, I asked ChatGPT to help me doing that with Terraform so the whole
+  process could be easily repeatable.</p>
+</p>
+
+<p>After some back and forth I ended up with the following script on <code>terraform/main.tf</code>:</p>
+
+{% highlight terraform %}
+# requires TF_VAR_hetzner_api_token env var
+# eg: `TF_VAR_hetzner_api_token=foo terraform apply`
+variable "hetzner_api_token" {
+  type    = string
+  default = ""
+}
+
+# requires TF_VAR_hetzner_ssh_fingerprint env var
+# eg: `TF_VAR_hetzner_ssh_fingerprint=bar terraform apply`
+variable "hetzner_ssh_fingerprint" {
+  type    = string
+  default = ""
+}
+
+# requires TF_VAR_user_private_key_path env var
+# eg: `TF_VAR_user_private_key_path=/Users/foo/.ssh/id_ed25519 terraform apply`
+variable "user_private_key_path" {
+  type    = string
+  default = ""
+}
+
+variable "server_names" {
+  default = ["web", "worker", "db"]
+}
+
+data "hcloud_ssh_key" "ssh_key" {
+  fingerprint = var.hetzner_ssh_fingerprint
+}
+
+provider "hcloud" {
+  token = var.hetzner_api_token
+}
+
+variable "common_provisioner_commands" {
+  default = [
+    "echo 1",
+  ]
+}
+
+resource "hcloud_server" "cax11" {
+  count       = length(var.server_names)
+  name        = var.server_names[count.index]
+  image       = "ubuntu-22.04"
+  server_type = "cax11"
+  location    = "nbg1"
+  ssh_keys    = [data.hcloud_ssh_key.ssh_key.id]
+
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = true
+  }
+
+  # create a acme.json file only on the server "web"
+  # it will be used to keep the certificate on the host so it can be reused
+  # across many containers (will avoid rate limiting from letsencrypt)
+  #
+  # inspiration: https://github.com/basecamp/kamal/discussions/112#discussioncomment-6266858
+  #
+  provisioner "remote-exec" {
+    inline = var.server_names[count.index] == "web" ? concat([
+      "mkdir -p /letsencrypt && touch /letsencrypt/acme.json && chmod 600 /letsencrypt/acme.json",
+    ], var.common_provisioner_commands) : var.common_provisioner_commands
+
+    connection {
+      type        = "ssh"
+      user        = "root"
+      private_key = file(var.user_private_key_path)
+      host        = self.ipv4_address
+    }
+  }
+}
+
+# Print the IP addresses of the created instances
+output "formatted_instance_ips" {
+  value = <<-EOT
+    web: ${hcloud_server.cax11[0].ipv4_address}
+    worker: ${hcloud_server.cax11[1].ipv4_address}
+    db: ${hcloud_server.cax11[2].ipv4_address}
+  EOT
+}
+
+
+# update ../.env file with IPv4 addresses and
+# remove old ssh keys from the .ssh/known_hosts file
+resource "null_resource" "update_env_file" {
+  depends_on = [hcloud_server.cax11]
+
+  provisioner "local-exec" {
+    command = <<EOT
+sed -i -E 's/^KAMAL_WEB_IP=.*/KAMAL_WEB_IP=${hcloud_server.cax11[0].ipv4_address}/' ../.env
+sed -i -E 's/^KAMAL_WORKER_IP=.*/KAMAL_WORKER_IP=${hcloud_server.cax11[1].ipv4_address}/' ../.env
+sed -i -E 's/^POSTGRES_HOST=.*/POSTGRES_HOST=${hcloud_server.cax11[2].ipv4_address}/' ../.env
+ssh-keygen -R ${hcloud_server.cax11[0].ipv4_address}
+ssh-keygen -R ${hcloud_server.cax11[1].ipv4_address}
+ssh-keygen -R ${hcloud_server.cax11[2].ipv4_address}
+EOT
+  }
+}
+
+terraform {
+  required_version = ">= 1.4.3"
+  required_providers {
+    hcloud = {
+      "source"  = "hetznercloud/hcloud"
+      "version" = ">= 1.44.1"
+    }
+  }
+}
+{% endhighlight %}
+
+<p>The script above does a couple of things:</p>
+
+<ul>
+  <li>define a few variables so the Terraform script doesn't hold any hard coded sensitive data, namely the Hetzner api token, the fingerprint of the ssh key associated with my account on Hetzner and my ssh private key</li>
+
+  <li>define the resources to be managed on the german provider: 3 VPSs of the type <code>CAX11</code>, named <code>web</code>, <code>worker</code> and <code>db</code></li>
+
+  <li>create and give permission to the file <code>/letsencrypt/acme.json</code> only on the <code>web</code> server as it will be used ahead to hold Let's Encrypt certificate</li>
+
+  <li>print the ipv4 of the created resources</li>
+
+  <li>update the <code>.env</code> file with the ipv4 of the created servers. This file will be used by Kamal to set up the environment variables on the servers</li>
+
+  <li>remove the ipv4 of the created resources from the <code>.ssh/known_hosts</code> file, this can be left out in case you are not applying and destroying the resources on Hetzner often.</li>
+
+  <li>define the versions of Terraform and the provider (boilerplate code required by Terraform)</li>
+</ul>
+
+<p>Once you have uploaded your public ssh key to Hetzner, you can copy the fingerprint by visiting <code>Security -> SSH keys</code> on their website.</p>
+
+<p>By visiting <code>Security -> API tokens</code> you can generate an api token that will allow Terraform to manage resources on your Hetzner account.</p>
+
+<p>The path to your private key is required so Terraform can ssh into the servers on your behalf.</p>
+
+<p>Once you have everything in place and have installed Terraform on your machine you can run:</p>
+
+{% highlight bash %}
+cd terraform
+terraform init
+{% endhighlight %}
+
+<p>to initialize the terraform thing and:</p>
+
+{% highlight bash %}
+TF_VAR_user_private_key_path=/Users/my_user/.ssh/id_ed25519 TF_VAR_hetzner_api_token="abcdefghijklmnopqrstuvwxyz" TF_VAR_hetzner_ssh_fingerprint="a1:b2:c3:d4:e5:f6:g7:h8" terraform apply
+{% endhighlight %}
+
+<p>to create the resources on Hetzner. Notice you gotta prepend <code>TF_VAR_</code> on the name of the variables defined in the script.</p>
+
+<p>In case you want to destroy the resources created you can run:</p>
+
+{% highlight bash %}
+TF_VAR_user_private_key_path=/Users/my_user/.ssh/id_ed25519 TF_VAR_hetzner_api_token="abcdefghijklmnopqrstuvwxyz" TF_VAR_hetzner_ssh_fingerprint="a1:b2:c3:d4:e5:f6:g7:h8" terraform destroy
+{% endhighlight %}
+
+<p>In a follow-up post I'll share how I set up the servers with Kamal, including Let's Encrypt on the <code>web</code>.</p>
