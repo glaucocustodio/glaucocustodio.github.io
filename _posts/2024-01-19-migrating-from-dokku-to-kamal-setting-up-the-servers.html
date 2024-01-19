@@ -1,0 +1,141 @@
+---
+layout: post
+status: publish
+published: true
+title: "Migrating From Dokku to Kamal: Setting up the Servers"
+categories:
+- DevOps
+- Kamal
+---
+
+<p>This is the second post of the series "Migrating From Dokku to Kamal" and today I am gonna show you how I've set up my servers with <a href="https://kamal-deploy.org/" target="_blank" rel="external nofollow">Kamal</a>, <a href="{% post_url 2024-01-18-migrating-from-dokku-to-kamal-provisioning-with-terraform %}">click here</a> to read the first post of the series in case you've missed it.</p>
+
+<div class="note">The author assumes you've a basic understanding of how Kamal works, you can familiarize yourself by checking the <a href="https://kamal-deploy.org/docs/installation" target="_blank" rel="external nofollow">official documentation</a>.</div>
+
+<p>
+  Below you can find part of my final <code>deploy.yml</code>:
+</p>
+
+
+{% highlight yaml %}
+servers:
+  web:
+    hosts:
+      - <%= ENV['KAMAL_WEB_IP'] %>
+    labels:
+      traefik.http.routers.domain.rule: Host(`*.domain.com`)
+      traefik.http.routers.domain.entrypoints: websecure
+      traefik.http.routers.domain.tls.certresolver: letsencrypt
+
+  worker:
+    hosts:
+      - <%= ENV['KAMAL_WORKER_IP'] %>
+    cmd: bin/run-worker.sh
+
+  registry:
+    server: ghcr.io
+    username: your_github_username
+    password:
+      - KAMAL_REGISTRY_PASSWORD
+
+env:
+  clear:
+    RAILS_ENV: production
+  secret:
+    - RAILS_LOG_TO_STDOUT
+    - CLOUDFLARE_API_KEY
+    - S3_ACCESS_KEY_ID
+    - S3_SECRET_ACCESS_KEY
+    - S3_ENDPOINT
+    - S3_REGION
+    - POSTGRES_DATABASE
+    - POSTGRES_HOST
+    - POSTGRES_DB
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+
+builder:
+  multiarch: false
+
+accessories:
+  db:
+    image: postgres:16.0
+    host: <%= ENV['POSTGRES_HOST'] %>
+    port: 5432
+    env:
+      secret:
+        - POSTGRES_DB
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
+
+  db_backup:
+    image: eeshugerman/postgres-backup-s3:16
+    host: <%= ENV['POSTGRES_HOST'] %>
+    env:
+      clear:
+        SCHEDULE: '@daily'
+        BACKUP_KEEP_DAYS: 10
+        S3_BUCKET: whatever-bucket
+        S3_PREFIX: '/'
+      secret:
+        - S3_ACCESS_KEY_ID
+        - S3_SECRET_ACCESS_KEY
+        - S3_ENDPOINT
+        - S3_REGION
+        - POSTGRES_HOST
+        - POSTGRES_DATABASE
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+
+traefik:
+  options:
+    publish:
+      - "443:443"
+    volume:
+      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+  args:
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
+    entryPoints.web.http.redirections.entryPoint.to: websecure
+    entryPoints.web.http.redirections.entryPoint.scheme: https
+    entryPoints.web.http.redirections.entrypoint.permanent: true
+    entrypoints.websecure.http.tls: true
+    entrypoints.websecure.http.tls.domains[0].main: "domain.com"
+    entrypoints.websecure.http.tls.domains[0].sans: "*.domain.com"
+    certificatesResolvers.letsencrypt.acme.email: "user@provider.com"
+    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+    certificatesresolvers.letsencrypt.acme.dnschallenge.provider: cloudflare
+  env:
+    secret:
+      - CLOUDFLARE_API_KEY
+    clear:
+      CLOUDFLARE_EMAIL: 'user@provider.com'
+{% endhighlight %}
+
+<p>It does a couple of things:</p>
+
+<ul>
+  <li>reads the env vars <code>KAMAL_WEB_IP</code>, <code>KAMAL_WORKER_IP</code> and <code>POSTGRES_HOST</code> from the <code>.env</code> file that were defined with Terraform (as shown on the <a href='{% post_url 2024-01-18-migrating-from-dokku-to-kamal-provisioning-with-terraform %}'>other post</a>)</li>
+
+  <li>defines three servers: <code>web</code>, <code>worker</code> and <code>db</code> (which is under <code>accessories</code>)</li>
+
+  <li>sets Let's Encrypt as certificate resolver for the <code>web</code> server</li>
+
+  <li>overrides the command to be executed on the Docker container for the <code>worker</code> server, it'll run <code>bin/run-worker.sh</code> instead</li>
+
+  <li>sets GitHub as image registry, it's for free</li>
+
+  <li>speeds up the build time by disabling <code>multiarch</code> since both my local machine and the servers run on the arm64 architecture</li>
+
+  <li>sets up a container on the <code>db</code> server to backup the Postgres database once a day using <a href="https://github.com/eeshugerman/postgres-backup-s3" target="_blank" rel="external nofollow">postgres-backup-s3</a></li>
+</ul>
+
+<h2>Resolving Let's Encrypt ACME v2 challenge</h2>
+
+<p>As my domain has Cloudflare as DNS resolver and I wanted to support wildcard certificates - so I could test my app at <code>kamal.domain.com</code> before switching from Digital Ocean to Hetzner on <code>domain.com</code>, the web server is solving <a href="https://community.letsencrypt.org/t/acme-v2-production-environment-wildcards/55578" target="_blank" rel="external nofollow">Let's Encrypt ACME v2 challenge</a> through DNS (thanks Nick for <a href="https://github.com/basecamp/kamal/discussions/112" target="_blank" rel="external nofollow">sharing it</a>), that's why I had to define the extra args for <code>traefik</code> (including <code>CLOUDFLARE_EMAIL</code> and <code>CLOUDFLARE_API_KEY</code>).</p>
+
+<p>Note we are storing the certificate on the file we created with Terraform: <code>/letsencrypt/acme.json</code>. This way we don't need to regenerate a new certificate every time a new <code>web</code> container is run.</p>
+
+<p>That's it for today, in a follow-up post I'll share how I've set up cron to run scheduled tasks.</p>
