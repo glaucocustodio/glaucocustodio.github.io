@@ -1,0 +1,130 @@
+---
+layout: post
+status: publish
+published: true
+title: "Migrating From Dokku to Kamal: Scheduling Cron Jobs"
+categories:
+- DevOps
+- Kamal
+---
+
+<p>This is the third post of the series "Migrating From Dokku to Kamal" and today I am gonna show you how I've set cron with <a href="https://kamal-deploy.org/" target="_blank" rel="external nofollow">Kamal</a>, <a href="{% post_url 2024-01-19-migrating-from-dokku-to-kamal-setting-up-the-servers %}">click here</a> to read the second post of the series in case you've missed it.</p>
+
+<p>I needed a way run periodic tasks on Kamal to replace <a target="_blank" rel="external nofollow" href="https://dokku.com/docs/processes/scheduled-cron-tasks/">Dokku's scheduled cron tasks</a>.</p>
+
+<p>Cron seemed the way to go according to this <a target="_blank" rel="external nofollow" href="https://github.com/basecamp/kamal/pull/57/files">pull request</a> on the Kamal repo, but making it work turned out to be not so simple as that.</p>
+
+<p>The idea is to have a new container on the <code>worker</code> server responsible for scheduling jobs defined on a crontab file.</p>
+
+<h2>Defining cron jobs</h2>
+
+<p>First thing is to create this crontab file defining the tasks to be scheduled by cron, I've put this file on <code>config/app.crontab</code>:</p>
+
+{% highlight bash %}
+59 20 * * 1,2,3,4,5 /rails/bin/cron-executor.sh make whatever
+{% endhighlight %}
+
+<p>Note that I am passing the command I want to run (<code>make whatever</code> in this case) to a <code>bin/cron-executor.sh</code>:</p>
+
+{% highlight bash %}
+#!/bin/bash -e
+
+PATH=$PATH:/usr/local/bin
+
+cd /rails || exit
+
+echo "CRON: ${@}" >/proc/1/fd/1 2>/proc/1/fd/2
+
+exec "${@}" >/proc/1/fd/1 2>/proc/1/fd/2
+{% endhighlight %}
+
+<p>this shell script is responsible for doing a few things before running the desired command:</p>
+
+<ul>
+  <li>adds <code>/usr/local/bin</code> to <code>$PATH</code>, so ruby and bundle can be loaded</li>
+  <li>enters the directory of the application (<code>/rails</code>)</li>
+  <li>prints the command that is about to be executed</li>
+  <li>executes the command</li>
+</ul>
+
+<p>In case you are wondering, <code>>/proc/1/fd/1 2>/proc/1/fd/2</code> is required to redirect the output of the command to the container's stdout/stderr. If you don't add this, <strong>you won't be able to see the logs</strong> of the cron jobs when running <code>docker logs</code> for example.</p>
+
+<h2>Setting up the Dockerfile</h2>
+
+<p>The next step is to make sure the application's <code>Dockerfile</code> installs cron and applies the jobs from the crontab file we just defined:</p>
+
+{% highlight Dockerfile %}
+ARG RUBY_VERSION=3.2.2
+FROM ruby:$RUBY_VERSION-slim-bullseye as base
+
+...
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install -y cron \
+    # Remove package lists for smaller image sizes
+    && rm -rf /var/lib/apt/lists/* \
+    && which cron \
+    && rm -rf /etc/cron.*/*
+
+COPY config/app.crontab /etc/cron.d/cronfile
+RUN chmod 0644 /etc/cron.d/cronfile
+RUN crontab /etc/cron.d/cronfile
+
+USER root
+
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
+{% endhighlight %}
+
+<div class="note alert">The default Dockerfile for Rails 7.1 sets up a non-root user for security reasons, but I couldn't get cron working with a non-root user, that's why I ended up using <code>USER root</code>. Please let me know in case you managed to get that working.</div>
+
+<h2>Passing environment variables to cron</h2>
+
+<p>Cron reads environment variables from <code>/etc/environment</code>, so we need to set them there by adding one line to <code>bin/docker-entrypoint</code>:</p>
+
+{% highlight bash %}
+#!/bin/bash -e
+
+# pass env vars to cron
+env >> /etc/environment
+
+# If running the rails server then create or migrate existing database
+if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  ./bin/rails db:prepare
+fi
+
+exec "${@}"
+{% endhighlight %}
+
+<h2>Defining a new server</h2>
+
+<p>The last step is to define a new server on Kamal's <code>deploy.yml</code> with the same ip as the <code>worker</code>:</p>
+
+{% highlight yaml %}
+servers:
+  web:
+    hosts:
+      - <%= ENV['KAMAL_WEB_IP'] %>
+    labels:
+      traefik.http.routers.domain.rule: Host(`*.domain.com`)
+      traefik.http.routers.domain.entrypoints: websecure
+      traefik.http.routers.domain.tls.certresolver: letsencrypt
+
+  worker:
+    hosts:
+      - <%= ENV['KAMAL_WORKER_IP'] %>
+    cmd: bin/run-worker.sh
+
+  cron:
+    hosts:
+      - <%= ENV['KAMAL_WORKER_IP'] %>
+    cmd: bash -c "cron -f -L 2"
+{% endhighlight %}
+
+<p>Note that <code>bash -c "cron -f -L 2"</code> is set as the command to run on the container, it'll make cron to run on the foreground and set the logging verbosity.</p>
+
+<p>That's all folks, I hope you have enjoyed the series.</p>
+
+<p>Ps: I'd like to thank you Jason for writing <a target="_blank" rel="external nofollow" href="https://blog.thesparktree.com/cron-in-docker">this post</a> on running cron on Docker, it was really useful to me!</p>

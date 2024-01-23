@@ -41,6 +41,7 @@ servers:
 env:
   clear:
     RAILS_ENV: production
+    PIDFILE: /dev/null
   secret:
     - RAILS_LOG_TO_STDOUT
     - CLOUDFLARE_API_KEY
@@ -127,6 +128,8 @@ traefik:
 
   <li>sets GitHub as image registry, it's for free</li>
 
+  <li>sets env vars. <code>PIDFILE=/dev/null</code> tells Rails to not save pid files as you might receive the error <code>A server is already running. Check /rails/tmp/pids/server.pid</code> in case docker gets killed abruptly. This will be the default behaviour as of  <a href="https://github.com/rails/rails/pull/50644" target="_blank" rel="external nofollow">Rails 8</a>. Check <a href="https://medium.com/pragmatic-programmers/rails-tmp-pids-server-pid-not-cleaned-up-a3155093b52f" target="_blank" rel="external nofollow">this post</a> for more info.</li>
+
   <li>speeds up the build time by disabling <code>multiarch</code> since both my local machine and the servers run on the arm64 architecture</li>
 
   <li>sets up a container on the <code>db</code> server to backup the Postgres database once a day using <a href="https://github.com/eeshugerman/postgres-backup-s3" target="_blank" rel="external nofollow">postgres-backup-s3</a></li>
@@ -138,4 +141,4 @@ traefik:
 
 <p>Note we are storing the certificate on the file we created with Terraform: <code>/letsencrypt/acme.json</code>. This way we don't need to regenerate a new certificate every time a new <code>web</code> container is run.</p>
 
-<p>That's it for today, in a follow-up post I'll share how I've set up cron to run scheduled tasks.</p>
+<p>That's it for today, in the <a href="{% post_url 2024-01-23-migrating-from-dokku-to-kamal-scheduling-cron-jobs %}">last post of the series</a> I share how I've set up cron to run scheduled tasks.</p>
