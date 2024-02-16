@@ -65,8 +65,13 @@ provider "hcloud" {
 }
 
 variable "common_provisioner_commands" {
+  # change default DNS servers as Hetzner's default ones are not reliable
   default = [
     "echo 1",
+    "sed -i 's/#DNS=/DNS=1.1.1.1/' /etc/systemd/resolved.conf",
+    "sed -i 's/#FallbackDNS=/FallbackDNS=8.8.8.8/' /etc/systemd/resolved.conf",
+    "sed -i 's/#DNSOverTLS=no/DNSOverTLS=opportunistic/' /etc/systemd/resolved.conf",
+    "systemctl restart systemd-resolved",
   ]
 }
 
@@ -149,6 +154,8 @@ terraform {
   <li>define the resources to be managed on the german provider: 3 VPSs of the type <code>CAX11</code>, named <code>web</code>, <code>worker</code> and <code>db</code></li>
 
   <li>create and give permission to the file <code>/letsencrypt/acme.json</code> only on the <code>web</code> server as it will be used ahead to hold Let's Encrypt certificate</li>
+
+  <li>change default DNS and enable DNSOverTLS when supported</li>
 
   <li>print the ipv4 of the created resources</li>
 

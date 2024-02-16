@@ -4,10 +4,16 @@ title: About
 permalink: /about/
 ---
 
-Hi, my name is Glauco Custódio and I am a brazilian Software Engineer currently living in Lisbon, Portugal.
+<div>
+  <p>
+    Hi, I'm Glauco Custódio, a brazilian Software Engineer currently living in Lisbon, Portugal.
+  </p>
 
-I'm passionate about building great software, learning new things and contributing back to the community.
+  <p>
+    I'm passionate about building great software, learning new things and contributing back to the community.
+  </p>
 
-<br>
-<br>
-<br>
+  <p>
+    Check my <a href="https://github.com/glaucocustodio">GitHub profile</a> to see what I've been up to lately.
+  </p>
+</div>
