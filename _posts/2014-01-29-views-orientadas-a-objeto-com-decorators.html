@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Views Orientadas a Objeto com Decorators
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-01-29 00:47:29 -0200'
 date_gmt: '2014-01-29 00:47:29 -0200'
 categories:
@@ -46,7 +46,7 @@ comments:
 # app/helpers/events_helper.rb
 module EventsHelper
   def price(event)
-    [event.min_price, event.max_price].map do |c| 
+    [event.min_price, event.max_price].map do |c|
       number_to_currency(c) if c.present?
     end
     .reject(&:blank?).join(' - ')
@@ -76,7 +76,7 @@ end
 # app/decorators/event_decorator.rb
 module EventDecorator
   def price
-    [min_price, max_price].map do |c| 
+    [min_price, max_price].map do |c|
       number_to_currency(c) if c.present?
     end
     .reject(&:blank?).join(' - ')

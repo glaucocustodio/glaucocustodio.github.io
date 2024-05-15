@@ -6,7 +6,7 @@ permalink: /about/
 
 <div>
   <p>
-    Hi, I'm Glauco Custódio, a brazilian Software Engineer currently living in Lisbon, Portugal.
+    Hi, I'm Glauco Custodio, a brazilian Software Engineer currently living in Portugal.
   </p>
 
   <p>

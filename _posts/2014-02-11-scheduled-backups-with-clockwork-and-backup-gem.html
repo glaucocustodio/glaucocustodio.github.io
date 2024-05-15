@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Scheduled Backups with Clockwork and Backup Gem
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-02-11 17:18:13 -0200'
 date_gmt: '2014-02-11 17:18:13 -0200'
 categories:
@@ -89,7 +89,7 @@ Model.new(:my_bkp_name, 'Description for my_bkp_name') do
   #
   database PostgreSQL do |db|
     DB = YAML.load_file("#{DIR}/config/database.yml")
-    # try to get RAILS_ENV variable, 
+    # try to get RAILS_ENV variable,
     # if it is not set, use 'production'
     RAILS_ENV = ENV.fetch('RAILS_ENV'){'production'}
 

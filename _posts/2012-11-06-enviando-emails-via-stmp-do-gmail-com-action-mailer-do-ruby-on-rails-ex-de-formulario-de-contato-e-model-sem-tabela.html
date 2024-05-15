@@ -5,7 +5,7 @@ published: true
 title: Enviando Emails via STMP (Gmail) com Action Mailer do Rails - Formul&aacute;rio
   de Contato e Model sem Tabela
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2012-11-06 20:00:33 -0200'
 date_gmt: '2012-11-06 20:00:33 -0200'
 categories:
@@ -190,7 +190,7 @@ class ContactsController < ApplicationController
 
     if @contact.valid?
       redirect_to :action => 'new'
-      return  
+      return
     end
 
     render :action => 'new'
@@ -260,7 +260,7 @@ config.action_mailer.smtp_settings = {
   :user_name            => 'usuario_remetente',
   :password             => 'senha123',
   :authentication       => 'plain',
-  :enable_starttls_auto => true 
+  :enable_starttls_auto => true
 }
 # Para debug apenas, é melhor que a linha abaixo seja adicionado apenas no ambiente de desenvolvimento
 config.action_mailer.raise_delivery_errors = true
@@ -284,7 +284,7 @@ class ContactsController < ApplicationController
       ContactMailer.contact_message(params[:contact]).deliver
       flash[:notice] = 'Mensagem enviado com sucesso'
       redirect_to :action => 'new'
-      return  
+      return
     end
 
     render :action => 'mew'
@@ -299,7 +299,7 @@ end
 <p>Vamos adicionar algumas validações no formulário, para isso abro o model <code>Contact</code> e adiciono algumas linhas, ficando como abaixo:</p>
 
 {% highlight ruby %}
-class Contact 
+class Contact
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -310,7 +310,7 @@ class Contact
             :length => {:in => 2..50}
 
   validates :email,
-            :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }  
+            :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
 
   validates :message,
             :length => {:in => 10..750}

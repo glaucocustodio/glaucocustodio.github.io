@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Construindo Querys com ActiveRecord e Arel
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-07-28 19:56:17 -0300'
 date_gmt: '2014-07-28 19:56:17 -0300'
 categories:
@@ -96,7 +96,7 @@ User.where(
 {% highlight sql %}
 SELECT "users".* FROM "users"  WHERE (
   (
-    "users"."email"  = 'teste@provedor.com' OR 
+    "users"."email"  = 'teste@provedor.com' OR
     "users"."gender" = 'm' AND "users"."name" = 'Teste'
   )
 )

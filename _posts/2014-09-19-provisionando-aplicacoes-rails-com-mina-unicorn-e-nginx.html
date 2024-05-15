@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Provisionando Aplica&ccedil;&otilde;es Rails com Mina, Unicorn e Nginx
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-09-19 17:18:59 -0300'
 date_gmt: '2014-09-19 17:18:59 -0300'
 categories:
@@ -134,7 +134,7 @@ end
 <p>Agora, vamos configurar nossa entrada no servidor, eu costumo criar um arquivo com o nome da aplicação (nesse caso <code>my_app</code>) dentro da pasta <code>sites-enabled</code> no diretório do Nginx.</p>
 
 {% highlight nginx linenos %}
-# /opt/nginx/sites-enabled/my_app 
+# /opt/nginx/sites-enabled/my_app
 upstream my_app {
   # socket location
   server unix:/home/user/my_app/shared/sockets/unicorn.sock fail_timeout=0;
@@ -148,7 +148,7 @@ server {
     # if file does not exist, use the last, in this case, @app
     try_files $uri $uri/index.html $uri.html @app;
   }
-  
+
   location @app {
     # must match the name of upstream directive which is defined above
     proxy_pass http://my_app;
@@ -158,7 +158,7 @@ server {
     # below line is only required for HTTPS
     # proxy_set_header   X-Forwarded-Proto https;
   }
- 
+
   # cache control
   location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
     expires max;

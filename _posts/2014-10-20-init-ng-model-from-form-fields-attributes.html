@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Init Ng-Model from Form Fields Attributes
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-10-20 20:02:05 -0200'
 date_gmt: '2014-10-20 20:02:05 -0200'
 categories:
@@ -80,7 +80,7 @@ comments:
 <p>Suppose we have an HTML like that:</p>
 <div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="gBoEa" data-default-tab="html" data-user="glaucocustodio">
 <pre><code>&lt;!DOCTYPE html&gt; &lt;html lang="en" ng-app=""&gt; &lt;head&gt; &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;input type="text" value="John" ng-model="name"&gt; &lt;/body&gt; &lt;/html&gt;</code></pre>
-See the Pen <a href="http://codepen.io/glaucocustodio/pen/gBoEa/">gBoEa</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/gBoEa/">gBoEa</a> by Glauco Custodio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
 
 </div>
 <script type="text/javascript" src="//codepen.io/assets/embed/ei.js"></script>
@@ -93,7 +93,7 @@ See the Pen <a href="http://codepen.io/glaucocustodio/pen/gBoEa/">gBoEa</a> by G
 <div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="Beldq" data-default-tab="js" data-user="glaucocustodio">
 <pre><code>var app = angular.module('myApp', []); app.controller('MyCtrl', function ($scope) { $scope.name = 'John'; });</code></pre>
 
-See the Pen <a href="http://codepen.io/glaucocustodio/pen/Beldq/">Beldq</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/Beldq/">Beldq</a> by Glauco Custodio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
 </div>
 
 <p>But when our entire page is coming from server, it does not seem a good approach, we would need mix the server language with JavaScript or mess up with another not cool thing.</p>
@@ -105,7 +105,7 @@ See the Pen <a href="http://codepen.io/glaucocustodio/pen/Beldq/">Beldq</a> by G
 <div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="pIkdw" data-default-tab="html" data-user="glaucocustodio">
 <pre><code>&lt;!DOCTYPE html&gt; &lt;html lang="en" ng-app=""&gt; &lt;head&gt; &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;input type="text" ng-model="name" ng-init="name='John'"&gt; &lt;/body&gt; &lt;/html&gt;</code></pre>
 
-See the Pen <a href="http://codepen.io/glaucocustodio/pen/pIkdw/">pIkdw</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/pIkdw/">pIkdw</a> by Glauco Custodio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
 </div>
 
 <script type="text/javascript" src="//codepen.io/assets/embed/ei.js"></script>
@@ -114,7 +114,7 @@ See the Pen <a href="http://codepen.io/glaucocustodio/pen/pIkdw/">pIkdw</a> by G
 <p>Finally, we can use a <a href="https://github.com/glaucocustodio/angular-initial-value" target="_blank">custom directive</a> to load values based on form fields attributes:</p>
 <div class="codepen" data-height="268" data-theme-id="0" data-slug-hash="nhcmz" data-default-tab="js" data-user="glaucocustodio">
 <pre><code>angular.module('initFromForm', []) .directive('ngInitial', function() { return { restrict: 'A', controller: [ '$scope', '$element', '$attrs', '$parse', function($scope, $element, $attrs, $parse) { var getter, setter, val; val = $attrs.ngInitial || ($element.attr("checked") !== undefined ? true : '') || $attrs.value || $element.val() getter = $parse($attrs.ngModel); setter = getter.assign; setter($scope, val); } ] }; }); var app = angular.module('myApp', ['initFromForm']);</code></pre>
-See the Pen <a href="http://codepen.io/glaucocustodio/pen/nhcmz/">nhcmz</a> by Glauco Custódio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
+See the Pen <a href="http://codepen.io/glaucocustodio/pen/nhcmz/">nhcmz</a> by Glauco Custodio (<a href="http://codepen.io/glaucocustodio">@glaucocustodio</a>) on <a href="http://codepen.io">CodePen</a>.
 
 </div>
 

@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Auto Orienting Images with Paperclip
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2015-08-04 19:52:04 -0300'
 date_gmt: '2015-08-04 19:52:04 -0300'
 categories:
@@ -36,7 +36,7 @@ has_attached_file :logo, styles: { original: {convert_options: '-auto-orient'} }
 # ...
 Paperclip::Attachment.default_options[:storage]         = :s3
 Paperclip::Attachment.default_options[:s3_credentials]  = "#{Rails.root}/config/s3.yml"
-Paperclip::Attachment.default_options[:styles]          = lambda { |attachment| 
+Paperclip::Attachment.default_options[:styles]          = lambda { |attachment|
   attachment.content_type.index("image/") == 0 ? {original: {convert_options: "-auto-orient"}} : {}
 }
 {% endhighlight %}

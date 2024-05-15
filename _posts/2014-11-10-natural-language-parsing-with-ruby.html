@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Natural Language Parsing with Ruby
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2014-11-10 18:14:27 -0200'
 date_gmt: '2014-11-10 18:14:27 -0200'
 categories:
@@ -95,8 +95,8 @@ class Parser
 
   def self.go statement, number_of_orders
     parser = MyGrammarParser.new
-    
-    tree = parser.parse(statement) 
+
+    tree = parser.parse(statement)
     if !tree.nil?
       tree = clean_tree(tree)
     end

@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Identificar e Matar Workers Zumbis do Resque
 author:
-  display_name: Glauco Custódio
+  display_name: Glauco Custodio
 date: '2013-09-03 12:30:55 -0300'
 date_gmt: '2013-09-03 12:30:55 -0300'
 categories:
@@ -45,25 +45,25 @@ Resque.workers.select{|worker| Resque.remove_worker(worker) }
 {% highlight text %}
 user@server:~$ sudo netstat -ntp | grep 6379
 tcp        0      0 127.0.0.1:6379          127.0.0.1:44597         ESTABLISHED 1671/redis-server
-tcp        0      0 127.0.0.1:6379          127.0.0.1:44543         FIN_WAIT2   -               
-tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock) 
+tcp        0      0 127.0.0.1:6379          127.0.0.1:44543         FIN_WAIT2   -
+tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock)
 tcp        0      0 127.0.0.1:6379          127.0.0.1:55760         ESTABLISHED 1671/redis-server
-tcp        0      0 127.0.0.1:46408         127.0.0.1:6379          TIME_WAIT   -               
+tcp        0      0 127.0.0.1:46408         127.0.0.1:6379          TIME_WAIT   -
 tcp        0      0 127.0.0.1:55760         127.0.0.1:6379          ESTABLISHED 8223/resque-1.25.2:
-tcp        0      0 127.0.0.1:46410         127.0.0.1:6379          TIME_WAIT   -               
-tcp        1      0 127.0.0.1:54364         127.0.0.1:6379          CLOSE_WAIT  14490/ruby      
-tcp        0      0 127.0.0.1:46402         127.0.0.1:6379          TIME_WAIT   -               
-tcp        0      0 127.0.0.1:37607         127.0.0.1:6379          TIME_WAIT   -               
-tcp        0      0 127.0.0.1:50442         127.0.0.1:6379          TIME_WAIT   -               
-tcp        0      0 127.0.0.1:37608         127.0.0.1:6379          TIME_WAIT   -               
-tcp        1      0 127.0.0.1:44543         127.0.0.1:6379          CLOSE_WAIT  7395/current    
+tcp        0      0 127.0.0.1:46410         127.0.0.1:6379          TIME_WAIT   -
+tcp        1      0 127.0.0.1:54364         127.0.0.1:6379          CLOSE_WAIT  14490/ruby
+tcp        0      0 127.0.0.1:46402         127.0.0.1:6379          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37607         127.0.0.1:6379          TIME_WAIT   -
+tcp        0      0 127.0.0.1:50442         127.0.0.1:6379          TIME_WAIT   -
+tcp        0      0 127.0.0.1:37608         127.0.0.1:6379          TIME_WAIT   -
+tcp        1      0 127.0.0.1:44543         127.0.0.1:6379          CLOSE_WAIT  7395/current
 {% endhighlight %}
 
 <p>Estamos interessados somente nas linhas em que ainda há conexões abertas (<code>ESTABLISHED</code>), se quiser, pode aplicar mais um <code>grep</code> com pipe para filtrar a saída:</p>
 {% highlight text %}
 user@server:~$ sudo netstat -ntp | grep 6379 | grep ESTABLISHED
 tcp        0      0 127.0.0.1:6379          127.0.0.1:44597         ESTABLISHED 1671/redis-server
-tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock) 
+tcp        0      0 127.0.0.1:44597         127.0.0.1:6379          ESTABLISHED 1492/puma.sock)
 tcp        0      0 127.0.0.1:6379          127.0.0.1:55760         ESTABLISHED 1671/redis-server
 tcp        0      0 127.0.0.1:55760         127.0.0.1:6379          ESTABLISHED 8223/resque-1.25.2:
 {% endhighlight %}
