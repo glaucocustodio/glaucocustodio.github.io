@@ -32,6 +32,10 @@ select * from users where status = 'true'
 
 <p>Use <a href="https://ruby-doc.org/core-2.5.0/doc/syntax/literals_rdoc.html#label-Here+Documents"> squiggly heredoc</a> (<code><<~SQL...SQL</code>) - introduced in Ruby 2.3, if you want to remove the indentation:</p>
 
-<img class="size-full wp-image-92 aligncenter" title="ugly sql" src="{{ site.baseurl }}/assets/squiggly-heredoc-ruby.png"/>
+<img class="size-full wp-image-92 aligncenter" title="squiggly-heredoc ruby" src="{{ site.baseurl }}/assets/squiggly-heredoc-ruby.png"/>
 
 <p>Replace SQL by whatever language you want to represent (like for instance <code><<~HTML...HTML</code>) so your editor might know how to highlight it.</p>
+
+<p>Use <code>strip</code> to remove <code>\n</code> at the end of the string and <code>\</code> to continue in the next line:</p>
+
+<img class="size-full wp-image-92 aligncenter" title="multiline squiggly-heredoc ruby" src="{{ site.baseurl }}/assets/multiline-squiggly-heredoc-ruby.png"/>
