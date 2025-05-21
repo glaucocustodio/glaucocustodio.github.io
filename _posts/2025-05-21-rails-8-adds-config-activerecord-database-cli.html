@@ -1,0 +1,24 @@
+---
+layout: post
+status: publish
+published: true
+title: "Rails 8 adds config.activerecord.database_cli"
+categories:
+- Rails
+---
+
+<p>
+  Rails 8 adds <code>config.activerecord.database_cli</code> to allow customizing the database CLI when accessing the database from the command line via <code>rails dbconsole</code>.
+</p>
+
+<p>If you want to use <a href="https://www.pgcli.com/" target="_blank" rel="external nofollow">pgcli</a> instead of the default <code>psql</code> to connect to your database for example, you can add the following configuration to a initializer (ie: <code>config/initializers/database_cli.rb</code>):</p>
+
+{% highlight ruby %}
+Rails.application.configure do
+  if Rails.env.local?
+    config.active_record.database_cli = {postgresql: "pgcli"}
+  end
+end
+{% endhighlight %}
+
+<p>The new configuration option is available since <a href="https://github.com/rails/rails/blob/8-0-stable/activerecord/CHANGELOG.md#rails-800beta1-september-26-2024" target="_blank" rel="external nofollow">Rails 8.0.0.beta1</a>, you can check out the <a href="https://github.com/rails/rails/pull/52656" target="_blank" rel="external nofollow">pull request</a> for more details.</p>
