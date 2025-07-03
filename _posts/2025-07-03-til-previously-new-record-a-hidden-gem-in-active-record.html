@@ -1,0 +1,35 @@
+---
+layout: post
+status: publish
+published: true
+title: "TIL: previously_new_record? — A Hidden Gem in ActiveRecord"
+categories:
+- Ruby
+---
+
+<p>
+  Have you ever needed to know if a record in Rails was just created — especially after using <code>create_or_find_by</code> or <code>find_or_create_by</code>?
+</p>
+
+<p>Most Rails devs reach for <code>new_record?</code>, but it won’t help after <code>create_or_find_by</code>, because the record is already saved. So how do you know if a record was just created?</p>
+
+<p>
+  Say hello to <code>previously_new_record?</code>, which for my surprise is available since <a href="https://github.com/rails/rails/blob/6-1-stable/activerecord/CHANGELOG.md#rails-610-december-09-2020" target="_blank" rel="external nofollow">Rails 6.1</a>.
+</p>
+
+<p>It tells you if the record was new right before the last save — giving you a clean way to trigger onboarding logic, log metadata, or set defaults only for new records.</p>
+
+<p>Here's how one can use it:</p>
+
+{% highlight ruby %}
+user = User.create_or_find_by(email: params[:email])
+
+# only create the log if the user was just created
+if user.previously_new_record?
+  create_log(user)
+end
+{% endhighlight %}
+
+<p>Next time you need to distinguish between a found and a created record, reach for <code>previously_new_record?</code>. It’s already part of ActiveRecord — no extra setup needed.</p>
+
+<p>You can check out how it was implemented in this <a href="https://github.com/rails/rails/pull/36276" target="_blank" rel="external nofollow">pull request</a>.</p>
