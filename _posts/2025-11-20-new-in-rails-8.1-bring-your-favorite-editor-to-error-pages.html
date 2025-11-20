@@ -1,0 +1,23 @@
+---
+layout: post
+status: publish
+published: true
+title: "New in Rails 8.1: Bring Your Favorite Editor to Error Pages"
+categories:
+- Ruby
+---
+
+<p>Rails 8.1.0 (released on October 22, 2025) brings a new feature that allows you to open the file that caused the error in your favorite editor.</p>
+
+<p>To enable this feature, you need to set either <code>EDITOR</code> or <code>RAILS_EDITOR</code> environment variable with the path to your editor, for example:</p>
+
+{% highlight bash %}
+# .bashrc / .zshrc
+export RAILS_EDITOR="cursor"
+{% endhighlight %}
+
+<p>Then, when you are taken to the error page, click on the pencil icon to open it in your editor:</p>
+
+<img alt="Demo: opening file from error page in Rails 8.1" src="{{ site.baseurl }}/assets/opening-file-from-error-page-rails-8.1.png"/>
+
+<p>A new <code>ActiveSupport::Editor</code> class has been added to handle the editor functionality, check the <a href="https://github.com/rails/rails/pull/55295" target="_blank" rel="external nofollow">pull request</a> for more details.</p>
