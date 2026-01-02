@@ -1,0 +1,36 @@
+---
+layout: post
+status: publish
+published: true
+title: "RSpec Satisfy Matcher"
+categories:
+- Ruby
+---
+
+<p>I've recently discovered (or at least found a good use case for it) the <a href="https://rspec.info/features/3-13/rspec-expectations/built-in-matchers/satisfy/" target="_blank" rel="external nofollow">satisfy</a> matcher in RSpec.</p>
+
+<p>My intention was to ensure an attribute contained a string and not another string (within <code>have_attributes</code>).</p>
+
+<p>I tried a few variations of the code below, but none of them worked:</p>
+
+{% highlight ruby %}
+message = Message.first
+expect(message).to have_attributes(
+  conversation_id: conversation.id,
+  customer: "customer@example.com",
+  response: include("Hello, world!").and(not_to(include("Subject:")))
+)
+{% endhighlight %}
+
+<p>While inspecting <a href="https://rubygems.org/gems/rspec-expectations" target="_blank" rel="external nofollow">rspec-expectations</a>'s source code in search of an <code>exclude</code> matcher or something similar, the <code>satisfy</code> matcher stood out as a good fit:</p>
+
+{% highlight ruby %}
+expect(message).to have_attributes(
+  conversation_id: conversation.id,
+  message: satisfy do |message|
+    message.include?("Hello, world!") && !message.include?("Subject:")
+  end
+)
+{% endhighlight %}
+
+<p>It's pretty self-explanatory, isn't it? The test will pass if the block returns <code>true</code>.</p>
