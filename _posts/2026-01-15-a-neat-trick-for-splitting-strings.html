@@ -1,0 +1,40 @@
+---
+layout: post
+status: publish
+published: true
+title: "A Neat Trick for Splitting Strings"
+categories:
+- Ruby
+---
+<p>You probably needed to split a full name into first and last name at some point.</p>
+
+<p>How would you split the string <code>Ayrton Senna da Silva</code> into <code>Ayrton</code> as the first name and <code>Senna da Silva</code> as the last name?</p>
+
+<p>What if the name contains inconsistent amounts of whitespace in between the words? Eg: <code style="white-space: pre;">Ayrton Senna da  Silva</code>.</p>
+
+{% highlight ruby %}
+"Ayrton Senna da  Silva".split(" ")
+# => ["Ayrton", "Senna", "da", "Silva"]
+{% endhighlight %}
+
+<p>Splitting by space is a good start, but it doesn't finish the job.</p>
+
+<h2>Solution</h2>
+
+<p>I learned recently we can pass a second argument to <code>split</code> specifying the maximum number of splits:</p>
+
+{% highlight ruby %}
+"Ayrton Senna da  Silva".split(" ", 2)
+# => ["Ayrton", "Senna da  Silva"]
+{% endhighlight %}
+
+<p>That almost worked, but we still have an extra space in the last name.</p>
+
+<p>By combining it with <code>squish</code> we can get the desired result in a clean way:</p>
+
+{% highlight ruby %}
+"Ayrton Senna da  Silva".squish.split(" ", 2)
+# => ["Ayrton", "Senna da Silva"]
+{% endhighlight %}
+
+<p>That's it.</p>
