@@ -27,8 +27,9 @@ expect(message).to have_attributes(
 {% highlight ruby %}
 expect(message).to have_attributes(
   conversation_id: conversation.id,
-  message: satisfy do |message|
-    message.include?("Hello, world!") && !message.include?("Subject:")
+  customer: "customer@example.com",
+  response: satisfy do |response|
+    response.include?("Hello, world!") && !response.include?("Subject:")
   end
 )
 {% endhighlight %}
